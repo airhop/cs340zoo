@@ -7,5 +7,5 @@ public class Proxy {
     public void getGameModel(){
 
     }
-    public void
+    public void get
 }
