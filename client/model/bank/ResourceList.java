@@ -58,6 +58,4 @@ public class ResourceList {
   }
   void addWood(){}
   void addOre(){}
-  void addSheep(){}
-  void addBrick(){}
 }
