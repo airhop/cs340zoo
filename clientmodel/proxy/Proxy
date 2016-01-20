@@ -1,5 +1,11 @@
 package clientmodel.proxy;
 
 public class Proxy {
+    public Proxy(){
 
+    }
+    public void getGameModel(){
+
+    }
+    public void
 }
