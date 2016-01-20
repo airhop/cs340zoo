@@ -56,4 +56,6 @@ public class ResourceList {
   {
     numOfWood = wood;
   }
+  void addWood(){}
+  void addOre(){}
 }
