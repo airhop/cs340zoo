@@ -16,5 +16,6 @@ public class ResourceList {
   numOfWheat = 19;
   numOfWood = 19;
   }
-
+  //Getters and Setters
+  
 }
