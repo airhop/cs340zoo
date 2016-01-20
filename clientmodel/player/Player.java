@@ -2,25 +2,27 @@ package clientmodel.player;
 
 public class Player {
   
+  
+  //placeable items
   int cities;
-  String color;
-  boolean discarded;
+  int roads;
+  int settlements;
+  
   int monuments;
-  String name;
+  int soldiers;
   DevCardList newDevCards;
   DevCardList oldDevCards;
   boolean playedDevCard;
-  int playerID;
   ResourceList resources;
-  int roads;
-  int settlements;
-  int soldiers;
+  boolean discarded;
   int victoryPoints;
   
   
-  void addVictoryPoint(){}
   void drawDevCard(){}
   void placeCity(){}
+  void placeRoad(){}
+  void placeSettlement(){}
+  void place
   void playCard(){}
   void trade(){}
   void purchase(){}
