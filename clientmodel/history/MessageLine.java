@@ -3,7 +3,7 @@ package clientmodel.history;
 
 public class MessageLine {
 
-String Message;
+String message;
 String source;
 
 //getters and setters right here
