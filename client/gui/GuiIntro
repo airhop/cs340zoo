@@ -1,11 +1,11 @@
 package clientmodel.proxy;
 
-public class GuiIntro{
+public class GuiIntro {
     public static void main(String[] args) {
         GuiIntro myMain = new GuiIntro();
-
+        myMain.runAll();
     }
-    public runAll(){
+    public void runAll(){
 
     }
 }
