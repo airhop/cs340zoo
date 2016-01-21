@@ -15,19 +15,19 @@ public interface IProxy {
     public ClientModel buyCard(){
 
     }
-    public ClientModel buyCard(){
+    public ClientModel useMonopoly(){
 
     }
-    public ClientModel useCard(){
+    public ClientModel useYearOfPlenty(){
+
+    }
+    public ClientModel useRoadBuilding(){
 
     }
     public ClientModel tradeMeritime(){
 
     }
     public ClientModel tradeDomestic(){
-
-    }
-    public ClientModel tradeMeritime(){
 
     }
 }
