@@ -1,7 +1,10 @@
-package clientmodel.client;
+    public boolean canTradePlayer(){}package clientmodel.client;
 
 public class Facade {
     public Facade(){
+        public boolean canTradePlayer(){} 
+        public boolean canTradePlayer(){}
+            public boolean canTradePlayer(){}
 
     }
 
