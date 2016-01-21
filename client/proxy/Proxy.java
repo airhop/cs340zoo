@@ -1,11 +1,7 @@
 package clientmodel.proxy;
 
-public class Proxy {
+public class Proxy implements IProxy{
     public Proxy(){
 
     }
-    public void getGameModel(){
-
-    }
-    public void get
 }

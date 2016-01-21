@@ -1,0 +1,9 @@
+package clientmodel.proxy;
+
+public class MockProxy {
+    public MockProxy(){
+
+    }
+
+
+}
