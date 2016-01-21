@@ -1,4 +1,4 @@
-    public boolean canTradePlayer(){}package clientmodel.client;
+package clientmodel.client;
 
 public class Facade {
 
