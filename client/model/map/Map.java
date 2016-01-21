@@ -9,6 +9,13 @@ public class Map {
   int radius = -1;
   HexLocation robber = null;
   
+     /**
+    *checks to see if hex can be added
+    */
+  public boolean canAddHex()
+  {
+    return false;
+  }
   /**
     *adds a hex to the maps list of hexes
     * 
@@ -17,10 +24,17 @@ public class Map {
     * @param String resource - type of resource obtained from hex
     * @param int number - index of owner
     */
- addHex(int x, int y, String resource, int number)
+ public void addHex(int x, int y, String resource, int number)
  {
    
  }
+      /**
+    *checks to see if port can be added
+    */
+  public boolean canAddPort()
+  {
+    return false;
+  }
    /**
     *adds a port to the maps list of ports
     * 
@@ -30,10 +44,17 @@ public class Map {
     * @param String direction - direction from hex the port is located
     * @param int ratio - the ratio of resources tradeable (i.e 1:2, 1:4)
     */
- addPort(int x, int y, String resource, String direction, int ratio)
+ public void addPort(int x, int y, String resource, String direction, int ratio)
  {
    
  }
+      /**
+    *checks to see if road can be added
+    */
+   public boolean canAddRoad()
+  {
+    return false;
+  }
    /**
     *adds a road to the maps list of roads
     * 
@@ -42,10 +63,17 @@ public class Map {
     * @param String direction - direction from hex that road is located
     * @param int owner - index of owner
     */
- addRoad(int x, int y, String direction, int owner)
+ public void addRoad(int x, int y, String direction, int owner)
  {
    
  }
+     /**
+    *checks to see if settlement can be added
+    */ 
+   public boolean canAddSettlement()
+  {
+    return false;
+  }
     /**
     *adds a settlement to the maps list of settlements
     * 
@@ -54,10 +82,17 @@ public class Map {
     * @param String direction - direction from hex that settlement is located
     * @param int owner - index of owner
     */
- addSettlement(int x, int y, String direction, int owner)
+ public void addSettlement(int x, int y, String direction, int owner)
  {
    
  }
+     /**
+    *checks to see if City can be added
+    */ 
+   public boolean canAddCity()
+  {
+    return false;
+  }
     /**
     *adds a city to the maps list of cities
     * 
@@ -66,17 +101,24 @@ public class Map {
     * @param String direction - direction from hex that city is located
     * @param int owner - index of owner
     */
- addCity(int x, int y, String direction, int owner)
+ public void addCity(int x, int y, String direction, int owner)
  {
    
  }
+     /**
+    *checks to see if robber can be relocated
+    */ 
+   public boolean canRelocateRobber()
+  {
+    return false;
+  }
     /**
     *moves robber to a new hex location
     * 
     * @param int x - horizontal location of hex robber is to be moved to
     * @param int y - diagonal location of hex robber is to be moved to
     */
- relocateRobber(int x, int y)
+ public void relocateRobber(int x, int y)
  {
    
  }
