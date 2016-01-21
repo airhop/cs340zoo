@@ -1,11 +1,27 @@
     public boolean canTradePlayer(){}package clientmodel.client;
 
 public class Facade {
-    public Facade(){
-        public boolean canTradePlayer(){} 
-        public boolean canTradePlayer(){}
-            public boolean canTradePlayer(){}
 
-    }
+    public boolean canBuildRoad(){} 
+    public boolean canBuildSettlement(){}
+    public boolean canBuildCity(){}
+    
+    public boolean canBuyDevcard(){} 
+    public boolean canPlayDevcard(){}
+  
+    public boolean canMonopoly(){} 
+    public boolean canRoadBuilding(){}
+    public boolean canPlaceMonument(){}
+    public boolean canYoP(){} 
+    public boolean canPlaceSoldier(){}
+    
+    public boolean canRob(){}
+    public boolean canMoveRobber(){}
+    
+    public boolean canTradePlayer(){}
+    public boolean canTradeBank(){} 
+    public boolean canAcceptTrade(){}
+    public boolean canWin(){} 
+    public boolean canRoll(){}
 
 }
