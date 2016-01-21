@@ -1,5 +1,5 @@
 public class City extends VertexObject{
  
   	
- 	boolean canPlaceAtLocation throws illegalMoveException(){};
+ 	boolean canPlaceAtLocation throws illegalMoveException(return false;){};
 }
