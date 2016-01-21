@@ -1,4 +1,4 @@
-package shared.Deserializer;
+package shared.serialization;
 
 public class Deserializer {
 
