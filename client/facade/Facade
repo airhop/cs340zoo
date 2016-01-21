@@ -1,4 +1,4 @@
-package clientmodel.proxy;
+package clientmodel.facade;
 
 public class Facade {
     public Facade(){
