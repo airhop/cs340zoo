@@ -3,8 +3,19 @@ package clientmodel.bank;
 
 public class Bank {
   ResourceList resources = new ResourceList("map");
+    /**
+    * checks to make sure the bank can give the proper resource amount
+    */
+  canAddBrick()
+  {
+    
+  }
   
   addBrick()
+  {
+    
+  }
+  canGiveBrick()
   {
     
   }
@@ -12,7 +23,18 @@ public class Bank {
   {
     
   }
+    /**
+    * checks to make sure the bank can give the proper resource amount
+    */
+  canAddOre()
+  {
+    
+  }
   addOre()
+  {
+    
+  }
+  canGiveOre()
   {
     
   }
@@ -20,7 +42,18 @@ public class Bank {
   {
     
   }
+    /**
+    * checks to make sure the bank can give the proper resource amount
+    */  
+  canAddSheep()
+  {
+    
+  }
   addSheep()
+  {
+    
+  }
+  canGiveSheep()
   {
     
   }
@@ -28,7 +61,18 @@ public class Bank {
   {
     
   }
+    /**
+    * checks to make sure the bank can give the proper resource amount
+    */  
+  canAddWheat()
+  {
+    
+  }
   addWheat()
+  {
+    
+  }
+  canGiveWheat()
   {
     
   }
@@ -36,7 +80,18 @@ public class Bank {
   {
     
   }
+    /**
+    * checks to make sure the bank can give the proper resource amount
+    */  
+  canAddWood()
+  {
+    
+  }
   addWood()
+  {
+    
+  }
+  canGiveWood()
   {
     
   }
