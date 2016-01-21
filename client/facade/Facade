@@ -29,28 +29,25 @@ public class Facade {
     public boolean canRoll(){}
     
     //do methods
-    public boolean BuildRoad(){} 
-    public boolean PlaceRoad(){}
-    public boolean BuildSettlement(){}
-    public boolean PlaceSettlement(){}
-    public boolean BuildCity(){}
-    public boolean PlaceCity(){}
+    public boolean placeRoad(){}
+    public boolean placeSettlement(){}
+    public boolean placeCity(){}
     
-    public boolean BuyDevcard(){} 
-    public boolean PlayDevcard(){}
+    public boolean buyDevcard(){}
+    public boolean playDevcard(){}
 
-    public boolean Monopoly(){} 
-    public boolean RoadBuilding(){}
-    public boolean PlaceMonument(){}
-    public boolean YoP(){} 
-    public boolean PlaceSoldier(){}
+    public boolean monopoly(){}
+    public boolean roadBuilding(){}
+    public boolean placeMonument(){}
+    public boolean yoP(){}
+    public boolean placeSoldier(){}
     
-    public boolean Rob(){}
-    public boolean MoveRobber(){}
+    public boolean rob(){}
+    public boolean moveRobber(){}
     
-    public boolean TradePlayer(){}
-    public boolean TradeBank(){} 
-    public boolean AcceptTrade(){}
-    public boolean Win(){} 
-    public boolean Roll(){}
+    public boolean tradePlayer(){}
+    public boolean tradeBank(){}
+    public boolean acceptTrade(){}
+    public boolean win(){}
+    public boolean roll(){}
 }
