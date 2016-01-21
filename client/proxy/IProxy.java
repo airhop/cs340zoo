@@ -1,6 +1,5 @@
 package clientmodel.proxy;
 
-import com.sun.deploy.util.SessionState;
 
 public interface IProxy {
 
