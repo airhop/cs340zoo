@@ -16,7 +16,7 @@ public class Facade {
     public boolean canMonopoly(){} 
     public boolean canRoadBuilding(){}
     public boolean canPlaceMonument(){}
-    public boolean canYoP(){} 
+    public boolean canYearOfPlenty(){}
     public boolean canPlaceSoldier(){}
     
     public boolean canRob(){}
@@ -39,7 +39,7 @@ public class Facade {
     public boolean playMonopoly(){}
     public boolean playRoadBuilding(){}
     public boolean placeMonument(){}
-    public boolean yoP(){}
+    public boolean playYearOfPlenty(){}
     public boolean placeSoldier(){}
     
     public boolean rob(){}

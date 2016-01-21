@@ -21,34 +21,40 @@ public interface IProxy {
     public ClientModel playDevCard(){
 
     }
-
-
-
-
-
-
-
-
-
-    public ClientModel getResource(ResourceEnum resource){
+    public ClientModel playMonopoly(){
 
     }
-    public ClientModel buyDevCard(){
+    public ClientModel playRoadBuilding(){
 
     }
-    public ClientModel useMonopoly(){
+    public ClientModel placeMonument(){
 
     }
-    public ClientModel useYearOfPlenty(){
+    public ClientModel playRoadBuilding(){
 
     }
-    public ClientModel useRoadBuilding(){
+    public ClientModel playYearOfPlenty(){
 
     }
-    public ClientModel tradeMeritime(){
+    public ClientModel placeSoldier(){
 
     }
-    public ClientModel tradeDomestic(){
+    public ClientModel rob(){
+
+    }
+    public ClientModel moveRobber(){
+
+    }
+    public ClientModel tradePlayer(){
+
+    }
+    public ClientModel tradeBank(){
+
+    }
+    public ClientModel acceptTrade(){
+
+    }
+    public ClientModel win(){
 
     }
 }
