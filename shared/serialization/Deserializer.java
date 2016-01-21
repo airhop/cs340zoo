@@ -1,6 +1,6 @@
 package shared.Deserializer;
 
-public class Wool {
+public class Deserializer {
 
 	/**
   	* deserializes the JSON formatted data from the server 
