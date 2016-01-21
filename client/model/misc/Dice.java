@@ -6,5 +6,7 @@ public class Dice {
   
   int rollDice(){}
   boolean canRoll(){}
+  
+  return false;
 
 }
