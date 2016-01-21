@@ -6,15 +6,30 @@ public interface IProxy {
     public void getGameModel(){
 
     }
-    public ClientModel PlaceRoad(){
+    public ClientModel placeRoad(){
 
     }
-    public ClientModel PlaceSettlement(){
+    public ClientModel placeSettlement(){
 
     }
-    public ClientModel PlaceCity(){
+    public ClientModel placeCity(){
 
     }
+    public ClientModel buyDevCard(){
+
+    }
+    public ClientModel playDevCard(){
+
+    }
+
+
+
+
+
+
+
+
+
     public ClientModel getResource(ResourceEnum resource){
 
     }

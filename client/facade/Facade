@@ -33,11 +33,11 @@ public class Facade {
     public boolean placeSettlement(){}
     public boolean placeCity(){}
     
-    public boolean buyDevcard(){}
-    public boolean playDevcard(){}
+    public boolean buyDevCard(){}
+    public boolean playDevCard(){}
 
-    public boolean monopoly(){}
-    public boolean roadBuilding(){}
+    public boolean playMonopoly(){}
+    public boolean playRoadBuilding(){}
     public boolean placeMonument(){}
     public boolean yoP(){}
     public boolean placeSoldier(){}

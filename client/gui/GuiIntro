@@ -1,0 +1,11 @@
+package clientmodel.proxy;
+
+public class GuiIntro{
+    public static void main(String[] args) {
+        GuiIntro myMain = new GuiIntro();
+
+    }
+    public runAll(){
+
+    }
+}
