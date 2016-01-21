@@ -1,4 +1,4 @@
-package clientmodel.proxy;
+package clientmodel.gui;
 
 public class GuiIntro {
     public static void main(String[] args) {
