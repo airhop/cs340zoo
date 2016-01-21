@@ -2,6 +2,7 @@ package clientmodel.client;
 
 public class Facade {
     public Facade(){
+        public boolean canTradePlayer(){}
 
     }
 
