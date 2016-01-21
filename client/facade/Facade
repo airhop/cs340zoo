@@ -1,8 +1,9 @@
-package clientmodel.facade;
+package clientmodel.client;
 
 public class Facade {
     public Facade(){
 
     }
+
 
 }
