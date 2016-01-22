@@ -6,7 +6,7 @@ public class Deserializer {
   	* deserializes the JSON formatted data from the server 
   	* 
   	*/
-	public void deserialize(){};
+	public void deserialize(){}
 
 
 }

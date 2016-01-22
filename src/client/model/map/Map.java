@@ -1,11 +1,13 @@
 package client.model.map;
 
+import java.util.ArrayList;
+
 public class Map {
-  ArrayList<Hex> hexes = new ArrayList <Hex> ();
-  ArrayList<Port> ports = new ArrayList <Port> ();
-  ArrayList<Road> roads = new ArrayList <Road> ();
-  ArrayList<VertexObject> settlements = new ArrayList<VertexObject> ();
-  ArrayList<VertexObject> cities = new ArrayList<VertexObject> ();
+  ArrayList<Hex> hexes = new ArrayList <> ();
+  ArrayList<Port> ports = new ArrayList <> ();
+  ArrayList<Road> roads = new ArrayList <> ();
+  ArrayList<VertexObject> settlements = new ArrayList<> ();
+  ArrayList<VertexObject> cities = new ArrayList<> ();
   int radius = -1;
   Robber robber;
   
@@ -27,10 +29,10 @@ public class Map {
   /**
     *adds a hex to the maps list of hexes
     * 
-    * @param int x - horizontal location of hex
-    * @param int y - diagonal location of hex
-    * @param String resource - type of resource obtained from hex
-    * @param int number - index of owner
+    * @param  x - horizontal location of hex
+    * @param  y - diagonal location of hex
+    * @param  resource - type of resource obtained from hex
+    * @param  number - index of owner
     */
  public void addHex(int x, int y, String resource, int number)
  {
@@ -46,11 +48,11 @@ public class Map {
    /**
     *adds a port to the maps list of ports
     * 
-    * @param int x - horizontal location of hex related to port
-    * @param int y - diagonal location of hex related to port
-    * @param String resource - type of resource obtained from hex
-    * @param String direction - direction from hex the port is located
-    * @param int ratio - the ratio of resources tradeable (i.e 1:2, 1:4)
+    * @param  x - horizontal location of hex related to port
+    * @param  y - diagonal location of hex related to port
+    * @param  resource - type of resource obtained from hex
+    * @param  direction - direction from hex the port is located
+    * @param  ratio - the ratio of resources tradeable (i.e 1:2, 1:4)
     */
  public void addPort(int x, int y, String resource, String direction, int ratio)
  {
@@ -66,10 +68,10 @@ public class Map {
    /**
     *adds a road to the maps list of roads
     * 
-    * @param int x - horizontal location of hex
-    * @param int y - diagonal location of hex
-    * @param String direction - direction from hex that road is located
-    * @param int owner - index of owner
+    * @param  x - horizontal location of hex
+    * @param  y - diagonal location of hex
+    * @param  direction - direction from hex that road is located
+    * @param  owner - index of owner
     */
  public void addRoad(int x, int y, String direction, int owner)
  {
@@ -85,10 +87,10 @@ public class Map {
     /**
     *adds a settlement to the maps list of settlements
     * 
-    * @param int x - horizontal location of hex
-    * @param int y - diagonal location of hex
-    * @param String direction - direction from hex that settlement is located
-    * @param int owner - index of owner
+    * @param  x - horizontal location of hex
+    * @param  y - diagonal location of hex
+    * @param  direction - direction from hex that settlement is located
+    * @param  owner - index of owner
     */
  public void addSettlement(int x, int y, String direction, int owner)
  {
@@ -104,10 +106,10 @@ public class Map {
     /**
     *adds a city to the maps list of cities
     * 
-    * @param int x - horizontal location of hex
-    * @param int y - diagonal location of hex
-    * @param String direction - direction from hex that city is located
-    * @param int owner - index of owner
+    * @param  x - horizontal location of hex
+    * @param  y - diagonal location of hex
+    * @param  direction - direction from hex that city is located
+    * @param  owner - index of owner
     */
  public void addCity(int x, int y, String direction, int owner)
  {
@@ -123,8 +125,8 @@ public class Map {
     /**
     *moves robber to a new hex location
     * 
-    * @param int x - horizontal location of hex robber is to be moved to
-    * @param int y - diagonal location of hex robber is to be moved to
+    * @param  x - horizontal location of hex robber is to be moved to
+    * @param  y - diagonal location of hex robber is to be moved to
     */
  public void relocateRobber(int x, int y)
  {

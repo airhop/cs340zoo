@@ -6,7 +6,7 @@ public class Road {
   
   Road(int x, int y, int id)
   {
-    location = new EdgeLocation(x,y);
+    location = new EdgeLocation(0,0, "");
     owner = id;
   }
 }

@@ -7,7 +7,7 @@ public class VertexObject{
   
   VertexObject(int x, int y, int id)
   {
-    location = new EdgeLocation(x,y);
+    location = new EdgeLocation(0,0, "this");
     owner = id;
   }
 }

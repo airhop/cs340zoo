@@ -1,5 +1,7 @@
 package client.model.misc;
 
+import client.model.bank.ResourceList;
+
 public class TradeOffer {
   
   //The index of the person offering the trade

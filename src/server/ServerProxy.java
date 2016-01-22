@@ -1,10 +1,13 @@
 package server;
 
-import shared.jsonobject.*;
-import client.model.*;
-import client.model.map.*;
-import client.model.history.*;
+import client.model.ClientModel;
 import client.model.bank.ResourceList;
+import client.model.history.MessageList;
+import client.model.map.EdgeLocation;
+import client.model.map.HexLocation;
+import client.model.map.VertexObject;
+import shared.jsonobject.Login;
+import shared.jsonobject.PassObject;
 
 public class ServerProxy implements IServerProxy{
 

@@ -1,5 +1,12 @@
 package client.model;
 
+import client.model.bank.Bank;
+import client.model.map.Map;
+import client.model.misc.TradeOffer;
+import client.model.misc.TurnTracker;
+import client.model.player.Player;
+import shared.exceptions.InvalidWinner;
+
 public class ClientModel {
   Map map;
   Bank bank;
@@ -20,15 +27,16 @@ public class ClientModel {
     /**
     * decides game winner and sets the winner to the id of the winning player
     * 
-    * @param int winnerid - id of the winning player
+    * @param //int winnerid - id of the winning player
     */
-  public void decideWinner(int winnerid)
-  {
+  public void decideWinner(int winnerid) throws InvalidWinner {
     if(winnerid<0 || winnerid >3)
     {
-      throw someIllegalException;
-      return;
+      throw new InvalidWinner();
+
+    }else{
+      winner = winnerid;
     }
-    winner = winnerid;
+
   }
 }

@@ -1,5 +1,7 @@
 package client.model.history;
 
+import java.util.ArrayList;
+
 public class MessageList {
 
   ArrayList<MessageLine> chatMessages;
@@ -8,17 +10,17 @@ public class MessageList {
   /**
   * Adds a message to the message list
   * 
-  * @param MessageLine line 
+  * @param //MessageLine line
   */
   void addChatMessage(MessageLine line){}
   void addLogMessage(MessageLine line){}
   MessageLine getChatLine()
   {
-  	return NULL;
+  	return null;
   }
   MessageLine getLogLine()
   {
-  	return NULL;
+  	return null;
   }
 
 }

@@ -10,7 +10,7 @@ public class Robber
   /*@param HexLocation - find if robber is in a certain hex
    @return true/false
   */
-  bool isLocated(HexLocation h)
+  Boolean isLocated(HexLocation h)
   {
     return false;
   }

@@ -2,7 +2,7 @@ package client.model.map;
 
 public class Hex {
   
-  HexLocation location;;
+  HexLocation location;
   String resource;
   String number;
   
