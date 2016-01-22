@@ -16,7 +16,10 @@ public class ServerProxy implements IServerProxy{
 	//				else do everything and return normal
 
 	//	Server s;
-	//@param boolean v - if true valid server, else mock server
+	/**
+	 * @param  v - if true valid server, else mock server
+	 */
+
 	public ServerProxy(boolean v)
 	{
 		valid = v;
@@ -25,7 +28,7 @@ public class ServerProxy implements IServerProxy{
 	}
 
 	//User operations
-	/* @param Login object with username and PassObjectword
+	/** @param l - Login object with username and PassObjectword
 	 * @return true/false whether a successful login or not.
 	 */
 	@Override
@@ -37,7 +40,7 @@ public class ServerProxy implements IServerProxy{
 		return false;
 	}
 
-	/* @param Login object with new username and PassObjectword
+	/** @param l - Login object with new username and PassObjectword
      * @return true/false whether a successful registry or not
      */
 	@Override
@@ -49,7 +52,7 @@ public class ServerProxy implements IServerProxy{
 
 	//Games: Game queries/actions (pre-joining)
 
-	/*no prereqs
+	/**no prereqs
      * @return array of Game objects
      */
 	@Override
@@ -59,7 +62,7 @@ public class ServerProxy implements IServerProxy{
 		return cm;
 	}
 
-	/*@param PassObject object - should have new Game name
+	/**@param p object - should have new Game name
      *@return = newly created game
      */
 	@Override
@@ -68,7 +71,7 @@ public class ServerProxy implements IServerProxy{
 		return new ClientModel();
 	}
 
-	/*@param PassObject object - hold the pid and string color
+	/**@param p - object - hold the pid and string color
      *@return true/false based on if everything set
      */
 	@Override
@@ -81,7 +84,7 @@ public class ServerProxy implements IServerProxy{
 
 	//Game: operations for the game you're in, requires cookies
 
-	/*@return  the Game model, true if version provided,
+	/**@return  the Game model, true if version provided,
      */
 	@Override
 	public ClientModel gameModel()
@@ -89,9 +92,9 @@ public class ServerProxy implements IServerProxy{
 		return new ClientModel();
 	}
 
-	/*conditions - verify that user is logged in and joined a game
+	/**conditions - verify that user is logged in and joined a game
      *   there needs to be space for another player
-     *@param PassObject object - "LARGEST ARMY" is only string accepted
+     *@param p - PassObject object - "LARGEST ARMY" is only string accepted
      *return true/false if added
      */
 	@Override
@@ -100,7 +103,7 @@ public class ServerProxy implements IServerProxy{
 		return false;
 	}
 
-	/*no preconditions
+	/**no preconditions
      *@return string array of AI types
      */
 	@Override
@@ -113,7 +116,7 @@ public class ServerProxy implements IServerProxy{
 
 	//Moves
 
-	/*@param msg to be sent
+	/**@param msg to be sent
      *no preconditions for sending a message
      */
 	@Override
@@ -122,7 +125,7 @@ public class ServerProxy implements IServerProxy{
 
 	}
 
-	/*@param playerid = id of player
+	/**@param p - PassObject = id of player
      *@return roll = 2-12
      *conditions - must be players turn in rolling status
      *
@@ -134,8 +137,8 @@ public class ServerProxy implements IServerProxy{
 		return 2;
 	}
 
-	/*@PassObject p - object with player id and victim id
-     *@param HexLocation new location of robber
+	/**@PassObject p - object with player id and victim id
+     *@param hl - HexLocation new location of robber
      *Robber stuff.  Set the robber, give around robbed cards
      */
 	@Override
@@ -144,7 +147,7 @@ public class ServerProxy implements IServerProxy{
 
 	}
 
-	/*@param PassObject object with player id
+	/**@param p - PassObject object with player id
      *Finish the turn and PassObject the torch
      */
 	@Override
@@ -153,7 +156,8 @@ public class ServerProxy implements IServerProxy{
 
 	}
 
-	/*@param PassObject object with player id of player that it is happening to
+	/**
+	 * @param p - PassObject object with player id of player that it is happening to
      */
 	@Override
 	public void movesBuyDevCard(PassObject p)
@@ -161,8 +165,9 @@ public class ServerProxy implements IServerProxy{
 
 	}
 
-	/*@param PassObject object with player that is making the move
-     *@param ResourceList - items to be taken?
+	/**
+	 * @param p - PassObject object with player that is making the move
+     *@param rl - ResourceList - items to be taken?
      */
 	@Override
 	public void movesYearOfPlenty(PassObject p, ResourceList rl)
@@ -170,9 +175,10 @@ public class ServerProxy implements IServerProxy{
 
 	}
 
-	/*@param PassObject player that is making the move
-     *@param EdgeLocation1
-     *@param EdgeLocation2
+	/**
+	 * @param p - PassObject player that is making the move
+     *@param el - EdgeLocation1
+     *@param e2 - EdgeLocation2
      */
 	@Override
 	public void movesRoad_Building(PassObject p, EdgeLocation el, EdgeLocation e2)
@@ -180,8 +186,9 @@ public class ServerProxy implements IServerProxy{
 
 	}
 
-	/*@param PassObject - Player id, victim ID
-     *@param Hexlocation - where robber will be
+	/**
+	 * @param  p - PassObject - Player id, victim ID
+     *@param hl - Hexlocation - where robber will be
      */
 	@Override
 	public void movesSoldier(PassObject p, HexLocation hl)
@@ -189,7 +196,8 @@ public class ServerProxy implements IServerProxy{
 
 	}
 
-	/*@param PassObject - player id, resource
+	/**
+	 * @param p - PassObject - player id, resource
      */
 	@Override
 	public void movesMonopoly(PassObject p)
@@ -197,46 +205,52 @@ public class ServerProxy implements IServerProxy{
 
 	}
 
-	/*@param PassObject - player id
+	/**
+	 * @param p - PassObject - player id
      */
 	@Override
 	public void movesMonument(PassObject p)
 	{
 	}
 
-	/*@param PassObject - player id, availability
-     *@param EdgeLocation - place in question
+	/**
+	 * @param p - PassObject - player id, availability
+     *@param p - EdgeLocation - place in question
      */
 	@Override
 	public void movesBuildRoad(PassObject p, EdgeLocation el)
 	{
 	}
 
-	/*@param PassObject - player id, bool availability
-     *@VertexLocation - place in question
+	/**
+	 * @param p -PassObject - player id, bool availability
+     *@param  vl -VertexObject - place in question
      */
 	@Override
 	public void movesBuildSettlement(PassObject p, VertexObject vl)
 	{
 	}
 
-	/*@param PassObject - player id, bool availability
-     *@VertexLocation - place in question
+	/**
+	 * @param p -PassObject - player id, bool availability
+     *@param vl - VertexObject - place in question
      */
 	@Override
 	public void movesBuildCity(PassObject p, VertexObject vl)
 	{
 	}
 
-	/*@param PassObject - player id reciever id
-     *@param ResourceList - items being offered
+	/**
+	 * @param p - PassObject - player id reciever id
+     *@param rl - ResourceList - items being offered
      */
 	@Override
 	public void movesOfferTrade(PassObject p, ResourceList rl)
 	{
 	}
 
-	/*@param PassObject - player id reciever id
+	/**
+	 * @param p - PassObject - player id reciever id
      *@return PassObject - player, acceptability
      */
 	@Override
@@ -245,8 +259,9 @@ public class ServerProxy implements IServerProxy{
 		return p;
 	}
 
-	/*@param PassObject - player id
-     *@param ResourceList - items to trade
+	/**
+	 * @param p - PassObject - player id
+     *@param rl - ResourceList - items to trade
      *@return - player id, acceptability
      */
 	@Override
@@ -255,8 +270,9 @@ public class ServerProxy implements IServerProxy{
 		return p;
 	}
 
-	/*@param PassObject - player id
-     *@param ResourceList - cards to discard
+	/**
+	 * @param p - PassObject - player id
+     *@param rl - ResourceList - cards to discard
      */
 	@Override
 	public void movesdiscardCards(PassObject p, ResourceList rl)

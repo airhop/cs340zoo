@@ -13,7 +13,7 @@ public class MockServer implements IServerProxy{
     }
 
     //User operations
-	/* @param Login object with username and PassObjectword
+	/** @param l object with username and PassObjectword
 	 * @return true/false whether a successful login or not.
 	 */
     public boolean userLogin(Login l)
@@ -21,7 +21,7 @@ public class MockServer implements IServerProxy{
         return false;
     }
 
-    /* @param Login object with new username and PassObjectword
+    /** @param l object with new username and PassObjectword
      * @return true/false whether a successful registry or not
      */
     public boolean userRegister(Login l)
@@ -32,7 +32,7 @@ public class MockServer implements IServerProxy{
 
 //Games: Game queries/actions (pre-joining)
 
-    /*no prereqs
+    /**no prereqs
      * @return array of Game objects
      */
     public ClientModel[] gamesList()
@@ -41,7 +41,7 @@ public class MockServer implements IServerProxy{
         return cm;
     }
 
-    /*@param PassObject object - should have new Game name
+    /**@param p object - should have new Game name
      *@return = newly created game
      */
     public ClientModel gamesCreate(PassObject p)
@@ -49,7 +49,7 @@ public class MockServer implements IServerProxy{
         return new ClientModel();
     }
 
-    /*@param PassObject object - hold the pid and string color
+    /**@param p object - hold the pid and string color
      *@return true/false based on if everything set
      */
     public boolean gamesJoin(PassObject p)
@@ -61,16 +61,16 @@ public class MockServer implements IServerProxy{
 
 //Game: operations for the game you're in, requires cookies
 
-    /*@return  the Game model, true if version provided,
+    /**@return  the Game model, true if version provided,
      */
     public ClientModel gameModel()
     {
         return new ClientModel();
     }
 
-    /*conditions - verify that user is logged in and joined a game
+    /**conditions - verify that user is logged in and joined a game
      *   there needs to be space for another player
-     *@param PassObject object - "LARGEST ARMY" is only string accepted
+     *@param p object - "LARGEST ARMY" is only string accepted
      *return true/false if added
      */
     public boolean gameAddAI(PassObject p)
@@ -78,7 +78,7 @@ public class MockServer implements IServerProxy{
         return false;
     }
 
-    /*no preconditions
+    /**no preconditions
      *@return string array of AI types
      */
     public String[] gameListAI()
@@ -90,7 +90,7 @@ public class MockServer implements IServerProxy{
 
 //Moves
 
-    /*@param msg to be sent
+    /**@param msg to be sent
      *no preconditions for sending a message
      */
     public void movesSendChat(MessageList msg)
@@ -98,7 +98,7 @@ public class MockServer implements IServerProxy{
 
     }
 
-    /*@param playerid = id of player
+    /**@param p = id of player
      *@return roll = 2-12
      *conditions - must be players turn in rolling status
      *
@@ -109,8 +109,8 @@ public class MockServer implements IServerProxy{
         return 2;
     }
 
-    /*@PassObject p - object with player id and victim id
-     *@param HexLocation new location of robber
+    /**@param p - object with player id and victim id
+     *@param hl new location of robber
      *Robber stuff.  Set the robber, give around robbed cards
      */
     public void movesRobPlayer(PassObject p, HexLocation hl)
@@ -118,7 +118,7 @@ public class MockServer implements IServerProxy{
 
     }
 
-    /*@param PassObject object with player id
+    /**@param p object with player id
      *Finish the turn and PassObject the torch
      */
     public void movesFinishTurn(PassObject p)
@@ -126,80 +126,80 @@ public class MockServer implements IServerProxy{
 
     }
 
-    /*@param PassObject object with player id of player that it is happening to
+    /**@param p object with player id of player that it is happening to
      */
     public void movesBuyDevCard(PassObject p)
     {
 
     }
 
-    /*@param PassObject object with player that is making the move
-     *@param ResourceList - items to be taken?
+    /**@param p object with player that is making the move
+     *@param rl - items to be taken?
      */
     public void movesYearOfPlenty(PassObject p, ResourceList rl)
     {
 
     }
 
-    /*@param PassObject player that is making the move
-     *@param EdgeLocation1
-     *@param EdgeLocation2
+    /**@param p player that is making the move
+     *@param el - edge place 1
+     *@param e2 - edge place 2
      */
     public void movesRoad_Building(PassObject p, EdgeLocation el, EdgeLocation e2)
     {
 
     }
 
-    /*@param PassObject - Player id, victim ID
-     *@param Hexlocation - where robber will be
+    /**@param p - Player id, victim ID
+     *@param hl - where robber will be
      */
     public void movesSoldier(PassObject p, HexLocation hl)
     {
 
     }
 
-    /*@param PassObject - player id, resource
+    /**@param p - player id, resource
      */
     public void movesMonopoly(PassObject p)
     {
 
     }
 
-    /*@param PassObject - player id
+    /**@param p - player id
      */
     public void movesMonument(PassObject p)
     {
     }
 
-    /*@param PassObject - player id, availability
-     *@param EdgeLocation - place in question
+    /**@param p - player id, availability
+     *@param el - place in question
      */
     public void movesBuildRoad(PassObject p, EdgeLocation el)
     {
     }
 
-    /*@param PassObject - player id, bool availability
-     *@VertexLocation - place in question
+    /**@param p - player id, bool availability
+     *@param vl - place in question
      */
     public void movesBuildSettlement(PassObject p, VertexObject vl)
     {
     }
 
-    /*@param PassObject - player id, bool availability
-     *@VertexLocation - place in question
+    /**@param p - player id, bool availability
+     *@param vl - place in question
      */
     public void movesBuildCity(PassObject p, VertexObject vl)
     {
     }
 
-    /*@param PassObject - player id reciever id
-     *@param ResourceList - items being offered
+    /**@param p - player id reciever id
+     *@param rl - items being offered
      */
     public void movesOfferTrade(PassObject p, ResourceList rl)
     {
     }
 
-    /*@param PassObject - player id reciever id
+    /**@param p - player id reciever id
      *@return PassObject - player, acceptability
      */
     public PassObject movesAcceptTrade(PassObject p)
@@ -207,8 +207,8 @@ public class MockServer implements IServerProxy{
         return p;
     }
 
-    /*@param PassObject - player id
-     *@param ResourceList - items to trade
+    /**@param p - player id
+     *@param rl - items to trade
      *@return - player id, acceptability
      */
     public PassObject movesMaritimeTrade(PassObject p, ResourceList rl)
@@ -216,8 +216,8 @@ public class MockServer implements IServerProxy{
         return p;
     }
 
-    /*@param PassObject - player id
-     *@param ResourceList - cards to discard
+    /**@param p - player id
+     *@param rl - cards to discard
      */
     public void movesdiscardCards(PassObject p, ResourceList rl)
     {

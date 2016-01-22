@@ -12,13 +12,13 @@ public class MessageList {
   * 
   * @param //MessageLine line
   */
-  void addChatMessage(MessageLine line){}
-  void addLogMessage(MessageLine line){}
-  MessageLine getChatLine()
+  public void addChatMessage(MessageLine line){}
+  public void addLogMessage(MessageLine line){}
+  public MessageLine getChatLine()
   {
   	return null;
   }
-  MessageLine getLogLine()
+  public MessageLine getLogLine()
   {
   	return null;
   }

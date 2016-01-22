@@ -8,7 +8,7 @@ import client.model.player.Player;
 import shared.exceptions.InvalidWinner;
 
 public class ClientModel {
-  Map map;
+  private Map map;
   Bank bank;
   Player[] players;
   TurnTracker tt;

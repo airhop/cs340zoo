@@ -6,7 +6,7 @@ import shared.exceptions.IllegalMoveException;
 public class City extends VertexObject {
 
 
-	City(int x, int y, int id) {
+	public City(int x, int y, int id) {
 		super(x, y, id);
 	}
 
@@ -14,5 +14,5 @@ public class City extends VertexObject {
 	{
 		return false;
 	}
- 	void placeCity(){}
+	public void placeCity(){}
 }

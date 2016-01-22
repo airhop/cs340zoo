@@ -4,8 +4,8 @@ public class EdgeLocation {
   int x;
   int y;
   String direction;
-  
-  EdgeLocation(int X, int Y, String dir)
+
+  public EdgeLocation(int X, int Y, String dir)
   {
     x = X;
     y = Y;

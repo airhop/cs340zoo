@@ -14,14 +14,14 @@ public class DevCardList {
   /*this method will randomly decide which card the bank will give
   @return cardtype of card to be returned
   */
-  String buyDevCard()
+  public String buyDevCard()
   {
     return "soldier";
   }
   
   /*@return can a devcard be purchased
   */
-  boolean canBuyDevCard()
+  public boolean canBuyDevCard()
   {
     return false;
   }
@@ -31,7 +31,7 @@ public class DevCardList {
   probably should have multiple methods, but this will go though a giant switch on the enum types
   @return if can use a DevCard
   */
-  boolean canUseDevCard(String type)
+  public boolean canUseDevCard(String type)
   {
     return false;
   }
