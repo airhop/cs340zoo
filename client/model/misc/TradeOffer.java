@@ -10,5 +10,6 @@ public class TradeOffer {
   ResourceList offer;
   
   public TradeOffer(){}
+  
   //getters and setters
 }

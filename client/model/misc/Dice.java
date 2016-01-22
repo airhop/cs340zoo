@@ -2,7 +2,7 @@ package client.model.misc;
 
 public class Dice {
   
-  int diceRoll;//1-12
+  int diceRoll;//2-12
   
   //curiosities sake.  Roll 2 1-6 or roll 2-12
   int rollDice()
@@ -10,7 +10,7 @@ public class Dice {
     //RollResultView.setRollValue(int value);
     
   }
-  boolean canRoll(){ return false; }
+  boolean canRoll() throws illegalMoveException{ return false; }
 
 
 }

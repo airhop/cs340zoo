@@ -7,6 +7,7 @@ public class Chat {
  	 * updates the messages to display the new message entered
   	 *  
  	 */
-	void addMessage(){}
+	void addChatMessage(){}
+	String printChatMessages(){return NULL;}
 
 }
