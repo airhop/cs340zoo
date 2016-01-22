@@ -1,8 +1,6 @@
 /*
 I am currently running through all of the classes as things to do pop up I am putting it here.  You are welcome to help
 
-HexLocations/EdgeLocations - need to be comparable objects with an overridden compareTo method
-      or just need a compareTo method
 need an Exception package with classes for illegal moves
 Does a port need a player to attach with it so that we know who owns it?
 
