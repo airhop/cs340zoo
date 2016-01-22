@@ -11,28 +11,89 @@ import shared.jsonobject.PassObject;
 
 public interface IProxy {
 
+    /**
+     * This is used to log a player in that has already registered
+     * @param l - This is the Login or identification for the user
+     * @return True or false if the player is logged in
+     */
     boolean userLogin(Login l);
+
+    /**
+     * This is used to register a new player
+     * @param l - This is the Login or identification for the user
+     * @return True or Flase is the player is created
+     */
     boolean userRegister(Login l);
+
+    /**
+     * Calls this method to get a list of the games to join
+     * @return The names of all the gamse
+     */
     String[] gamesList();
+
+    /**
+     * You are making a game
+     * @param s - The name of the game
+     * @return True or false if the game gets created
+     */
     boolean gamesCreate(String s);
+
+    /**
+     * The player wants to join a game so they use this method
+     * @param s - The game that they want to join
+     * @param playerId - The player that wants to join
+     * @return True or False
+     */
     boolean gamesJoin(String s, int playerId);
+
+    /**
+     * When you want to add an AI to the game
+     * @return True or False
+     */
     boolean gameAddAI();
-    String[]  gameListAI();
+
+    /**
+     * Game list for the AI's to join
+     * @return String[] returned
+     */
+    String[] gameListAI();
+
+    /**
+     * Messages to be sent to all the players
+     * @param msg - The messages to be sent to the players
+     */
     void sendChat(MessageList msg);
+
+    /**
+     * Used when a player finishes his turn
+     * @param playerId - the player that is ending their turn
+     */
     void finishTurn(int playerId);
+
+    /**
+     * Player that wants to build a city pushes it to the server
+     * @param playerId - Player that wants to build
+     * @param el - Location to build the City
+     */
     void buildCity(int playerId, EdgeLocation el);
+
+    /**
+     * Player builds a settlement
+     * @param playerId - Player that wants to build the settlement
+     * @param el - Edge/Vertex that it is going to be built to
+     */
     void buildSettlement(int playerId, EdgeLocation el);
 
     /**
      * Discards cards
-     * @param playerId -
-     * @param rl
+     * @param playerId - Player to discard
+     * @param rl - Resources to discard
      */
     void discardCards(int playerId, ResourceList rl);
 
     /**
      * Rolls a number and shows the affect on the server
-     * @param numRoled - Numebr that is rolled
+     * @param numRoled - Number that is rolled
      */
     void rollNumber(int numRoled);
     /**
