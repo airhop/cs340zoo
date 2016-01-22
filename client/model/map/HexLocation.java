@@ -1,7 +1,7 @@
 
 package clientmodel.map;
 
-public class HexLocation implements comparable {
+public class HexLocation {
   int x;
   int y;
   
