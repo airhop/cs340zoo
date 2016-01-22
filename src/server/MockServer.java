@@ -7,6 +7,7 @@ import client.model.history.*;
 import client.model.bank.ResourceList;
 
 public class MockServer implements IServerProxy{
+
     public MockServer()
     {
     }

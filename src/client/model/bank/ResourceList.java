@@ -8,7 +8,7 @@ public class ResourceList {
   int numOfWheat;
   int numOfWood;
   
-  ResourceList("map")
+  public ResourceList()
   {
     numOfBrick = 19;
     numOfOre = 19;
@@ -18,10 +18,7 @@ public class ResourceList {
   }
   
   //overload the constructor so that RL can be used for trades, bank, map, players etc.
-  ResourceList()
-  {
-    
-  }
+
   int getBrick()
   {
     return numOfBrick;

@@ -1,5 +1,8 @@
 package client.poller;
 
+import client.model.ClientModel;
+import client.proxy.IProxy;
+
 public class Poller {
     IProxy myProxy;
     ClientModel myModel;
@@ -15,6 +18,6 @@ public class Poller {
      * @return
      */
     public ClientModel getClientModel(){
-
+        return null;
     }
 }
