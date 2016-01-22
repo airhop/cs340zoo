@@ -1,6 +1,11 @@
 package clientmodel;
 
 public class ClientModel {
+  Map map;
+  Bank bank;
+  Player[] players;
+  TurnTracker tt;
+  TradeOffer to;
   int version = 0;
   int winner = -1;
   
