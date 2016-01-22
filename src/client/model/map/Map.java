@@ -18,6 +18,13 @@ public class Map {
   }
   //have another to update, or just create a new one every time?
   
+  /**
+   * initialize a new map when game is created
+   */
+  public void initialize()
+  {
+    
+  }
   
      /**
     *checks to see if hex can be added
