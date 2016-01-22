@@ -55,11 +55,9 @@ public class Player {
     /**
     * trades with one other player for a given ratio.
     * 
-    * @param int ratio the ratio that will decide how many cards are traded
-    * @param ResourceList resource - the resources that will be traded
-    * @param int playerIndex - the index of the player that the current player will be trading with
+    * @param TradeOffer offer - the offer from another player to dictate the trade
     */
-  void trade(int ratio, ResourceList resource, int playerIndex){}
+  void trade(TradeOffer offer){}
     /**
     * purchases a resource from the bank
     * 
