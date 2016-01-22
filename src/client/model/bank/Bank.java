@@ -1,164 +1,168 @@
 package client.model.bank;
 
 public class Bank {
-  ResourceList resources = new ResourceList();
-  DevCardList dcl = new DevCardList();
+  ResourceList resources;
+  DevCardList dcl;
     /**
     * checks to make sure the bank can add the proper resource amount
     */
-  boolean canAddBrick()
+
+    public boolean canAddBrick()
   {
     return false;
   }
     /**
     * adds proper resource to resourcelist
     */
-  void addBrick()
+
+    public void addBrick()
+    {
+    }
+    /**
+     *@param amount - number of resources needed to give out
+    * checks to make sure the bank can give the proper resource amount
+    */
+
+
+
+    public boolean canGiveBrick(int amount)
+    {
+      return false;
+    }
+     /**
+    * gives proper resource from resourcelist
+    */
+     public void giveBrick()
   {
     
   }
     /**
-     *@param amount - number of resources needed to give out
-    * checks to make sure the bank can give the proper resource amount
-    */  
-  boolean canGiveBrick(int amount)
+    * checks to make sure the bank can add the proper resource amount
+    */
+    public boolean canAddOre()
   {
     return false;
   }
      /**
+    * adds proper resource to resourcelist
+    */
+     public void addOre()
+  {
+    
+  }
+    /**
+     *@param amount - number of resources needed to give out
+    * checks to make sure the bank can give the proper resource amount
+    */
+    public boolean canGiveOre(int amount)
+  {
+    return false;
+  }
+    /**
     * gives proper resource from resourcelist
-    */  
-  void giveBrick()
+    */
+    public void giveOre()
   {
     
   }
     /**
     * checks to make sure the bank can add the proper resource amount
     */
-  boolean canAddOre()
-  {
-    return false;
-  }
-     /**
-    * adds proper resource to resourcelist
-    */  
-  void addOre()
-  {
-    
-  }
-    /**
-     *@param amount - number of resources needed to give out
-    * checks to make sure the bank can give the proper resource amount
-    */  
-  boolean canGiveOre(int amount)
-  {
-    return false;
-  }
-    /**
-    * gives proper resource from resourcelist
-    */  
-  void giveOre()
-  {
-    
-  }
-    /**
-    * checks to make sure the bank can add the proper resource amount
-    */  
-  boolean canAddSheep()
+    public boolean canAddSheep()
   {
     return false;
   }
     /**
     * adds proper resource to resourcelist
     */
-  void addSheep()
+    public void addSheep()
   {
     
   }
     /**
      *@param amount - number of resources needed to give out
     * checks to make sure the bank can give the proper resource amount
-    */  
-  boolean canGiveSheep(int amount)
+    */
+    public boolean canGiveSheep(int amount)
   {
     return false;
   }
     /**
     * gives proper resource from resourcelist
-    */  
-  void giveSheep()
+    */
+    public void giveSheep()
   {
     
   }
     /**
     * checks to make sure the bank can add the proper resource amount
-    */  
-  boolean canAddWheat()
+    */
+    public boolean canAddWheat()
   {
     return false;
   }
     /**
     * adds proper resource to resourcelist
     */
-  void addWheat()
+    public void addWheat()
   {
     
   }
     /**
      *@param amount - number of resources needed to give out
     * checks to make sure the bank can give the proper resource amount
-    */  
-  boolean canGiveWheat(int amount)
+    */
+    public boolean canGiveWheat(int amount)
   {
     return false;
   }
     /**
     * gives proper resource from resourcelist
-    */  
-  void giveWheat()
+    */
+    public void giveWheat()
   {
     
   }
     /**
     * checks to make sure the bank can add the proper resource amount
-    */  
-  boolean canAddWood()
+    */
+    public boolean canAddWood()
   {
     return false;
   }
     /**
     * adds proper resource to resourcelist
-    */  
-  void addWood()
+    */
+    public void addWood()
   {
     
   }
     /**
      *@param amount - number of resources needed to give out
     * checks to make sure the bank can give the proper resource amount
-    */  
-  boolean canGiveWood(int amount)
+    */
+    public boolean canGiveWood(int amount)
   {
     return false;
   }
     /**
     * gives proper resource from resourcelist
-    */  
-  void giveWood()
+    */
+    public void giveWood()
   {
     
   }
   
   /*verify that the bank does have dev cards to give
   */
-  boolean canBuyDevCard()
+  public boolean canBuyDevCard()
   {
     return false;
   }
   
   /*purchase of a devcard
   */
-  void BuyDevCard()
+  public void BuyDevCard()
   {
     
   }
