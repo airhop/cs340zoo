@@ -5,7 +5,6 @@ import shared.jsonobject.PassObject;
 
 public class MockProxy implements IProxy{
 
-
     public MockProxy(){
 
     }
