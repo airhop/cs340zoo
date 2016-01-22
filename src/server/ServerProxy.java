@@ -137,7 +137,7 @@ public class ServerProxy implements IServerProxy{
 		return 2;
 	}
 
-	/**@PassObject p - object with player id and victim id
+	/**@param p - object with player id and victim id
      *@param hl - HexLocation new location of robber
      *Robber stuff.  Set the robber, give around robbed cards
      */
@@ -215,7 +215,7 @@ public class ServerProxy implements IServerProxy{
 
 	/**
 	 * @param p - PassObject - player id, availability
-     *@param p - EdgeLocation - place in question
+     *@param el - EdgeLocation - place in question
      */
 	@Override
 	public void movesBuildRoad(PassObject p, EdgeLocation el)

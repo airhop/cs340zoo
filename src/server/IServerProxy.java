@@ -79,7 +79,7 @@ public interface IServerProxy {
      */
     int movesRollNumber(PassObject p);
 
-    /**@PassObject p - object with player id and victim id
+    /**@param p - object with player id and victim id
      *@param hl - HexLocation new location of robber
      *Robber stuff.  Set the robber, give around robbed cards
      */

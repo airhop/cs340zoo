@@ -10,7 +10,7 @@ public class MessageList {
   /**
   * Adds a message to the message list
   * 
-  * @param //MessageLine line
+  * @param line - a line of text
   */
   public void addChatMessage(MessageLine line){}
   public void addLogMessage(MessageLine line){}
