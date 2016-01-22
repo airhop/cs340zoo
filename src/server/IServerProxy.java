@@ -10,7 +10,7 @@ import client.model.bank.ResourceList;
 public interface IServerProxy {
     //User operations
 	/**
-     *  @param l - Login object with username and PassObjectword
+     * @param l - Login object with username and PassObjectword
 	 * @return true/false whether a successful login or not.
 	 */
     boolean userLogin(Login l);
@@ -29,7 +29,8 @@ public interface IServerProxy {
      */
     ClientModel[] gamesList();
 
-    /**@param p -PassObject object - should have new Game name
+    /**
+     * @param p -PassObject object - should have new Game name
      *@return = newly created game
      */
     ClientModel gamesCreate(PassObject p);
