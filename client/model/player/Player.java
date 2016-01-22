@@ -52,12 +52,15 @@ public class Player {
     * 
     */
   void discardCard(){}
+  
     /**
     * trades with one other player for a given ratio.
+    * ClientModel will call this method when the canAcceptTrade is called
     * 
     * @param TradeOffer offer - the offer from another player to dictate the trade
+    * @return accomplished - if trade was done or not
     */
-  void trade(TradeOffer offer){}
+  boolean trade(TradeOffer offer){ return false;}
     /**
     * purchases a resource from the bank
     * 
@@ -77,4 +80,9 @@ public class Player {
   void playMonument(){}
   
   //getters and setters
+  
+  /*
+  return boolean if can be robbed and you aren't moving the robber
+  */
+  boolean canRob(){ return false; }
 }
