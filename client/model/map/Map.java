@@ -7,7 +7,15 @@ public class Map {
   ArrayList<VertexObject> settlements = new ArrayList<VertexObject> ();
   ArrayList<VertexObject> cities = new ArrayList<VertexObject> ();
   int radius = -1;
-  HexLocation robber = null;
+  Robber robber;
+  
+  //regular constructor to create map
+  public Map()
+  {
+    
+  }
+  //have another to update, or just create a new one every time?
+  
   
      /**
     *checks to see if hex can be added
