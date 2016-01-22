@@ -6,140 +6,140 @@ public class Bank {
     /**
     * checks to make sure the bank can add the proper resource amount
     */
-  canAddBrick()
+  boolean canAddBrick()
   {
-    
+    return false;
   }
     /**
     * adds proper resource to resourcelist
     */
-  addBrick()
+  void addBrick()
   {
     
   }
     /**
     * checks to make sure the bank can give the proper resource amount
     */  
-  canGiveBrick()
+  boolean canGiveBrick()
   {
-    
+    return false;
   }
      /**
     * gives proper resource from resourcelist
     */  
-  giveBrick()
+  void giveBrick()
   {
     
   }
     /**
     * checks to make sure the bank can add the proper resource amount
     */
-  canAddOre()
+  boolean canAddOre()
   {
-    
+    return false;
   }
      /**
     * adds proper resource to resourcelist
     */  
-  addOre()
+  void addOre()
   {
     
   }
     /**
     * checks to make sure the bank can give the proper resource amount
     */  
-  canGiveOre()
+  boolean canGiveOre()
   {
-    
+    return false;
   }
     /**
     * gives proper resource from resourcelist
     */  
-  giveOre()
+  void giveOre()
   {
     
   }
     /**
     * checks to make sure the bank can add the proper resource amount
     */  
-  canAddSheep()
+  boolean canAddSheep()
   {
-    
+    return false;
   }
     /**
     * adds proper resource to resourcelist
     */
-  addSheep()
+  void addSheep()
   {
     
   }
     /**
     * checks to make sure the bank can give the proper resource amount
     */  
-  canGiveSheep()
+  boolean canGiveSheep()
   {
-    
+    return false;
   }
     /**
     * gives proper resource from resourcelist
     */  
-  giveSheep()
+  void giveSheep()
   {
     
   }
     /**
     * checks to make sure the bank can add the proper resource amount
     */  
-  canAddWheat()
+  boolean canAddWheat()
   {
-    
+    return false;
   }
     /**
     * adds proper resource to resourcelist
     */
-  addWheat()
+  void addWheat()
   {
     
   }
     /**
     * checks to make sure the bank can give the proper resource amount
     */  
-  canGiveWheat()
+  boolean canGiveWheat()
   {
-    
+    return false;
   }
     /**
     * gives proper resource from resourcelist
     */  
-  giveWheat()
+  void giveWheat()
   {
     
   }
     /**
     * checks to make sure the bank can add the proper resource amount
     */  
-  canAddWood()
+  boolean canAddWood()
   {
-    
+    return false;
   }
     /**
     * adds proper resource to resourcelist
     */  
-  addWood()
+  void addWood()
   {
     
   }
     /**
     * checks to make sure the bank can give the proper resource amount
     */  
-  canGiveWood()
+  boolean canGiveWood()
   {
-    
+    return false;
   }
     /**
     * gives proper resource from resourcelist
     */  
-  giveWood()
+  void giveWood()
   {
     
   }

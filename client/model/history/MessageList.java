@@ -10,6 +10,9 @@ public class MessageList {
   * @param MessageLine line 
   */
   void addLine(MessageLine line){}
-
+  MessageLine getLine()
+  {
+  	return NULL;
+  }
 
 }
