@@ -1,4 +1,4 @@
-package clientmodel.misc;
+package client.model.misc;
 
 public class TradeOffer {
   
@@ -9,5 +9,6 @@ public class TradeOffer {
   //Positive numbers are resources being offered. Negative are resources being asked for.
   ResourceList offer;
   
+  public TradeOffer(){}
   //getters and setters
 }
