@@ -4,10 +4,18 @@ import client.model.ClientModel;
 import shared.jsonobject.PassObject;
 
 public class MockProxy implements IProxy{
+
+
     public MockProxy(){
 
     }
 
+    /**
+     * Sets up a mock Proxy
+     */
+    public void runMock(){
+
+    }
 
     @Override
     public ClientModel getGameModel(PassObject pass) {

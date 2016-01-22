@@ -29,7 +29,7 @@ public class DevCardList {
   }
   
   /**
-  @param type - type of card that wants to be used
+  @param type type of card that wants to be used
   probably should have multiple methods, but this will go though a giant switch on the enum types
   @return if can use a DevCard
   */
