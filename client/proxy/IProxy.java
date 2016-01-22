@@ -3,58 +3,82 @@ package clientmodel.proxy;
 
 public interface IProxy {
 
-    public void getGameModel(){
+    /**
+     * Returns the ClientModel when called
+     * @return
+     */
+    public ClientModel getGameModel(){
 
     }
-    public ClientModel placeRoad(){
+
+    /**
+     * Given paramaters of the playerID and where to place the road in the PassObject
+     * we send the server the information needed to place the road
+     * @param pass
+     * @return
+     */
+    public ClientModel placeRoad(PassObject pass){
 
     }
-    public ClientModel placeSettlement(){
+
+    /**
+     * Given paramaters of the playerID and where to place the Settlement in the PassObject
+     * we send the server the information needed to place Settlement
+     * @param pass
+     * @return
+     */
+    public ClientModel placeSettlement(PassObject pass){
 
     }
-    public ClientModel placeCity(){
+
+    /**
+     *
+     * @param pass
+     * @return
+     */
+    public ClientModel placeCity(PassObject pass){
 
     }
-    public ClientModel buyDevCard(){
+    public ClientModel buyDevCard(PassObject pass){
 
     }
-    public ClientModel playDevCard(){
+    public ClientModel playDevCard(PassObject pass){
 
     }
-    public ClientModel playMonopoly(){
+    public ClientModel playMonopoly(PassObject pass){
 
     }
-    public ClientModel playRoadBuilding(){
+    public ClientModel playRoadBuilding(PassObject pass){
 
     }
-    public ClientModel placeMonument(){
+    public ClientModel placeMonument(PassObject pass){
 
     }
-    public ClientModel playRoadBuilding(){
+    public ClientModel playRoadBuilding(PassObject pass){
 
     }
-    public ClientModel playYearOfPlenty(){
+    public ClientModel playYearOfPlenty(PassObject pass){
 
     }
-    public ClientModel placeSoldier(){
+    public ClientModel placeSoldier(PassObject pass){
 
     }
-    public ClientModel rob(){
+    public ClientModel rob(PassObject pass){
 
     }
-    public ClientModel moveRobber(){
+    public ClientModel moveRobber(PassObject pass){
 
     }
-    public ClientModel tradePlayer(){
+    public ClientModel tradePlayer(PassObject pass){
 
     }
-    public ClientModel tradeBank(){
+    public ClientModel tradeBank(PassObject pass){
 
     }
-    public ClientModel acceptTrade(){
+    public ClientModel acceptTrade(PassObject pass){
 
     }
-    public ClientModel win(){
+    public ClientModel win(PassObject pass){
 
     }
 }

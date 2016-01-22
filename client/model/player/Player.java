@@ -52,12 +52,15 @@ public class Player {
   * 
   */
   void discardCard(){}
-  /**
-  * trades with one other player for given resources
-  * 
-  * @param TradeOffer offer - the offer from another player to dictate the trade
-  */
-  void trade(TradeOffer offer){}
+  
+    /**
+    * trades with one other player for given resources
+    * ClientModel will call this method when the canAcceptTrade is called
+    * 
+    * @param TradeOffer offer - the offer from another player to dictate the trade
+    * @return accomplished - if trade was done or not
+    */
+  boolean trade(TradeOffer offer){ return false;}
   /**
   * purchases a resource from the port based on a ratio
   * 
@@ -207,4 +210,10 @@ public class Player {
   */
   boolean canBuildRoad(){return false;}
   //getters and setters
-}   
+
+  
+  /*
+  return boolean if can be robbed and you aren't moving the robber
+  */
+  boolean canRob(){ return false; }
+}
