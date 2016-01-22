@@ -211,9 +211,4 @@ public class Player {
   boolean canBuildRoad(){return false;}
   //getters and setters
 
-  
-  /*
-  return boolean if can be robbed and you aren't moving the robber
-  */
-  boolean canRob(){ return false; }
 }
