@@ -8,7 +8,6 @@ import client.model.map.HexLocation;
 import client.model.map.VertexObject;
 import shared.jsonobject.Login;
 import shared.jsonobject.PassObject;
-Import Java.net.HttpURLConnection;
 
 public class ServerProxy implements IServerProxy{
 
