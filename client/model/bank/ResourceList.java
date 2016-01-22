@@ -16,6 +16,12 @@ public class ResourceList {
     numOfWheat = 19;
     numOfWood = 19;
   }
+  
+  //overload the constructor so that RL can be used for trades, bank, map, players etc.
+  ResourceList()
+  {
+    
+  }
   int getBrick()
   {
     return numOfBrick;

@@ -5,7 +5,8 @@ public class Port {
   HexLocation location;
   String resource;
   String direction;
-  int ratio;
+  int ratio;  //ratio type?  what is ratio for?
+  //do we need an owner value as well?
   
   Port(int x, int y, String resrc, String dir, int rat)
   {

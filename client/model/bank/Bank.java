@@ -1,8 +1,8 @@
-
 package clientmodel.bank;
 
 public class Bank {
   ResourceList resources = new ResourceList("map");
+  DevCardList dcl = new DevCardList();
     /**
     * checks to make sure the bank can add the proper resource amount
     */
@@ -18,9 +18,10 @@ public class Bank {
     
   }
     /**
+     *@param amount - number of resources needed to give out
     * checks to make sure the bank can give the proper resource amount
     */  
-  boolean canGiveBrick()
+  boolean canGiveBrick(int amount)
   {
     return false;
   }
@@ -46,9 +47,10 @@ public class Bank {
     
   }
     /**
+     *@param amount - number of resources needed to give out
     * checks to make sure the bank can give the proper resource amount
     */  
-  boolean canGiveOre()
+  boolean canGiveOre(int amount)
   {
     return false;
   }
@@ -74,9 +76,10 @@ public class Bank {
     
   }
     /**
+     *@param amount - number of resources needed to give out
     * checks to make sure the bank can give the proper resource amount
     */  
-  boolean canGiveSheep()
+  boolean canGiveSheep(int amount)
   {
     return false;
   }
@@ -102,9 +105,10 @@ public class Bank {
     
   }
     /**
+     *@param amount - number of resources needed to give out
     * checks to make sure the bank can give the proper resource amount
     */  
-  boolean canGiveWheat()
+  boolean canGiveWheat(int amount)
   {
     return false;
   }
@@ -130,9 +134,10 @@ public class Bank {
     
   }
     /**
+     *@param amount - number of resources needed to give out
     * checks to make sure the bank can give the proper resource amount
     */  
-  boolean canGiveWood()
+  boolean canGiveWood(int amount)
   {
     return false;
   }
@@ -140,6 +145,20 @@ public class Bank {
     * gives proper resource from resourcelist
     */  
   void giveWood()
+  {
+    
+  }
+  
+  /*verify that the bank does have dev cards to give
+  */
+  boolean canBuyDevCard()
+  {
+    
+  }
+  
+  /*purchase of a devcard
+  */
+  void BuyDevCard()
   {
     
   }

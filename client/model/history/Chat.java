@@ -3,11 +3,13 @@ package clientmodel.history;
 public class Chat {
 
 	MessageList messageList;
-	/**
- 	 * updates the messages to display the new message entered
-  	 *  
- 	 */
-	void addChatMessage(){}
-	String printChatMessages(){return NULL;}
+	/*for printing or returning the list, however the history will need it.
+	*/
+	void printMessageList(){}
+	
+	/*to add a message to the messagelist
+	*/
+	void addMessage(String source, String message){}
+
 
 }
