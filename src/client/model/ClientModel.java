@@ -27,7 +27,7 @@ public class ClientModel {
     /**
     * decides game winner and sets the winner to the id of the winning player
     * 
-    * @param //int winnerid - id of the winning player
+    * @param winnerid - id of the winning player
     */
   public void decideWinner(int winnerid) throws InvalidWinner {
     if(winnerid<0 || winnerid >3)
