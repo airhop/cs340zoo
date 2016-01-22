@@ -77,11 +77,6 @@ public class Player {
   */
   void purchaseFromBank(ResourceList resource){}
   /**
-  * ends a players turn
-  * 
-  */
-  void endTurn(){}
-  /**
   * rolls the dice at the beginning of the turn
   * 
   */
