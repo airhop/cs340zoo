@@ -5,6 +5,8 @@ public class Player {
   //player qualities
   String color;
   String name;
+  String password;
+  int biggestRoadLength;
   int playerID;
   
   //placeable items
@@ -210,5 +212,9 @@ public class Player {
   */
   boolean canBuildRoad(){return false;}
   //getters and setters
-
+  /**
+  * Checks to see if the player can be robbed by another player
+  * @return boolean whether or not the player can be robbed
+  */
+  boolean canBeRobbed(){return false;}
 }
