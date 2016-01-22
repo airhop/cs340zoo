@@ -1,5 +1,7 @@
 package client.model.bank;
 
+import shared.exceptions.InsufficientResourcesException;
+
 public class Bank {
   ResourceList resources;
   DevCardList dcl;
@@ -25,16 +27,16 @@ public class Bank {
 
 
 
-    public boolean canGiveBrick(int amount)
+    public boolean canGiveBrick(int amount) throws InsufficientResourcesException
     {
       return false;
     }
      /**
     * gives proper resource from resourcelist
     */
-     public void giveBrick()
+     public int giveBrick(int amount)
   {
-    
+    return 1;
   }
     /**
     * checks to make sure the bank can add the proper resource amount
@@ -54,16 +56,16 @@ public class Bank {
      *@param amount - number of resources needed to give out
     * checks to make sure the bank can give the proper resource amount
     */
-    public boolean canGiveOre(int amount)
+    public boolean canGiveOre(int amount)  throws InsufficientResourcesException
   {
     return false;
   }
     /**
     * gives proper resource from resourcelist
     */
-    public void giveOre()
+    public int giveOre(int amount)
   {
-    
+    return 1;
   }
     /**
     * checks to make sure the bank can add the proper resource amount
@@ -83,16 +85,16 @@ public class Bank {
      *@param amount - number of resources needed to give out
     * checks to make sure the bank can give the proper resource amount
     */
-    public boolean canGiveSheep(int amount)
+    public boolean canGiveSheep(int amount) throws InsufficientResourcesException
   {
     return false;
   }
     /**
     * gives proper resource from resourcelist
     */
-    public void giveSheep()
+    public int giveSheep(int amount)
   {
-    
+    return 1;
   }
     /**
     * checks to make sure the bank can add the proper resource amount
@@ -112,16 +114,16 @@ public class Bank {
      *@param amount - number of resources needed to give out
     * checks to make sure the bank can give the proper resource amount
     */
-    public boolean canGiveWheat(int amount)
+    public boolean canGiveWheat(int amount) throws InsufficientResourcesException
   {
     return false;
   }
     /**
     * gives proper resource from resourcelist
     */
-    public void giveWheat()
+    public int giveWheat(int amount)
   {
-    
+    return 1;
   }
     /**
     * checks to make sure the bank can add the proper resource amount
@@ -141,22 +143,22 @@ public class Bank {
      *@param amount - number of resources needed to give out
     * checks to make sure the bank can give the proper resource amount
     */
-    public boolean canGiveWood(int amount)
+    public boolean canGiveWood(int amount) throws InsufficientResourcesException
   {
     return false;
   }
     /**
     * gives proper resource from resourcelist
     */
-    public void giveWood()
+    public int giveWood(int amount)
   {
-    
+    return 1;
   }
   
   /**
    * verify that the bank does have dev cards to give
   */
-  public boolean canBuyDevCard()
+  public boolean canBuyDevCard() throws InsufficientResourcesException
   {
     return false;
   }
