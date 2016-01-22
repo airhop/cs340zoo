@@ -110,6 +110,24 @@ public class Player {
   * @return boolean whether or not the player played the soldier card
   */
   public boolean placeSoldier(){return false;}
+  
+  /**
+   * If the player has more then 7 cards when the robber is moved half the cards must be discarded
+   * @return boolean whether or not it is true
+  */
+  public boolean canRobberDiscard()
+  {
+    return false;
+  }
+  
+  /**
+   *Player  must discard half their hand if the robber was moved and there are more then 7 cards in hand 
+   */
+  public void RobberDiscard()
+  {
+    return;
+  }
+  
   /**
   * Robs a player of one resource card
   * @return boolean whether or not the player chose to rob 
