@@ -19,43 +19,43 @@ public class ResourceList {
   
   //overload the constructor so that RL can be used for trades, bank, map, players etc.
 
-  int getBrick()
+  public int getBrick()
   {
     return numOfBrick;
   }
-  int getOre()
+  public int getOre()
   {
     return numOfOre;
   }
-  int getSheep()
+  public int getSheep()
   {
     return numOfSheep;
   }
-  int getWheat()
+  public int getWheat()
   {
     return numOfWheat;
   }
-  int getWood()
+  public int getWood()
   {
     return numOfWood;
   }
-  void setBrick(int brick)
+  public void setBrick(int brick)
   {
     numOfBrick = brick;
   }
-  void setOre(int ore)
+  public void setOre(int ore)
   {
     numOfOre = ore;
   }
-  void setSheep(int sheep)
+  public void setSheep(int sheep)
   {
     numOfSheep = sheep;
   }
-  void setWheat(int wheat)
+  public void setWheat(int wheat)
   {
     numOfWheat = wheat;
   }
-  void setWood(int wood)
+  public void setWood(int wood)
   {
     numOfWood = wood;
   }

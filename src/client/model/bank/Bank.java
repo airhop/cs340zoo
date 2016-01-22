@@ -153,14 +153,16 @@ public class Bank {
     
   }
   
-  /*verify that the bank does have dev cards to give
+  /**
+   * verify that the bank does have dev cards to give
   */
   public boolean canBuyDevCard()
   {
     return false;
   }
   
-  /*purchase of a devcard
+  /**
+   * purchase of a devcard
   */
   public void BuyDevCard()
   {

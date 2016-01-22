@@ -7,10 +7,11 @@ public class Robber
   
   //need a getLocation method
   
-  /*@param HexLocation - find if robber is in a certain hex
+  /**
+   * @param h - HexLocation - find if robber is in a certain hex
    @return true/false
   */
-  Boolean isLocated(HexLocation h)
+  public Boolean isLocated(HexLocation h)
   {
     return false;
   }

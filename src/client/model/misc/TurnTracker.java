@@ -13,17 +13,20 @@ public class TurnTracker {
 //  void startTurn(){}
 //  void endTurn(){}
 
-/*@param int pid
+/**
+ * @param  pid - player id
 if not turn don't do anything, else move turn to next player
 */
   public void updateStatus(int pid){}
   
-/*@param pid - player id of player wishing to try for largest army
+/**
+ * @param pid - player id of player wishing to try for largest army
     might return bool in future, not a necessity at the moment though
 */
   public void calcLargestArmy(int pid){}
   
-  /*@param pid = player id of player wishing to try for longest road
+  /**
+   * @param pid = player id of player wishing to try for longest road
       again might return bool in future, not a necessity at the moment
   */
   public void calcLongestRoad(int pid){}

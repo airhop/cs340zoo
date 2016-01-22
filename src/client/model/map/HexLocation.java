@@ -12,7 +12,7 @@ public class HexLocation {
   }
   //getters and setters
 
-  /*@param hl - hexlocation to compare to
+  /**@param hl - hexlocation to compare to
   compare to another hexlocation to see if they are the same for the robber
   @return whether they are the same or not
   */
