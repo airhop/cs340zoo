@@ -40,6 +40,13 @@ public class ClientModel {
   }
   //can methods
   /**
+   * This is used to see when the robber moves if the player can discard
+   * @return
+   */
+  public boolean canRobberDiscard(){
+    return false;
+  }
+  /**
    * Checks to see if building a road is a legal move for the player
    * @return boolean whether or not the player can build a road
    */

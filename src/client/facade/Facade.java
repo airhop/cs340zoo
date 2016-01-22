@@ -2,6 +2,13 @@ package client.facade;
 
 public class Facade {
 
+    /**
+     * This is used to see when the robber moves if the player can discard
+     * @return
+     */
+    public boolean canRobberDiscard(){
+        return false;
+    }
     //can methods
     /**
     * Checks to see if building a road is a legal move for the player

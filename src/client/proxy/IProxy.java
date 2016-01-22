@@ -2,9 +2,26 @@ package client.proxy;
 
 
 import client.model.ClientModel;
+import client.model.bank.ResourceList;
+import client.model.history.MessageList;
+import client.model.map.EdgeLocation;
+import shared.jsonobject.Login;
 import shared.jsonobject.PassObject;
 
 public interface IProxy {
+
+    boolean userLogin(Login l);
+    boolean userRegister(Login l);
+    ClientModel[] gamesList();
+    ClientModel gamesCreate(PassObject p);
+    boolean gamesJoin(PassObject p);
+    boolean gameAddAI(PassObject p);
+    String[] gameListAI();
+    void sendChat(MessageList msg);
+    int rollNumber(PassObject p);
+    void finishTurn(PassObject p);
+    void playYearOfPlenty(PassObject p, ResourceList rl);
+    void playRoadBuilding(PassObject p, EdgeLocation el, EdgeLocation e2);
 
     /**
      * Returns the ClientModel when called
@@ -40,13 +57,6 @@ public interface IProxy {
     ClientModel buyDevCard(PassObject pass);
 
     /**
-     * The parameters that are needed to play a DevCard are passed on the
-     * PassObject
-     * @param pass -Passed Object
-     */
-    ClientModel playDevCard(PassObject pass);
-
-    /**
      * To play a Monopoly Card you call this function which contacts the Server proxy
      * @param pass -Passed Object
      */
@@ -75,13 +85,13 @@ public interface IProxy {
      * towards the largest army
      * @param pass -Passed Object
      */
-    ClientModel placeSoldier(PassObject pass);
+    ClientModel playSoldier(PassObject pass);
 
     /**
      * This method is used by the player when they either move the robber or they roll a seven
      * @param pass -Passed Object
      */
-    ClientModel rob(PassObject pass);
+    ClientModel robPlayer(PassObject pass);
 
     /**
      * This is used by the player to move the robberer to a new location
