@@ -1,4 +1,4 @@
-package shared.invalidPositionException;
+package shared.InvalidPositionException;
 
 public class InvalidPositionException extends Exception 
 {
