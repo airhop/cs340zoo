@@ -10,4 +10,13 @@ public abstract class VertexObject{
   //   location = new EdgeLocation(0,0, "this");
   //   owner = id;
   // }
+  
+  /**
+   *@param VertexObject - an object to compareTo
+   *@return if the location is being used already
+   */
+   boolean compareTo(VertexObject vo)
+   {
+     return false;
+   }
 }
