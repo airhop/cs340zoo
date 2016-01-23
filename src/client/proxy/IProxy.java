@@ -1,13 +1,13 @@
 package client.proxy;
 
 
-import client.model.ClientModel;
+
 import client.model.bank.ResourceList;
 import client.model.history.MessageList;
 import client.model.map.EdgeLocation;
 import client.model.map.HexLocation;
 import shared.jsonobject.Login;
-import shared.jsonobject.PassObject;
+
 
 public interface IProxy {
 
