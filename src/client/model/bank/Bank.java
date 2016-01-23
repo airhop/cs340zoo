@@ -9,9 +9,18 @@ public class Bank {
     /**
     * adds proper resource to resourcelist
     */
-    public void addBrick() throws InsufficientResourcesException
+    public void addBrick(int brick) throws InsufficientResourcesException
     {
       //throws if trying to add negative number
+      if(brick < 0)
+      {
+        throw new InsufficientResourcesException();  
+      }
+      else
+      {
+        int prevRsrcBrick = resources.getBrick();
+        resources.setBrick((prevRsrcBrick + brick));
+      }
     }
     /**
      *@param amount - number of resources needed to give out
@@ -31,9 +40,18 @@ public class Bank {
      /**
     * adds proper resource to resourcelist
     */
-    public void addOre() throws InsufficientResourcesException
+    public void addOre(int ore) throws InsufficientResourcesException
     {
       //throws if trying to add negative number
+      if(ore < 0)
+      {
+        throw new InsufficientResourcesException();  
+      }
+      else
+      {
+        int prevRsrcOre = resources.getOre();
+        resources.setOre((prevRsrcOre + ore));
+      }
     }
     /**
      *@param amount - number of resources needed to give out
