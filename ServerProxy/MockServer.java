@@ -1,9 +1,5 @@
 package server;
 
-import shared.jsonobject.*;
-import client.model.*;
-import client.model.map.*;
-import client.model.history.*;
 import client.model.bank.ResourceList;
 
 public class MockServer implements IServerProxy{
