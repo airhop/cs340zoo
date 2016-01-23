@@ -1,12 +1,12 @@
 package client.proxy;
 
-import client.model.ClientModel;
+
 import client.model.bank.ResourceList;
 import client.model.history.MessageList;
 import client.model.map.EdgeLocation;
 import client.model.map.HexLocation;
+import shared.exceptions.*;
 import shared.jsonobject.Login;
-import shared.jsonobject.PassObject;
 
 public class MockProxy implements IProxy{
 
@@ -23,13 +23,13 @@ public class MockProxy implements IProxy{
 
 
     @Override
-    public boolean userLogin(Login l) {
-        return false;
+    public void userLogin(Login l) throws InvalidUserException {
+
     }
 
     @Override
-    public boolean userRegister(Login l) {
-        return false;
+    public void userRegister(Login l) throws InvalidUserException {
+
     }
 
     @Override
@@ -38,13 +38,13 @@ public class MockProxy implements IProxy{
     }
 
     @Override
-    public boolean gamesCreate(String s) {
-        return false;
+    public void gamesCreate(String s) throws FailedCreateGameException {
+
     }
 
     @Override
-    public boolean gamesJoin(String s, int playerId) {
-        return false;
+    public void gamesJoin(String s, int playerId) throws InvalidUserException {
+
     }
 
     @Override
@@ -68,17 +68,22 @@ public class MockProxy implements IProxy{
     }
 
     @Override
-    public void buildCity(int playerId, EdgeLocation el) {
+    public void buildRoad(int playerId, EdgeLocation el) {
 
     }
 
     @Override
-    public void buildSettlement(int playerId, EdgeLocation el) {
+    public void buildCity(int playerId, EdgeLocation el) throws IllegalBuildException {
 
     }
 
     @Override
-    public void discardCards(int playerId, ResourceList rl) {
+    public void buildSettlement(int playerId, EdgeLocation el) throws IllegalBuildException {
+
+    }
+
+    @Override
+    public void discardCards(int playerId, ResourceList rl) throws InsufficientResourcesException {
 
     }
 
@@ -93,22 +98,7 @@ public class MockProxy implements IProxy{
     }
 
     @Override
-    public void placeRoad(int playerId, EdgeLocation el) {
-
-    }
-
-    @Override
-    public void placeSettlement(int playerId, EdgeLocation el) {
-
-    }
-
-    @Override
-    public void placeCity(int playerId, EdgeLocation el) {
-
-    }
-
-    @Override
-    public void buyDevCard(int playerId) {
+    public void buyDevCard(int playerId) throws InsufficientResourcesException {
 
     }
 
@@ -163,7 +153,7 @@ public class MockProxy implements IProxy{
     }
 
     @Override
-    public void win(int playerId) {
+    public void win(int playerId) throws InvalidWinnerException {
 
     }
 }

@@ -12,14 +12,34 @@ public class MessageList {
   * 
   * @param line - a line of text
   */
-  public void addChatMessage(MessageLine line){}
-  public void addLogMessage(MessageLine line){}
-  public MessageLine getChatLine()
+  public void addChatMessage(MessageLine line)
   {
+    chatMessages.add(line);
+  }
+  public void addLogMessage(MessageLine line)
+  {
+    logMessages.add(line);
+  }
+  public MessageLine getChatLine(MessageLine line)
+  {
+  	for(int i = 0; i < chatMessages.getLength(); i++)
+  	{
+  	  if(chatMessages.get(i).getMessage.equals(line.getMessage) && chatMessages.get(i).getMessage.equals(line.getSource))
+  	  {
+  	    return chatMessages.get(i);
+  	  }
+  	}
   	return null;
   }
   public MessageLine getLogLine()
   {
+  	for(int i = 0; i < chatMessages.getLength(); i++)
+  	{
+  	  if(logMessages.get(i).getMessage.equals(line.getMessage) && chatMessages.get(i).getMessage.equals(line.getSource))
+  	  {
+  	    return logMessages.get(i);
+  	  }
+  	}
   	return null;
   }
 
