@@ -7,7 +7,7 @@ import client.model.misc.TurnTracker;
 import client.model.player.Player;
 import shared.exceptions.InvalidWinner;
 
-public class ClientModel {
+public class GameModel {
   private Map map;
   Bank bank;
   Player[] players;
