@@ -1,5 +1,7 @@
 package client.model.map;
-import shared.exceptions;
+import shared.exceptions.FailureToAddException;
+import shared.exceptions.InvalidPositionException;
+
 import java.util.ArrayList;
 
 public class Map {
@@ -117,7 +119,8 @@ public class Map {
      * @param direction - direction from hex that city is located
      * @param owner     - index of owner
      */
-    public void addCity(int x, int y, String direction, int owner) throws FailureToAddException{
+    public void addCity(int x, int y, String direction, int owner) throws FailureToAddException
+    {
 
     }
 
@@ -134,7 +137,8 @@ public class Map {
      * @param x - horizontal location of hex robber is to be moved to
      * @param y - diagonal location of hex robber is to be moved to
      */
-    public void relocateRobber(int x, int y) {
+    public void relocateRobber(int x, int y) throws InvalidPositionException
+    {
 
     }
 
