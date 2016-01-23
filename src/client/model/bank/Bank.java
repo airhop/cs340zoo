@@ -98,7 +98,11 @@ public class Bank {
     */
     public boolean canGiveSheep(int amount)
   {
-    return false;
+      if(amount < 0){return false;}
+      
+      int prevRsrcSheep = resources.getSheep();
+      if((prevRsrcSheep - amount) < 0){return false;}
+      return true;
   }
     /**
     * gives proper resource from resourcelist
@@ -129,7 +133,11 @@ public class Bank {
     */
     public boolean canGiveWheat(int amount)
   {
-    return false;
+      if(amount < 0){return false;}
+      
+      int prevRsrcWheat = resources.getWheat();
+      if((prevRsrcWheat - amount) < 0){return false;}
+      return true;
   }
     /**
     * gives proper resource from resourcelist
@@ -160,7 +168,11 @@ public class Bank {
     */
     public boolean canGiveWood(int amount)
   {
-    return false;
+      if(amount < 0){return false;}
+      
+      int prevRsrcWood = resources.getWood();
+      if((prevRsrcWood - amount) < 0){return false;}
+      return true;
   }
     /**
     * gives proper resource from resourcelist
@@ -175,7 +187,10 @@ public class Bank {
   */
   public boolean canBuyDevCard(ResourceList playerResources)
   {
-    return false;
+      int sheep = playerResources.getSheep();
+           int brick = playerResources.getBrick();
+      if((prevRsrcBrick - amount) < 0){return false;}
+      return true;
   }
   
   /**
