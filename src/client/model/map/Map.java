@@ -25,14 +25,13 @@ public class Map {
   {
     
   }
-  
-     /**
+    /**
     *checks to see if hex can be added
     */
   public boolean canAddHex()
   {
     return false;
-  }
+  }//may not be used
   /**
     *adds a hex to the maps list of hexes
     * 
@@ -41,7 +40,7 @@ public class Map {
     * @param  resource - type of resource obtained from hex
     * @param  number - index of owner
     */
- public void addHex(int x, int y, String resource, int number)
+ public void addHex(int x, int y, String resource, int number)//may not be used
  {
    
  }
