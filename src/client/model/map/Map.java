@@ -1,5 +1,5 @@
 package client.model.map;
-
+import shared.exceptions;
 import java.util.ArrayList;
 
 public class Map {
@@ -39,7 +39,7 @@ public class Map {
      * @param resource - type of resource obtained from hex
      * @param number   - index of owner
      */
-    public void addHex(int x, int y, String resource, int number)//may not be used
+    public void addHex(int x, int y, String resource, int number) throws FailureToAddException//may not be used
     {
 
     }
@@ -60,7 +60,7 @@ public class Map {
      * @param direction - direction from hex the port is located
      * @param ratio     - the ratio of resources tradeable (i.e 1:2, 1:4)
      */
-    public void addPort(int x, int y, String resource, String direction, int ratio) {
+    public void addPort(int x, int y, String resource, String direction, int ratio) throws FailureToAddException{
 
     }
 
@@ -79,7 +79,7 @@ public class Map {
      * @param direction - direction from hex that road is located
      * @param owner     - index of owner
      */
-    public void addRoad(int x, int y, String direction, int owner) {
+    public void addRoad(int x, int y, String direction, int owner) throws FailureToAddException {
 
     }
 
@@ -98,7 +98,7 @@ public class Map {
      * @param direction - direction from hex that settlement is located
      * @param owner     - index of owner
      */
-    public void addSettlement(int x, int y, String direction, int owner) {
+    public void addSettlement(int x, int y, String direction, int owner) throws FailureToAddException{
 
     }
 
@@ -117,7 +117,7 @@ public class Map {
      * @param direction - direction from hex that city is located
      * @param owner     - index of owner
      */
-    public void addCity(int x, int y, String direction, int owner) {
+    public void addCity(int x, int y, String direction, int owner) throws FailureToAddException{
 
     }
 
