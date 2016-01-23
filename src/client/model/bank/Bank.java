@@ -28,7 +28,11 @@ public class Bank {
     */
     public boolean canGiveBrick(int amount)
     {
-      return false;
+      if(amount < 0){return false;}
+      
+      int prevRsrcBrick = resources.getBrick();
+      if((prevRsrcBrick - amount) < 0){return false;}
+      return true;
     }
      /**
     * gives proper resource from resourcelist
@@ -57,9 +61,13 @@ public class Bank {
      *@param amount - number of resources needed to give out
     * checks to make sure the bank can give the proper resource amount
     */
-    public boolean canGiveOre(int amount)  throws InsufficientResourcesException
+    public boolean canGiveOre(int amount)
   {
-    return false;
+      if(amount < 0){return false;}
+      
+      int prevRsrcOre = resources.getOre();
+      if((prevRsrcOre - amount) < 0){return false;}
+      return true;
   }
     /**
     * gives proper resource from resourcelist
@@ -88,9 +96,13 @@ public class Bank {
      *@param amount - number of resources needed to give out
     * checks to make sure the bank can give the proper resource amount
     */
-    public boolean canGiveSheep(int amount) throws InsufficientResourcesException
+    public boolean canGiveSheep(int amount)
   {
-    return false;
+      if(amount < 0){return false;}
+      
+      int prevRsrcSheep = resources.getSheep();
+      if((prevRsrcSheep - amount) < 0){return false;}
+      return true;
   }
     /**
     * gives proper resource from resourcelist
@@ -119,9 +131,13 @@ public class Bank {
      *@param amount - number of resources needed to give out
     * checks to make sure the bank can give the proper resource amount
     */
-    public boolean canGiveWheat(int amount) throws InsufficientResourcesException
+    public boolean canGiveWheat(int amount)
   {
-    return false;
+      if(amount < 0){return false;}
+      
+      int prevRsrcWheat = resources.getWheat();
+      if((prevRsrcWheat - amount) < 0){return false;}
+      return true;
   }
     /**
     * gives proper resource from resourcelist
@@ -152,7 +168,11 @@ public class Bank {
     */
     public boolean canGiveWood(int amount)
   {
-    return false;
+      if(amount < 0){return false;}
+      
+      int prevRsrcWood = resources.getWood();
+      if((prevRsrcWood - amount) < 0){return false;}
+      return true;
   }
     /**
     * gives proper resource from resourcelist
@@ -167,7 +187,18 @@ public class Bank {
   */
   public boolean canBuyDevCard(ResourceList playerResources)
   {
-    return false;
+      int sheep = playerResources.getSheep();
+      int wheat = playerResources.getWheat();
+      int ore = playerResources.getOre();
+      if(sheep < 1 || wheat < 1 || ore < 1)
+      {
+        return false;
+      }
+      if(dcl.getSize() < 1)
+      {
+        return false;
+      }
+      return true;
   }
   
   /**
@@ -176,5 +207,17 @@ public class Bank {
   public void BuyDevCard(ResourceList playerResources) throws InsufficientResourcesException
   {
     //if player doesnt have 1 sheep 1 wheat 1 ore throw exception
+      int sheep = playerResources.getSheep();
+      int wheat = playerResources.getWheat();
+      int ore = playerResources.getOre();
+      if(sheep < 1 || wheat < 1 || ore < 1)
+      {
+        throw new InsufficientResourcesException();
+      }
+      if(dcl.getSize() < 1)
+      {
+        throw new InsufficientResourcesException();
+      }
+      //add a return for the devcard purchased
   }
 }
