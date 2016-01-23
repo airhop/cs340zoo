@@ -14,7 +14,7 @@ public class Dice {
     //RollResultView.setRollValue(int value);
     return 0;
   }
-  public boolean canRoll() throws IllegalMoveException { return false; }
+  public boolean canRoll() { return false; }
 
 
 }
