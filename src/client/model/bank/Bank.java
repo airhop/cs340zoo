@@ -40,6 +40,12 @@ public class Bank {
      public void giveBrick(int amount) throws InsufficientResourcesException
   {
     //throws if there arent enough resources to give
+      if(amount < 0){throw new InsufficientResourcesException();}
+      int prevRsrcBrick = resources.getBrick();
+      if((prevRsrcBrick - amount) < 0){throw new InsufficientResourcesException();}
+      
+      int newRsrc = (prevRsrcBrick-amount);
+      resources.setBrick(newRsrc);
   }
      /**
     * adds proper resource to resourcelist
@@ -75,6 +81,12 @@ public class Bank {
      public void giveOre(int amount) throws InsufficientResourcesException
   {
     //throws if there arent enough resources to give
+      if(amount < 0){throw new InsufficientResourcesException();}
+      int prevRsrcOre = resources.getOre();
+      if((prevRsrcOre - amount) < 0){throw new InsufficientResourcesException();}
+      
+      int newRsrc = (prevRsrcOre-amount);
+      resources.setOre(newRsrc);
   }
     /**
     * adds proper resource to resourcelist
@@ -110,6 +122,12 @@ public class Bank {
      public void giveSheep(int amount) throws InsufficientResourcesException
   {
     //throws if there arent enough resources to give
+      if(amount < 0){throw new InsufficientResourcesException();}
+      int prevRsrcSheep = resources.getSheep();
+      if((prevRsrcSheep - amount) < 0){throw new InsufficientResourcesException();}
+      
+      int newRsrc = (prevRsrcSheep-amount);
+      resources.setSheep(newRsrc);
   }
     /**
     * adds proper resource to resourcelist
@@ -145,6 +163,12 @@ public class Bank {
      public void giveWheat(int amount) throws InsufficientResourcesException
   {
     //throws if there arent enough resources to give
+      if(amount < 0){throw new InsufficientResourcesException();}
+      int prevRsrcWheat = resources.getWheat();
+      if((prevRsrcWheat - amount) < 0){throw new InsufficientResourcesException();}
+      
+      int newRsrc = (prevRsrcWheat-amount);
+      resources.setWheat(newRsrc);
   }
     /**
     * adds proper resource to resourcelist
@@ -180,6 +204,12 @@ public class Bank {
      public void giveWood(int amount) throws InsufficientResourcesException
   {
     //throws if there arent enough resources to give
+      if(amount < 0){throw new InsufficientResourcesException();}
+      int prevRsrcWood = resources.getWood();
+      if((prevRsrcWood - amount) < 0){throw new InsufficientResourcesException();}
+      
+      int newRsrc = (prevRsrcWood-amount);
+      resources.setWood(newRsrc);
   }
   
   /**
