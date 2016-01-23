@@ -6,6 +6,7 @@ import client.model.bank.ResourceList;
 import client.model.history.MessageList;
 import client.model.map.EdgeLocation;
 import client.model.map.HexLocation;
+import shared.exceptions.FailedCreateGameException;
 import shared.exceptions.InvalidUserException;
 import shared.jsonobject.Login;
 
@@ -35,7 +36,7 @@ public interface IProxy {
      * @param s - The name of the game
      * @return True or false if the game gets created
      */
-    boolean gamesCreate(String s) ;
+    void gamesCreate(String s) throws FailedCreateGameException;
 
     /**
      * The player wants to join a game so they use this method
@@ -43,7 +44,7 @@ public interface IProxy {
      * @param playerId - The player that wants to join
      * @return True or False
      */
-    boolean gamesJoin(String s, int playerId);
+    void gamesJoin(String s, int playerId) throws InvalidUserException;
 
     /**
      * When you want to add an AI to the game
