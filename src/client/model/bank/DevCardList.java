@@ -10,7 +10,6 @@ public class DevCardList {
   int roadBuilding;
   int soldier;
   int yearOfPlenty;
-  int total; //the total number of devcards available
   
   //getters and setters
   /**
@@ -41,4 +40,11 @@ public class DevCardList {
   }
   
   //useDevCard is basically using the get/set.  The facade can take care of the rest of the stuff
+  
+  public int getSize()
+  {
+    int total = 0;
+    total = total + monopoly + monument + yearOfPlenty + roadBuilding + soldier;
+    return total;
+  }
 }

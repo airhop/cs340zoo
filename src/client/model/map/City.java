@@ -3,12 +3,19 @@ package client.model.map;
 import client.model.map.VertexObject;
 import shared.exceptions.IllegalMoveException;
 
-public class City extends VertexObject {
+public class City extends VertexObject
+{
 
-
-	public boolean canPlaceAtLocation()
+	public boolean canPlaceAtLocation(EdgeLocation edge)
 	{
-		return false;
+		if(edge == null)
+		{
+			return false;
+		}
+		return true;
 	}
-	public void placeCity(){}
+	public void placeCity()
+	{
+		//placeCity();
+	}
 }
