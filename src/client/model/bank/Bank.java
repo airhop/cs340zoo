@@ -71,9 +71,18 @@ public class Bank {
     /**
     * adds proper resource to resourcelist
     */
-    public void addSheep() throws InsufficientResourcesException
+    public void addSheep(int sheep) throws InsufficientResourcesException
     {
       //throws if trying to add negative number
+      if(sheep < 0)
+      {
+        throw new InsufficientResourcesException();  
+      }
+      else
+      {
+        int prevRsrcSheep = resources.getSheep();
+        resources.setSheep((prevRsrcSheep + sheep));
+      }
     }
     /**
      *@param amount - number of resources needed to give out
@@ -93,9 +102,18 @@ public class Bank {
     /**
     * adds proper resource to resourcelist
     */
-    public void addWheat() throws InsufficientResourcesException
+    public void addWheat(int wheat) throws InsufficientResourcesException
     {
       //throws if trying to add negative number
+      if(wheat < 0)
+      {
+        throw new InsufficientResourcesException();  
+      }
+      else
+      {
+        int prevRsrcWheat = resources.getWheat();
+        resources.setWheat((prevRsrcWheat + wheat));
+      }
     }
     /**
      *@param amount - number of resources needed to give out
@@ -115,9 +133,18 @@ public class Bank {
     /**
     * adds proper resource to resourcelist
     */
-    public void addWood() throws InsufficientResourcesException
+    public void addWood(int wood) throws InsufficientResourcesException
     {
       //throws if trying to add negative number
+      if(wood < 0)
+      {
+        throw new InsufficientResourcesException();  
+      }
+      else
+      {
+        int prevRsrcWood = resources.getWood();
+        resources.setWood((prevRsrcWood + wood));
+      }
     }
     /**
      *@param amount - number of resources needed to give out
