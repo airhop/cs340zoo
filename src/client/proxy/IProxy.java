@@ -6,8 +6,7 @@ import client.model.bank.ResourceList;
 import client.model.history.MessageList;
 import client.model.map.EdgeLocation;
 import client.model.map.HexLocation;
-import shared.exceptions.FailedCreateGameException;
-import shared.exceptions.InvalidUserException;
+import shared.exceptions.*;
 import shared.jsonobject.Login;
 
 
@@ -34,7 +33,6 @@ public interface IProxy {
     /**
      * You are making a game
      * @param s - The name of the game
-     * @return True or false if the game gets created
      */
     void gamesCreate(String s) throws FailedCreateGameException;
 
@@ -42,7 +40,6 @@ public interface IProxy {
      * The player wants to join a game so they use this method
      * @param s - The game that they want to join
      * @param playerId - The player that wants to join
-     * @return True or False
      */
     void gamesJoin(String s, int playerId) throws InvalidUserException;
 
@@ -69,27 +66,34 @@ public interface IProxy {
      * @param playerId - the player that is ending their turn
      */
     void finishTurn(int playerId);
+    /**
+     * Given paramaters of the playerID and where to place the road in the PassObject
+     * we send the server the information needed to place the road
+     * @param playerId - PlayerId passed to the server
+     * @param el - Location on the board to build
+     */
+    void buildRoad(int playerId, EdgeLocation el);
 
     /**
      * Player that wants to build a city pushes it to the server
      * @param playerId - Player that wants to build
      * @param el - Location to build the City
      */
-    void buildCity(int playerId, EdgeLocation el);
+    void buildCity(int playerId, EdgeLocation el) throws IllegalBuildException;
 
     /**
      * Player builds a settlement
      * @param playerId - Player that wants to build the settlement
      * @param el - Edge/Vertex that it is going to be built to
      */
-    void buildSettlement(int playerId, EdgeLocation el);
+    void buildSettlement(int playerId, EdgeLocation el) throws IllegalBuildException;
 
     /**
      * Discards cards
      * @param playerId - Player to discard
      * @param rl - Resources to discard
      */
-    void discardCards(int playerId, ResourceList rl);
+    void discardCards(int playerId, ResourceList rl) throws InsufficientResourcesException;
 
     /**
      * Rolls a number and shows the affect on the server
@@ -102,35 +106,11 @@ public interface IProxy {
     void getGameModel();
 
     /**
-     * Given paramaters of the playerID and where to place the road in the PassObject
-     * we send the server the information needed to place the road
-     * @param playerId - PlayerId passed to the server
-     * @param el - Location on the board to build
-     */
-    void placeRoad(int playerId, EdgeLocation el);
-
-    /**
-     * Given paramaters of the playerID and where to place the Settlement in the PassObject
-     * we send the server the information needed to place the Settlement
-     * @param playerId - PlayerId passed to the server
-     * @param el - Location on the board to build
-     */
-    void placeSettlement(int playerId, EdgeLocation el);
-
-    /**
-     * Given paramaters of the playerID and where to place the City in the PassObject
-     * we send the server the information needed to place the City
-     * @param playerId - PlayerId passed to the server
-     * @param el - Location on the board to build
-     */
-    void placeCity(int playerId, EdgeLocation el);
-
-    /**
      * Parameters are passed for the buying of the DevCard on the PassObject
      * a clientModel is returned
      * @param playerId - PlayerId passed to the server
      */
-    void buyDevCard(int playerId);
+    void buyDevCard(int playerId) throws InsufficientResourcesException;
 
     /**
      * To play a Monopoly Card you call this function which contacts the Server proxy
@@ -210,5 +190,5 @@ public interface IProxy {
      * This is when a player wins the game!!! Wohooo!!!
      * @param playerId -Passed Object
      */
-    void win(int playerId);
+    void win(int playerId) throws InvalidWinnerException;
 }
