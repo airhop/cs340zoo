@@ -177,17 +177,17 @@ public class Facade {
     * enacts the trade offer of the specified player
     * @return boolean whether or not the player traded with another player
     */
-    public void tradePlayer() throws IllegalMoveException{}
+    public void tradePlayer() throws IllegalMoveException, IllegalMoveException{}
     /**
     * completes a transaction of resources with the bank
     * @return boolean whether or not the player traded with the bank
     */
-    public void tradeBank() throws InsufficientResourcesException{}
+    public void tradeBank() throws InsufficientResourcesException, IllegalMoveException{}
     /**
     * accepts the trade offer of another player
     * @return boolean whether or not the player accepted a trade offer
     */
-    public void acceptTrade() throws InsufficientResoucesException{}
+    public void acceptTrade() throws InsufficientResoucesException, IllegalMoveException{}
     /**
     * ends the game and congratulates the player with 10 victory points
     * @return boolean whether or not the player has sufficient victory points to win
