@@ -5,14 +5,7 @@ import shared.exceptions.InsufficientResourcesException;
 public class Bank {
   ResourceList resources;
   DevCardList dcl;
-    /**
-    * checks to make sure the bank can add the proper resource amount
-    */
 
-    public boolean canAddBrick()
-  {
-    return false;
-  }
     /**
     * adds proper resource to resourcelist
     */
@@ -34,13 +27,6 @@ public class Bank {
      public void giveBrick(int amount) throws InsufficientResourcesException
   {
     //throws if there arent enough resources to give
-  }
-    /**
-    * checks to make sure the bank can add the proper resource amount
-    */
-    public boolean canAddOre()
-  {
-    return false;
   }
      /**
     * adds proper resource to resourcelist
@@ -65,13 +51,6 @@ public class Bank {
     //throws if there arent enough resources to give
   }
     /**
-    * checks to make sure the bank can add the proper resource amount
-    */
-    public boolean canAddSheep()
-  {
-    return false;
-  }
-    /**
     * adds proper resource to resourcelist
     */
     public void addSheep() throws InsufficientResourcesException
@@ -94,13 +73,6 @@ public class Bank {
     //throws if there arent enough resources to give
   }
     /**
-    * checks to make sure the bank can add the proper resource amount
-    */
-    public boolean canAddWheat()
-  {
-    return false;
-  }
-    /**
     * adds proper resource to resourcelist
     */
     public void addWheat() throws InsufficientResourcesException
@@ -121,13 +93,6 @@ public class Bank {
      public void giveWheat(int amount) throws InsufficientResourcesException
   {
     //throws if there arent enough resources to give
-  }
-    /**
-    * checks to make sure the bank can add the proper resource amount
-    */
-    public boolean canAddWood()
-  {
-    return false;
   }
     /**
     * adds proper resource to resourcelist
