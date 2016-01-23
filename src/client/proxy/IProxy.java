@@ -6,6 +6,7 @@ import client.model.bank.ResourceList;
 import client.model.history.MessageList;
 import client.model.map.EdgeLocation;
 import client.model.map.HexLocation;
+import shared.exceptions.InvalidUserException;
 import shared.jsonobject.Login;
 
 
@@ -14,16 +15,14 @@ public interface IProxy {
     /**
      * This is used to log a player in that has already registered
      * @param l - This is the Login or identification for the user
-     * @return True or false if the player is logged in
      */
-    boolean userLogin(Login l);
+    void userLogin(Login l) throws InvalidUserException;
 
     /**
      * This is used to register a new player
      * @param l - This is the Login or identification for the user
-     * @return True or Flase is the player is created
      */
-    boolean userRegister(Login l);
+    void userRegister(Login l) throws InvalidUserException;
 
     /**
      * Calls this method to get a list of the games to join
