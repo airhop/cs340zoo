@@ -1,13 +1,14 @@
 package client.poller;
 
-import client.model.ClientModel;
+
+import client.model.GameModel;
 import client.proxy.IProxy;
 
 public class Poller {
     IProxy myProxy;
-    ClientModel myModel;
+    GameModel myModel;
 
-    public Poller(IProxy givenProxy, ClientModel givenModel){
+    public Poller(IProxy givenProxy, GameModel givenModel){
         myProxy = givenProxy;
         myModel = givenModel;
     }
@@ -17,7 +18,7 @@ public class Poller {
      * and updates the ClientsModel
      * @return
      */
-    public ClientModel getClientModel(){
+    public GameModel getClientModel(){
         return null;
     }
 }

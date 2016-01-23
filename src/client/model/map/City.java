@@ -6,7 +6,7 @@ import shared.exceptions.IllegalMoveException;
 public class City extends VertexObject {
 
 
-	public boolean canPlaceAtLocation() throws IllegalMoveException
+	public boolean canPlaceAtLocation()
 	{
 		return false;
 	}
