@@ -1,5 +1,9 @@
 package client.facade;
-import  shared.exceptions;
+
+import shared.exceptions.IllegalMoveException;
+import shared.exceptions.InsufficientResourcesException;
+import shared.exceptions.InvalidPositionException;
+import shared.exceptions.InvalidWinnerException;
 
 public class Facade {
 
@@ -122,7 +126,7 @@ public class Facade {
     * Places a Settlement at a given location on the map
     * @return boolean whether or not the player placed a settlement
     */
-    public void placeSettlement() throws InvalidPositionException{}
+    public void placeSettlement() throws InvalidPositionException {}
     /**
     * Places a City at a given location on the map
     * @return boolean whether or not the player placed the city
@@ -132,7 +136,7 @@ public class Facade {
     * Buys a developement card and increases the amount for the purchasing player
     * @return boolean whether or not the player bought the dev card
     */
-    public void buyDevCard() throws IllegalMoveException{}
+    public void buyDevCard() throws IllegalMoveException {}
     /**
     * uses a specific development card
     * @return boolean whether or not the player played a devcard
@@ -187,12 +191,12 @@ public class Facade {
     * accepts the trade offer of another player
     * @return boolean whether or not the player accepted a trade offer
     */
-    public void acceptTrade() throws InsufficientResoucesException, IllegalMoveException{}
+    public void acceptTrade() throws InsufficientResourcesException, IllegalMoveException{}
     /**
     * ends the game and congratulates the player with 10 victory points
     * @return boolean whether or not the player has sufficient victory points to win
     */
-    public void win() throws InvalidWinnerException{}
+    public void win() throws InvalidWinnerException {}
     /**
     * rolls the dice for a number 1-12
     * @return boolean whether or not the player rolled the dice
