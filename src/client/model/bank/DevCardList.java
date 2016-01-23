@@ -1,6 +1,8 @@
 
 package client.model.bank;
 
+import shared.exceptions.InsufficientResourcesException;
+
 public class DevCardList {
   
   int monopoly;
@@ -15,9 +17,9 @@ public class DevCardList {
    * this method will randomly decide which card the bank will give
   @return cardtype of card to be returned
   */
-  public String buyDevCard()
+  public String buyDevCard() throws InsufficientResourcesException
   {
-    return "soldier";
+    return null;
   }
   
   /**
@@ -29,7 +31,7 @@ public class DevCardList {
   }
   
   /**
-  @param type type of card that wants to be used
+  @param type of card that wants to be used
   probably should have multiple methods, but this will go though a giant switch on the enum types
   @return if can use a DevCard
   */

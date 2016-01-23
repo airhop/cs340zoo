@@ -6,6 +6,6 @@ import shared.exceptions.IllegalMoveException;
 public class Settlement extends VertexObject {
 
 
-	public boolean canPlaceAtLocation() throws IllegalMoveException {return false;}
- 	public void placeSettlement(){}
+	public boolean canPlaceAtLocation()  {return false;}
+ 	public void placeSettlement()throws IllegalMoveException{}
 }
