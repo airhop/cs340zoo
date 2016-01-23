@@ -24,6 +24,7 @@ public class MockProxy implements IProxy{
 
     @Override
     public void userLogin(Login l) throws InvalidUserException {
+        return;
 
     }
 
