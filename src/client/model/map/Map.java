@@ -1,5 +1,7 @@
 package client.model.map;
 
+import shared.exceptions.FailureToAddException;
+
 import java.util.ArrayList;
 
 public class Map {
@@ -60,7 +62,8 @@ public class Map {
      * @param direction - direction from hex the port is located
      * @param ratio     - the ratio of resources tradeable (i.e 1:2, 1:4)
      */
-    public void addPort(int x, int y, String resource, String direction, int ratio) {
+    public void addPort(int x, int y, String resource, String direction, int ratio) throws FailureToAddException
+    {
 
     }
 
@@ -79,14 +82,16 @@ public class Map {
      * @param direction - direction from hex that road is located
      * @param owner     - index of owner
      */
-    public void addRoad(int x, int y, String direction, int owner) {
+    public void addRoad(int x, int y, String direction, int owner) throws FailureToAddException
+    {
 
     }
 
     /**
      * checks to see if settlement can be added
      */
-    public boolean canAddSettlement() {
+    public boolean canAddSettlement()
+    {
         return false;
     }
 
@@ -98,7 +103,8 @@ public class Map {
      * @param direction - direction from hex that settlement is located
      * @param owner     - index of owner
      */
-    public void addSettlement(int x, int y, String direction, int owner) {
+    public void addSettlement(int x, int y, String direction, int owner) throws FailureToAddException
+    {
 
     }
 
@@ -117,7 +123,8 @@ public class Map {
      * @param direction - direction from hex that city is located
      * @param owner     - index of owner
      */
-    public void addCity(int x, int y, String direction, int owner) {
+    public void addCity(int x, int y, String direction, int owner) throws FailureToAddException
+    {
 
     }
 
@@ -134,7 +141,8 @@ public class Map {
      * @param x - horizontal location of hex robber is to be moved to
      * @param y - diagonal location of hex robber is to be moved to
      */
-    public void relocateRobber(int x, int y) {
+    public void relocateRobber(int x, int y) throws FailureToAddException
+    {
 
     }
 
