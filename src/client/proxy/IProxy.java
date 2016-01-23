@@ -35,7 +35,7 @@ public interface IProxy {
      * @param s - The name of the game
      * @return True or false if the game gets created
      */
-    boolean gamesCreate(String s);
+    boolean gamesCreate(String s) ;
 
     /**
      * The player wants to join a game so they use this method
