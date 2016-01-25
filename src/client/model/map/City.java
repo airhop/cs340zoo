@@ -16,6 +16,6 @@ public class City extends VertexObject
 	}
 	public void placeCity()
 	{
-		//placeCity();
+		
 	}
 }
