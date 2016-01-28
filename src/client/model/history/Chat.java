@@ -2,11 +2,21 @@ package client.model.history;
 
 public class Chat 
 {
-	MessageList messageList;
+	MessageList ChatList;
 	/**
 	 * for printing or returning the list, however the history will need it.
 	*/
-	public void printMessageList(){}
+	public void printMessageList()
+	{
+		StringBuilder sb = new StringBuilder();
+		for(MessageLine line : ChatList)
+		{
+			sb.append(line.message);
+			sb.append("\n");
+			sb.append(line.source);
+			sb.append("\n");
+		}
+	}
 	
 	/**
 	 * to add a message to the messagelist
