@@ -2,7 +2,7 @@ package client.model.history;
 
 public class Log {
 
-	MessageList messageList;
+	MessageList LogList;
 
 	/**
 	 * for printing or returning the list, however the history will need it.
