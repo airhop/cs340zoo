@@ -21,5 +21,8 @@ public class Chat
 	/**
 	 * to add a message to the messagelist
 	*/
-	public void addMessage(String source, String message){}
+	public void addMessage(String source, String message)
+	{
+		ChatList.add(new MessageLine(message, source));
+	}
 }
