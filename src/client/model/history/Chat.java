@@ -23,6 +23,6 @@ public class Chat
 	*/
 	public void addMessage(String source, String message)
 	{
-		ChatList.add(new MessageLine(message, source));
+		ChatList.addMessage(new MessageLine(message, source));
 	}
 }
