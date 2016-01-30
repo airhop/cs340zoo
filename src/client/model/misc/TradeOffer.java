@@ -13,5 +13,28 @@ public class TradeOffer {
   
   public TradeOffer(){}
   
-  //getters and setters
+  public int getSender()
+  {
+    return sender;
+  }
+  public void setSender(int send)
+  {
+    sender = send;
+  }  
+  public int getReciever()
+  {
+    return reciever;
+  }
+  public void setReciever(int recieve)
+  {
+    reciever = recieve;
+  }  
+  public ResourceList getOffer()
+  {
+    return offer;
+  }
+  public void setOffer(ResourceList off)
+  {
+    offer = off;
+  }
 }
