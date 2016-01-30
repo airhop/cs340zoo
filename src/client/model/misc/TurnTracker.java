@@ -12,6 +12,17 @@ public class TurnTracker {
   //know current player, status of turn
   //rolling trading, building, finish
 
+public TurnTracker()
+{
+  currPlayer = 0;
+  status = 0;
+}
+public TurnTracker(int currentP, int stat)
+{
+  currPlayer = currentP;
+  status = stat;
+}
+
 public int getCurrentPlayer()
 {
   return currPlayer;
