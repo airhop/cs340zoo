@@ -9,9 +9,6 @@ public class TurnTracker {
   int currLA = 2;  
   //must be at least 3 to claim largest army, therefore if player army >  currLA they earn largest army and currLA = player army size
   
-  //know current player, status of turn
-  //rolling trading, building, finish
-
 public TurnTracker()
 {
   currPlayer = 0;
@@ -22,11 +19,16 @@ public TurnTracker(int currentP, int stat)
   currPlayer = currentP;
   status = stat;
 }
-
+/**
+Gets the id of the current player
+*/
 public int getCurrentPlayer()
 {
   return currPlayer;
 }
+/**
+Sets the id of the current player
+*/
 public void setCurrentPlayer(int pid)
 {
   currPlayer = pid;
