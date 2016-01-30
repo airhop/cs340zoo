@@ -34,8 +34,9 @@ public void setCurrentPlayer(int pid)
 }
 
 /**
- * @param  pid - player id
-if not turn don't do anything, else move turn to next player
+* Updates status of the current player.
+* If the player is in the last part of their turn, when called, this method moves on to the next player
+* and resets the status to zero.
 */
   public void updateStatus()
   {
@@ -50,6 +51,13 @@ if not turn don't do anything, else move turn to next player
     }
     else status += 1;
   }
+  /**
+ * returns the current status of the current players game
+ * 0 = ROLL
+ * 1 = TRADE
+ * 2 = BUILD
+ * 3 = FINISH
+*/
    public void getStatus()
   {
     return status;
