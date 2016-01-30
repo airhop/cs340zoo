@@ -3,10 +3,8 @@ package client.model.misc;
 public class TurnTracker {
   int currPlayer;
   int status;
-  int longestRoad;
-  int currLR = 4; 
-  int largestArmy;
-  int currLA = 2;  
+  int longestRoad = -1;
+  int largestArmy = -1;
   //must be at least 3 to claim largest army, therefore if player army >  currLA they earn largest army and currLA = player army size
   
 public TurnTracker()
@@ -63,6 +61,22 @@ public void setCurrentPlayer(int pid)
    public void getStatus()
   {
     return status;
+  }
+  public int getLongestRoad()
+  {
+    return longestRoad;
+  }
+  public void setLongestRoad(int road)
+  {
+    longestRoad = road;
+  }
+  public int getLargestArmy()
+  {
+    return largestArmy;
+  }
+  public void setLargestArmy(int army)
+  {
+    largestArmy = army;
   }
 /**
  * @param pid - player id of player wishing to try for largest army
