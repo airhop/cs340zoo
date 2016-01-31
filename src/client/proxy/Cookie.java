@@ -7,14 +7,20 @@ import java.net.URLDecoder;
  * Created by Josh on 1/31/2016.
  */
 public class Cookie {
-    private String cookieName;
-    private String cookieValue;
-    private String decodedValue;
+    private String cookieName = "";
+    private String cookieValue = "";
+    private String decodedValue = "";
 
     public Cookie(){
 
     }
-
+    public boolean isActive(){
+        if(cookieName != ""){
+            return true;
+        }else{
+            return false;
+        }
+    }
 
     public String getCookieName() {
         return cookieName;

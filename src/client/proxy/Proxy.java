@@ -4,13 +4,13 @@ import client.model.bank.ResourceList;
 import client.model.history.MessageList;
 import client.model.map.EdgeLocation;
 import client.model.map.HexLocation;
+import com.google.gson.Gson;
 import shared.exceptions.*;
 import shared.jsonobject.Login;
 import shared.serialization.Deserializer;
 import shared.serialization.Serializer;
-
 import java.io.IOException;
-import java.io.PrintStream;
+import java.io.ObjectOutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
@@ -24,159 +24,28 @@ public class Proxy implements IProxy{
     private Serializer Ser = new Serializer();
     private Cookie userCookie = new Cookie();
     private Cookie gameCookie = new Cookie();
+    private Gson myGson = new Gson();
 
     public Proxy(){
 
     }
 
-    @Override
-    public void userLogin(Login l) throws InvalidUserException {
 
-    }
-
-    @Override
-    public void userRegister(Login l) throws InvalidUserException {
-
-    }
-
-    @Override
-    public String[] gamesList() {
-        return new String[0];
-    }
-
-    @Override
-    public void gamesCreate(String s) throws FailedCreateGameException {
-
-    }
-
-    @Override
-    public void gamesJoin(String s, int playerId) throws InvalidUserException {
-
-    }
-
-    @Override
-    public boolean gameAddAI() {
-        return false;
-    }
-
-    @Override
-    public String[] gameListAI() {
-        return new String[0];
-    }
-
-    @Override
-    public void sendChat(MessageList msg) {
-
-    }
-
-    @Override
-    public void finishTurn(int playerId) {
-
-    }
-
-    @Override
-    public void buildRoad(int playerId, EdgeLocation el) {
-
-    }
-
-    @Override
-    public void buildCity(int playerId, EdgeLocation el) throws IllegalBuildException {
-
-    }
-
-    @Override
-    public void buildSettlement(int playerId, EdgeLocation el) throws IllegalBuildException {
-
-    }
-
-    @Override
-    public void discardCards(int playerId, ResourceList rl) throws InsufficientResourcesException {
-
-    }
-
-    @Override
-    public void rollNumber(int numRoled) {
-
-    }
-
-    @Override
-    public void getGameModel() {
-
-    }
-
-    @Override
-    public void buyDevCard(int playerId) throws InsufficientResourcesException {
-
-    }
-
-    @Override
-    public void playMonopoly(int playerId, String card) {
-
-    }
-
-    @Override
-    public void playRoadBuilding(int playerId, EdgeLocation e1, EdgeLocation e2) {
-
-    }
-
-    @Override
-    public void placeMonument(int playerId) {
-
-    }
-
-    @Override
-    public void playYearOfPlenty(int playerId) {
-
-    }
-
-    @Override
-    public void playSoldier(int playerId) {
-
-    }
-
-    @Override
-    public void robPlayer(int playerIdOne, int playerIdTwo) {
-
-    }
-
-    @Override
-    public void moveRobber(int playerId, HexLocation hl) {
-
-    }
-
-    @Override
-    public void tradePlayer(int playerIdOne, int playerIdTwo, ResourceList rl) {
-
-    }
-
-    @Override
-    public void tradeBank(int playerId, ResourceList rl) {
-
-    }
-
-    @Override
-    public void acceptTrade(int playerIdOne, int playerIdTwo, ResourceList rl) {
-
-    }
-
-    @Override
-    public void win(int playerId) throws InvalidWinnerException {
-
-    }
-
-    private Object doGet(String urlPath) throws ClientException {
+    private Object doGet(String urlPath, Class myClass) throws ClientException {
         try {
             URL url = new URL(URL_PREFIX + urlPath);
             HttpURLConnection connection = (HttpURLConnection)url.openConnection();
             connection.setRequestMethod(HTTP_GET);
-            connection.setRequestProperty(userCookie.getCookieName(), userCookie.getCookieValue());
-            if(){
 
+            if(userCookie.isActive()){
+                connection.setRequestProperty(userCookie.getCookieName(), userCookie.getCookieValue());
+            }
+            if(gameCookie.isActive()){
+                connection.setRequestProperty(gameCookie.getCookieName(), gameCookie.getCookieValue());
             }
             connection.connect();
             if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
-                Object result = xmlStream.fromXML(connection.getInputStream());
-                return result;
+                return myGson.fromJson(connection.getInputStream().toString(), myClass);
             }
             else {
                 throw new ClientException(String.format("doGet failed: %s (http code %d)", urlPath, connection.getResponseCode()));
@@ -187,22 +56,35 @@ public class Proxy implements IProxy{
         }
     }
 
-    private void doPost(String urlPath, Object postData) throws ClientException {
+    private Object doPost(String urlPath, Object postData, Class myClass) throws ClientException {
         try {
             URL url = new URL(URL_PREFIX + urlPath);
             HttpURLConnection connection = (HttpURLConnection)url.openConnection();
+            String temp;
             connection.setRequestMethod(HTTP_POST);
+
+            if(userCookie.isActive()){
+                connection.setRequestProperty(userCookie.getCookieName(), userCookie.getCookieValue());
+            }
+            if(gameCookie.isActive()){
+                connection.setRequestProperty(gameCookie.getCookieName(), gameCookie.getCookieValue());
+            }
+
             connection.setDoOutput(true);
             connection.connect();
-            xmlStream.toXML(postData, connection.getOutputStream());
+            temp = myGson.toJson(postData);
+            ObjectOutputStream myOut = new ObjectOutputStream(connection.getOutputStream());
+            myOut.writeBytes(temp);
+            myOut.close();
             connection.getOutputStream().close();
             if (connection.getResponseCode() != HttpURLConnection.HTTP_OK) {
                 throw new ClientException(String.format("doPost failed: %s (http code %d)", urlPath, connection.getResponseCode()));
+            }else{
+                return myGson.fromJson(connection.getInputStream().toString(), myClass);
             }
         }
         catch (IOException e) {
             throw new ClientException(String.format("doPost failed: %s", e.getMessage()), e);
         }
     }
-
 }
