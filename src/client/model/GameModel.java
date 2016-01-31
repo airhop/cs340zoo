@@ -1,10 +1,11 @@
 package client.model;
 
 import client.model.bank.Bank;
-import client.model.map.Map;
-import client.model.misc.TradeOffer;
-import client.model.misc.TurnTracker;
+import client.model.bank.ResourceList;
+import client.model.map.*;
+import client.model.misc.*;
 import client.model.player.Player;
+import shared.exceptions.IllegalMoveException;
 import shared.exceptions.InvalidWinnerException;
 
 public class GameModel {
@@ -15,6 +16,8 @@ public class GameModel {
     TradeOffer to;
     int version = 0;
     int winner = -1;
+    Dice dice;
+
 
     /**
      * updates version of the game model
@@ -28,13 +31,18 @@ public class GameModel {
      *
      * @param winnerid - id of the winning player
      */
-    public void decideWinner(int winnerid) throws InvalidWinnerException {
-        if (winnerid < 0 || winnerid > 3) {
-            throw new InvalidWinnerException();
 
-        } else {
-            winner = winnerid;
-        }
+    /**
+     * decides game winner and sets the winner to the id of the winning player
+     *
+     * @param winnerid - id of the winning player
+     */
+    public void decideWinner(int winnerid) throws InvalidWinnerException
+    {
+        int cp = tt.getCurrentPlayer();
+        if(players[cp].canWin())
+            winner = cp;
+
     }
     //can methods
 
@@ -43,7 +51,8 @@ public class GameModel {
      *
      * @return
      */
-    public boolean canRobberDiscard() {
+    public boolean canRobberDiscard()
+    {
         return false;
     }
 
@@ -52,8 +61,10 @@ public class GameModel {
      *
      * @return boolean whether or not the player can build a road
      */
-    public boolean canBuildRoad() {
-        return false;
+    public boolean canBuildRoad()
+    {
+        int cp = tt.getCurrentPlayer();
+        return players[cp].canBuildRoad();
     }
 
     /**
@@ -61,8 +72,9 @@ public class GameModel {
      *
      * @return boolean whether or not the player can place a road
      */
-    public boolean canPlaceRoad() {
-        return false;
+    public boolean canPlaceRoad()
+    {
+        return map.canAddRoad();
     }
 
     /**
@@ -70,8 +82,10 @@ public class GameModel {
      *
      * @return boolean whether or not the player can build a settlement
      */
-    public boolean canBuildSettlement() {
-        return false;
+    public boolean canBuildSettlement()
+    {
+        int cp = tt.getCurrentPlayer();
+        return players[cp].canBuildSettlement();
     }
 
     /**
@@ -79,8 +93,9 @@ public class GameModel {
      *
      * @return boolean whether or not the player can place a settlement
      */
-    public boolean canPlaceSettlement() {
-        return false;
+    public boolean canPlaceSettlement()
+    {
+        return map.canAddSettlement();
     }
 
     /**
@@ -88,8 +103,10 @@ public class GameModel {
      *
      * @return boolean whether or not the player can build a city
      */
-    public boolean canBuildCity() {
-        return false;
+    public boolean canBuildCity()
+    {
+        int cp = tt.getCurrentPlayer();
+        return players[cp].canBuildCity();
     }
 
     /**
@@ -97,8 +114,9 @@ public class GameModel {
      *
      * @return boolean whether or not the player can place a city
      */
-    public boolean canPlaceCity() {
-        return false;
+    public boolean canPlaceCity()
+    {
+        return map.canAddCity();
     }
 
     /**
@@ -106,8 +124,10 @@ public class GameModel {
      *
      * @return boolean whether or not the player can buy a Developement card
      */
-    public boolean canBuyDevcard() {
-        return false;
+    public boolean canBuyDevcard()
+    {
+        int cp = tt.getCurrentPlayer();
+        return players[cp].canBuyDevcard();
     }
 
     /**
@@ -115,8 +135,10 @@ public class GameModel {
      *
      * @return boolean whether or not the player can play a Developement card
      */
-    public boolean canPlayDevcard() {
-        return false;
+    public boolean canPlayDevcard()
+    {
+        int cp = tt.getCurrentPlayer();
+        return players[cp].canPlayDevcard();
     }
 
     /**
@@ -124,8 +146,10 @@ public class GameModel {
      *
      * @return boolean whether or not the player can monopoly
      */
-    public boolean canMonopoly() {
-        return false;
+    public boolean canMonopoly()
+    {
+        int cp = tt.getCurrentPlayer();
+        return players[cp].canMonopoly();
     }
 
     /**
@@ -133,8 +157,10 @@ public class GameModel {
      *
      * @return boolean whether or not the player can road building
      */
-    public boolean canRoadBuilding() {
-        return false;
+    public boolean canRoadBuilding()
+    {
+        int cp = tt.getCurrentPlayer();
+        return players[cp].canRoadBuilding();
     }
 
     /**
@@ -142,8 +168,10 @@ public class GameModel {
      *
      * @return boolean whether or not the player can place a monument
      */
-    public boolean canPlaceMonument() {
-        return false;
+    public boolean canPlaceMonument()
+    {
+        int cp = tt.getCurrentPlayer();
+        return players[cp].canRoadBuilding();
     }
 
     /**
@@ -151,8 +179,10 @@ public class GameModel {
      *
      * @return boolean whether or not the player can play the Year of Plenty card
      */
-    public boolean canYearOfPlenty() {
-        return false;
+    public boolean canYearOfPlenty()
+    {
+        int cp = tt.getCurrentPlayer();
+        return players[cp].canYearOfPlenty();
     }
 
     /**
@@ -160,10 +190,22 @@ public class GameModel {
      *
      * @return boolean whether or not the player can place the Soldier card
      */
-    public boolean canPlaceSoldier() {
-        return false;
+    public boolean canPlaceSoldier()
+    {
+        int cp = tt.getCurrentPlayer();
+        return players[cp].canPlaceSoldier();
     }
 
+    public boolean canFinishTurn()
+    {
+        return (tt.getStatus() == 3);
+    }
+
+    public boolean canDiscardCards()
+    {
+
+        return false;
+    }
     /**
      * Checks to see if robbing another player is a legal move for the player
      *
@@ -187,7 +229,9 @@ public class GameModel {
      *
      * @return boolean whether or not the player can trade with another player
      */
-    public boolean canTradePlayer() {
+    public boolean canTradePlayer()
+    {
+
         return false;
     }
 
@@ -214,7 +258,12 @@ public class GameModel {
      *
      * @return boolean whether or not the player can win (have 10 victory points)
      */
-    public boolean canWin() {
+    public boolean canWin()
+    {
+        //need to check if it is finish turn?
+        int cp = tt.getCurrentPlayer();
+        if(players[cp].canWin())
+            return true;
         return false;
     }
 
@@ -223,7 +272,10 @@ public class GameModel {
      *
      * @return boolean whether or not the player can roll the dice
      */
-    public boolean canRoll() {
+    public boolean canRoll()
+    {
+        if(tt.getStatus() == 0)
+            return true;
         return false;
     }
 
@@ -234,8 +286,10 @@ public class GameModel {
      *
      * @return boolean whether or not the player built the road (perhaps placeholder return values for all of the do methods)
      */
-    public boolean placeRoad() {
-        return false;
+    public void placeRoad(EdgeLocation el)
+    {
+        int cp = tt.getCurrentPlayer();
+        map.addRoad(el, cp);
     }
 
     /**
@@ -261,8 +315,16 @@ public class GameModel {
      *
      * @return boolean whether or not the player bought the dev card
      */
-    public boolean buyDevCard() {
-        return false;
+    public void buyDevCard() throws IllegalMoveException
+    {
+        //be in the purchasing phase
+        int cp = tt.getCurrentPlayer();
+        if(tt.getStatus() != 2)
+            throw new IllegalMoveException("Not a purchasing phase...");
+        if(!players[cp].canBuyDevcard())
+            throw new IllegalMoveException("Not enough resources");
+        DevCardType dct = bank.BuyDevCard();
+        players[cp].drawDevCard(dct);
     }
 
     /**
@@ -270,7 +332,9 @@ public class GameModel {
      *
      * @return boolean whether or not the player played a devcard
      */
-    public boolean playDevCard() {
+    public boolean playDevCard()
+    {
+        int cp = tt.getCurrentPlayer();
         return false;
     }
 
@@ -279,7 +343,17 @@ public class GameModel {
      *
      * @return boolean whether or not the player played a monopoly
      */
-    public boolean playMonopoly() {
+    public boolean playMonopoly()
+    {
+        //use the ResourceList.merge method
+        int cp = tt.getCurrentPlayer();
+        ResourceType wanted = players[cp].getMonopoly();
+        int given = 0;
+        for(int i = 0; i < players.length; i++)
+            if(i != cp)
+                given += players[i].Monopolize(wanted);
+        players[cp].addResources(given);
+
         return false;
     }
 
@@ -378,8 +452,19 @@ public class GameModel {
      *
      * @return boolean whether or not the player rolled the dice
      */
-    public boolean roll() {
-        return false;
+    public boolean roll()
+    {
+        if(tt.getStatus() != 0)
+            return false;
+        int cp = tt.getCurrentPlayer();
+        int diceRoll = dice.rollDice();
+
+        ResourceList[] pids = map.rollingDice(diceRoll);
+        for(int i = 0; i < pids.length; i++)
+            players[i].addResources(pids[i]);
+
+        tt.updateStatus();
+        return true;
     }
 
 }
