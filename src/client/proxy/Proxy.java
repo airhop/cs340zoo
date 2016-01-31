@@ -7,6 +7,10 @@ import client.model.map.HexLocation;
 import shared.exceptions.*;
 import shared.jsonobject.Login;
 
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
 public class Proxy implements IProxy{
 
     public Proxy(){
@@ -148,4 +152,44 @@ public class Proxy implements IProxy{
     public void win(int playerId) throws InvalidWinnerException {
 
     }
+
+    private Object doGet(String urlPath) throws ClientException {
+        try {
+            URL url = new URL(URL_PREFIX + urlPath);
+            HttpURLConnection connection = (HttpURLConnection)url.openConnection();
+            connection.setRequestMethod(HTTP_GET);
+            connection.connect();
+            if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
+                Object result = xmlStream.fromXML(connection.getInputStream());
+                return result;
+            }
+            else {
+                throw new ClientException(String.format("doGet failed: %s (http code %d)",
+                        urlPath, connection.getResponseCode()));
+            }
+        }
+        catch (IOException e) {
+            throw new ClientException(String.format("doGet failed: %s", e.getMessage()), e);
+        }
+    }
+
+    private void doPost(String urlPath, Object postData) throws ClientException {
+        try {
+            URL url = new URL(URL_PREFIX + urlPath);
+            HttpURLConnection connection = (HttpURLConnection)url.openConnection();
+            connection.setRequestMethod(HTTP_POST);
+            connection.setDoOutput(true);
+            connection.connect();
+            xmlStream.toXML(postData, connection.getOutputStream());
+            connection.getOutputStream().close();
+            if (connection.getResponseCode() != HttpURLConnection.HTTP_OK) {
+                throw new ClientException(String.format("doPost failed: %s (http code %d)",
+                        urlPath, connection.getResponseCode()));
+            }
+        }
+        catch (IOException e) {
+            throw new ClientException(String.format("doPost failed: %s", e.getMessage()), e);
+        }
+    }
+
 }

@@ -23,13 +23,13 @@ public class MessageList {
   */
   public MessageLine getMessageLine(MessageLine line)
   {
-  	for(int i = 0; i < chatMessages.getLength(); i++)
-  	{
-  	  if(chatMessages.get(i).getMessage.equals(line.getMessage) && chatMessages.get(i).getMessage.equals(line.getSource))
-  	  {
-  	    return chatMessages.get(i);
-  	  }
-  	}
+//  	for(int i = 0; i < getMessage.length; i++)
+//  	{
+//  	  if(getMessage.get(i).getMessage.equals(line.getMessage) && chatMessages.get(i).getMessage.equals(line.getSource))
+//  	  {
+//  	    return chatMessages.get(i);
+//  	  }
+//  	}
   	return null;
   }
 

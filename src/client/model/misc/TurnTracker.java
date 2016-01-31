@@ -53,7 +53,7 @@ public class TurnTracker {
      * 2 = BUILD
      * 3 = FINISH
      */
-    public void getStatus() {
+    public int getStatus() {
         return status;
     }
 

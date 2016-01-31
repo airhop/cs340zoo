@@ -9,13 +9,13 @@ public class Chat
 	public void printMessageList()
 	{
 		StringBuilder sb = new StringBuilder();
-		for(MessageLine line : ChatList)
-		{
-			sb.append(line.message);
-			sb.append("\n");
-			sb.append(line.source);
-			sb.append("\n");
-		}
+//		for(MessageLine line : ChatList)
+//		{
+//			sb.append(line.message);
+//			sb.append("\n");
+//			sb.append(line.source);
+//			sb.append("\n");
+//		}
 	}
 	
 	/**
