@@ -6,17 +6,28 @@ import client.model.map.EdgeLocation;
 import client.model.map.HexLocation;
 import shared.exceptions.*;
 import shared.jsonobject.Login;
+import shared.serialization.Deserializer;
+import shared.serialization.Serializer;
 
 import java.io.IOException;
+import java.io.PrintStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class Proxy implements IProxy{
+    private String SERVER_HOST = "localhost";
+    private int SERVER_PORT = 8081;
+    private String URL_PREFIX = "http://" + SERVER_HOST + ":" + SERVER_PORT;
+    private final String HTTP_GET = "GET";
+    private final String HTTP_POST = "POST";
+    private Deserializer deSer = new Deserializer();
+    private Serializer Ser = new Serializer();
+    private Cookie userCookie = new Cookie();
+    private Cookie gameCookie = new Cookie();
 
     public Proxy(){
 
     }
-
 
     @Override
     public void userLogin(Login l) throws InvalidUserException {
@@ -158,14 +169,17 @@ public class Proxy implements IProxy{
             URL url = new URL(URL_PREFIX + urlPath);
             HttpURLConnection connection = (HttpURLConnection)url.openConnection();
             connection.setRequestMethod(HTTP_GET);
+            connection.setRequestProperty(userCookie.getCookieName(), userCookie.getCookieValue());
+            if(){
+
+            }
             connection.connect();
             if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
                 Object result = xmlStream.fromXML(connection.getInputStream());
                 return result;
             }
             else {
-                throw new ClientException(String.format("doGet failed: %s (http code %d)",
-                        urlPath, connection.getResponseCode()));
+                throw new ClientException(String.format("doGet failed: %s (http code %d)", urlPath, connection.getResponseCode()));
             }
         }
         catch (IOException e) {
@@ -183,8 +197,7 @@ public class Proxy implements IProxy{
             xmlStream.toXML(postData, connection.getOutputStream());
             connection.getOutputStream().close();
             if (connection.getResponseCode() != HttpURLConnection.HTTP_OK) {
-                throw new ClientException(String.format("doPost failed: %s (http code %d)",
-                        urlPath, connection.getResponseCode()));
+                throw new ClientException(String.format("doPost failed: %s (http code %d)", urlPath, connection.getResponseCode()));
             }
         }
         catch (IOException e) {
