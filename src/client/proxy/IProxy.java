@@ -6,7 +6,7 @@ import client.model.bank.ResourceList;
 import client.model.history.MessageList;
 import client.model.map.EdgeLocation;
 import shared.exceptions.*;
-import shared.jsonobject.Login;
+import shared.jsonobject.Resources;
 import shared.jsonobject.User;
 
 
@@ -20,7 +20,7 @@ public interface IProxy {
 
     /**
      * This is used to register a new player
-     * @param l - This is the Login or identification for the user
+     * @param u - This is the Login or identification for the user
      */
     void userRegister(User u) throws InvalidUserException;
 
@@ -86,7 +86,7 @@ public interface IProxy {
      * @param playerIdOne - playerIdOne passed to the server
      * @param playerIdTwo - playerIdTwo being robbed
      */
-    void robPlayer(int playerIdOne, int playerIdTwo);
+    void robPlayer(int playerIdOne, int playerIdTwo, EdgeLocation El);
     /**
      * Used when a player finishes his turn
      * @param playerId - the player that is ending their turn
@@ -102,7 +102,7 @@ public interface IProxy {
      * This method finalizes the playing of the Year of plenty card from a player on the server
      * @param playerId - PlayerId passed to the server
      */
-    void playYearOfPlenty(int playerId);
+    void playYearOfPlenty(int playerId, Resources r1, Resources r2);
     /**
      * To play the Card road building you finally get here in the proxy and this finalizes the
      * playing of the card on the server
@@ -116,7 +116,7 @@ public interface IProxy {
      * towards the largest army
      * @param playerId - PlayerId passed to the server
      */
-    void playSoldier(int playerId);
+    void playSoldier(int playerId, EdgeLocation El);
     /**
      * To play a Monopoly Card you call this function which contacts the Server proxy
      * @param playerId - PlayerId passed to the server

@@ -3,7 +3,6 @@ package client.proxy;
 import client.model.bank.ResourceList;
 import client.model.history.MessageList;
 import client.model.map.EdgeLocation;
-import client.model.map.HexLocation;
 import com.google.gson.Gson;
 import shared.exceptions.*;
 import shared.jsonobject.Login;
