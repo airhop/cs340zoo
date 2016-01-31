@@ -68,8 +68,13 @@ public class ResourceList {
   }
   public ResourceList merge(ResourceList first, ResourceList second)
   {
-    int newbrick
-    int new
-    int new
+    int newbrick = first.getBrick() + second.getBrick();
+    int newore = first.getOre() + second.getOre();
+    int newsheep = first.getSheep() + second.getSheep();
+    int newwheat = first.getWheat() + second.getWheat();
+    int newwood = first.getWood() + second.getWood();
+    
+    ResourceList result = new ResourceList(newbrick, newore, newsheep, newwheat, newwood);
+    return result;
   }
 }
