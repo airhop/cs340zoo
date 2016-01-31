@@ -16,7 +16,14 @@ public class ResourceList {
     numOfWheat = 19;
     numOfWood = 19;
   }
-  
+    public ResourceList(int br, int or, int sh, int wh, int wo)
+  {
+    numOfBrick = br;
+    numOfOre = or;
+    numOfSheep = sh;
+    numOfWheat = wh;
+    numOfWood = wo;
+  }
   //overload the constructor so that RL can be used for trades, bank, map, players etc.
 
   public int getBrick()
@@ -58,5 +65,11 @@ public class ResourceList {
   public void setWood(int wood)
   {
     numOfWood = wood;
+  }
+  public ResourceList merge(ResourceList first, ResourceList second)
+  {
+    int newbrick
+    int new
+    int new
   }
 }
