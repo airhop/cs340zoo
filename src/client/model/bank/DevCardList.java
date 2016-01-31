@@ -5,13 +5,20 @@ import shared.exceptions.InsufficientResourcesException;
 
 public class DevCardList {
   
-  int monopoly;
-  int monument;
-  int roadBuilding;
-  int soldier;
-  int yearOfPlenty;
+  int monopoly = -1;
+  int monument = -1;
+  int roadBuilding = -1;
+  int soldier = -1;
+  int yearOfPlenty = -1;
   
-  //getters and setters
+  DevCardList(int mono, int monu, int road, int sldr, int yop)
+  {
+    monopoly = mono;
+    monument = monu;
+    roadBuilding = road;
+    soldier = sldr;
+    yearOfPlenty = yop;
+  }
   /**
    * this method will randomly decide which card the bank will give
   @return cardtype of card to be returned
@@ -47,4 +54,35 @@ public class DevCardList {
     total = total + monopoly + monument + yearOfPlenty + roadBuilding + soldier;
     return total;
   }
+  
+  public int getMonopoly() {
+		return monopoly;
+	}
+	public void setMonopoly(int monopoly) {
+		this.monopoly = monopoly;
+	}
+	public int getMonument() {
+		return monument;
+	}
+	public void setMonument(int monument) {
+		this.monument = monument;
+	}
+	public int getRoadBuilding() {
+		return roadBuilding;
+	}
+	public void setRoadBuilding(int roadBuilding) {
+		this.roadBuilding = roadBuilding;
+	}
+	public int getSoldier() {
+		return soldier;
+	}
+	public void setSoldier(int soldier) {
+		this.soldier = soldier;
+	}
+	public int getYearOfPlenty() {
+		return yearOfPlenty;
+	}
+	public void setYearOfPlenty(int yearOfPlenty) {
+		this.yearOfPlenty = yearOfPlenty;
+	}
 }
