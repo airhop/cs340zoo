@@ -30,7 +30,6 @@ Sets the id of the current player
 public void setCurrentPlayer(int pid)
 {
   currPlayer = pid;
-  return;
 }
 
 /**
@@ -58,7 +57,7 @@ public void setCurrentPlayer(int pid)
  * 2 = BUILD
  * 3 = FINISH
 */
-   public void getStatus()
+   public int getStatus()
   {
     return status;
   }
