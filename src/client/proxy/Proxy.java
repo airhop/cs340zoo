@@ -30,7 +30,6 @@ public class Proxy implements IProxy{
 
     }
 
-
     private Object doGet(String urlPath, Class myClass) throws ClientException {
         try {
             URL url = new URL(URL_PREFIX + urlPath);
@@ -86,5 +85,150 @@ public class Proxy implements IProxy{
         catch (IOException e) {
             throw new ClientException(String.format("doPost failed: %s", e.getMessage()), e);
         }
+    }
+
+    @Override
+    public void userLogin(Login l) throws InvalidUserException {
+
+    }
+
+    @Override
+    public void userRegister(Login l) throws InvalidUserException {
+
+    }
+
+    @Override
+    public String[] gamesList() {
+        return new String[0];
+    }
+
+    @Override
+    public void gamesCreate(String s) throws FailedCreateGameException {
+
+    }
+
+    @Override
+    public void gamesJoin(String s, int playerId) throws InvalidUserException {
+
+    }
+
+    @Override
+    public void gamesSave() {
+
+    }
+
+    @Override
+    public void gamesLoad() {
+
+    }
+
+    @Override
+    public void getGameModel() {
+
+    }
+
+    @Override
+    public void resetCommands() {
+
+    }
+
+    @Override
+    public void runCommand() {
+
+    }
+
+    @Override
+    public void listCommands() {
+
+    }
+
+    @Override
+    public boolean gameAddAI() {
+        return false;
+    }
+
+    @Override
+    public String[] gameListAI() {
+        return new String[0];
+    }
+
+    @Override
+    public void sendChat(MessageList msg) {
+
+    }
+
+    @Override
+    public void rollNumber(int numRoled) {
+
+    }
+
+    @Override
+    public void robPlayer(int playerIdOne, int playerIdTwo) {
+
+    }
+
+    @Override
+    public void finishTurn(int playerId) {
+
+    }
+
+    @Override
+    public void buyDevCard(int playerId) throws InsufficientResourcesException {
+
+    }
+
+    @Override
+    public void playYearOfPlenty(int playerId) {
+
+    }
+
+    @Override
+    public void playRoadBuilding(int playerId, EdgeLocation e1, EdgeLocation e2) {
+
+    }
+
+    @Override
+    public void playSoldier(int playerId) {
+
+    }
+
+    @Override
+    public void playMonopoly(int playerId, String card) {
+
+    }
+
+    @Override
+    public void placeMonument(int playerId) {
+
+    }
+
+    @Override
+    public void buildRoad(int playerId, EdgeLocation el) {
+
+    }
+
+    @Override
+    public void buildSettlement(int playerId, EdgeLocation el) throws IllegalBuildException {
+
+    }
+
+    @Override
+    public void buildCity(int playerId, EdgeLocation el) throws IllegalBuildException {
+
+    }
+
+    @Override
+    public void offerTrade(int playerIdOne, int playerIdTwo, ResourceList rl) {
+
+    }
+
+    @Override
+    public void tradeBank(int playerId, ResourceList rl) {
+
+    }
+
+    @Override
+    public void discardCards(int playerId, ResourceList rl) throws InsufficientResourcesException {
+
     }
 }

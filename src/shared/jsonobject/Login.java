@@ -2,7 +2,7 @@ package shared.jsonobject;
 
 public class Login 
 {
-	private String userame, password;
+	private String username, password;
 	public Login()
 	{
 	}

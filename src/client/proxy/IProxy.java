@@ -5,24 +5,24 @@ package client.proxy;
 import client.model.bank.ResourceList;
 import client.model.history.MessageList;
 import client.model.map.EdgeLocation;
-import client.model.map.HexLocation;
 import shared.exceptions.*;
 import shared.jsonobject.Login;
+import shared.jsonobject.User;
 
 
 public interface IProxy {
 
     /**
      * This is used to log a player in that has already registered
-     * @param l - This is the Login or identification for the user
+     * @param u - This is the Login or identification for the user
      */
-    void userLogin(Login l) throws InvalidUserException;
+    void userLogin(User u) throws InvalidUserException;
 
     /**
      * This is used to register a new player
      * @param l - This is the Login or identification for the user
      */
-    void userRegister(Login l) throws InvalidUserException;
+    void userRegister(User u) throws InvalidUserException;
 
     /**
      * Calls this method to get a list of the games to join
