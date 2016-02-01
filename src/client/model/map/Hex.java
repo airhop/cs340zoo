@@ -13,4 +13,36 @@ public class Hex {
     number = num;
   }
   //Getters and Setters
+
+
+  public HexLocation getLocation() 
+  {
+	  return location;
+  }
+
+  public void setLocation(HexLocation location) 
+  {
+	  this.location = location;
+  }
+
+  public String getResource() 
+  {
+	  return resource;
+  }
+
+  public void setResource(String resource) 
+  {
+	  this.resource = resource;
+  }
+
+  public String getNumber() 
+  {
+	  return number;
+  }
+
+  public void setNumber(String number) 
+  {
+	  this.number = number;
+  }
+  
 }

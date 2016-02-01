@@ -15,5 +15,15 @@ public class Robber
   {
     return false;
   }
+
+  public HexLocation getHl() 
+  {
+	  return hl;
+  }
+
+  public void setHl(HexLocation hl) 
+  {
+	  this.hl = hl;
+  }
   
 }

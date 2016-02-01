@@ -23,9 +23,13 @@ public class Map {
         roads = new ArrayList<Road>();
         settlements = new ArrayList<VertexObject>();
         cities = new ArrayList<VertexObject>();
+        
+    }
+    private void generateResourcesAndNumbers()
+    {
+    	
     }
     //have another to update, or just create a new one every time?
-
     /**
      * initialize a new map when game is created
      */
@@ -47,6 +51,7 @@ public class Map {
     			//addCity();
     		}
     		//relocateRobber();
+    		
     	}
     }
 
@@ -67,13 +72,19 @@ public class Map {
      */
     public void addHex(int x, int y, String resource, int number) throws FailureToAddException//may not be used
     {
-
+    	String numberString = new String(Integer.toString(number));
+    	Hex hex = new Hex(x,y,resource,numberString);
+    	hexes.put(hex.getLocation(), hex);
     }
 
     /**
      * checks to see if port can be added
      */
-    public boolean canAddPort() {
+    public boolean canAddPort(Hex hex) {
+        if(hex.getResource() ==  "Ocean" || hex.getResource() == "Sea")
+        {
+        	return true;
+        }
         return false;
     }
 
