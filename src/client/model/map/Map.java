@@ -29,15 +29,32 @@ public class Map {
     /**
      * initialize a new map when game is created
      */
-    public void initialize() {
-
+    public void initialize() 
+    {
+    	if (hexes.size() < 33)
+    	{
+    		//addHex();
+    		if(canAddPort())//several canDo Methods
+    		{
+    			//addPort();
+    		}
+    		if(canAddRoad())
+    		{
+    			//addRoad();
+    		}
+    		if(canAddCity())
+    		{
+    			//addCity();
+    		}
+    		//relocateRobber();
+    	}
     }
 
     /**
      * checks to see if hex can be added
      */
     public boolean canAddHex() {
-        return false;
+        return true;
     }//may not be used
 
     /**
