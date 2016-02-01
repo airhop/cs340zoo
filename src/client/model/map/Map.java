@@ -1,21 +1,25 @@
 package client.model.map;
+
+import java.util.ArrayList;
 import shared.exceptions.FailureToAddException;
 import shared.exceptions.InvalidPositionException;
 
-import java.util.ArrayList;
-
 public class Map {
-    ArrayList<Hex> hexes = new ArrayList<>();
-    ArrayList<Port> ports = new ArrayList<>();
-    ArrayList<Road> roads = new ArrayList<>();
-    ArrayList<VertexObject> settlements = new ArrayList<>();
-    ArrayList<VertexObject> cities = new ArrayList<>();
+    ArrayList<Hex> hexes;
+    ArrayList<Port> ports;
+    ArrayList<Road> roads;
+    ArrayList<VertexObject> settlements;
+    ArrayList<VertexObject> cities;
     int radius = -1;
     Robber robber;
 
     //regular constructor to create map
     public Map() {
-
+        hexes = new ArrayList<>();
+        ports = new ArrayList<>();
+        roads = new ArrayList<>();
+        settlements = new ArrayList<>();
+        cities = new ArrayList<>();
     }
     //have another to update, or just create a new one every time?
 

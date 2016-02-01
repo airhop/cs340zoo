@@ -5,7 +5,28 @@ import shared.exceptions.InsufficientResourcesException;
 public class Bank {
   ResourceList resources;
   DevCardList dcl;
-
+  
+  Bank(ResourceList res, DevCardList devs)
+  {
+    resources = res;
+    dcl = devs;
+  }
+    public ResourceList getResources()
+    {
+      return resources;
+    }
+    public void setResources(ResourceList list)
+    {
+      resources = list;
+    }
+    public DevCardList getDevCards()
+    {
+      return dcl;
+    }
+    public void setDevCards(DevCardList list)
+    {
+      devs = list;
+    }
     /**
     * adds proper resource to resourcelist
     */

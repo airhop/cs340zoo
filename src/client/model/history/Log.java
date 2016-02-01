@@ -9,13 +9,13 @@ public class Log {
 	public void printMessageList()
 	{
 		StringBuilder sb = new StringBuilder();
-		for(MessageLine line : LogList)
-		{
-			sb.append(line.message);
-			sb.append("\n");
-			sb.append(line.source);
-			sb.append("\n");
-		}
+//		for(MessageLine line : LogList)
+//		{
+//			sb.append(line.message);
+//			sb.append("\n");
+//			sb.append(line.source);
+//			sb.append("\n");
+//		}
 	}
 	
 	/**

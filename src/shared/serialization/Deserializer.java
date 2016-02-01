@@ -14,6 +14,7 @@ public class Deserializer {
 		Gson gson = new Gson();
 		GameModel deserializeGame = gson.fromJson(json, GameModel.class);
 
+
 		return deserializeGame;
 	}
 
