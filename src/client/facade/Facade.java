@@ -245,20 +245,26 @@ public class Facade
      * Places a Road at a given location on the map
      * @return boolean whether or not the player built the road (perhaps placeholder return values for all of the do methods)
      */
-    public void placeRoad(EdgeLocation el)
+    public void placeRoad(EdgeLocation el) throws InvalidPositionException
     {
-        game.placeRoad(el);
+         game.placeRoad(el);
     }
     /**
      * Places a Settlement at a given location on the map
      * @return boolean whether or not the player placed a settlement
      */
-    public void placeSettlement() throws InvalidPositionException {}
+    public void placeSettlement(EdgeLocation el) throws InvalidPositionException
+    {
+         game.placeSettlement(el);
+    }
     /**
      * Places a City at a given location on the map
      * @return boolean whether or not the player placed the city
      */
-    public void placeCity() throws InvalidPositionException{}
+    public void placeCity(EdgeLocation el) throws InvalidPositionException
+    {
+        game.placeCity(el);
+    }
     /**
      * Buys a developement card and increases the amount for the purchasing player
      * @return boolean whether or not the player bought the dev card
@@ -267,21 +273,23 @@ public class Facade
     {
         game.buyDevCard();
     }
-    /**
-     * uses a specific development card
-     * @return boolean whether or not the player played a devcard
-     */
-    public void playDevCard() throws IllegalMoveException{}
+
     /**
      * uses Monopoly
      * @return boolean whether or not the player played a monopoly
      */
-    public void playMonopoly() throws IllegalMoveException{}
+    public void playMonopoly() throws IllegalMoveException
+    {
+        game.playMonopoly();
+    }
     /**
      * plays the road build card
      * @return boolean
      */
-    public void playRoadBuilding() throws IllegalMoveException{}
+    public void playRoadBuilding() throws IllegalMoveException
+    {
+        game.playRoadBuilding();
+    }
     /**
      * plays a monument card
      * @return boolean whether or not the player placed a monument
@@ -306,27 +314,44 @@ public class Facade
      * Places a the robber at a specific location on the map
      * @return boolean whether or not the player moved the robber
      */
-    public void moveRobber() throws IllegalMoveException{}
+    public void moveRobber(HexLocation hl) throws IllegalMoveException
+    {
+        game.moveRobber(hl);
+    }
     /**
      * enacts the trade offer of the specified player
      * @return boolean whether or not the player traded with another player
      */
-    public void tradePlayer() throws IllegalMoveException, IllegalMoveException{}
+    public void tradePlayer() throws IllegalMoveException, IllegalMoveException
+    {
+
+    }
+
     /**
      * completes a transaction of resources with the bank
      * @return boolean whether or not the player traded with the bank
      */
-    public void tradeBank() throws InsufficientResourcesException, IllegalMoveException{}
+    public void tradeBank() throws InsufficientResourcesException, IllegalMoveException
+    {
+
+    }
+
     /**
      * accepts the trade offer of another player
      * @return boolean whether or not the player accepted a trade offer
      */
-    public void acceptTrade() throws InsufficientResourcesException, IllegalMoveException{}
+    public void acceptTrade() throws InsufficientResourcesException, IllegalMoveException
+    {
+
+    }
     /**
      * ends the game and congratulates the player with 10 victory points
      * @return boolean whether or not the player has sufficient victory points to win
      */
-    public void win() throws InvalidWinnerException {}
+    public void win() throws InvalidWinnerException
+    {
+        game.win();
+    }
     /**
      * rolls the dice for a number 1-12
      * @return boolean whether or not the player rolled the dice

@@ -5,7 +5,9 @@ import client.model.bank.ResourceList;
 import client.model.map.*;
 import client.model.misc.*;
 import client.model.player.Player;
+import org.omg.CORBA.DynAnyPackage.Invalid;
 import shared.exceptions.IllegalMoveException;
+import shared.exceptions.InvalidPositionException;
 import shared.exceptions.InvalidWinnerException;
 
 public class GameModel {
@@ -220,8 +222,9 @@ public class GameModel {
      *
      * @return boolean whether or not the player can move the robber
      */
-    public boolean canMoveRobber() {
-        return false;
+    public boolean canMoveRobber(HexLocation hl)
+    {
+        return map.canMoveRobber();
     }
 
     /**
@@ -286,10 +289,13 @@ public class GameModel {
      *
      * @return boolean whether or not the player built the road (perhaps placeholder return values for all of the do methods)
      */
-    public void placeRoad(EdgeLocation el)
+    public void placeRoad(EdgeLocation el) throws InvalidPositionException
     {
         int cp = tt.getCurrentPlayer();
-        map.addRoad(el, cp);
+        if(players[cp].canBuildRoad() && map.canAddRoad(el))
+            map.addRoad(el, cp);
+        else
+            throw new InvalidPositionException("Error Building a Road");
     }
 
     /**
@@ -297,8 +303,13 @@ public class GameModel {
      *
      * @return boolean whether or not the player placed a settlement
      */
-    public boolean placeSettlement() {
-        return false;
+    public void placeSettlement(EdgeLocation el) throws InvalidPositionException
+    {
+        int cp = tt.getCurrentPlayer();
+        if(players[cp].canBuildSettlement() && map.canAddSettlement(el))
+            map.addSettlement(el, cp);
+        else
+            throw new InvalidPositionException("Error Building a Settlement");
     }
 
     /**
@@ -306,8 +317,13 @@ public class GameModel {
      *
      * @return boolean whether or not the player placed the city
      */
-    public boolean placeCity() {
-        return false;
+    public void placeCity(EdgeLocation el) throws InvalidPositionException
+    {
+        int cp = tt.getCurrentPlayer();
+        if(players[cp].canBuildCity() && map.canAddCity(el))
+            map.addCity(el, cp);
+        else
+            throw new InvalidPositionException("Error building a City");
     }
 
     /**
@@ -328,22 +344,11 @@ public class GameModel {
     }
 
     /**
-     * uses a specific development card
-     *
-     * @return boolean whether or not the player played a devcard
-     */
-    public boolean playDevCard()
-    {
-        int cp = tt.getCurrentPlayer();
-        return false;
-    }
-
-    /**
      * uses Monopoly
      *
      * @return boolean whether or not the player played a monopoly
      */
-    public boolean playMonopoly()
+    public void playMonopoly()
     {
         //use the ResourceList.merge method
         int cp = tt.getCurrentPlayer();
@@ -353,8 +358,6 @@ public class GameModel {
             if(i != cp)
                 given += players[i].Monopolize(wanted);
         players[cp].addResources(given);
-
-        return false;
     }
 
     /**
@@ -362,8 +365,10 @@ public class GameModel {
      *
      * @return boolean
      */
-    public boolean playRoadBuilding() {
-        return false;
+    public void playRoadBuilding()
+    {
+        int cp = tt.getCurrentPlayer();
+        players[cp].playRoadBuilding();
     }
 
     /**
@@ -443,8 +448,12 @@ public class GameModel {
      *
      * @return boolean whether or not the player has sufficient victory points to win
      */
-    public boolean win() {
-        return false;
+    public void win() throws InvalidWinnerException
+    {
+        if(winner != -1 && winner != tt.getCurrentPlayer())
+            throw new InvalidWinnerException("Not the Winner's turn");
+        if(winner == -1)
+            throw new InvalidWinnerException("No winner yet declared!");
     }
 
     /**
