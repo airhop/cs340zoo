@@ -1,8 +1,19 @@
+/**
+ * must can before do everytime?  Who's job is that?
+ *
+ * canRob - return an array of those that can be robbed, return an array of ints
+ *          can make it a return array instead of void method
+ * TradePlayer - set up the TradeOffer
+ */
+
 package client.facade;
 
+import shared.definitions.*;
 import shared.exceptions.*;
 import client.model.*;
 import client.model.map.*;
+import client.model.bank.ResourceList;
+import client.model.misc.*;
 
 public class Facade
 {
@@ -46,6 +57,15 @@ public class Facade
         return game.canPlaceRoad();
     }
     /**
+     * Places a Road at a given location on the map
+     * @return boolean whether or not the player built the road (perhaps placeholder return values for all of the do methods)
+     */
+    public void placeRoad(EdgeLocation el) throws InvalidPositionException
+    {
+        if(game != null)
+           game.placeRoad(el);
+    }
+    /**
      * Checks to see if building a settlement is a legal move for the player
      * @return boolean whether or not the player can build a settlement
      */
@@ -55,6 +75,7 @@ public class Facade
             return false;
         return game.canBuildSettlement();
     }
+
     /**
      * Checks to see if placing a settlement is a legal move for the player
      * @return boolean whether or not the player can place a settlement
@@ -65,6 +86,17 @@ public class Facade
             return false;
         return game.canPlaceSettlement();
     }
+
+    /**
+     * Places a Settlement at a given location on the map
+     * @return boolean whether or not the player placed a settlement
+     */
+    public void placeSettlement(EdgeLocation el) throws InvalidPositionException
+    {
+        if(game != null)
+            game.placeSettlement(el);
+    }
+
     /**
      * Checks to see if building a city is a legal move for the player
      * @return boolean whether or not the player can build a city
@@ -85,6 +117,17 @@ public class Facade
             return false;
         return game.canPlaceCity();
     }
+
+    /**
+     * Places a City at a given location on the map
+     * @return boolean whether or not the player placed the city
+     */
+    public void placeCity(EdgeLocation el) throws InvalidPositionException
+    {
+        if(game != null)
+            game.placeCity(el);
+    }
+
     /**
      * Checks to see if buying a Developement Card is a legal move for the player
      * @return boolean whether or not the player can buy a Developement card
@@ -159,31 +202,29 @@ public class Facade
      * Checks to see if robbing another player is a legal move for the player
      * @return boolean whether or not the player can rob another player
      */
-    public boolean canRob()
+    public void canRob()
     {
-        if(game == null)
-            return false;
-        return game.canRob();
+        int [] ids;
+        if(game != null)
+            ids = game.canRob();
     }
     /**
      * Checks to see if moving the robber is a legal move for the player
      * @return boolean whether or not the player can move the robber
      */
-    public boolean canMoveRobber()
+    public boolean canPlaceRobber(HexLocation hl)
     {
         if(game == null)
             return false;
-        return game.canMoveRobber();
+        return game.canMoveRobber(hl);
     }
     /**
-     * Checks to see if trading resource cards with another player is a legal move for the player
-     * @return boolean whether or not the player can trade with another player
+     * Set up the TradeOffer
      */
-    public boolean canTradePlayer()
+    public void TradePlayer() throws IllegalMoveException, InsufficientResourcesException
     {
-        if(game == null)
-            return false;
-        return game.canTradePlayer();
+        if(game != null)
+             game.TradePlayer();
     }
     /**
      * Checks to see if trading resources with the bank is a legal move for the player
@@ -205,16 +246,7 @@ public class Facade
             return false;
         return game.canAcceptTrade();
     }
-    /**
-     * Checks to see if the player can win the game
-     * @return boolean whether or not the player can win (have 10 victory points)
-     */
-    public boolean canWin()
-    {
-        if(game == null)
-            return false;
-        return game.canWin();
-    }
+
     /**
      * Checks to see if the player can roll the dice
      * @return boolean whether or not the player can roll the dice
@@ -242,30 +274,6 @@ public class Facade
 
     //do methods
     /**
-     * Places a Road at a given location on the map
-     * @return boolean whether or not the player built the road (perhaps placeholder return values for all of the do methods)
-     */
-    public void placeRoad(EdgeLocation el) throws InvalidPositionException
-    {
-         game.placeRoad(el);
-    }
-    /**
-     * Places a Settlement at a given location on the map
-     * @return boolean whether or not the player placed a settlement
-     */
-    public void placeSettlement(EdgeLocation el) throws InvalidPositionException
-    {
-         game.placeSettlement(el);
-    }
-    /**
-     * Places a City at a given location on the map
-     * @return boolean whether or not the player placed the city
-     */
-    public void placeCity(EdgeLocation el) throws InvalidPositionException
-    {
-        game.placeCity(el);
-    }
-    /**
      * Buys a developement card and increases the amount for the purchasing player
      * @return boolean whether or not the player bought the dev card
      */
@@ -278,9 +286,9 @@ public class Facade
      * uses Monopoly
      * @return boolean whether or not the player played a monopoly
      */
-    public void playMonopoly() throws IllegalMoveException
+    public void playMonopoly(ResourceType r) throws IllegalMoveException
     {
-        game.playMonopoly();
+        game.playMonopoly(r);
     }
     /**
      * plays the road build card
@@ -345,16 +353,37 @@ public class Facade
 
     }
     /**
-     * ends the game and congratulates the player with 10 victory points
-     * @return boolean whether or not the player has sufficient victory points to win
-     */
-    public void win() throws InvalidWinnerException
-    {
-        game.win();
-    }
-    /**
      * rolls the dice for a number 1-12
      * @return boolean whether or not the player rolled the dice
      */
-    public void roll() throws IllegalMoveException{}
+    public void roll() throws IllegalMoveException
+    {
+        if(game != null)
+            game.roll();
+    }
+
+    /**
+     * ends the game and congratulates the player with 10 victory points
+     * @return boolean whether or not the player has sufficient victory points to win
+     */
+    public void win()
+    {
+        try
+        {    game.decideWinner(); }
+        catch(InvalidWinnerException e)
+        {
+            //there was not winner yet . . .
+        }
+    }
+
+    /**
+     * Checks to see if the player can win the game
+     * @return boolean whether or not the player can win (have 10 victory points)
+     */
+    public boolean canWin()
+    {
+        if(game == null)
+            return false;
+        return game.canWin();
+    }
 }

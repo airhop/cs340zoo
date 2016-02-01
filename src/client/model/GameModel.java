@@ -1,3 +1,15 @@
+/**
+ * Roll = resourceList/player what are we returning and passing around?
+ *
+ * CanMoveRobber calls canRelocateRobber, move it to a valid hex location (can't be4 where it was and can't be an ocean tile
+ *
+ * Monopoly - send a player a resource type, return the number they have (delete those resources)
+ *              send a player a resource type and an int, increase the resource by that
+ * RoadBuilding - canRB - make sure there are 2 roads to be played and the card
+ * Soldier - have a knight card?
+ */
+
+
 package client.model;
 
 import client.model.bank.Bank;
@@ -6,9 +18,8 @@ import client.model.map.*;
 import client.model.misc.*;
 import client.model.player.Player;
 import org.omg.CORBA.DynAnyPackage.Invalid;
-import shared.exceptions.IllegalMoveException;
-import shared.exceptions.InvalidPositionException;
-import shared.exceptions.InvalidWinnerException;
+import shared.exceptions.*;
+import shared.definitions.*;
 
 public class GameModel {
     private Map map;
@@ -28,25 +39,36 @@ public class GameModel {
         version++;
     }
 
+
     /**
-     * decides game winner and sets the winner to the id of the winning player
+     * Checks to see if the player can win the game
      *
-     * @param winnerid - id of the winning player
+     * @return boolean whether or not the player can win (have 10 victory points)
      */
+    public boolean canWin()
+    {
+        //need to check if it is finish turn?
+        int cp = tt.getCurrentPlayer();
+        if(players[cp].canWin())
+            return true;
+        return false;
+    }
 
     /**
      * decides game winner and sets the winner to the id of the winning player
      *
-     * @param winnerid - id of the winning player
      */
-    public void decideWinner(int winnerid) throws InvalidWinnerException
+    public void decideWinner() throws InvalidWinnerException
     {
         int cp = tt.getCurrentPlayer();
         if(players[cp].canWin())
             winner = cp;
+        if(winner != -1)
+            players[winner].win();
+        else
+            throw new InvalidWinnerException("No winner yet!");
 
     }
-    //can methods
 
     /**
      * This is used to see when the robber moves if the player can discard
@@ -80,6 +102,19 @@ public class GameModel {
     }
 
     /**
+     * Places a Road at a given location on the map
+     *
+     * @return boolean whether or not the player built the road (perhaps placeholder return values for all of the do methods)
+     */
+    public void placeRoad(EdgeLocation el) throws InvalidPositionException
+    {
+        int cp = tt.getCurrentPlayer();
+        if(players[cp].canBuildRoad() && map.canAddRoad(el))
+            map.addRoad(el, cp);
+        else
+            throw new InvalidPositionException("Error Building a Road");
+    }
+    /**
      * Checks to see if building a settlement is a legal move for the player
      *
      * @return boolean whether or not the player can build a settlement
@@ -95,9 +130,23 @@ public class GameModel {
      *
      * @return boolean whether or not the player can place a settlement
      */
-    public boolean canPlaceSettlement()
+    public boolean canPlaceSettlement(EdgeLocation el)
     {
-        return map.canAddSettlement();
+        return map.canAddSettlement(el, tt.getCurrentPlayer());
+    }
+
+    /**
+     * Places a Settlement at a given location on the map
+     *
+     * @return boolean whether or not the player placed a settlement
+     */
+    public void placeSettlement(EdgeLocation el) throws InvalidPositionException
+    {
+        int cp = tt.getCurrentPlayer();
+        if(players[cp].canBuildSettlement() && map.canAddSettlement(el))
+            map.addSettlement(el, cp);
+        else
+            throw new InvalidPositionException("Error Building a Settlement");
     }
 
     /**
@@ -119,6 +168,20 @@ public class GameModel {
     public boolean canPlaceCity()
     {
         return map.canAddCity();
+    }
+
+    /**
+     * Places a City at a given location on the map
+     *
+     * @return boolean whether or not the player placed the city
+     */
+    public void placeCity(EdgeLocation el) throws InvalidPositionException
+    {
+        int cp = tt.getCurrentPlayer();
+        if(players[cp].canBuildCity() && map.canAddCity(el))
+            map.addCity(el, cp);
+        else
+            throw new InvalidPositionException("Error building a City");
     }
 
     /**
@@ -173,7 +236,7 @@ public class GameModel {
     public boolean canPlaceMonument()
     {
         int cp = tt.getCurrentPlayer();
-        return players[cp].canRoadBuilding();
+        return players[cp].canPlaceMonument();
     }
 
     /**
@@ -210,11 +273,24 @@ public class GameModel {
     }
     /**
      * Checks to see if robbing another player is a legal move for the player
-     *
      * @return boolean whether or not the player can rob another player
      */
-    public boolean canRob() {
-        return false;
+    public int[] canRob()
+    {
+        //find who can be robbed
+        int[] ids = new int[3];
+        int currId = 0;
+        for(int i = 0; i < players.length; i++)
+            if(i != tt.getCurrentPlayer() && players[i].canRob())
+                ids[currId++] = i;
+        if(currId == 3)
+            return ids;
+
+        //if not all players are possibilities then make a smaller array with the possibilities
+        int[] possibilities = new int[currId+1];
+        for(int i = 0; i < possibilities.length; i++)
+            possibilities[i] = ids[i];
+        return possibilities;
     }
 
     /**
@@ -224,18 +300,19 @@ public class GameModel {
      */
     public boolean canMoveRobber(HexLocation hl)
     {
-        return map.canMoveRobber();
+        return map.canRelocateRobber(hl);
     }
 
     /**
-     * Checks to see if trading resource cards with another player is a legal move for the player
-     *
-     * @return boolean whether or not the player can trade with another player
+     *Set up the TradeOffer
      */
-    public boolean canTradePlayer()
+    public void TradePlayer() throws IllegalMoveException, InsufficientResourcesException
     {
+        if(tt.getStatus() != 1)
+            throw new IllegalMoveException("not the trading phase");
 
-        return false;
+        to =  players[tt.getCurrentPlayer()].tradeOffer();
+
     }
 
     /**
@@ -257,20 +334,6 @@ public class GameModel {
     }
 
     /**
-     * Checks to see if the player can win the game
-     *
-     * @return boolean whether or not the player can win (have 10 victory points)
-     */
-    public boolean canWin()
-    {
-        //need to check if it is finish turn?
-        int cp = tt.getCurrentPlayer();
-        if(players[cp].canWin())
-            return true;
-        return false;
-    }
-
-    /**
      * Checks to see if the player can roll the dice
      *
      * @return boolean whether or not the player can roll the dice
@@ -283,49 +346,6 @@ public class GameModel {
     }
 
     //do methods
-
-    /**
-     * Places a Road at a given location on the map
-     *
-     * @return boolean whether or not the player built the road (perhaps placeholder return values for all of the do methods)
-     */
-    public void placeRoad(EdgeLocation el) throws InvalidPositionException
-    {
-        int cp = tt.getCurrentPlayer();
-        if(players[cp].canBuildRoad() && map.canAddRoad(el))
-            map.addRoad(el, cp);
-        else
-            throw new InvalidPositionException("Error Building a Road");
-    }
-
-    /**
-     * Places a Settlement at a given location on the map
-     *
-     * @return boolean whether or not the player placed a settlement
-     */
-    public void placeSettlement(EdgeLocation el) throws InvalidPositionException
-    {
-        int cp = tt.getCurrentPlayer();
-        if(players[cp].canBuildSettlement() && map.canAddSettlement(el))
-            map.addSettlement(el, cp);
-        else
-            throw new InvalidPositionException("Error Building a Settlement");
-    }
-
-    /**
-     * Places a City at a given location on the map
-     *
-     * @return boolean whether or not the player placed the city
-     */
-    public void placeCity(EdgeLocation el) throws InvalidPositionException
-    {
-        int cp = tt.getCurrentPlayer();
-        if(players[cp].canBuildCity() && map.canAddCity(el))
-            map.addCity(el, cp);
-        else
-            throw new InvalidPositionException("Error building a City");
-    }
-
     /**
      * Buys a developement card and increases the amount for the purchasing player
      *
@@ -348,16 +368,16 @@ public class GameModel {
      *
      * @return boolean whether or not the player played a monopoly
      */
-    public void playMonopoly()
+    public void playMonopoly(ResourceType r)
     {
         //use the ResourceList.merge method
         int cp = tt.getCurrentPlayer();
-        ResourceType wanted = players[cp].getMonopoly();
+
         int given = 0;
         for(int i = 0; i < players.length; i++)
             if(i != cp)
-                given += players[i].Monopolize(wanted);
-        players[cp].addResources(given);
+                given += players[i].Monopolize(r);
+        players[cp].addResources(r, given);
     }
 
     /**
@@ -441,19 +461,6 @@ public class GameModel {
      */
     public boolean acceptTrade() {
         return false;
-    }
-
-    /**
-     * ends the game and congratulates the player with 10 victory points
-     *
-     * @return boolean whether or not the player has sufficient victory points to win
-     */
-    public void win() throws InvalidWinnerException
-    {
-        if(winner != -1 && winner != tt.getCurrentPlayer())
-            throw new InvalidWinnerException("Not the Winner's turn");
-        if(winner == -1)
-            throw new InvalidWinnerException("No winner yet declared!");
     }
 
     /**
