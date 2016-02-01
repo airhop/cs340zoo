@@ -10,6 +10,8 @@
  * canRob - return an array of those that can be robbed, return an array of ints
  *          can make it a return array instead of void method
  * TradePlayer - set up the TradeOffer
+ *
+ * need a ServerNotFunctioning exception?
  */
 
 package client.facade;
@@ -27,9 +29,15 @@ public class Facade
     GameModel game;
     IProxy proxy;
 
-    public Facade()
+    public Facade(Proxy p)
     {
         game = null;
+        proxy = p;
+    }
+    public Facade(MockProxy p)
+    {
+        game = null;
+        proxy = p;
     }
 
     public void Reinitialize(GameModel g)
@@ -402,5 +410,13 @@ public class Facade
         if(game == null)
             return false;
         return game.canWin();
+    }
+
+    //
+    public boolean canSendChat(String msg, int pid)
+    {
+        if(game == null)
+            return false;
+        return game.canSendChat(msg, pid);
     }
 }

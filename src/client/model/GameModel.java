@@ -18,6 +18,7 @@
  *      - could return an array of TradeOffers and that can be passed to players
  *
  * canDiscardCards - what is the point?  Can discard a list of cards, of has a hand that can discard cards?  etc.
+ * canSendChat - what would be stopping you?
  *
  * Robber - CanMoveRobber calls canRelocateRobber, move it to a valid hex location (can't be4 where it was and can't be an ocean tile
  *
@@ -36,6 +37,7 @@ import client.model.map.*;
 import client.model.misc.*;
 import client.model.player.Player;
 import org.omg.CORBA.DynAnyPackage.Invalid;
+import client.model.history.*;
 import shared.exceptions.*;
 import shared.definitions.*;
 
@@ -48,6 +50,8 @@ public class GameModel {
     int version = 0;
     int winner = -1;
     Dice dice;
+    Chat chat;
+    Log log;
 
 
     public GameModel(String[] names) {
@@ -555,4 +559,9 @@ public class GameModel {
         return true;
     }
 
+    public boolean canSendChat(String msg, int pid)
+    {
+        chat.addMessage(players[pid].getName(), msg);
+        return true;
+    }
 }
