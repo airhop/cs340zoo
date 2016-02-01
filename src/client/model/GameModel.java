@@ -1,12 +1,30 @@
 /**
- * Roll = resourceList/player what are we returning and passing around?
+ * Bank - needs an add ResourceList for robberdiscard
+ *      - need an empty constructor
+ *      - get a lazy canGive(enumtype), return type.  Same with addtype
+ *      - given a tradeOffer can we trade?
  *
- * CanMoveRobber calls canRelocateRobber, move it to a valid hex location (can't be4 where it was and can't be an ocean tile
+ * TradeOffer - can you seperate the TradeOffer into 2 resourcelists?  1 positive and 1 negative.
+ *
+ * Player - need a constructor with only a name and an id, all items
+ *        - canrobberdiscard - player method discard cards and return the resourcelist of discarded cards
+ *        - canPlaceMonument - if VP == 10, return true, else false
+ *        trading?
+`*            - tradePlayer = return a TradeOffer to set up tradeoffer
+ *            - need 2 acceptTrade methods.  1 for reciever and 1 for sender.
+ *        - canTradeBank() will be its job to make sure the port is correct as well
+ *
+ * Roll = resourceList/player what are we returning and passing around?
+ *      - could return an array of TradeOffers and that can be passed to players
+ *
+ * canDiscardCards - what is the point?  Can discard a list of cards, of has a hand that can discard cards?  etc.
+ *
+ * Robber - CanMoveRobber calls canRelocateRobber, move it to a valid hex location (can't be4 where it was and can't be an ocean tile
  *
  * Monopoly - send a player a resource type, return the number they have (delete those resources)
  *              send a player a resource type and an int, increase the resource by that
  * RoadBuilding - canRB - make sure there are 2 roads to be played and the card
- * Soldier - have a knight card?
+ *
  */
 
 
@@ -32,6 +50,56 @@ public class GameModel {
     Dice dice;
 
 
+    public GameModel(String[] names) {
+        map = new Map();
+        bank = new Bank();
+        tt = new TurnTracker();
+        to = new TradeOffer();
+        dice = new Dice();
+        players = new Player[4];
+        for (int i = 0; i < names.length; i++)
+            players[i] = new Player(names[i], i);
+    }
+
+    public void reinitialize(GameModel game) {
+        map = game.getMap();
+        tt = game.getTurnTracker();
+        to = game.getTradeOffer();
+        version = game.getVersion();
+        winner = game.getWinner();
+        players = game.getPlayers();
+        bank = game.getBank();
+//        dice = new Dice();
+    }
+
+    public Map getMap() {
+        return map;
+    }
+
+    public TurnTracker getTurnTracker() {
+        return tt;
+    }
+
+    public TradeOffer getTradeOffer() {
+        return to;
+    }
+
+    public int getVersion() {
+        return version;
+    }
+
+    public int getWinner() {
+        return winner;
+    }
+
+    public Bank getBank() {
+        return bank;
+    }
+
+    public Player[] getPlayers() {
+        return players;
+    }
+
     /**
      * updates version of the game model
      */
@@ -45,25 +113,22 @@ public class GameModel {
      *
      * @return boolean whether or not the player can win (have 10 victory points)
      */
-    public boolean canWin()
-    {
+    public boolean canWin() {
         //need to check if it is finish turn?
         int cp = tt.getCurrentPlayer();
-        if(players[cp].canWin())
+        if (players[cp].canWin())
             return true;
         return false;
     }
 
     /**
      * decides game winner and sets the winner to the id of the winning player
-     *
      */
-    public void decideWinner() throws InvalidWinnerException
-    {
+    public void decideWinner() throws InvalidWinnerException {
         int cp = tt.getCurrentPlayer();
-        if(players[cp].canWin())
+        if (players[cp].canWin())
             winner = cp;
-        if(winner != -1)
+        if (winner != -1)
             players[winner].win();
         else
             throw new InvalidWinnerException("No winner yet!");
@@ -75,18 +140,36 @@ public class GameModel {
      *
      * @return
      */
-    public boolean canRobberDiscard()
-    {
-        return false;
+    public void RobberDiscard() {
+        for (int i = 0; i < players.length; i++)
+            bank.add(players[i].canRobberDiscard());
     }
+
+    /**
+     * Places a the robber at a specific location on the map
+     *
+     * @return boolean whether or not the player moved the robber
+     */
+    public void moveRobber(HexLocation hl) {
+        map.placeRobber(hl);
+    }
+
+    /**
+     * Checks to see if moving the robber is a legal move for the player
+     *
+     * @return boolean whether or not the player can move the robber
+     */
+    public boolean canMoveRobber(HexLocation hl) {
+        return map.canRelocateRobber(hl);
+    }
+
 
     /**
      * Checks to see if building a road is a legal move for the player
      *
      * @return boolean whether or not the player can build a road
      */
-    public boolean canBuildRoad()
-    {
+    public boolean canBuildRoad() {
         int cp = tt.getCurrentPlayer();
         return players[cp].canBuildRoad();
     }
@@ -96,8 +179,7 @@ public class GameModel {
      *
      * @return boolean whether or not the player can place a road
      */
-    public boolean canPlaceRoad()
-    {
+    public boolean canPlaceRoad() {
         return map.canAddRoad();
     }
 
@@ -106,21 +188,20 @@ public class GameModel {
      *
      * @return boolean whether or not the player built the road (perhaps placeholder return values for all of the do methods)
      */
-    public void placeRoad(EdgeLocation el) throws InvalidPositionException
-    {
+    public void placeRoad(EdgeLocation el) throws InvalidPositionException {
         int cp = tt.getCurrentPlayer();
-        if(players[cp].canBuildRoad() && map.canAddRoad(el))
+        if (players[cp].canBuildRoad() && map.canAddRoad(el))
             map.addRoad(el, cp);
         else
             throw new InvalidPositionException("Error Building a Road");
     }
+
     /**
      * Checks to see if building a settlement is a legal move for the player
      *
      * @return boolean whether or not the player can build a settlement
      */
-    public boolean canBuildSettlement()
-    {
+    public boolean canBuildSettlement() {
         int cp = tt.getCurrentPlayer();
         return players[cp].canBuildSettlement();
     }
@@ -130,8 +211,7 @@ public class GameModel {
      *
      * @return boolean whether or not the player can place a settlement
      */
-    public boolean canPlaceSettlement(EdgeLocation el)
-    {
+    public boolean canPlaceSettlement(EdgeLocation el) {
         return map.canAddSettlement(el, tt.getCurrentPlayer());
     }
 
@@ -140,10 +220,9 @@ public class GameModel {
      *
      * @return boolean whether or not the player placed a settlement
      */
-    public void placeSettlement(EdgeLocation el) throws InvalidPositionException
-    {
+    public void placeSettlement(EdgeLocation el) throws InvalidPositionException {
         int cp = tt.getCurrentPlayer();
-        if(players[cp].canBuildSettlement() && map.canAddSettlement(el))
+        if (players[cp].canBuildSettlement() && map.canAddSettlement(el))
             map.addSettlement(el, cp);
         else
             throw new InvalidPositionException("Error Building a Settlement");
@@ -154,8 +233,7 @@ public class GameModel {
      *
      * @return boolean whether or not the player can build a city
      */
-    public boolean canBuildCity()
-    {
+    public boolean canBuildCity() {
         int cp = tt.getCurrentPlayer();
         return players[cp].canBuildCity();
     }
@@ -165,8 +243,7 @@ public class GameModel {
      *
      * @return boolean whether or not the player can place a city
      */
-    public boolean canPlaceCity()
-    {
+    public boolean canPlaceCity() {
         return map.canAddCity();
     }
 
@@ -175,10 +252,9 @@ public class GameModel {
      *
      * @return boolean whether or not the player placed the city
      */
-    public void placeCity(EdgeLocation el) throws InvalidPositionException
-    {
+    public void placeCity(EdgeLocation el) throws InvalidPositionException {
         int cp = tt.getCurrentPlayer();
-        if(players[cp].canBuildCity() && map.canAddCity(el))
+        if (players[cp].canBuildCity() && map.canAddCity(el))
             map.addCity(el, cp);
         else
             throw new InvalidPositionException("Error building a City");
@@ -189,8 +265,7 @@ public class GameModel {
      *
      * @return boolean whether or not the player can buy a Developement card
      */
-    public boolean canBuyDevcard()
-    {
+    public boolean canBuyDevcard() {
         int cp = tt.getCurrentPlayer();
         return players[cp].canBuyDevcard();
     }
@@ -200,8 +275,7 @@ public class GameModel {
      *
      * @return boolean whether or not the player can play a Developement card
      */
-    public boolean canPlayDevcard()
-    {
+    public boolean canPlayDevcard() {
         int cp = tt.getCurrentPlayer();
         return players[cp].canPlayDevcard();
     }
@@ -211,8 +285,7 @@ public class GameModel {
      *
      * @return boolean whether or not the player can monopoly
      */
-    public boolean canMonopoly()
-    {
+    public boolean canMonopoly() {
         int cp = tt.getCurrentPlayer();
         return players[cp].canMonopoly();
     }
@@ -222,8 +295,7 @@ public class GameModel {
      *
      * @return boolean whether or not the player can road building
      */
-    public boolean canRoadBuilding()
-    {
+    public boolean canRoadBuilding() {
         int cp = tt.getCurrentPlayer();
         return players[cp].canRoadBuilding();
     }
@@ -233,8 +305,7 @@ public class GameModel {
      *
      * @return boolean whether or not the player can place a monument
      */
-    public boolean canPlaceMonument()
-    {
+    public boolean canUseMonument() {
         int cp = tt.getCurrentPlayer();
         return players[cp].canPlaceMonument();
     }
@@ -244,10 +315,23 @@ public class GameModel {
      *
      * @return boolean whether or not the player can play the Year of Plenty card
      */
-    public boolean canYearOfPlenty()
-    {
+    public boolean canYearOfPlenty() {
         int cp = tt.getCurrentPlayer();
         return players[cp].canYearOfPlenty();
+    }
+
+    /**
+     * plays the year of plenty card for a given player
+     *
+     * @return boolean whether or not the player played the year of plenty card
+     */
+    public void playYearOfPlenty(ResourceType r) throws IllegalMoveException, InsufficientResourcesException {
+        if (!bank.canGive(r, 2))
+            throw new InsufficientResourcesException("Bank doesn't have enough resources");
+        bank.add(r, 2);
+        int cp = tt.getCurrentPlayer();
+        players[cp].playYearOfPlenty();
+        players[cp].add(r, 2);
     }
 
     /**
@@ -255,21 +339,22 @@ public class GameModel {
      *
      * @return boolean whether or not the player can place the Soldier card
      */
-    public boolean canPlaceSoldier()
-    {
+    public boolean canPlaceSoldier() {
         int cp = tt.getCurrentPlayer();
         return players[cp].canPlaceSoldier();
     }
 
-    public boolean canFinishTurn()
-    {
+    public boolean canFinishTurn() {
         return (tt.getStatus() == 3);
     }
 
+    public void FinishTurn()
+    {   tt.updateStatus();   }
+
+
     public boolean canDiscardCards()
     {
-
-        return false;
+        return players[tt.getCurrentPlayer()].canDiscardCards();
     }
     /**
      * Checks to see if robbing another player is a legal move for the player
@@ -293,17 +378,7 @@ public class GameModel {
         return possibilities;
     }
 
-    /**
-     * Checks to see if moving the robber is a legal move for the player
-     *
-     * @return boolean whether or not the player can move the robber
-     */
-    public boolean canMoveRobber(HexLocation hl)
-    {
-        return map.canRelocateRobber(hl);
-    }
-
-    /**
+   /**
      *Set up the TradeOffer
      */
     public void TradePlayer() throws IllegalMoveException, InsufficientResourcesException
@@ -311,8 +386,7 @@ public class GameModel {
         if(tt.getStatus() != 1)
             throw new IllegalMoveException("not the trading phase");
 
-        to =  players[tt.getCurrentPlayer()].tradeOffer();
-
+        to =  players[tt.getCurrentPlayer()].tradePlayer();
     }
 
     /**
@@ -320,8 +394,23 @@ public class GameModel {
      *
      * @return boolean whether or not the player can trade with the bank
      */
-    public boolean canTradeBank() {
-        return false;
+    public boolean canTradeBank(ResourceList rl)
+    {
+        int cp = tt.getCurrentPlayer();
+        to = players[cp].TradeBank();
+        if(to == null)
+            return false;
+        return bank.canTrade(to);
+    }
+    /**
+     * completes a transaction of resources with the bank
+     *
+     * @return boolean whether or not the player traded with the bank
+     */
+    public void tradeBank(ResourceList rl)
+    {
+        bank.trade(to);
+        players[tt.getCurrentPlayer()].trade(to);
     }
 
     /**
@@ -329,10 +418,24 @@ public class GameModel {
      *
      * @return boolean whether or not the player can accept a trade offer from another player
      */
-    public boolean canAcceptTrade() {
-        return false;
+    public boolean canAcceptTrade()
+    {
+        int pid = to.getReciever();
+        return players[pid].canAcceptTrade(to);
     }
 
+    /**
+     * accepts the trade offer of another player
+     *
+     * @return boolean whether or not the player accepted a trade offer
+     */
+    public void acceptTrade()
+    {
+        int pid = to.getReciever();
+        int cp = tt.getCurrentPlayer();
+        players[pid].trade(to);
+        players[cp].trade(to);
+    }
     /**
      * Checks to see if the player can roll the dice
      *
@@ -401,15 +504,6 @@ public class GameModel {
     }
 
     /**
-     * plays the year of plenty card for a given player
-     *
-     * @return boolean whether or not the player played the year of plenty card
-     */
-    public boolean playYearOfPlenty() {
-        return false;
-    }
-
-    /**
      * Places a Soldier and grants the effects he brings
      *
      * @return boolean whether or not the player played the soldier card
@@ -428,38 +522,11 @@ public class GameModel {
     }
 
     /**
-     * Places a the robber at a specific location on the map
-     *
-     * @return boolean whether or not the player moved the robber
-     */
-    public boolean moveRobber() {
-        return false;
-    }
-
-    /**
      * enacts the trade offer of the specified player
      *
      * @return boolean whether or not the player traded with another player
      */
     public boolean tradePlayer() {
-        return false;
-    }
-
-    /**
-     * completes a transaction of resources with the bank
-     *
-     * @return boolean whether or not the player traded with the bank
-     */
-    public boolean tradeBank() {
-        return false;
-    }
-
-    /**
-     * accepts the trade offer of another player
-     *
-     * @return boolean whether or not the player accepted a trade offer
-     */
-    public boolean acceptTrade() {
         return false;
     }
 
@@ -475,9 +542,14 @@ public class GameModel {
         int cp = tt.getCurrentPlayer();
         int diceRoll = dice.rollDice();
 
-        ResourceList[] pids = map.rollingDice(diceRoll);
-        for(int i = 0; i < pids.length; i++)
-            players[i].addResources(pids[i]);
+        if(diceRoll == 7)
+            RobberDiscard();
+        else
+        {
+            ResourceList[] pids = map.rollingDice(diceRoll);
+            for (int i = 0; i < pids.length; i++)
+                players[i].addResources(pids[i]);
+        }
 
         tt.updateStatus();
         return true;

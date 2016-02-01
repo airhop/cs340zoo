@@ -1,5 +1,11 @@
 /**
  * must can before do everytime?  Who's job is that?
+ * removed canPlayDevCard - not necessary . . .
+ *          also playMonument - not needed, only activated at win
+ *
+ * There is a loging object and a user object.  We only need one
+ * Aaron will you get/set up the jsonobject file
+ *          also set up the main ant testing file.
  *
  * canRob - return an array of those that can be robbed, return an array of ints
  *          can make it a return array instead of void method
@@ -14,27 +20,23 @@ import client.model.*;
 import client.model.map.*;
 import client.model.bank.ResourceList;
 import client.model.misc.*;
+import client.proxy.*;
 
 public class Facade
 {
     GameModel game;
+    IProxy proxy;
 
     public Facade()
     {
         game = null;
     }
 
-    /**
-     * This is used to see when the robber moves if the player can discard
-     * @return
-     */
-    public boolean canRobberDiscard()
+    public void Reinitialize(GameModel g)
     {
-        if(game == null)
-            return false;
-
-        return game.canRobberDiscard();
+        game.reinitialize(g);
     }
+
     //can methods
     /**
      * Checks to see if building a road is a legal move for the player
@@ -138,16 +140,7 @@ public class Facade
             return false;
         return game.canBuyDevcard();
     }
-    /**
-     * Checks to see if playing a Developement Card is a legal move for the player
-     * @return boolean whether or not the player can play a Developement card
-     */
-    public boolean canPlayDevcard()
-    {
-        if(game == null)
-            return false;
-        return game.canPlayDevcard();
-    }
+
     /**
      * Checks to see if Montoply is a legal move for the player
      * @return boolean whether or not the player can monopoly
@@ -172,12 +165,13 @@ public class Facade
      * Checks to see if placing a Monument Card(?) is a legal move for the player
      * @return boolean whether or not the player can place a monument
      */
-    public boolean canPlaceMonument()
+    public boolean canUseMonument()
     {
         if(game == null)
             return false;
-        return game.canPlaceMonument();
+        return game.canUseMonument();
     }
+
     /**
      * Checks to see if placing a Year Of Plenty card is a legal move for the player
      * @return boolean whether or not the player can play the Year of Plenty card
@@ -187,6 +181,15 @@ public class Facade
         if(game == null)
             return false;
         return game.canYearOfPlenty();
+    }
+    /**
+     * plays the year of plenty card for a given player
+     * @return boolean whether or not the player played the year of plenty card
+     */
+    public void playYearOfPlenty(ResourceType r) throws IllegalMoveException
+    {
+        if(game != null)
+            game.playYearofPlenty(r);
     }
     /**
      * Checks to see if placing a Soldier card is a legal move for the player
@@ -219,6 +222,35 @@ public class Facade
         return game.canMoveRobber(hl);
     }
     /**
+     * This is used to see when the robber moves if the player can discard
+     * @return
+     */
+    public boolean canRobberDiscard()
+    {
+        if(game == null)
+            return false;
+
+        return game.canRobberDiscard();
+    }
+
+    /**
+     * Robs a player of one resource card
+     * @return boolean whether or not the player chose to rob
+     */
+    public void rob()throws IllegalMoveException
+    {
+
+    }
+
+    /**
+     * Places a the robber at a specific location on the map
+     * @return boolean whether or not the player moved the robber
+     */
+    public void moveRobber(HexLocation hl) throws IllegalMoveException
+    {
+        game.moveRobber(hl);
+    }
+    /**
      * Set up the TradeOffer
      */
     public void TradePlayer() throws IllegalMoveException, InsufficientResourcesException
@@ -230,23 +262,22 @@ public class Facade
      * Checks to see if trading resources with the bank is a legal move for the player
      * @return boolean whether or not the player can trade with the bank
      */
-    public boolean canTradeBank()
+    public boolean canTradeBank(ResourceList rl)
     {
         if(game == null)
             return false;
-        return game.canTradeBank();
-    }
-    /**
-     * Checks to see accepting a trade request is a legal move for the player
-     * @return boolean whether or not the player can accept a trade offer from another player
-     */
-    public boolean canAcceptTrade()
-    {
-        if(game == null)
-            return false;
-        return game.canAcceptTrade();
+        return game.canTradeBank(rl);
     }
 
+    /**
+     * completes a transaction of resources with the bank
+     * @return boolean whether or not the player traded with the bank
+     */
+    public void tradeBank(ResourceList rl) throws InsufficientResourcesException, IllegalMoveException
+    {
+        if(game != null)
+            game.tradeBank(rl);
+    }
     /**
      * Checks to see if the player can roll the dice
      * @return boolean whether or not the player can roll the dice
@@ -265,11 +296,16 @@ public class Facade
         return game.canFinishTurn();
     }
 
-    public boolean canDiscardCards()
+    public void FinishTurn()
+    {
+        game.FinishTurn();
+    }
+
+    public boolean canDiscardCards(ResourceList rl)
     {
         if(game == null)
             return false;
-        return game.canDiscardCards();
+        return game.canDiscardCards(rl);
     }
 
     //do methods
@@ -298,59 +334,40 @@ public class Facade
     {
         game.playRoadBuilding();
     }
-    /**
-     * plays a monument card
-     * @return boolean whether or not the player placed a monument
-     */
-    public void placeMonument() throws IllegalMoveException{}
-    /**
-     * plays the year of plenty card for a given player
-     * @return boolean whether or not the player played the year of plenty card
-     */
-    public void playYearOfPlenty() throws IllegalMoveException{}
+
     /**
      * Places a Soldier and grants the effects he brings
      * @return boolean whether or not the player played the soldier card
      */
     public void placeSoldier() throws IllegalMoveException{}
-    /**
-     * Robs a player of one resource card
-     * @return boolean whether or not the player chose to rob
-     */
-    public void rob()throws IllegalMoveException{}
-    /**
-     * Places a the robber at a specific location on the map
-     * @return boolean whether or not the player moved the robber
-     */
-    public void moveRobber(HexLocation hl) throws IllegalMoveException
-    {
-        game.moveRobber(hl);
-    }
+
     /**
      * enacts the trade offer of the specified player
      * @return boolean whether or not the player traded with another player
      */
     public void tradePlayer() throws IllegalMoveException, IllegalMoveException
     {
-
+        game.TradePlayer();
     }
 
     /**
-     * completes a transaction of resources with the bank
-     * @return boolean whether or not the player traded with the bank
+     * Checks to see accepting a trade request is a legal move for the player
+     * @return boolean whether or not the player can accept a trade offer from another player
      */
-    public void tradeBank() throws InsufficientResourcesException, IllegalMoveException
+    public boolean canAcceptTrade()
     {
-
+        if(game == null)
+            return false;
+        return game.canAcceptTrade();
     }
-
     /**
      * accepts the trade offer of another player
      * @return boolean whether or not the player accepted a trade offer
      */
     public void acceptTrade() throws InsufficientResourcesException, IllegalMoveException
     {
-
+        if(game != null)
+            game.acceptTrade();
     }
     /**
      * rolls the dice for a number 1-12
