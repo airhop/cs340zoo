@@ -1,11 +1,13 @@
 package client.model.map;
 
 import java.util.ArrayList;
+import java.util.TreeMap;
+
 import shared.exceptions.FailureToAddException;
 import shared.exceptions.InvalidPositionException;
 
 public class Map {
-    ArrayList<Hex> hexes;
+    TreeMap<HexLocation,Hex> hexes;
     ArrayList<Port> ports;
     ArrayList<Road> roads;
     ArrayList<VertexObject> settlements;
@@ -14,12 +16,13 @@ public class Map {
     Robber robber;
 
     //regular constructor to create map
-    public Map() {
-        hexes = new ArrayList<>();
-        ports = new ArrayList<>();
-        roads = new ArrayList<>();
-        settlements = new ArrayList<>();
-        cities = new ArrayList<>();
+    public Map() 
+    {
+        hexes = new TreeMap<HexLocation,Hex>();
+        ports = new ArrayList<Port>();
+        roads = new ArrayList<Road>();
+        settlements = new ArrayList<VertexObject>();
+        cities = new ArrayList<VertexObject>();
     }
     //have another to update, or just create a new one every time?
 
@@ -145,6 +148,60 @@ public class Map {
     {
 
     }
-
     //getters and setters
+	public TreeMap<HexLocation, Hex> getHexes() {
+		return hexes;
+	}
+
+	public void setHexes(TreeMap<HexLocation, Hex> hexes) {
+		this.hexes = hexes;
+	}
+
+	public ArrayList<Port> getPorts() {
+		return ports;
+	}
+
+	public void setPorts(ArrayList<Port> ports) {
+		this.ports = ports;
+	}
+
+	public ArrayList<Road> getRoads() {
+		return roads;
+	}
+
+	public void setRoads(ArrayList<Road> roads) {
+		this.roads = roads;
+	}
+
+	public ArrayList<VertexObject> getSettlements() {
+		return settlements;
+	}
+
+	public void setSettlements(ArrayList<VertexObject> settlements) {
+		this.settlements = settlements;
+	}
+
+	public ArrayList<VertexObject> getCities() {
+		return cities;
+	}
+
+	public void setCities(ArrayList<VertexObject> cities) {
+		this.cities = cities;
+	}
+
+	public int getRadius() {
+		return radius;
+	}
+
+	public void setRadius(int radius) {
+		this.radius = radius;
+	}
+
+	public Robber getRobber() {
+		return robber;
+	}
+
+	public void setRobber(Robber robber) {
+		this.robber = robber;
+	}
 }
