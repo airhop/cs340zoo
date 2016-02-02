@@ -276,15 +276,27 @@ public class Bank {
       }
       //add a return for the devcard purchased
   }
-  public boolean canGive(int type, int amount)
+  public boolean canGive(String type, int amount)
   {
-    if(type == 0)
+    if(type.equals("brick"))
     {
-      
+      return canGiveBrick(amount);
     }
-  }
-  public boolean canAdd()
-  {
-    
+    if(type.equals("ore"))
+    {
+      return canGiveOre(amount);
+    }
+    if(type.equals("sheep"))
+    {
+      return canGiveSheep(amount);
+    }
+    if(type.equals("wheat"))
+    {
+      return canGiveWheat(amount);
+    }
+    if(type.equals("wood"))
+    {
+      return canGiveWood(amount);
+    }
   }
 }
