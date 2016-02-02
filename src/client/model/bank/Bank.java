@@ -6,11 +6,16 @@ public class Bank {
   ResourceList resources;
   DevCardList dcl;
   
-  Bank(ResourceList res, DevCardList devs)
-  {
+    Bank()
+    {
+    resources = new ResourceList(19,19,19,19,19);
+    dcl = new DevCardList();
+    }
+    Bank(ResourceList res, DevCardList devs)
+    {
     resources = res;
     dcl = devs;
-  }
+    }
     public ResourceList getResources()
     {
       return resources;
