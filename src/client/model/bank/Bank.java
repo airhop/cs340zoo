@@ -9,7 +9,7 @@ public class Bank {
     Bank()
     {
     resources = new ResourceList(19,19,19,19,19);
-    dcl = new DevCardList();
+    dcl = new DevCardList(2,5,2,14,2);
     }
     Bank(ResourceList res, DevCardList devs)
     {
