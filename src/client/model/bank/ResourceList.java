@@ -1,8 +1,9 @@
 package client.model.bank;
 
-public class ResourceList {
+public class ResourceList 
+{
   
-    int numOfBrick;
+  int numOfBrick;
   int numOfOre;
   int numOfSheep;
   int numOfWheat;

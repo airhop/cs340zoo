@@ -3,6 +3,7 @@ package client.model.map;
 import java.util.ArrayList;
 import java.util.TreeMap;
 
+import client.model.bank.ResourceList;
 import shared.exceptions.FailureToAddException;
 import shared.exceptions.InvalidPositionException;
 
@@ -12,6 +13,7 @@ public class Map {
     ArrayList<Road> roads;
     ArrayList<VertexObject> settlements;
     ArrayList<VertexObject> cities;
+    ArrayList<ResourceList> resources;
     int radius = -1;
     Robber robber;
 
@@ -23,7 +25,7 @@ public class Map {
         roads = new ArrayList<Road>();
         settlements = new ArrayList<VertexObject>();
         cities = new ArrayList<VertexObject>();
-        
+        resources = new ArrayList<ResourceList>();
     }
     private void generateResourcesAndNumbers()
     {
@@ -35,31 +37,37 @@ public class Map {
      */
     public void initialize() 
     {
-    	if (hexes.size() < 33)
+    	if(canAddHex())
     	{
     		//addHex();
-    		if(canAddPort())//several canDo Methods
-    		{
-    			//addPort();
-    		}
-    		if(canAddRoad())
-    		{
-    			//addRoad();
-    		}
-    		if(canAddCity())
-    		{
-    			//addCity();
-    		}
-    		//relocateRobber();
-    		
     	}
+    	
+    	if(canAddPort())//several canDo Methods
+    	{
+    		//addPort();
+    	}
+    	if(canAddRoad())
+    	{
+    		//addRoad();
+    	}
+    	if(canAddCity())
+    	{
+    		//addCity();
+    	}
+    	//relocateRobber();
     }
 
     /**
      * checks to see if hex can be added
      */
-    public boolean canAddHex() {
-        return true;
+    public boolean canAddHex() 
+    {
+    	if (hexes.size() < 33)
+    	{
+    		return true;
+    	}
+    	return false;
+        
     }//may not be used
 
     /**
@@ -97,8 +105,10 @@ public class Map {
      * @param direction - direction from hex the port is located
      * @param ratio     - the ratio of resources tradeable (i.e 1:2, 1:4)
      */
-    public void addPort(int x, int y, String resource, String direction, int ratio) throws FailureToAddException{
-
+    public void addPort(int x, int y, String resource, String direction, int ratio) throws FailureToAddException
+    {
+    	Port port = new Port(x,y,resource, direction, ratio);
+    	
     }
 
     /**
