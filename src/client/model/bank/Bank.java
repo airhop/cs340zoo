@@ -276,4 +276,15 @@ public class Bank {
       }
       //add a return for the devcard purchased
   }
+  public boolean canGive(int type, int amount)
+  {
+    if(type == 0)
+    {
+      
+    }
+  }
+  public boolean canAdd()
+  {
+    
+  }
 }
