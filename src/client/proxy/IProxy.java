@@ -4,10 +4,10 @@ package client.proxy;
 
 import client.model.bank.ResourceList;
 import client.model.history.MessageList;
-import client.model.map.EdgeLocation;
 import shared.exceptions.*;
 import shared.jsonobject.Resources;
 import shared.jsonobject.User;
+import shared.locations.EdgeLocation;
 
 
 public interface IProxy {

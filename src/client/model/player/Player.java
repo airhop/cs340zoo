@@ -4,6 +4,7 @@ import client.model.bank.DevCardList;
 import client.model.bank.ResourceList;
 import client.model.map.Port;
 import client.model.misc.TradeOffer;
+import shared.definitions.ResourceType;
 import shared.exceptions.InsufficientResourcesException;
 
 public class Player {
@@ -73,13 +74,50 @@ public class Player {
     }
 
   }
-  public void addResource(String resourceType, int numberOfResource)
+  public void addResource(ResourceType resource, int numberOfResource)
   {
     //switch statement for each resource type adding them to the resource list
+    switch(resource)
+    {
+      case WOOD:
+        resources.setWood(resources.getWood() + numberOfResource);
+        break;
+      case BRICK:
+        resources.setBrick(resources.getBrick() + numberOfResource);
+        break;
+      case SHEEP:
+        resources.setSheep(resources.getSheep() + numberOfResource);
+        break;
+      case WHEAT:
+        resources.setWheat(resources.getWheat() + numberOfResource);
+        break;
+      case ORE:
+        resources.setOre(resources.getOre() + numberOfResource);
+        break;
+    }
+
   }
-  public void depleteResource(String resourceType)
+  public void depleteResource(ResourceType resource)
   {
     //switch statement to set the resource that matches the resource type to 0
+    switch(resource)
+    {
+      case WOOD:
+        resources.setWood(0);
+        break;
+      case BRICK:
+        resources.setBrick(0);
+        break;
+      case SHEEP:
+        resources.setSheep(0);
+        break;
+      case WHEAT:
+        resources.setWheat(0);
+        break;
+      case ORE:
+        resources.setOre(0);
+        break;
+    }
   }
   /**
   * Places a city on the map if it is a legal move. 
@@ -130,8 +168,6 @@ public class Player {
   */
   public void playDevCard(String cardType)
   {
-    //if(oldDevCards.exists(cardType) && playedDevCard == false);
-    //oldDevCards.remove(cardType);
     playedDevCard = true;
   }
   /**
@@ -142,7 +178,7 @@ public class Player {
   {
     if(playedDevCard = true)
     {
-      //card
+      discarded = true;
     }
   }
 
@@ -152,46 +188,54 @@ public class Player {
    * @param
    * @return
    */
-  public TradeOffer trade()
-  {
-    return null;
-  }
-  public void AcceptTrade(ResourceList resourcesToTrade)
+
+  public void AcceptTrade(ResourceType resource, int numOfResource)
   {
 
   }
-
-  /**
-   * purchases a resource from the bank
-   * @param resource
-   */
-  public void purchaseFromBank(ResourceList resource){}
 
   /**
   * uses Monopoly
   * @return boolean whether or not the player played a monopoly
   */
-  public boolean playMonopoly(){return false;}
+  public void playMonopoly()
+  {
+    oldDevCards.setMonopoly(oldDevCards.getMonopoly() -1);
+  }
   /**
   * plays the road build card
   * @return boolean 
   */
-  public boolean playRoadBuilding(){return false;}
+  public void playRoadBuilding()
+  {
+    oldDevCards.setRoadBuilding(oldDevCards.getRoadBuilding() - 1);
+  }
   /**
   * plays a monument card
   * @return boolean whether or not the player placed a monument
   */
-  public boolean placeMonument(){return false;}
+  public void placeMonument()
+  {
+    monuments--;
+    oldDevCards.setMonument(oldDevCards.getMonument() - 1);
+  }
   /**
   * plays the year of plenty card for a given player
   * @return boolean whether or not the player played the year of plenty card
   */
-  public boolean playYearOfPlenty(){return false;}
+  public void playYearOfPlenty()
+  {
+    oldDevCards.setYearOfPlenty(oldDevCards.getYearOfPlenty() - 1);
+  }
   /**
   * Places a Soldier and grants the effects he brings
   * @return boolean whether or not the player played the soldier card
   */
-  public boolean placeSoldier(){return false;}
+  public void placeSoldier()
+  {
+    soldiers--;
+    oldDevCards.setSoldier(oldDevCards.getSoldier() -1);
+  }
   
   /**
    * If the player has more then 7 cards when the robber is moved half the cards must be discarded
@@ -199,34 +243,53 @@ public class Player {
   */
   public boolean canRobberDiscard()
   {
+    if((resources.getBrick() + resources.getWood() + resources.getOre() + resources.getSheep() + resources.getWheat()) > 7 )
+    {
+      return true;
+    }
     return false;
   }
-  
-  /**
-   *Player  must discard half their hand if the robber was moved and there are more then 7 cards in hand 
-   */
-  public void RobberDiscard()
-  {
-    return;
-  }
-  
+
   /**
   * Robs a player of one resource card
   * @return boolean whether or not the player chose to rob 
   */
-  public boolean rob(){return false;}
-  /**
-  * Places a the robber at a specific location on the map
-  * @return boolean whether or not the player moved the robber
-  */
-  public boolean moveRobber(){return false;}
+  public void rob(ResourceType resourceRecieved)
+  {
+    switch(resourceRecieved)
+    {
+      case WOOD:
+        resources.setWood(resources.getWood() + 1);
+        break;
+      case BRICK:
+        resources.setBrick(resources.getBrick() + 1);
+        break;
+      case SHEEP:
+        resources.setSheep(resources.getSheep() + 1);
+        break;
+      case WHEAT:
+        resources.setWheat(resources.getWheat() + 1);
+        break;
+      case ORE:
+        resources.setOre(resources.getOre() + 1);
+        break;
+    }
+  }
+
   /**
     * Checks to see if buying a Developement Card is a legal move for the player
     * @return boolean whether or not the player can buy a Developement card
     */
   public boolean canBuyDevcard()
   {
-    return false;
+    if(resources.getOre() < 1 || resources.getWheat() < 1 || resources.getSheep() < 1)
+    {
+      return true;
+    }
+    else
+    {
+      return false;
+    }
   }
   /**
   * Checks to see if playing a Developement Card is a legal move for the player
@@ -244,13 +307,24 @@ public class Player {
   * Checks to see if Montoply is a legal move for the player
   * @return boolean whether or not the player can monopoly
   */
-  public boolean canMonopoly(){return false;}
+  public boolean canMonopoly()
+  {
+    if(oldDevCards.getMonopoly() > 0)
+    {
+      return true;
+    }
+    return false;
+  }
   /**
   * Checks to see if building a road in a specific place is a legal move for the player
   * @return boolean whether or not the player can road building
   */
   public boolean canPlayRoadBuilding()
   {
+    if(oldDevCards.getRoadBuilding() > 0)
+    {
+      return true;
+    }
     return false;
   }
   /**
@@ -269,14 +343,21 @@ public class Player {
   * Checks to see if placing a Year Of Plenty card is a legal move for the player
   * @return boolean whether or not the player can play the Year of Plenty card
   */
-  public boolean canYearOfPlenty(){return false;}
+  public boolean canYearOfPlenty()
+  {
+    if(oldDevCards.getYearOfPlenty() > 0)
+    {
+      return true;
+    }
+    return false;
+  }
   /**
   * Checks to see if placing a Soldier card is a legal move for the player
   * @return boolean whether or not the player can place the Soldier card
   */
   public boolean canPlaceSoldier()
   {
-    if(oldDevCards.getSoldier() != 0 || newDevCards.getSoldier() != 0)
+    if(oldDevCards.getSoldier() > 0)
     {
       return true;
     }
@@ -287,24 +368,31 @@ public class Player {
   * @return boolean whether or not the player can rob another player
   */
   public boolean canRob(){return false;}
-  /**
-  * Checks to see if moving the robber is a legal move for the player
-  * @return boolean whether or not the player can move the robber
-  */
-  public boolean canMoveRobber(){return false;}
+
   /**
   * Checks to see if trading resource cards with another player is a legal move for the player
   * @return boolean whether or not the player can trade with another player
   */
-  public boolean canTradePlayer()
-  {//check port value
+  public boolean canOfferTrade()
+  {
+    if((resources.getBrick() + resources.getWood() + resources.getOre() + resources.getSheep() + resources.getWheat()) > 0)
+    {
+      return true;
+    }
     return false;
   }
   /**
   * Checks to see if trading resources with the bank is a legal move for the player
   * @return boolean whether or not the player can trade with the bank
   */
-  public boolean canTradeBank(){return false;}
+  public boolean canTradeBank()
+  {
+    if((resources.getBrick() + resources.getWood() + resources.getOre() + resources.getSheep() + resources.getWheat()) > 0)
+    {
+      return true;
+    }
+    return false;
+  }
   /**
   * Checks to see accepting a trade request is a legal move for the player
   * @return boolean whether or not the player can accept a trade offer from another player
@@ -365,7 +453,7 @@ public class Player {
   * Checks to see if the player can be robbed by another player
   * @return boolean whether or not the player can be robbed
   */
-  public boolean canBeRobbed(){return false;}
+
   public int getRoads() {
     return roads;
   }
