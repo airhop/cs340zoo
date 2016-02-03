@@ -2,7 +2,7 @@ package client.model.map;
 
 public class Road {
   int owner;
-  EdgeLocation location;
+  shared.locations.EdgeLocation location;
   
   public Road(int x, int y, int id)
   {

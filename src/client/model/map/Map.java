@@ -4,8 +4,11 @@ import java.util.ArrayList;
 import java.util.TreeMap;
 
 import client.model.bank.ResourceList;
+import client.proxy.Proxy;
 import shared.exceptions.FailureToAddException;
 import shared.exceptions.InvalidPositionException;
+import shared.locations.VertexLocation;
+import shared.serialization.Deserializer;
 
 public class Map {
     TreeMap<shared.locations.HexLocation,Hex> hexes;
@@ -16,7 +19,7 @@ public class Map {
     ArrayList<ResourceList> resources;
     int radius = -1;
     Robber robber;
-
+    Deserializer deserializer;
     //regular constructor to create map
     public Map() 
     {
@@ -26,19 +29,20 @@ public class Map {
         settlements = new ArrayList<VertexObject>();
         cities = new ArrayList<VertexObject>();
         resources = new ArrayList<ResourceList>();
+        deserializer = new Deserializer();
     }
-    private void generateNumbers()
-    {
-    	
-    }
-    private void generateOceanHex()
-    {
-    	
-    }
-    private void generateResourceHex()
-    {
-    	
-    }
+//    private void generateNumbers()
+//    {
+//    	
+//    }
+//    private void generateOceanHex()
+//    {
+//    	
+//    }
+//    private void generateResourceHex()
+//    {
+//    	
+//    }
     //have another to update, or just create a new one every time?
     /**
      * initialize a new map when game is created
@@ -53,15 +57,7 @@ public class Map {
     	{
     		//addPort();
     	}
-//    	if(canAddRoad())
-//    	{
-//    		//addRoad();
-//    	}
-//    	if(canAddCity())
-//    	{
-//    		//addCity();
-//    	}
-    	//relocateRobber();
+    	relocateRobber();
     }
 
     /**
@@ -121,7 +117,7 @@ public class Map {
     /**
      * checks to see if road can be added
      */
-    public boolean canAddRoad(shared.locations.EdgeLocation edgeLocation,Hex hex) 
+    public boolean canAddRoad(shared.locations.EdgeLocation edgeLocation) 
     {
     	if (edgeLocation == hex.location.)
         return false;
@@ -135,8 +131,9 @@ public class Map {
      * @param direction - direction from hex that road is located
      * @param owner     - index of owner
      */
-    public void addRoad(int x, int y, String direction, int owner) throws FailureToAddException {
-
+    public void addRoad(int x, int y, String direction, int owner) throws FailureToAddException 
+    {
+    	Road road = new Road(x, y);
     }
 
     /**
@@ -155,14 +152,18 @@ public class Map {
      * @param direction - direction from hex that settlement is located
      * @param owner     - index of owner
      */
-    public void addSettlement(int x, int y, String direction, int owner) throws FailureToAddException{
-
+    public void addSettlement(int x, int y, String direction, int owner) throws FailureToAddException
+    {
+    	Settlement settlement = new Settlement(x,y,direction,owner);
+    	settlements.add(settlement);
     }
 
     /**
      * checks to see if City can be added
      */
-    public boolean canAddCity() {
+    public boolean canAddCity(VertexLocation vertextLocation) 
+    {
+    	if (vertextLocation.getNormalizedLocation().)
         return false;
     }
 
