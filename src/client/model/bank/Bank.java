@@ -274,7 +274,7 @@ public class Bank {
       {
         throw new InsufficientResourcesException();
       }
-      return dcl.buyDevCard(playerResources);
+      return dcl.buyDevCard();
   }
   public boolean canGive(String type, int amount)
   {
