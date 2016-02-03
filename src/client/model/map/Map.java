@@ -38,13 +38,11 @@ public class Map {
     /**
      * initialize a new map when game is created
      */
-    public void initialize() 
-    {
-    	
-    }
-    public void initialize()
-    {
-    }
+    public void initialize() {}
+    
+//    public void initialize()
+//    {
+//    }
 
     /**
      * checks to see if hex can be added
@@ -74,10 +72,11 @@ public class Map {
     	Hex hex = new Hex(x,y,resource,numberString);
     	hexes.put(hex.getLocation(), hex);
     }
-    public void
-    {
-    	
-    }
+// This section suppose to be rolling dice method
+//    public void
+//    {
+//    	
+//    }
     /**
      * checks to see if port can be added
      */
