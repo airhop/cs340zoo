@@ -1,8 +1,12 @@
 package client.model.map;
 
+import shared.locations.EdgeLocation;
+import shared.locations.VertexLocation;
+
 public abstract class VertexObject{
   int owner;
-  EdgeLocation location;
+  EdgeLocation edgelocation;
+  //VertexLocation vertexLocation;
   //edgelocation?
   
   // public VertexObject(int x, int y, int id)
@@ -11,7 +15,15 @@ public abstract class VertexObject{
   //   owner = id;
   // }
   
-  /**
+//  public VertexLocation getVertexLocation() {
+//	return vertexLocation;
+//}
+//
+//public void setVertexLocation(VertexLocation vertexLocation) {
+//	this.vertexLocation = vertexLocation;
+//}
+
+/**
    *@param VertexObject - an object to compareTo
    *@return if the location is being used already
    */
@@ -32,12 +44,12 @@ public abstract class VertexObject{
 
    public EdgeLocation getLocation() 
    {
-	   return location;
+	   return edgelocation;
    }
 
    public void setLocation(EdgeLocation location) 
    {
-	   this.location = location;
+	   this.edgelocation = location;
    }
    
 }
