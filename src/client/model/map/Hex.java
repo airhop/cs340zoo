@@ -2,25 +2,25 @@ package client.model.map;
 
 public class Hex {
   
-  HexLocation location;
+  shared.locations.HexLocation location;
   String resource;
   String number;
 
   public Hex(int x, int y, String resrc, String num)
   {
-    location = new HexLocation(x,y);
+    location = new  shared.locations.HexLocation(x,y);
     resource = resrc;
     number = num;
   }
   //Getters and Setters
 
 
-  public HexLocation getLocation() 
+  public shared.locations.HexLocation getLocation() 
   {
 	  return location;
   }
 
-  public void setLocation(HexLocation location) 
+  public void setLocation(shared.locations.HexLocation location) 
   {
 	  this.location = location;
   }

@@ -8,7 +8,7 @@ import shared.exceptions.FailureToAddException;
 import shared.exceptions.InvalidPositionException;
 
 public class Map {
-    TreeMap<HexLocation,Hex> hexes;
+    TreeMap<shared.locations.HexLocation,Hex> hexes;
     ArrayList<Port> ports;
     ArrayList<Road> roads;
     ArrayList<VertexObject> settlements;
@@ -20,14 +20,22 @@ public class Map {
     //regular constructor to create map
     public Map() 
     {
-        hexes = new TreeMap<HexLocation,Hex>();
+        hexes = new TreeMap<shared.locations.HexLocation,Hex>();
         ports = new ArrayList<Port>();
         roads = new ArrayList<Road>();
         settlements = new ArrayList<VertexObject>();
         cities = new ArrayList<VertexObject>();
         resources = new ArrayList<ResourceList>();
     }
-    private void generateResourcesAndNumbers()
+    private void generateNumbers()
+    {
+    	
+    }
+    private void generateOceanHex()
+    {
+    	
+    }
+    private void generateResourceHex()
     {
     	
     }
@@ -41,19 +49,18 @@ public class Map {
     	{
     		//addHex();
     	}
-    	
     	if(canAddPort())//several canDo Methods
     	{
     		//addPort();
     	}
-    	if(canAddRoad())
-    	{
-    		//addRoad();
-    	}
-    	if(canAddCity())
-    	{
-    		//addCity();
-    	}
+//    	if(canAddRoad())
+//    	{
+//    		//addRoad();
+//    	}
+//    	if(canAddCity())
+//    	{
+//    		//addCity();
+//    	}
     	//relocateRobber();
     }
 
@@ -114,7 +121,9 @@ public class Map {
     /**
      * checks to see if road can be added
      */
-    public boolean canAddRoad() {
+    public boolean canAddRoad(shared.locations.EdgeLocation edgeLocation,Hex hex) 
+    {
+    	if (edgeLocation == hex.location.)
         return false;
     }
 
@@ -133,7 +142,8 @@ public class Map {
     /**
      * checks to see if settlement can be added
      */
-    public boolean canAddSettlement() {
+    public boolean canAddSettlement() 
+    {
         return false;
     }
 
