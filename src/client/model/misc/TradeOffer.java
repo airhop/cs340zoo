@@ -10,8 +10,24 @@ public class TradeOffer {
   int reciever;
   //Positive numbers are resources being offered. Negative are resources being asked for.
   ResourceList offer;
+  //Resource List of whats being sent (negative)
+  ResourceList sentList = new ResourceList();
+  //Resource List of whats being recieved (positive)
+  ResourceList recievedList = new ResourceList();
   
-  public TradeOffer(){}
+  public TradeOffer(ResourceList offr)
+  {
+    offer = offr;
+  }
+  
+  public void separateOffer()
+  {
+    int brick = offer.getBrick();
+    int ore = offer.getOre(); 
+    int sheep = offer.getSheep();
+    int wheat = offer.getWheat();
+    int wood = offer.getWood();
+  }
   
   public int getSender()
   {
