@@ -27,7 +27,7 @@ public class DevCardList {
   public String buyDevCard() throws InsufficientResourcesException
   {
     //Initialize array
-    ArrayList<int> randomize = new ArrayList<int>();
+    ArrayList<Integer> randomize = new ArrayList<Integer>();
     //for every amount of every type of card in the bank, add a certain number to the arraylist depending on the type
     for(int i=0; i<monopoly; i++)
     {
