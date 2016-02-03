@@ -260,7 +260,7 @@ public class Bank {
   /**
    * purchase of a devcard
   */
-  public void BuyDevCard(ResourceList playerResources) throws InsufficientResourcesException
+  public String BuyDevCard(ResourceList playerResources) throws InsufficientResourcesException
   {
     //if player doesnt have 1 sheep 1 wheat 1 ore throw exception
       int sheep = playerResources.getSheep();
@@ -274,7 +274,7 @@ public class Bank {
       {
         throw new InsufficientResourcesException();
       }
-      //add a return for the devcard purchased
+      return dcl.buyDevCard(playerResources);
   }
   public boolean canGive(String type, int amount)
   {
