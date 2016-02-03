@@ -2,6 +2,7 @@
 package client.model.bank;
 
 import shared.exceptions.InsufficientResourcesException;
+import java.util.ArrayList;
 import java.util.Random;
 
 public class DevCardList {
