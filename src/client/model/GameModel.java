@@ -1,6 +1,11 @@
 /**
- * David - canAcceptTrade - ResourceList
+ * David - canAcceptTrade - ResourceList param
+ *       - canOfferTrade - ResourceList param
+ *       - canDiscardCards(resourceList)
  *
+ * Mike - need to line up our methods, too many red things on my end
+ *
+ *       maritime trade?!
  */
 
 
@@ -11,11 +16,12 @@ import client.model.bank.ResourceList;
 import client.model.map.*;
 import client.model.misc.*;
 import client.model.player.Player;
+import com.sun.xml.internal.ws.api.ResourceLoader;
 import org.omg.CORBA.DynAnyPackage.Invalid;
 import client.model.history.*;
 import shared.exceptions.*;
 import shared.definitions.*;
-import shared.locations.VertexLocation;
+import shared.locations.*;
 import sun.security.provider.certpath.Vertex;
 
 public class GameModel {
@@ -42,7 +48,7 @@ public class GameModel {
             players[i] = new Player(names[i], i);
     }
 
-    public void reinitialize(GameModel game) {
+ /*   public void reinitialize(GameModel game) {
         map = game.getMap();
         tt = game.getTurnTracker();
         to = game.getTradeOffer();
@@ -52,34 +58,15 @@ public class GameModel {
         bank = game.getBank();
 //        dice = new Dice();
     }
+*/
 
-    public Map getMap() {
-        return map;
-    }
-
-    public TurnTracker getTurnTracker() {
-        return tt;
-    }
-
-    public TradeOffer getTradeOffer() {
-        return to;
-    }
-
-    public int getVersion() {
-        return version;
-    }
-
-    public int getWinner() {
-        return winner;
-    }
-
-    public Bank getBank() {
-        return bank;
-    }
-
-    public Player[] getPlayers() {
-        return players;
-    }
+    public Map getMap() {  return map;  }
+    public TurnTracker getTurnTracker() {  return tt;    }
+    public TradeOffer getTradeOffer() {  return to;    }
+    public int getVersion() {   return version;   }
+    public int getWinner() {   return winner;   }
+    public Bank getBank() {   return bank;    }
+    public Player[] getPlayers() {    return players;  }
 
     /**
      * updates version of the game model
@@ -87,7 +74,6 @@ public class GameModel {
     public void updateVersion() {
         version++;
     }
-
 
     /**
      * Checks to see if the player can win the game
@@ -116,18 +102,7 @@ public class GameModel {
 
     }
 
-    /**
-     * This is used to see when the robber moves if the player can discard
-     *
-     * @return
-     */
-    public void RobberDiscard()
-    {
-        for (int i = 0; i < players.length; i++)
-            bank.add(players[i].canRobberDiscard());
-    }
-
-    /**
+       /**
      * Checks to see if building a road is a legal move for the player
      *
      * @return boolean whether or not the player can build a road
@@ -245,9 +220,11 @@ public class GameModel {
      *
      * @return boolean whether or not the player can place a monument
      */
-    public boolean canUseMonument() {
-        int cp = tt.getCurrentPlayer();
-        return players[cp].canPlaceMonument();
+    public boolean canUseMonument(int pid)
+    {
+        if(pid != tt.getCurrentPlayer())
+            return false;
+        return players[pid].canPlaceMonument();
     }
 
     /**
@@ -273,8 +250,10 @@ public class GameModel {
         return players[pid].canPlaceSoldier();
     }
 
-    public boolean canRob(int vid)
+    public boolean canRob(int pid, int vid)
     {
+        if(tt.getCurrentPlayer() != pid)
+            return false;
         return players[vid].canRob();
     }
     /**
@@ -293,20 +272,26 @@ public class GameModel {
         return (tt.getStatus() == 3 && tt.getCurrentPlayer() == pid);
     }
 
-    public boolean canDiscardCards()
+    public boolean canDiscardCards(int pid, ResourceList rl)
     {
-        return players[tt.getCurrentPlayer()].canDiscardCards();
+        return players[pid].canDiscardCards(rl);
     }
 
    /**
      *Set up the TradeOffer
      */
-    public void TradePlayer() throws IllegalMoveException, InsufficientResourcesException
+    public boolean canTradePlayer(int pid, int rid, ResourceList rl) throws IllegalMoveException, InsufficientResourcesException
     {
-        if(tt.getStatus() != 1)
-            throw new IllegalMoveException("not the trading phase");
+        if(tt.getStatus() != 1 && pid != tt.getCurrentPlayer())
+            throw new IllegalMoveException("not the trading phase, or not the player's turn");
 
-       // to =  players[tt.getCurrentPlayer()].tradePlayer();
+        if(pid == rid)
+            throw new IllegalMoveException("No trading yourself!");
+
+        to = new TradeOffer(pid, rid, rl);
+        return players[pid].canOfferTrade(rl);
+
+
     }
 
     /**
@@ -326,9 +311,9 @@ public class GameModel {
      *
      * @return boolean whether or not the player can accept a trade offer from another player
      */
-    public boolean canAcceptTrade(int pid, ResourceList rl)
+    public boolean canAcceptTrade(int pid)
     {
-        return players[pid].canAcceptTrade(rl);
+        return players[pid].canAcceptTrade(to.getSentList());
     }
 
     /**
@@ -366,15 +351,6 @@ public class GameModel {
     }
 
     /**
-     * plays a monument card
-     *
-     * @return boolean whether or not the player placed a monument
-     */
-    public boolean placeMonument() {
-        return false;
-    }
-
-    /**
      * Robs a player of one resource card
      *
      * @return boolean whether or not the player chose to rob
@@ -386,15 +362,6 @@ public class GameModel {
             throw new IllegalMoveException("Can't rob yourself");
         players[pid].depleteResource(rt);
         players[cp].addResource(rt, 1);
-    }
-
-    /**
-     * enacts the trade offer of the specified player
-     *
-     * @return boolean whether or not the player traded with another player
-     */
-    public boolean tradePlayer() {
-        return false;
     }
 
     public boolean canSendChat(String msg, int pid)

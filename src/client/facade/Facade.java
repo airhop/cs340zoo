@@ -4,7 +4,12 @@
  *       - buildsettlement - vertexlocation not edgelocation
  *       - soldier - params
  *
+ *  still got to work out maritimeTrade . . .
  *
+ *
+ * TAs - maritime trade - who owns what ports?  how does that work?
+ *      - server pass back game model?
+ *      -
  * need a ServerNotFunctioning exception?
  */
 
@@ -18,7 +23,7 @@ import client.model.bank.ResourceList;
 import client.model.misc.*;
 import client.proxy.*;
 import shared.jsonobject.*;
-import shared.locations.VertexLocation;
+import shared.locations.*;
 
 public class Facade
 {
@@ -38,7 +43,7 @@ public class Facade
 
     public void Reinitialize(GameModel g)
     {
-        game.reinitialize(g);
+        game = g;
     }
 
         //login and register may need to print
@@ -211,11 +216,17 @@ public class Facade
      * Checks to see if placing a Monument Card(?) is a legal move for the player
      * @return boolean whether or not the player can place a monument
      */
-    public boolean canUseMonument()
+    public boolean canUseMonument(int pid)
     {
         if(game == null)
             return false;
-        return game.canUseMonument();
+        return game.canUseMonument(pid);
+    }
+
+    public void playMonument(int pid)
+    {
+        if(game != null)
+            game = proxy.placeMonument(pid);
     }
 
     /**
@@ -257,7 +268,7 @@ public class Facade
     {
         if(game != null)
         {
-            if(game.canPlaySoldier(pid) &&  game.canRob(vid) && game.canMoveRobber(hl))
+            if(game.canPlaySoldier(pid) &&  game.canRob(pid, vid) && game.canMoveRobber(hl))
                 game = proxy.playSoldier(pid, vid, hl);
         }
     }
@@ -266,57 +277,37 @@ public class Facade
      * Checks to see if robbing another player is a legal move for the player
      * @return boolean whether or not the player can rob another player
      */
-    public void canRob()
+    public boolean canRob(int pid, int vid)
     {
-        int [] ids;
         if(game != null)
-            ids = game.canRob();
+            return game.canRob(pid, vid);
     }
     /**
      * Checks to see if moving the robber is a legal move for the player
      * @return boolean whether or not the player can move the robber
      */
-    public boolean canPlaceRobber(HexLocation hl)
+    public boolean canMoveRobber(HexLocation hl)
     {
         if(game == null)
             return false;
         return game.canMoveRobber(hl);
-    }
-    /**
-     * This is used to see when the robber moves if the player can discard
-     * @return
-     */
-    public boolean canRobberDiscard()
-    {
-        if(game == null)
-            return false;
-
-        return game.canRobberDiscard();
     }
 
     /**
      * Robs a player of one resource card
      * @return boolean whether or not the player chose to rob
      */
-    public void rob(int pid, ResourceType rt)throws IllegalMoveException, InsufficientResourcesException
+    public void rob(int pid, int vid, HexLocation hl)throws IllegalMoveException, InsufficientResourcesException
     {
         if(pid == -1)
             throw new IllegalMoveException("no players can be robbed");
         if(game != null)
         {
-            game.rob(pid, rt);
-            proxy.robPlayer(game.getTurnTracker().getCurrentPlayer(), pid);
+            if(game.canRob(pid, vid) && game.canMoveRobber(hl))
+                game = proxy.robPlayer(pid, vid, hl);
         }
     }
 
-    /**
-     * Set up the TradeOffer
-     */
-    public void TradePlayer() throws IllegalMoveException, InsufficientResourcesException
-    {
-        if(game != null)
-             game.TradePlayer();
-    }
     /**
      * Checks to see if trading resources with the bank is a legal move for the player
      * @return boolean whether or not the player can trade with the bank
@@ -377,11 +368,20 @@ public class Facade
         game = proxy.FinishTurn(pid);
     }
 
-    public boolean canDiscardCards(ResourceList rl)
+    public boolean canDiscardCards(int pid, ResourceList rl)
     {
         if(game == null)
             return false;
-        return game.canDiscardCards(rl);
+        return game.canDiscardCards(pid, rl);
+    }
+
+    public void DiscardCards(int pid, ResourceList rl)
+    {
+        if(game!= null)
+        {
+            if(game.canDiscardCards(pid, rl))
+                game = proxy.discardCards(pid, rl);
+        }
     }
 
     /**
@@ -433,33 +433,49 @@ public class Facade
         }
     }
 
+
+    /**
+     * Set up the TradeOffer
+     */
+    public boolean canTradePlayer(int pid, int rid, ResourceList rl) throws IllegalMoveException, InsufficientResourcesException
+    {
+        if(game != null)
+            return game.canTradePlayer(pid, rid, rl);
+    }
     /**
      * enacts the trade offer of the specified player
      * @return boolean whether or not the player traded with another player
      */
-    public void tradePlayer() throws IllegalMoveException, IllegalMoveException
+    public void tradePlayer(int pid, int rid, ResourceList rl) throws InsufficientResourcesException, IllegalMoveException
     {
-        game.TradePlayer();
+        if(game!= null)
+        {
+            if(game.canTradePlayer(pid, rid, rl))
+                game = proxy.offerTrade(pid, rid, rl);
+        }
     }
 
     /**
      * Checks to see accepting a trade request is a legal move for the player
      * @return boolean whether or not the player can accept a trade offer from another player
      */
-    public boolean canAcceptTrade()
+    public boolean canAcceptTrade(int pid)
     {
         if(game == null)
             return false;
-        return game.canAcceptTrade();
+        return game.canAcceptTrade(pid);
     }
     /**
      * accepts the trade offer of another player
      * @return boolean whether or not the player accepted a trade offer
      */
-    public void acceptTrade() throws InsufficientResourcesException, IllegalMoveException
+    public void acceptTrade(int pid, boolean acceptance) throws InsufficientResourcesException, IllegalMoveException
     {
         if(game != null)
-            game.acceptTrade();
+        {
+            if(game.canAcceptTrade(pid))
+                game = proxy.acceptTrade(pid, acceptance);
+        }
     }
 
     /**
