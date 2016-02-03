@@ -134,7 +134,7 @@ public class DevCardList {
   {
 	this.monument = monument;
   }
-  public int getRoadBuilding
+  public int getRoadBuilding()
   {
 	return roadBuilding;
   }
