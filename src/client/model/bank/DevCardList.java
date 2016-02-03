@@ -31,9 +31,16 @@ public class DevCardList {
   /**
    * @return can a devcard be purchased
   */
-  public boolean canBuyDevCard()
+  public boolean canBuyDevCard(ResourceList playersHand)
   {
+    int ore = playersHand.getOre();
+    int sheep = playersHand.getSheep();
+    int wheat = playersHand.getWheat();
+    if(ore < 1 || sheep < 1 || wheat < 1)
+    {
     return false;
+    }
+    return true;
   }
   
   /**
