@@ -1,3 +1,5 @@
+// canPlaceRoad(EdgeLocation) samething to settlement,city road, canRelcationRobber(HexLocation),
+// need arraylist of vertexobject. Need to know which one is build on port.
 package client.model.map;
 
 import java.util.ArrayList;
@@ -13,12 +15,14 @@ import shared.locations.VertexLocation;
 import shared.serialization.Deserializer;
 import shared.locations.*;
 
-public class Map {
+public class Map 
+{
     TreeMap<HexLocation,Hex> hexes;
     ArrayList<Port> ports;
     ArrayList<Road> roads;
     ArrayList<VertexObject> settlements;
     ArrayList<VertexObject> cities;
+    //build an ArrayList<VertexObject> buildings that replace settlements and cities.
     ArrayList<ResourceList> resources;
     int radius = -1;
     Robber robber;
