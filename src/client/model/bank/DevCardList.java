@@ -2,6 +2,7 @@
 package client.model.bank;
 
 import shared.exceptions.InsufficientResourcesException;
+import java.util.Random;
 
 public class DevCardList {
   
@@ -25,14 +26,60 @@ public class DevCardList {
   */
   public String buyDevCard() throws InsufficientResourcesException
   {
+    //Initialize array
     ArrayList<int> randomize = new ArrayList<int>();
+    //for every amount of every type of card in the bank, add a certain number to the arraylist depending on the type
     for(int i=0; i<monopoly; i++)
     {
     	randomize.add(0);
     }
-        for(int i=0; i<monopoly; i++)
+    for(int i=0; i<monument; i++)
     {
-    	randomize.add(0);
+    	randomize.add(1);
+    }
+    for(int i=0; i<roadBuilding; i++)
+    {
+    	randomize.add(2);
+    }
+    for(int i=0; i<soldier; i++)
+    {
+    	randomize.add(3);
+    }
+    for(int i=0; i<yearOfPlenty; i++)
+    {
+    	randomize.add(4);
+    }
+    //Generate a random number from 0 to the size of the array minus 1
+    Random rand;
+    int min = 0;
+    int max = randomize.size()-1;
+    // nextInt is normally exclusive of the top value,
+    // so add 1 to make it inclusive
+    int randomNum = rand.nextInt((max - min) + 1) + min;
+    
+    //Use this number to access the random index of the arraylist, which gets the
+    //(0,1,2,3,4) depending on what the random number was indexed to. Then returns
+    //what type the card that was chosen was, in the form of a string.
+    int chosenCard = randomize.get(randomNum);
+    if(chosenCard == 0)
+    {
+    	return "monopoly";
+    }
+    if(chosenCard == 1)
+    {
+    	return "monument";
+    }
+    if(chosenCard == 2)
+    {
+    	return "roadbuilding";
+    }
+    if(chosenCard == 3)
+    {
+    	return "soldier";
+    }
+    if(chosenCard == 4)
+    {
+    	return "yearofplenty";
     }
   }
   
