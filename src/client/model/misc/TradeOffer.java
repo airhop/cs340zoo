@@ -19,6 +19,13 @@ public class TradeOffer {
   {
     offer = offr;
   }
+
+  public TradeOffer(int pid, int rid, ResourceList o)
+  {
+    sender = pid;
+    reciever = rid;
+    offer = o;
+  }
   /*
   * Separates the given offer into two resource lists, one that is filled with only the positive number
   * of resources being recieved, and the other a list filled with only the negative number of resources
@@ -62,4 +69,6 @@ public class TradeOffer {
   {
     offer = off;
   }
+  public ResourceList getSentList() {return sentList; }
+  public ResourceList getRecievedList() {return recievedList; }
 }
