@@ -25,7 +25,15 @@ public class DevCardList {
   */
   public String buyDevCard() throws InsufficientResourcesException
   {
-    return null;
+    ArrayList<int> randomize = new ArrayList<int>();
+    for(int i=0; i<monopoly; i++)
+    {
+    	randomize.add(0);
+    }
+        for(int i=0; i<monopoly; i++)
+    {
+    	randomize.add(0);
+    }
   }
   
   /**
