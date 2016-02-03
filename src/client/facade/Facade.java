@@ -1,15 +1,9 @@
 /**
- * must can before do everytime?  Who's job is that?
- * removed canPlayDevCard - not necessary . . .
- *          also playMonument - not needed, only activated at win
- *
- * There is a loging object and a user object.  We only need one
- * Aaron will you get/set up the jsonobject file
  *          also set up the main ant testing file.
+ *  Josh - can SendChat - will want to send an int and string instead of messagelist
+ *       - buildsettlement - vertexlocation not edgelocation
+ *       - soldier - params
  *
- * canRob - return an array of those that can be robbed, return an array of ints
- *          can make it a return array instead of void method
- * TradePlayer - set up the TradeOffer
  *
  * need a ServerNotFunctioning exception?
  */
@@ -23,6 +17,8 @@ import client.model.map.*;
 import client.model.bank.ResourceList;
 import client.model.misc.*;
 import client.proxy.*;
+import shared.jsonobject.*;
+import shared.locations.VertexLocation;
 
 public class Facade
 {
@@ -45,129 +41,171 @@ public class Facade
         game.reinitialize(g);
     }
 
+        //login and register may need to print
+        //register - user already exists, GUI in charge of checking lengths and that passwords match
+    public boolean Login(String username, String password)
+    {
+        User u = new User(username, password);
+        try
+        {  proxy.userLogin(u);  }
+        catch(InvalidUserException e)
+        {
+            return false;
+        }
+        return true;
+    }
+
+    public boolean register(String username, String password)
+    {
+        User u = new User(username, password);
+        try
+        {   proxy.userRegister(u);  }
+        catch(InvalidUserException e)
+        {   return false;   }
+        return true;
+    }
+
+    public String[] gamesList()
+    {
+
+        return proxy.gamesList();
+    }
+
+    public void gamesCreate(String s) throws FailedCreateGameException
+    {
+        proxy.gamesCreate(s);
+    }
+
+    public void gamesJoin(String s, int playerId) throws InvalidUserException
+    {
+        proxy.gamesJoin(s, playerId);
+    }
+
     //can methods
     /**
      * Checks to see if building a road is a legal move for the player
      * @return boolean whether or not the player can build a road
      */
-    public boolean canBuildRoad()
+    public boolean canBuildRoad(int pid)
     {
         if(game == null)
             return false;
-        return game.canBuildRoad();
+        return game.canBuildRoad(pid);
     }
     /**
      * Checks to see if placing a road is a legal move for the player
      * @return boolean whether or not the player can place a road
      */
-    public boolean canPlaceRoad()
+    public boolean canPlaceRoad(EdgeLocation el)
     {
         if(game == null)
             return false;
-        return game.canPlaceRoad();
+        return game.canPlaceRoad(el);
     }
     /**
      * Places a Road at a given location on the map
      * @return boolean whether or not the player built the road (perhaps placeholder return values for all of the do methods)
      */
-    public void placeRoad(EdgeLocation el) throws InvalidPositionException
+    public void placeRoad(int pid, EdgeLocation el) throws InvalidPositionException
     {
         if(game != null)
-           game.placeRoad(el);
+        {
+            if(game.canBuildRoad(pid), game.canPlaceRoad(pid, el))
+                game = proxy.buildRoad(pid, el);
+        }
     }
     /**
      * Checks to see if building a settlement is a legal move for the player
      * @return boolean whether or not the player can build a settlement
      */
-    public boolean canBuildSettlement()
+    public boolean canBuildSettlement(int pid)
     {
         if(game == null)
             return false;
-        return game.canBuildSettlement();
+        return game.canBuildSettlement(pid);
     }
 
     /**
      * Checks to see if placing a settlement is a legal move for the player
      * @return boolean whether or not the player can place a settlement
      */
-    public boolean canPlaceSettlement()
+    public boolean canPlaceSettlement(VertexLocation vl)
     {
         if(game == null)
             return false;
-        return game.canPlaceSettlement();
+        return game.canPlaceSettlement(vl);
     }
 
     /**
      * Places a Settlement at a given location on the map
      * @return boolean whether or not the player placed a settlement
      */
-    public void placeSettlement(EdgeLocation el) throws InvalidPositionException
+    public void placeSettlement(int pid, VertexLocation vl) throws InvalidPositionException
     {
         if(game != null)
-            game.placeSettlement(el);
+        {
+            if(canPlaceSettlement(pid, vl) && canBuildSettlement(pid))
+                game = proxy.buildSettlement(pid, vl);
+        }
     }
 
     /**
      * Checks to see if building a city is a legal move for the player
      * @return boolean whether or not the player can build a city
      */
-    public boolean canBuildCity()
+    public boolean canBuildCity(int pid)
     {
         if(game == null)
             return false;
-        return game.canBuildCity();
+        return game.canBuildCity(pid);
     }
     /**
      * Checks to see if placing a city is a legal move for the player
      * @return boolean whether or not the player can place a city
      */
-    public boolean canPlaceCity()
+    public boolean canPlaceCity(VertexLocation vl)
     {
         if(game == null)
             return false;
-        return game.canPlaceCity();
+        return game.canPlaceCity(vl);
     }
 
     /**
      * Places a City at a given location on the map
      * @return boolean whether or not the player placed the city
      */
-    public void placeCity(EdgeLocation el) throws InvalidPositionException
+    public void placeCity(int pid, VertexLocation vl) throws InvalidPositionException
     {
         if(game != null)
-            game.placeCity(el);
+        {
+            if(game.canBuildCity(pid) && game.canPlaceCity(vl))
+                game = proxy.buildCity(pid, vl);
+        }
     }
 
-    /**
-     * Checks to see if buying a Developement Card is a legal move for the player
-     * @return boolean whether or not the player can buy a Developement card
-     */
-    public boolean canBuyDevcard()
-    {
-        if(game == null)
-            return false;
-        return game.canBuyDevcard();
-    }
-
-    /**
-     * Checks to see if Montoply is a legal move for the player
-     * @return boolean whether or not the player can monopoly
-     */
-    public boolean canMonopoly()
-    {
-        if(game == null)
-            return false;
-        return game.canMonopoly();
-    }
     /**
      * Checks to see if building a road in a specific place is a legal move for the player
      * @return boolean whether or not the player can road building
      */
-    public boolean canRoadBuilding()
+    public boolean canRoadBuilding(int pid)
     {
         if(game == null)
             return false;
-        return game.canRoadBuilding();
+        return game.canRoadBuilding(pid);
+    }
+    /**
+     * plays the road build card
+     * @return boolean
+     */
+    public void playRoadBuilding(int pid, EdgeLocation el1, EdgeLocation el2) throws IllegalMoveException
+    {
+        if(game != null)
+        {
+            if(game.canRoadBuilding(pid) && game.canPlaceRoad(pid, el1)&& game.canPlaceRoad(pid, el2))
+                game = proxy.playRoadBuilding(pid, el1, el2);
+            else
+                throw new IllegalMoveException("Something is wrong");
+        }
     }
     /**
      * Checks to see if placing a Monument Card(?) is a legal move for the player
@@ -184,31 +222,46 @@ public class Facade
      * Checks to see if placing a Year Of Plenty card is a legal move for the player
      * @return boolean whether or not the player can play the Year of Plenty card
      */
-    public boolean canYearOfPlenty()
+    public boolean canYearOfPlenty(int pid)
     {
         if(game == null)
             return false;
-        return game.canYearOfPlenty();
+        return game.canYearOfPlenty(pid);
     }
     /**
      * plays the year of plenty card for a given player
      * @return boolean whether or not the player played the year of plenty card
      */
-    public void playYearOfPlenty(ResourceType r) throws IllegalMoveException
+    public void playYearOfPlenty(int pid, ResourceType r, ResourceType r1) throws IllegalMoveException, InsufficientResourcesException
     {
         if(game != null)
-            game.playYearofPlenty(r);
+            if(game.canYearOfPlenty(pid))
+                game = proxy.playYearOfPlenty(pid, r, r1);
     }
     /**
      * Checks to see if placing a Soldier card is a legal move for the player
      * @return boolean whether or not the player can place the Soldier card
      */
-    public boolean canPlaceSoldier()
+    public boolean canPlaySoldier(int pid)
     {
         if(game == null)
             return false;
-        return game.canPlaceSoldier();
+        return game.canPlaySoldier(pid);
     }
+
+    /**
+     * Places a Soldier and grants the effects he brings
+     * @return boolean whether or not the player played the soldier card
+     */
+    public void playSoldier(int pid, int vid, HexLocation hl) throws IllegalMoveException
+    {
+        if(game != null)
+        {
+            if(game.canPlaySoldier(pid) &&  game.canRob(vid) && game.canMoveRobber(hl))
+                game = proxy.playSoldier(pid, vid, hl);
+        }
+    }
+
     /**
      * Checks to see if robbing another player is a legal move for the player
      * @return boolean whether or not the player can rob another player
@@ -245,19 +298,17 @@ public class Facade
      * Robs a player of one resource card
      * @return boolean whether or not the player chose to rob
      */
-    public void rob()throws IllegalMoveException
+    public void rob(int pid, ResourceType rt)throws IllegalMoveException, InsufficientResourcesException
     {
-
+        if(pid == -1)
+            throw new IllegalMoveException("no players can be robbed");
+        if(game != null)
+        {
+            game.rob(pid, rt);
+            proxy.robPlayer(game.getTurnTracker().getCurrentPlayer(), pid);
+        }
     }
 
-    /**
-     * Places a the robber at a specific location on the map
-     * @return boolean whether or not the player moved the robber
-     */
-    public void moveRobber(HexLocation hl) throws IllegalMoveException
-    {
-        game.moveRobber(hl);
-    }
     /**
      * Set up the TradeOffer
      */
@@ -270,11 +321,11 @@ public class Facade
      * Checks to see if trading resources with the bank is a legal move for the player
      * @return boolean whether or not the player can trade with the bank
      */
-    public boolean canTradeBank(ResourceList rl)
+    public boolean canTradeBank(int pid, ResourceList rl)
     {
         if(game == null)
             return false;
-        return game.canTradeBank(rl);
+        return game.canTradeBank(pid, rl);
     }
 
     /**
@@ -290,23 +341,40 @@ public class Facade
      * Checks to see if the player can roll the dice
      * @return boolean whether or not the player can roll the dice
      */
-    public boolean canRoll()
+    public boolean canRoll(int pid)
     {
         if(game == null)
             return false;
-        return game.canRoll();
+        return game.canRoll(pid);
+    }
+    /**
+     * rolls the dice for a number 1-12
+     * @return boolean whether or not the player rolled the dice
+     */
+    public void roll(int pid) throws IllegalMoveException
+    {
+        if(game != null)
+        {
+            if(canRoll(pid))
+            {
+                int number = game.roll(pid);
+                if (number == -1)
+                    throw new IllegalMoveException("Not the rolling phase . . . ");
+                game = proxy.rollNumber(number);
+            }
+        }
     }
 
-    public boolean canFinishTurn()
+    public boolean canFinishTurn(int pid)
     {
         if(game == null)
             return false;
-        return game.canFinishTurn();
+        return game.canFinishTurn(pid);
     }
 
-    public void FinishTurn()
+    public void FinishTurn(int pid)
     {
-        game.FinishTurn();
+        game = proxy.FinishTurn(pid);
     }
 
     public boolean canDiscardCards(ResourceList rl)
@@ -316,38 +384,54 @@ public class Facade
         return game.canDiscardCards(rl);
     }
 
-    //do methods
+    /**
+     * Checks to see if buying a Developement Card is a legal move for the player
+     * @return boolean whether or not the player can buy a Developement card
+     */
+    public boolean canBuyDevcard(int pid)
+    {
+        if(game == null)
+            return false;
+        return game.canBuyDevcard(pid);
+    }
     /**
      * Buys a developement card and increases the amount for the purchasing player
      * @return boolean whether or not the player bought the dev card
      */
-    public void buyDevCard() throws IllegalMoveException
+    public void buyDevCard(int pid) throws IllegalMoveException
     {
-        game.buyDevCard();
+        if(game != null)
+        {
+            if(game.canBuyDevcard(pid))
+            {
+                game = proxy.buyDevCard(pid);
+            }
+        }
     }
 
+
+    /**
+     * Checks to see if Montoply is a legal move for the player
+     * @return boolean whether or not the player can monopoly
+     */
+    public boolean canMonopoly(int pid)
+    {
+        if(game == null)
+            return false;
+        return game.canMonopoly(pid);
+    }
     /**
      * uses Monopoly
      * @return boolean whether or not the player played a monopoly
      */
-    public void playMonopoly(ResourceType r) throws IllegalMoveException
+    public void playMonopoly(int pid, ResourceType r) throws IllegalMoveException
     {
-        game.playMonopoly(r);
+        if(game != null)
+        {
+            if(game.canMonopoly(pid))
+                game = proxy.playMonopoly(pid, r);
+        }
     }
-    /**
-     * plays the road build card
-     * @return boolean
-     */
-    public void playRoadBuilding() throws IllegalMoveException
-    {
-        game.playRoadBuilding();
-    }
-
-    /**
-     * Places a Soldier and grants the effects he brings
-     * @return boolean whether or not the player played the soldier card
-     */
-    public void placeSoldier() throws IllegalMoveException{}
 
     /**
      * enacts the trade offer of the specified player
@@ -376,15 +460,6 @@ public class Facade
     {
         if(game != null)
             game.acceptTrade();
-    }
-    /**
-     * rolls the dice for a number 1-12
-     * @return boolean whether or not the player rolled the dice
-     */
-    public void roll() throws IllegalMoveException
-    {
-        if(game != null)
-            game.roll();
     }
 
     /**
@@ -417,6 +492,8 @@ public class Facade
     {
         if(game == null)
             return false;
-        return game.canSendChat(msg, pid);
+        boolean sc = game.canSendChat(msg, pid);
+        if(sc)
+            return proxy.sendChat(pid, msg);
     }
 }
