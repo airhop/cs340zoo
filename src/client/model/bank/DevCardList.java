@@ -51,7 +51,7 @@ public class DevCardList {
     	randomize.add(4);
     }
     //Generate a random number from 0 to the size of the array minus 1
-    Random rand;
+    Random rand = null;
     int min = 0;
     int max = randomize.size()-1;
     // nextInt is normally exclusive of the top value,
@@ -82,6 +82,7 @@ public class DevCardList {
     {
     	return "yearofplenty";
     }
+      return null;
   }
   
   /**
