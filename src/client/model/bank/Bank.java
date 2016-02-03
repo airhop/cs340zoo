@@ -6,11 +6,16 @@ public class Bank {
   ResourceList resources;
   DevCardList dcl;
   
-  Bank(ResourceList res, DevCardList devs)
-  {
+    Bank()
+    {
+    resources = new ResourceList(19,19,19,19,19);
+    dcl = new DevCardList(2,5,2,14,2);
+    }
+    Bank(ResourceList res, DevCardList devs)
+    {
     resources = res;
     dcl = devs;
-  }
+    }
     public ResourceList getResources()
     {
       return resources;
@@ -270,5 +275,28 @@ public class Bank {
         throw new InsufficientResourcesException();
       }
       //add a return for the devcard purchased
+  }
+  public boolean canGive(String type, int amount)
+  {
+    if(type.equals("brick"))
+    {
+      return canGiveBrick(amount);
+    }
+    if(type.equals("ore"))
+    {
+      return canGiveOre(amount);
+    }
+    if(type.equals("sheep"))
+    {
+      return canGiveSheep(amount);
+    }
+    if(type.equals("wheat"))
+    {
+      return canGiveWheat(amount);
+    }
+    if(type.equals("wood"))
+    {
+      return canGiveWood(amount);
+    }
   }
 }
