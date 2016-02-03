@@ -9,14 +9,14 @@ public class PassObject
    {
       playerid = -1;
       otherid = -1;
-      boolean acceptablility = false;
+      acceptablility = false;
       information = null;
    }
       public PassObject(int pid, int oid, boolean accept, String info)
    {
       playerid = pid;
       otherid = oid;
-      boolean acceptablility = accept;
+      acceptablility = accept;
       information = info;
    }
    
