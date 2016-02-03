@@ -299,4 +299,28 @@ public class Bank {
       return canGiveWood(amount);
     }
   }
+  
+    public void add(String type, int amount)
+  {
+    if(type.equals("brick"))
+    {
+      addBrick(amount);
+    }
+    if(type.equals("ore"))
+    {
+      addOre(amount);
+    }
+    if(type.equals("sheep"))
+    {
+      addSheep(amount);
+    }
+    if(type.equals("wheat"))
+    {
+      addWheat(amount);
+    }
+    if(type.equals("wood"))
+    {
+      addWood(amount);
+    }
+  }
 }
