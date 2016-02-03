@@ -1,5 +1,7 @@
 package client.model.map;
 
+import shared.locations.HexLocation;
+
 public class Robber
 {
   HexLocation hl;

@@ -7,11 +7,14 @@ import client.model.bank.ResourceList;
 import client.proxy.Proxy;
 import shared.exceptions.FailureToAddException;
 import shared.exceptions.InvalidPositionException;
+import shared.locations.EdgeLocation;
+import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
 import shared.serialization.Deserializer;
+import shared.locations.*;
 
 public class Map {
-    TreeMap<shared.locations.HexLocation,Hex> hexes;
+    TreeMap<HexLocation,Hex> hexes;
     ArrayList<Port> ports;
     ArrayList<Road> roads;
     ArrayList<VertexObject> settlements;
@@ -23,7 +26,7 @@ public class Map {
     //regular constructor to create map
     public Map() 
     {
-        hexes = new TreeMap<shared.locations.HexLocation,Hex>();
+        hexes = new TreeMap<HexLocation,Hex>();
         ports = new ArrayList<Port>();
         roads = new ArrayList<Road>();
         settlements = new ArrayList<VertexObject>();
@@ -31,33 +34,16 @@ public class Map {
         resources = new ArrayList<ResourceList>();
         deserializer = new Deserializer();
     }
-//    private void generateNumbers()
-//    {
-//    	
-//    }
-//    private void generateOceanHex()
-//    {
-//    	
-//    }
-//    private void generateResourceHex()
-//    {
-//    	
-//    }
-    //have another to update, or just create a new one every time?
+    
     /**
      * initialize a new map when game is created
      */
     public void initialize() 
     {
-    	if(canAddHex())
-    	{
-    		//addHex();
-    	}
-    	if(canAddPort())//several canDo Methods
-    	{
-    		//addPort();
-    	}
-    	relocateRobber();
+    	
+    }
+    public void initialize()
+    {
     }
 
     /**
@@ -65,14 +51,14 @@ public class Map {
      */
     public boolean canAddHex() 
     {
-    	if (hexes.size() < 33)
+    	if (hexes.size() > 32)
     	{
-    		return true;
+    		return false;
     	}
-    	return false;
+    	return true;
         
     }//may not be used
-
+    
     /**
      * adds a hex to the maps list of hexes
      *
@@ -83,20 +69,29 @@ public class Map {
      */
     public void addHex(int x, int y, String resource, int number) throws FailureToAddException//may not be used
     {
+    	
     	String numberString = new String(Integer.toString(number));
     	Hex hex = new Hex(x,y,resource,numberString);
     	hexes.put(hex.getLocation(), hex);
     }
-
+    public void
+    {
+    	
+    }
     /**
      * checks to see if port can be added
      */
-    public boolean canAddPort(Hex hex) {
-        if(hex.getResource() ==  "Ocean" || hex.getResource() == "Sea")
+    public boolean canAddPort(Port port) 
+    {
+    	if(port == null)
+    	{
+    		return false;
+    	}
+        if(ports.contains(port))
         {
-        	return true;
+        	return false;
         }
-        return false;
+        return true;
     }
 
     /**
@@ -111,16 +106,23 @@ public class Map {
     public void addPort(int x, int y, String resource, String direction, int ratio) throws FailureToAddException
     {
     	Port port = new Port(x,y,resource, direction, ratio);
-    	
+    	ports.add(port);
     }
 
     /**
      * checks to see if road can be added
      */
-    public boolean canAddRoad(shared.locations.EdgeLocation edgeLocation) 
+    public boolean canAddRoad(Road road) 
     {
-    	if (edgeLocation == hex.location.)
-        return false;
+    	if (road == null)
+    	{
+    		return false;
+    	}
+    	if (roads.contains(road))
+    	{
+    		return false;
+    	}
+        return true;
     }
 
     /**
@@ -131,17 +133,31 @@ public class Map {
      * @param direction - direction from hex that road is located
      * @param owner     - index of owner
      */
-    public void addRoad(int x, int y, String direction, int owner) throws FailureToAddException 
+    //public void addRoad(int x, int y, String direction, int owner) throws FailureToAddException
+    public void addRoad(int x, int y, EdgeDirection direction, int owner) throws FailureToAddException
     {
-    	Road road = new Road(x, y);
+    	HexLocation hexLocation = new HexLocation(x,y);
+//    	EdgeDirection edgeDirection;
+//    	EdgeLocation edgeLocation = new EdgeLocation(hexLocation, edgeDirection);
+    	EdgeLocation edgeLocation = new EdgeLocation(hexLocation,direction);
+    	Road road = new Road(edgeLocation,owner);
+    	roads.add(road);
     }
 
     /**
      * checks to see if settlement can be added
      */
-    public boolean canAddSettlement() 
+    public boolean canAddSettlement(Settlement settlement) 
     {
-        return false;
+    	if (settlement == null)
+    	{
+    		return false;
+    	}
+    	if (settlements.contains(settlement))
+    	{
+    		return false;
+    	}
+        return true;
     }
 
     /**
@@ -152,19 +168,28 @@ public class Map {
      * @param direction - direction from hex that settlement is located
      * @param owner     - index of owner
      */
-    public void addSettlement(int x, int y, String direction, int owner) throws FailureToAddException
+    public void addSettlement(int x, int y, VertexDirection direction, int owner) throws FailureToAddException
     {
-    	Settlement settlement = new Settlement(x,y,direction,owner);
+    	HexLocation hex = new HexLocation(x,y);
+    	VertexLocation location =  new VertexLocation(hex, direction);
+    	Settlement settlement = new Settlement(location,owner);
     	settlements.add(settlement);
     }
 
     /**
      * checks to see if City can be added
      */
-    public boolean canAddCity(VertexLocation vertextLocation) 
+    public boolean canAddCity(City city) 
     {
-    	if (vertextLocation.getNormalizedLocation().)
-        return false;
+    	if (city == null)
+    	{
+    		return false;
+    	}
+    	if (cities.contains(city))
+    	{
+    		return false;
+    	}
+        return true;
     }
 
     /**
@@ -175,16 +200,25 @@ public class Map {
      * @param direction - direction from hex that city is located
      * @param owner     - index of owner
      */
-    public void addCity(int x, int y, String direction, int owner) throws FailureToAddException
+    public void addCity(int x, int y, VertexDirection direction, int owner) throws FailureToAddException
     {
-
+    	HexLocation hex = new HexLocation(x,y);
+    	VertexLocation location =  new VertexLocation(hex, direction);
+    	City city = new City(location,owner);
+    	cities.add(city);
     }
 
     /**
      * checks to see if robber can be relocated
      */
-    public boolean canRelocateRobber() {
-        return false;
+    public boolean canRelocateRobber(int x, int y) 
+    {
+    	HexLocation targetHex = new HexLocation(x,y);
+    	if (hexes.get(targetHex).resource == "Ocean" || hexes.get(targetHex).resource == "Sea")
+    	{
+    		return false;
+    	}
+        return true;
     }
 
     /**
@@ -195,7 +229,8 @@ public class Map {
      */
     public void relocateRobber(int x, int y) throws InvalidPositionException
     {
-
+    	HexLocation hexLocation = new HexLocation(x,y);
+    	robber.setHl(hexLocation);
     }
     //getters and setters
 	public TreeMap<HexLocation, Hex> getHexes() {

@@ -1,15 +1,21 @@
 package client.model.map;
 
+import shared.locations.EdgeLocation;
+
 public class Road {
   int owner;
-  shared.locations.EdgeLocation location;
+  EdgeLocation location;
   
-  public Road(int x, int y, int id)
+//  public Road(int x, int y, int id)
+//  {
+//    location = new EdgeLocation(0,0,"");
+//    owner = id;
+//  }
+  public Road(EdgeLocation edgeLocation, int id)
   {
-    location = new EdgeLocation(0,0, "");
-    owner = id;
+	  location = edgeLocation;
+	  owner = id;
   }
-
   public int getOwner()
   {
 	  return owner;
