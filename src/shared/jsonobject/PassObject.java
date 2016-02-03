@@ -12,6 +12,13 @@ public class PassObject
       boolean acceptablility = false;
       information = null;
    }
+      public PassObject(int pid, int oid, boolean accept, String info)
+   {
+      playerid = pid;
+      otherid = oid;
+      boolean acceptablility = accept;
+      information = info;
+   }
    
    public int getPlayerid() {
 		return playerid;
