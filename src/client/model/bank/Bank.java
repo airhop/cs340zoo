@@ -260,7 +260,7 @@ public class Bank {
   /**
    * purchase of a devcard
   */
-  public void BuyDevCard(ResourceList playerResources) throws InsufficientResourcesException
+  public String BuyDevCard(ResourceList playerResources) throws InsufficientResourcesException
   {
     //if player doesnt have 1 sheep 1 wheat 1 ore throw exception
       int sheep = playerResources.getSheep();
@@ -274,7 +274,7 @@ public class Bank {
       {
         throw new InsufficientResourcesException();
       }
-      //add a return for the devcard purchased
+      return dcl.buyDevCard();
   }
   public boolean canGive(String type, int amount)
   {
@@ -297,6 +297,30 @@ public class Bank {
     if(type.equals("wood"))
     {
       return canGiveWood(amount);
+    }
+  }
+  
+    public void add(String type, int amount)
+  {
+    if(type.equals("brick"))
+    {
+      addBrick(amount);
+    }
+    if(type.equals("ore"))
+    {
+      addOre(amount);
+    }
+    if(type.equals("sheep"))
+    {
+      addSheep(amount);
+    }
+    if(type.equals("wheat"))
+    {
+      addWheat(amount);
+    }
+    if(type.equals("wood"))
+    {
+      addWood(amount);
     }
   }
 }

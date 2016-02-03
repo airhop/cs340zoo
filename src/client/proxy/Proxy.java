@@ -2,31 +2,33 @@ package client.proxy;
 
 import client.model.bank.ResourceList;
 import client.model.history.MessageList;
-import client.model.map.EdgeLocation;
+import shared.locations.EdgeLocation;
 import com.google.gson.Gson;
 import shared.exceptions.*;
-import shared.jsonobject.Login;
-import shared.serialization.Deserializer;
-import shared.serialization.Serializer;
+import shared.jsonobject.Resources;
+import shared.jsonobject.User;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class Proxy implements IProxy{
-    private String SERVER_HOST = "localhost";
-    private int SERVER_PORT = 8081;
-    private String URL_PREFIX = "http://" + SERVER_HOST + ":" + SERVER_PORT;
+    private String SERVER_HOST;
+    private int SERVER_PORT;
+    private String URL_PREFIX;
     private final String HTTP_GET = "GET";
     private final String HTTP_POST = "POST";
-    private Deserializer deSer = new Deserializer();
-    private Serializer Ser = new Serializer();
-    private Cookie userCookie = new Cookie();
-    private Cookie gameCookie = new Cookie();
-    private Gson myGson = new Gson();
+    private Cookie userCookie;
+    private Cookie gameCookie;
+    private Gson myGson;
 
     public Proxy(){
-
+        SERVER_HOST = "localhost";
+        SERVER_PORT = 8081;
+        URL_PREFIX = "http://" + SERVER_HOST + ":" + SERVER_PORT;
+        userCookie = new Cookie();
+        gameCookie = new Cookie();
+        myGson = new Gson();
     }
 
     private Object doGet(String urlPath, Class myClass) throws ClientException {
@@ -54,7 +56,7 @@ public class Proxy implements IProxy{
         }
     }
 
-    private Object doPost(String urlPath, Object postData, Class myClass) throws ClientException {
+    private void doPost(String urlPath, Object postData, Class myClass) throws ClientException {
         try {
             URL url = new URL(URL_PREFIX + urlPath);
             HttpURLConnection connection = (HttpURLConnection)url.openConnection();
@@ -78,7 +80,8 @@ public class Proxy implements IProxy{
             if (connection.getResponseCode() != HttpURLConnection.HTTP_OK) {
                 throw new ClientException(String.format("doPost failed: %s (http code %d)", urlPath, connection.getResponseCode()));
             }else{
-                return myGson.fromJson(connection.getInputStream().toString(), myClass);
+                System.out.println(connection.getInputStream().toString());
+//                return myGson.fromJson(connection.getInputStream().toString(), myClass);
             }
         }
         catch (IOException e) {
@@ -86,13 +89,13 @@ public class Proxy implements IProxy{
         }
     }
 
-    @Override
-    public void userLogin(Login l) throws InvalidUserException {
 
+    @Override
+    public void userLogin(User u) throws InvalidUserException {
     }
 
     @Override
-    public void userRegister(Login l) throws InvalidUserException {
+    public void userRegister(User u) throws InvalidUserException {
 
     }
 
@@ -162,7 +165,7 @@ public class Proxy implements IProxy{
     }
 
     @Override
-    public void robPlayer(int playerIdOne, int playerIdTwo) {
+    public void robPlayer(int playerIdOne, int playerIdTwo, EdgeLocation El) {
 
     }
 
@@ -177,7 +180,7 @@ public class Proxy implements IProxy{
     }
 
     @Override
-    public void playYearOfPlenty(int playerId) {
+    public void playYearOfPlenty(int playerId, Resources r1, Resources r2) {
 
     }
 
@@ -187,7 +190,7 @@ public class Proxy implements IProxy{
     }
 
     @Override
-    public void playSoldier(int playerId) {
+    public void playSoldier(int playerId, EdgeLocation El) {
 
     }
 

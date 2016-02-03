@@ -17,6 +17,14 @@ public class ResourceList
     numOfWheat = 19;
     numOfWood = 19;
   }
+    public ResourceList(-1)
+  {
+    numOfBrick = 0;
+    numOfOre = 0;
+    numOfSheep = 0;
+    numOfWheat = 0;
+    numOfWood = 0;
+  }
     public ResourceList(int br, int or, int sh, int wh, int wo)
   {
     numOfBrick = br;
