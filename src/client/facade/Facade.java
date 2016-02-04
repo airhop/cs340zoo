@@ -186,7 +186,11 @@ public class Facade
         if(game != null)
         {
             if(game.canBuildCity(pid) && game.canPlaceCity(vl))
-                game = proxy.buildCity(pid, vl);
+                try {
+                    proxy.buildCity(pid, vl);
+                } catch (IllegalBuildException e) {
+                    e.printStackTrace();
+                }
         }
     }
 
@@ -269,7 +273,7 @@ public class Facade
         if(game != null)
         {
             if(game.canPlaySoldier(pid) &&  game.canRob(pid, vid) && game.canMoveRobber(hl))
-                proxy.playSoldier(pid, vid, hl);
+                proxy.playSoldier();
         }
     }
 
