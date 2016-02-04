@@ -7,6 +7,8 @@ import client.model.map.EdgeLocation;
 import client.model.map.HexLocation;
 import shared.exceptions.*;
 import shared.jsonobject.Login;
+import shared.jsonobject.Resources;
+import shared.jsonobject.User;
 
 public class MockProxy implements IProxy{
 
@@ -23,13 +25,12 @@ public class MockProxy implements IProxy{
 
 
     @Override
-    public void userLogin(Login l) throws InvalidUserException {
-        return;
+    public void userLogin(User u) throws InvalidUserException {
 
     }
 
     @Override
-    public void userRegister(Login l) throws InvalidUserException {
+    public void userRegister(User u) throws InvalidUserException {
 
     }
 
@@ -49,6 +50,36 @@ public class MockProxy implements IProxy{
     }
 
     @Override
+    public void gamesSave() {
+
+    }
+
+    @Override
+    public void gamesLoad() {
+
+    }
+
+    @Override
+    public void getGameModel() {
+
+    }
+
+    @Override
+    public void resetCommands() {
+
+    }
+
+    @Override
+    public void runCommand() {
+
+    }
+
+    @Override
+    public void listCommands() {
+
+    }
+
+    @Override
     public boolean gameAddAI() {
         return false;
     }
@@ -64,37 +95,17 @@ public class MockProxy implements IProxy{
     }
 
     @Override
-    public void finishTurn(int playerId) {
-
-    }
-
-    @Override
-    public void buildRoad(int playerId, EdgeLocation el) {
-
-    }
-
-    @Override
-    public void buildCity(int playerId, EdgeLocation el) throws IllegalBuildException {
-
-    }
-
-    @Override
-    public void buildSettlement(int playerId, EdgeLocation el) throws IllegalBuildException {
-
-    }
-
-    @Override
-    public void discardCards(int playerId, ResourceList rl) throws InsufficientResourcesException {
-
-    }
-
-    @Override
     public void rollNumber(int numRoled) {
 
     }
 
     @Override
-    public void getGameModel() {
+    public void robPlayer(int playerIdOne, int playerIdTwo, EdgeLocation El) {
+
+    }
+
+    @Override
+    public void finishTurn(int playerId) {
 
     }
 
@@ -104,7 +115,7 @@ public class MockProxy implements IProxy{
     }
 
     @Override
-    public void playMonopoly(int playerId, String card) {
+    public void playYearOfPlenty(int playerId, Resources r1, Resources r2) {
 
     }
 
@@ -114,32 +125,37 @@ public class MockProxy implements IProxy{
     }
 
     @Override
+    public void playSoldier(int playerId, EdgeLocation El) {
+
+    }
+
+    @Override
+    public void playMonopoly(int playerId, String card) {
+
+    }
+
+    @Override
     public void placeMonument(int playerId) {
 
     }
 
     @Override
-    public void playYearOfPlenty(int playerId) {
+    public void buildRoad(int playerId, EdgeLocation el) {
 
     }
 
     @Override
-    public void playSoldier(int playerId) {
+    public void buildSettlement(int playerId, EdgeLocation el) throws IllegalBuildException {
 
     }
 
     @Override
-    public void robPlayer(int playerIdOne, int playerIdTwo) {
+    public void buildCity(int playerId, EdgeLocation el) throws IllegalBuildException {
 
     }
 
     @Override
-    public void moveRobber(int playerId, HexLocation hl) {
-
-    }
-
-    @Override
-    public void tradePlayer(int playerIdOne, int playerIdTwo, ResourceList rl) {
+    public void offerTrade(int playerIdOne, int playerIdTwo, ResourceList rl) {
 
     }
 
@@ -149,12 +165,7 @@ public class MockProxy implements IProxy{
     }
 
     @Override
-    public void acceptTrade(int playerIdOne, int playerIdTwo, ResourceList rl) {
-
-    }
-
-    @Override
-    public void win(int playerId) throws InvalidWinnerException {
+    public void discardCards(int playerId, ResourceList rl) throws InsufficientResourcesException {
 
     }
 }

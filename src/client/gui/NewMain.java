@@ -1,6 +1,10 @@
 package client.gui;
 
 import client.proxy.Cookie;
+import client.proxy.IProxy;
+import client.proxy.Proxy;
+import shared.exceptions.InvalidUserException;
+import shared.jsonobject.User;
 
 /**
  * Created by Joshua on 1/22/2016.
@@ -13,6 +17,12 @@ public class NewMain {
         myCook.setFullCookie(temp);
         System.out.println(myCook.getCookieName());
         System.out.println(myCook.getCookieValue());
+        IProxy myProxy = new Proxy();
+        try {
+            myProxy.userLogin(new User("Sam", "sam"));
+        } catch (InvalidUserException e) {
+            e.printStackTrace();
+        }
     }
 
 }

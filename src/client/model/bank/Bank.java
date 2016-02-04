@@ -30,7 +30,7 @@ public class Bank {
     }
     public void setDevCards(DevCardList list)
     {
-      devs = list;
+      //devs = list;
     }
     /**
     * adds proper resource to resourcelist

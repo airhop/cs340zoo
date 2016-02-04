@@ -2,13 +2,13 @@ package client.proxy;
 
 import client.model.bank.ResourceList;
 import client.model.history.MessageList;
-import shared.locations.EdgeLocation;
-import com.google.gson.Gson;
+import com.google.gson.*;
 import shared.exceptions.*;
 import shared.jsonobject.Resources;
 import shared.jsonobject.User;
+import shared.locations.EdgeLocation;
+import shared.serialization.HttpURLResponse;
 import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
@@ -31,67 +31,141 @@ public class Proxy implements IProxy{
         myGson = new Gson();
     }
 
-    private Object doGet(String urlPath, Class myClass) throws ClientException {
+
+    public HttpURLResponse doGet(String commandName) throws ClientException {
+
+        HttpURLResponse result = new HttpURLResponse();
         try {
-            URL url = new URL(URL_PREFIX + urlPath);
+            URL url = new URL(URL_PREFIX + "/" + commandName);
             HttpURLConnection connection = (HttpURLConnection)url.openConnection();
             connection.setRequestMethod(HTTP_GET);
-
-            if(userCookie.isActive()){
-                connection.setRequestProperty(userCookie.getCookieName(), userCookie.getCookieValue());
-            }
-            if(gameCookie.isActive()){
-                connection.setRequestProperty(gameCookie.getCookieName(), gameCookie.getCookieValue());
-            }
             connection.connect();
+
+            result.setResponseCode(connection.getResponseCode());
+            result.setResponseLength(connection.getContentLength());
             if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
-                return myGson.fromJson(connection.getInputStream().toString(), myClass);
-            }
-            else {
-                throw new ClientException(String.format("doGet failed: %s (http code %d)", urlPath, connection.getResponseCode()));
+                if(connection.getContentLength() == 0) {
+//                    result.setResponseBody(xmlStream.fromXML(connection.getInputStream()));
+                }
+            } else {
+                throw new ClientException(String.format("doGet failed: %s (http code %d)", commandName, connection.getResponseCode()));
             }
         }
         catch (IOException e) {
             throw new ClientException(String.format("doGet failed: %s", e.getMessage()), e);
         }
+        return result;
     }
 
-    private void doPost(String urlPath, Object postData, Class myClass) throws ClientException {
+    public HttpURLResponse doPost(String commandName, Object postData) throws ClientException {
+
+        HttpURLResponse result = new HttpURLResponse();
+
         try {
-            URL url = new URL(URL_PREFIX + urlPath);
+            URL url = new URL(URL_PREFIX + commandName);
             HttpURLConnection connection = (HttpURLConnection)url.openConnection();
-            String temp;
             connection.setRequestMethod(HTTP_POST);
-
-            if(userCookie.isActive()){
-                connection.setRequestProperty(userCookie.getCookieName(), userCookie.getCookieValue());
-            }
-            if(gameCookie.isActive()){
-                connection.setRequestProperty(gameCookie.getCookieName(), gameCookie.getCookieValue());
-            }
-
             connection.setDoOutput(true);
             connection.connect();
-            temp = myGson.toJson(postData);
-            ObjectOutputStream myOut = new ObjectOutputStream(connection.getOutputStream());
-            myOut.writeBytes(temp);
-            myOut.close();
+
+
+//            xmlStream.toXML(postData, connection.getOutputStream());
             connection.getOutputStream().close();
-            if (connection.getResponseCode() != HttpURLConnection.HTTP_OK) {
-                throw new ClientException(String.format("doPost failed: %s (http code %d)", urlPath, connection.getResponseCode()));
-            }else{
-                System.out.println(connection.getInputStream().toString());
-//                return myGson.fromJson(connection.getInputStream().toString(), myClass);
+
+            result.setResponseCode(connection.getResponseCode());
+            result.setResponseLength(connection.getContentLength());
+            if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
+                if(connection.getContentLength() == 0) {
+//                    result.setResponseBody(xmlStream.fromXML(connection.getInputStream()));
+                }
+            } else {
+                throw new ClientException(String.format("doPost failed: %s (http code %d)", commandName, connection.getResponseCode()));
             }
         }
         catch (IOException e) {
             throw new ClientException(String.format("doPost failed: %s", e.getMessage()), e);
         }
+        return result;
     }
+
+
+//    private Object doGet(String urlPath, Class myClass) throws ClientException {
+//        try {
+//            URL url = new URL(URL_PREFIX + urlPath);
+//            HttpURLConnection connection = (HttpURLConnection)url.openConnection();
+//            connection.setRequestMethod(HTTP_GET);
+//
+//            if(userCookie.isActive()){
+//                connection.setRequestProperty(userCookie.getCookieName(), userCookie.getCookieValue());
+//            }
+//            if(gameCookie.isActive()){
+//                connection.setRequestProperty(gameCookie.getCookieName(), gameCookie.getCookieValue());
+//            }
+//            connection.connect();
+//            if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
+//                JsonElement myArray = new JsonArray();
+//                JsonObject myObj = new JsonObject();
+//                JsonParser myParser = new JsonParser();
+//                JsonObject obj = new JsonObject();
+//
+//                myArray = myParser.parse(connection.getInputStream().toString());
+//                System.out.println(connection.getInputStream().toString());
+//
+//                return myGson.fromJson(connection.getInputStream().toString(), myClass);
+//
+//            }
+//            else {
+//                throw new ClientException(String.format("doGet failed: %s (http code %d)", urlPath, connection.getResponseCode()));
+//            }
+//        }
+//        catch (IOException e) {
+//            throw new ClientException(String.format("doGet failed: %s", e.getMessage()), e);
+//        }
+//    }
+//
+//    private Object doPost(String urlPath, Object postData) throws ClientException {
+//        try {
+//            URL url = new URL(URL_PREFIX + urlPath);
+//            HttpURLConnection connection = (HttpURLConnection)url.openConnection();
+//            String temp;
+//            connection.setRequestMethod(HTTP_POST);
+//
+//            if(userCookie.isActive()){
+//                connection.setRequestProperty(userCookie.getCookieName(), userCookie.getCookieValue());
+//            }
+//            if(gameCookie.isActive()){
+//                connection.setRequestProperty(gameCookie.getCookieName(), gameCookie.getCookieValue());
+//            }
+//
+//            connection.setDoOutput(true);
+//            connection.connect();
+//            temp = myGson.toJson(postData);
+//            ObjectOutputStream myOut = new ObjectOutputStream(connection.getOutputStream());
+//            myOut.writeBytes(temp);
+//
+////            myOut.close();
+////            connection.getOutputStream().close();
+//            if (connection.getResponseCode() != HttpURLConnection.HTTP_OK) {
+//                throw new ClientException(String.format("doPost failed: %s (http code %d)", urlPath, connection.getResponseCode()));
+//            }else{//i need to grab cookies and the json
+//
+//                return myGson.fromJson(connection.getInputStream().toString(),);
+//            }
+//        }
+//        catch (IOException e) {
+//            throw new ClientException(String.format("doPost failed: %s", e.getMessage()), e);
+//        }
+//    }
 
 
     @Override
     public void userLogin(User u) throws InvalidUserException {
+        JsonElement myArray = new JsonArray();
+        JsonObject myObjOne = new JsonObject();
+        JsonObject myObjTwo = new JsonObject();
+        myObjOne.addProperty("username", u.getUsername());
+        myObjOne.addProperty("password", u.getPassword());
+        System.out.println(myObjOne.toString());
     }
 
     @Override
@@ -233,4 +307,6 @@ public class Proxy implements IProxy{
     public void discardCards(int playerId, ResourceList rl) throws InsufficientResourcesException {
 
     }
+
+
 }
