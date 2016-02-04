@@ -4,10 +4,13 @@ package client.proxy;
 
 import client.model.bank.ResourceList;
 import client.model.history.MessageList;
+import shared.definitions.ResourceType;
 import shared.exceptions.*;
 import shared.jsonobject.Resources;
 import shared.jsonobject.User;
 import shared.locations.EdgeLocation;
+import shared.locations.HexLocation;
+import shared.locations.VertexLocation;
 
 
 public interface IProxy {
@@ -86,7 +89,7 @@ public interface IProxy {
      * @param playerIdOne - playerIdOne passed to the server
      * @param playerIdTwo - playerIdTwo being robbed
      */
-    void robPlayer(int playerIdOne, int playerIdTwo, EdgeLocation El);
+    void robPlayer(int playerIdOne, int playerIdTwo, HexLocation Hl);
     /**
      * Used when a player finishes his turn
      * @param playerId - the player that is ending their turn
@@ -102,7 +105,7 @@ public interface IProxy {
      * This method finalizes the playing of the Year of plenty card from a player on the server
      * @param playerId - PlayerId passed to the server
      */
-    void playYearOfPlenty(int playerId, Resources r1, Resources r2);
+    void playYearOfPlenty(int playerId, ResourceType r1, ResourceType r2);
     /**
      * To play the Card road building you finally get here in the proxy and this finalizes the
      * playing of the card on the server
@@ -116,13 +119,13 @@ public interface IProxy {
      * towards the largest army
      * @param playerId - PlayerId passed to the server
      */
-    void playSoldier(int playerId, EdgeLocation El);
+    void playSoldier(int playerId, HexLocation El);
     /**
      * To play a Monopoly Card you call this function which contacts the Server proxy
      * @param playerId - PlayerId passed to the server
-     * @param card - Selected card to take from players
+     * @param r1 - Selected card to take from players
      */
-    void playMonopoly(int playerId, String card);
+    void playMonopoly(int playerId, ResourceType r1);
     /**
      * This method is used to play a victory od monument card finalizing the move on the server
      * @param playerId - PlayerId passed to the server
@@ -138,16 +141,16 @@ public interface IProxy {
     /**
      * Player builds a settlement
      * @param playerId - Player that wants to build the settlement
-     * @param el - Edge/Vertex that it is going to be built to
+     * @param vl - Edge/Vertex that it is going to be built to
      */
-    void buildSettlement(int playerId, EdgeLocation el) throws IllegalBuildException;
+    void buildSettlement(int playerId, VertexLocation vl) throws IllegalBuildException;
 
     /**
      * Player that wants to build a city pushes it to the server
      * @param playerId - Player that wants to build
-     * @param el - Location to build the City
+     * @param vl - Location to build the City
      */
-    void buildCity(int playerId, EdgeLocation el) throws IllegalBuildException;
+    void buildCity(int playerId, VertexLocation vl) throws IllegalBuildException;
     /**
      * This is to propose a trade to another player which will update a list
      * in the server model of trades taht can be made
@@ -157,12 +160,20 @@ public interface IProxy {
      */
     void offerTrade(int playerIdOne, int playerIdTwo, ResourceList rl);
     /**
+     * This is to propose a trade to another player which will update a list
+     * in the server model of trades taht can be made
+     * @param playerIdOne - playerIdOne passed to the server
+     * @param playerIdTwo - playerIdTwo being traded with
+     * @param rl - Traded between the players
+     */
+    void acceptTrade(int playerIdOne, int playerIdTwo, ResourceList rl);
+    /**
      * This is when you are going to trade with the bank this is fairly simple
      * so it only requires that you send information to finalize the trade on the server
      * @param playerId - playerIdOne passed to the server
-     * @param rl - Traded with the bank
+     * @param ratio - Traded with the bank
      */
-    void tradeBank(int playerId, ResourceList rl);
+    void meritimeTrade(int playerId, int ratio, ResourceList in, ResourceList out);
     /**
      * Discards cards
      * @param playerId - Player to discard
