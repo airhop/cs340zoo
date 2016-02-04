@@ -252,8 +252,8 @@ public class Map
     /**
      * moves robber to a new hex location
      *
-     * @param x - horizontal location of hex robber is to be moved to
-     * @param y - diagonal location of hex robber is to be moved to
+     * @param  - horizontal location of hex robber is to be moved to
+     * @param  - diagonal location of hex robber is to be moved to
      */
     //public void relocateRobber(int x, int y) throws InvalidPositionException
     public void relocateRober(HexLocation targetHex)

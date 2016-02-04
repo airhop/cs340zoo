@@ -24,7 +24,7 @@ public class NewMain {
 //        } catch (InvalidUserException e) {
 //            e.printStackTrace();
 //        }
-        Facade myFacade = new Facade();
+//        Facade myFacade = new Facade();
 
     }
 
