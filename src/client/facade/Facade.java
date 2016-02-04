@@ -273,7 +273,7 @@ public class Facade
         if(game != null)
         {
             if(game.canPlaySoldier(pid) &&  game.canRob(pid, vid) && game.canMoveRobber(hl))
-                proxy.playSoldier();
+                proxy.playSoldier(pid, vid, hl);
         }
     }
 
@@ -285,6 +285,7 @@ public class Facade
     {
         if(game != null)
             return game.canRob(pid, vid);
+        return true;
     }
     /**
      * Checks to see if moving the robber is a legal move for the player
@@ -308,7 +309,7 @@ public class Facade
         if(game != null)
         {
             if(game.canRob(pid, vid) && game.canMoveRobber(hl))
-                game = proxy.robPlayer(pid, vid, hl);
+                proxy.robPlayer(pid, vid, hl);
         }
     }
 
@@ -327,10 +328,10 @@ public class Facade
      * completes a transaction of resources with the bank
      * @return boolean whether or not the player traded with the bank
      */
-    public void tradeBank(ResourceList rl)
+    public void meritimeTrade(int playerId, int ratio, ResourceList in, ResourceList out)
     {
-        if(game != null)
-            game.maritimeTrade(rl);
+        if(proxy != null)
+            proxy.meritimeTrade(playerId, ratio, in, out);
     }
     /**
      * Checks to see if the player can roll the dice
@@ -370,7 +371,7 @@ public class Facade
 
     public void FinishTurn(int pid)
     {
-        proxy.FinishTurn(pid);
+        proxy.finishTurn(pid);
     }
 
     public boolean canDiscardCards(int pid, ResourceList rl)
@@ -385,7 +386,11 @@ public class Facade
         if(game!= null)
         {
             if(game.canDiscardCards(pid, rl))
-                game = proxy.discardCards(pid, rl);
+                try {
+                    proxy.discardCards(pid, rl);
+                } catch (InsufficientResourcesException e) {
+                    e.printStackTrace();
+                }
         }
     }
 
@@ -434,7 +439,7 @@ public class Facade
         if(game != null)
         {
             if(game.canMonopoly(pid))
-                game = proxy.playMonopoly(pid, r);
+                proxy.playMonopoly(pid, r);
         }
     }
 
@@ -457,6 +462,7 @@ public class Facade
         {
             System.out.println("An illegal move" + e.getMessage());
         }
+        return true;
     }
     /**
      * enacts the trade offer of the specified player

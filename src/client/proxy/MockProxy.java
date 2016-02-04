@@ -126,7 +126,7 @@ public class MockProxy implements IProxy{
     }
 
     @Override
-    public void playSoldier(int playerId, HexLocation El) {
+    public void playSoldier(int playerId, int victimId, HexLocation El) {
 
     }
 

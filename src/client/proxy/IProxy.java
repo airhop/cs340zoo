@@ -119,7 +119,7 @@ public interface IProxy {
      * towards the largest army
      * @param playerId - PlayerId passed to the server
      */
-    void playSoldier(int playerId, HexLocation El);
+    void playSoldier(int playerId, int victimId, HexLocation El);
     /**
      * To play a Monopoly Card you call this function which contacts the Server proxy
      * @param playerId - PlayerId passed to the server
