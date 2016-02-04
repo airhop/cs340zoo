@@ -1,9 +1,5 @@
 /**
- * Facade catch the exceptions
  *
- *
- *
- * need a ServerNotFunctioning exception?
  */
 
 package client.facade;
@@ -113,12 +109,12 @@ public class Facade
      * Places a Road at a given location on the map
      * @return boolean whether or not the player built the road (perhaps placeholder return values for all of the do methods)
      */
-    public void placeRoad(int pid, EdgeLocation el) throws InvalidPositionException
+    public void placeRoad(int pid, EdgeLocation el)
     {
         if(game != null)
         {
-            if(game.canBuildRoad(pid), game.canPlaceRoad(pid, el))
-                game = proxy.buildRoad(pid, el);
+            if(game.canBuildRoad(pid) && game.canPlaceRoad(el))
+                proxy.buildRoad(pid, el);
         }
     }
     /**
@@ -147,12 +143,12 @@ public class Facade
      * Places a Settlement at a given location on the map
      * @return boolean whether or not the player placed a settlement
      */
-    public void placeSettlement(int pid, VertexLocation vl) throws InvalidPositionException
+    public void placeSettlement(int pid, VertexLocation vl)
     {
         if(game != null)
         {
-            if(canPlaceSettlement(pid, vl) && canBuildSettlement(pid))
-                game = proxy.buildSettlement(pid, vl);
+            if(canPlaceSettlement(vl) && canBuildSettlement(pid))
+                proxy.buildSettlement(pid, vl);
         }
     }
 
@@ -181,7 +177,7 @@ public class Facade
      * Places a City at a given location on the map
      * @return boolean whether or not the player placed the city
      */
-    public void placeCity(int pid, VertexLocation vl) throws InvalidPositionException
+    public void placeCity(int pid, VertexLocation vl)
     {
         if(game != null)
         {
@@ -204,14 +200,12 @@ public class Facade
      * plays the road build card
      * @return boolean
      */
-    public void playRoadBuilding(int pid, EdgeLocation el1, EdgeLocation el2) throws IllegalMoveException
+    public void playRoadBuilding(int pid, EdgeLocation el1, EdgeLocation el2)
     {
         if(game != null)
         {
-            if(game.canRoadBuilding(pid) && game.canPlaceRoad(pid, el1)&& game.canPlaceRoad(pid, el2))
-                game = proxy.playRoadBuilding(pid, el1, el2);
-            else
-                throw new IllegalMoveException("Something is wrong");
+            if(game.canRoadBuilding(pid) && game.canPlaceRoad(el1)&& game.canPlaceRoad(el2))
+                proxy.playRoadBuilding(pid, el1, el2);
         }
     }
     /**
@@ -228,7 +222,7 @@ public class Facade
     public void playMonument(int pid)
     {
         if(game != null)
-            game = proxy.placeMonument(pid);
+            proxy.placeMonument(pid);
     }
 
     /**
@@ -245,11 +239,11 @@ public class Facade
      * plays the year of plenty card for a given player
      * @return boolean whether or not the player played the year of plenty card
      */
-    public void playYearOfPlenty(int pid, ResourceType r, ResourceType r1) throws IllegalMoveException, InsufficientResourcesException
+    public void playYearOfPlenty(int pid, ResourceType r, ResourceType r1)
     {
         if(game != null)
             if(game.canYearOfPlenty(pid))
-                game = proxy.playYearOfPlenty(pid, r, r1);
+                proxy.playYearOfPlenty(pid, r, r1);
     }
     /**
      * Checks to see if placing a Soldier card is a legal move for the player
@@ -271,7 +265,7 @@ public class Facade
         if(game != null)
         {
             if(game.canPlaySoldier(pid) &&  game.canRob(pid, vid) && game.canMoveRobber(hl))
-                game = proxy.playSoldier(pid, vid, hl);
+                proxy.playSoldier(pid, vid, hl);
         }
     }
 
@@ -299,10 +293,10 @@ public class Facade
      * Robs a player of one resource card
      * @return boolean whether or not the player chose to rob
      */
-    public void rob(int pid, int vid, HexLocation hl)throws IllegalMoveException, InsufficientResourcesException
+    public void rob(int pid, int vid, HexLocation hl)
     {
         if(pid == -1)
-            throw new IllegalMoveException("no players can be robbed");
+            System.out.println("No player to be robbed?");
         if(game != null)
         {
             if(game.canRob(pid, vid) && game.canMoveRobber(hl))
@@ -325,10 +319,10 @@ public class Facade
      * completes a transaction of resources with the bank
      * @return boolean whether or not the player traded with the bank
      */
-    public void tradeBank(ResourceList rl) throws InsufficientResourcesException, IllegalMoveException
+    public void tradeBank(ResourceList rl)
     {
         if(game != null)
-            game.tradeBank(rl);
+            game.maritimeTrade(rl);
     }
     /**
      * Checks to see if the player can roll the dice
@@ -344,16 +338,17 @@ public class Facade
      * rolls the dice for a number 1-12
      * @return boolean whether or not the player rolled the dice
      */
-    public void roll(int pid) throws IllegalMoveException
+    public void roll(int pid)
     {
         if(game != null)
         {
             if(canRoll(pid))
             {
                 int number = game.roll(pid);
-                if (number == -1)
-                    throw new IllegalMoveException("Not the rolling phase . . . ");
-                game = proxy.rollNumber(number);
+                if (number != -1)
+                    proxy.rollNumber(number);
+                else
+                    System.out.println("not a rolling phase");
             }
         }
     }
@@ -367,7 +362,7 @@ public class Facade
 
     public void FinishTurn(int pid)
     {
-        game = proxy.FinishTurn(pid);
+        proxy.FinishTurn(pid);
     }
 
     public boolean canDiscardCards(int pid, ResourceList rl)
@@ -400,13 +395,13 @@ public class Facade
      * Buys a developement card and increases the amount for the purchasing player
      * @return boolean whether or not the player bought the dev card
      */
-    public void buyDevCard(int pid) throws IllegalMoveException
+    public void buyDevCard(int pid)
     {
         if(game != null)
         {
             if(game.canBuyDevcard(pid))
             {
-                game = proxy.buyDevCard(pid);
+                proxy.buyDevCard(pid);
             }
         }
     }
@@ -426,7 +421,7 @@ public class Facade
      * uses Monopoly
      * @return boolean whether or not the player played a monopoly
      */
-    public void playMonopoly(int pid, ResourceType r) throws IllegalMoveException
+    public void playMonopoly(int pid, ResourceType r)
     {
         if(game != null)
         {
@@ -439,21 +434,41 @@ public class Facade
     /**
      * Set up the TradeOffer
      */
-    public boolean canTradePlayer(int pid, int rid, ResourceList rl) throws IllegalMoveException, InsufficientResourcesException
+    public boolean canTradePlayer(int pid, int rid, ResourceList rl)
     {
-        if(game != null)
-            return game.canTradePlayer(pid, rid, rl);
+        try
+        {
+            if (game != null)
+                return game.canTradePlayer(pid, rid, rl);
+        }
+        catch(InsufficientResourcesException e)
+        {
+            System.out.println("Not enough resources " + e.getMessage());
+        }
+        catch(IllegalMoveException e)
+        {
+            System.out.println("An illegal move" + e.getMessage());
+        }
     }
     /**
      * enacts the trade offer of the specified player
      * @return boolean whether or not the player traded with another player
      */
-    public void tradePlayer(int pid, int rid, ResourceList rl) throws InsufficientResourcesException, IllegalMoveException
+    public void tradePlayer(int pid, int rid, ResourceList rl)
     {
-        if(game!= null)
+        try {
+            if (game != null) {
+                if (game.canTradePlayer(pid, rid, rl))
+                    proxy.offerTrade(pid, rid, rl);
+            }
+        }
+        catch(InsufficientResourcesException e)
         {
-            if(game.canTradePlayer(pid, rid, rl))
-                game = proxy.offerTrade(pid, rid, rl);
+            System.out.println("Not enough resources " + e.getMessage());
+        }
+        catch(IllegalMoveException e)
+        {
+            System.out.println("An illegal move" + e.getMessage());
         }
     }
 
@@ -471,26 +486,12 @@ public class Facade
      * accepts the trade offer of another player
      * @return boolean whether or not the player accepted a trade offer
      */
-    public void acceptTrade(int pid, boolean acceptance) throws InsufficientResourcesException, IllegalMoveException
+    public void acceptTrade(int pid, boolean acceptance)
     {
         if(game != null)
         {
             if(game.canAcceptTrade(pid))
-                game = proxy.acceptTrade(pid, acceptance);
-        }
-    }
-
-    /**
-     * ends the game and congratulates the player with 10 victory points
-     * @return boolean whether or not the player has sufficient victory points to win
-     */
-    public void win()
-    {
-        try
-        {    game.decideWinner(); }
-        catch(InvalidWinnerException e)
-        {
-            //there was not winner yet . . .
+                proxy.acceptTrade(pid, acceptance);
         }
     }
 
