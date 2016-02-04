@@ -20,9 +20,9 @@ public class Map
     TreeMap<HexLocation,Hex> hexes;
     ArrayList<Port> ports;
     ArrayList<Road> roads;
-    ArrayList<VertexObject> settlements;
-    ArrayList<VertexObject> cities;
-    //build an ArrayList<VertexObject> buildings that replace settlements and cities.
+    //ArrayList<VertexObject> settlements;
+    //ArrayList<VertexObject> cities;
+    ArrayList<VertexObject> buildings;// that replace settlements and cities.
     ArrayList<ResourceList> resources;
     int radius = -1;
     Robber robber;
@@ -33,8 +33,9 @@ public class Map
         hexes = new TreeMap<HexLocation,Hex>();
         ports = new ArrayList<Port>();
         roads = new ArrayList<Road>();
-        settlements = new ArrayList<VertexObject>();
-        cities = new ArrayList<VertexObject>();
+//        settlements = new ArrayList<VertexObject>();
+//        cities = new ArrayList<VertexObject>();
+        buildings = new ArrayList<VertexObject>();
         resources = new ArrayList<ResourceList>();
         deserializer = new Deserializer();
     }
@@ -115,13 +116,14 @@ public class Map
     /**
      * checks to see if road can be added
      */
-    public boolean canAddRoad(Road road) 
+    //public boolean canAddRoad(Road road)
+    public boolean canAddRoad(EdgeLocation edgeLocation)
     {
-    	if (road == null)
+    	if (edgeLocation == null)
     	{
     		return false;
     	}
-    	if (roads.contains(road))
+    	if (roads.contains(edgeLocation))
     	{
     		return false;
     	}
@@ -150,15 +152,27 @@ public class Map
     /**
      * checks to see if settlement can be added
      */
-    public boolean canAddSettlement(Settlement settlement) 
+    //public boolean canAddSettlement(Settlement settlement,VertexObject settlement)
+    public boolean canAddSettlement(VertexLocation settlementLocation)
     {
-    	if (settlement == null)
+//    	if (settlement == null)
+//    	{
+//    		return false;
+//    	}
+//    	if (buildings.contains(settlement))
+//    	{
+//    		return false;
+//    	}
+    	if (settlementLocation == null)
     	{
     		return false;
     	}
-    	if (settlements.contains(settlement))
+    	for (VertexObject VObjIter: buildings)
     	{
-    		return false;
+    		if (VObjIter.getLocation() == settlementLocation)
+    		{
+    			return false;
+    		}
     	}
         return true;
     }
@@ -176,22 +190,32 @@ public class Map
     	HexLocation hex = new HexLocation(x,y);
     	VertexLocation location =  new VertexLocation(hex, direction);
     	Settlement settlement = new Settlement(location,owner);
-    	settlements.add(settlement);
+    	buildings.add(settlement);
     }
 
     /**
      * checks to see if City can be added
      */
-    public boolean canAddCity(City city) 
+    //public boolean canAddCity(City city)
+    public boolean canAddCity(VertexLocation vertexLocation)
     {
-    	if (city == null)
+    	if (vertexLocation == null)
     	{
     		return false;
     	}
-    	if (cities.contains(city))
+    	for (VertexObject VObjIter: buildings)
     	{
-    		return false;
+    		if (VObjIter.getLocation() == vertexLocation && !(VObjIter instanceof Settlement))
+    		{
+    			
+    		}
+    		
+    		if (VObjIter.getLocation() )
+    		{
+    			
+    		}
     	}
+    	if (buildings.contains)
         return true;
     }
 
@@ -208,15 +232,16 @@ public class Map
     	HexLocation hex = new HexLocation(x,y);
     	VertexLocation location =  new VertexLocation(hex, direction);
     	City city = new City(location,owner);
-    	cities.add(city);
+    	buildings.add(city);
     }
 
     /**
      * checks to see if robber can be relocated
      */
-    public boolean canRelocateRobber(int x, int y) 
+    //public boolean canRelocateRobber(int x, int y)
+    public boolean canRelocateRobber(HexLocation targetHex)
     {
-    	HexLocation targetHex = new HexLocation(x,y);
+    	//HexLocation targetHex = new HexLocation(x,y);
     	if (hexes.get(targetHex).resource == "Ocean" || hexes.get(targetHex).resource == "Sea")
     	{
     		return false;
@@ -230,10 +255,11 @@ public class Map
      * @param x - horizontal location of hex robber is to be moved to
      * @param y - diagonal location of hex robber is to be moved to
      */
-    public void relocateRobber(int x, int y) throws InvalidPositionException
+    //public void relocateRobber(int x, int y) throws InvalidPositionException
+    public void relocateRober(HexLocation targetHex)
     {
-    	HexLocation hexLocation = new HexLocation(x,y);
-    	robber.setHl(hexLocation);
+    	//HexLocation hexLocation = new HexLocation(x,y);
+    	robber.setHl(targetHex);
     }
     //getters and setters
 	public TreeMap<HexLocation, Hex> getHexes() {
@@ -260,24 +286,40 @@ public class Map
 		this.roads = roads;
 	}
 
-	public ArrayList<VertexObject> getSettlements() {
-		return settlements;
-	}
-
-	public void setSettlements(ArrayList<VertexObject> settlements) {
-		this.settlements = settlements;
-	}
-
-	public ArrayList<VertexObject> getCities() {
-		return cities;
-	}
-
-	public void setCities(ArrayList<VertexObject> cities) {
-		this.cities = cities;
-	}
+//	public ArrayList<VertexObject> getSettlements() {
+//		return settlements;
+//	}
+//
+//	public void setSettlements(ArrayList<VertexObject> settlements) {
+//		this.settlements = settlements;
+//	}
+//
+//	public ArrayList<VertexObject> getCities() {
+//		return cities;
+//	}
+//
+//	public void setCities(ArrayList<VertexObject> cities) {
+//		this.cities = cities;
+//	}
 
 	public int getRadius() {
 		return radius;
+	}
+
+	public ArrayList<VertexObject> getBuildings() {
+		return buildings;
+	}
+
+	public void setBuildings(ArrayList<VertexObject> buildings) {
+		this.buildings = buildings;
+	}
+
+	public ArrayList<ResourceList> getResources() {
+		return resources;
+	}
+
+	public void setResources(ArrayList<ResourceList> resources) {
+		this.resources = resources;
 	}
 
 	public void setRadius(int radius) {
