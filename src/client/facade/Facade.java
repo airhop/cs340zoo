@@ -414,7 +414,11 @@ public class Facade
         {
             if(game.canBuyDevcard(pid))
             {
-                proxy.buyDevCard(pid);
+                try {
+                    proxy.buyDevCard(pid);
+                } catch (InsufficientResourcesException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }

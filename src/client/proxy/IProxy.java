@@ -6,7 +6,6 @@ import client.model.bank.ResourceList;
 import client.model.history.MessageList;
 import shared.definitions.ResourceType;
 import shared.exceptions.*;
-import shared.jsonobject.Resources;
 import shared.jsonobject.User;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
@@ -163,10 +162,9 @@ public interface IProxy {
      * This is to propose a trade to another player which will update a list
      * in the server model of trades taht can be made
      * @param playerIdOne - playerIdOne passed to the server
-     * @param playerIdTwo - playerIdTwo being traded with
-     * @param rl - Traded between the players
+     * @param accept - Traded between the players
      */
-    void acceptTrade(int playerIdOne, int playerIdTwo, ResourceList rl);
+    void acceptTrade(int playerIdOne, boolean accept);
     /**
      * This is when you are going to trade with the bank this is fairly simple
      * so it only requires that you send information to finalize the trade on the server

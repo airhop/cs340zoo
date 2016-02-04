@@ -320,7 +320,7 @@ public class Proxy implements IProxy{
     }
 
     @Override
-    public void acceptTrade(int playerIdOne, int playerIdTwo, ResourceList rl) {
+    public void acceptTrade(int playerIdOne, boolean accept) {
 
     }
 
