@@ -92,20 +92,6 @@ public class GameModel {
         return false;
     }
 
-    /**
-     * decides game winner and sets the winner to the id of the winning player
-     */
-    public void decideWinner() throws InvalidWinnerException {
-        int cp = tt.getCurrentPlayer();
-        if (players[cp].canWin())
-            winner = cp;
-        if (winner != -1)
-            players[winner].win();
-        else
-            throw new InvalidWinnerException("No winner yet!");
-
-    }
-
        /**
      * Checks to see if building a road is a legal move for the player
      *
