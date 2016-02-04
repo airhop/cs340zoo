@@ -11,7 +11,7 @@ public class HttpURLResponse {
      * defined in HTTPURLConnection.
      */
     private int responseCode;
-
+    private String cookie;
     /**
      * The length of the body in the response message.<br>
      * <ol>
@@ -83,4 +83,11 @@ public class HttpURLResponse {
         this.responseBody = responseBody;
     }
 
+    public String getCookie() {
+        return cookie;
+    }
+
+    public void setCookie(String cookie) {
+        this.cookie = cookie;
+    }
 }

@@ -20,7 +20,7 @@ public class NewMain {
         System.out.println(myCook.getCookieValue());
         IProxy myProxy = new Proxy();
         try {
-            myProxy.userLogin(new User("Sam", "sam"));
+            myProxy.userLogin(new User("Pete", "pete"));
         } catch (InvalidUserException e) {
             e.printStackTrace();
         }

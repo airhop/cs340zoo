@@ -11,10 +11,8 @@ import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
 import shared.serialization.HttpURLResponse;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
+
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
@@ -94,7 +92,10 @@ public class Proxy implements IProxy{
                 }else{
                     result.setResponseCode(connection.getResponseCode());
                     result.setResponseLength(connection.getContentLength());
-                    result.setResponseBody(connection.getResponseMessage());
+                    BufferedReader myReader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                    result.setResponseBody(myReader.readLine());
+                    result.setCookie(connection.getHeaderField("Cookie"));
+//                    result.setResponseBody(connection.getResponseMessage());
                 }
             } else {
                 throw new ClientException(String.format("doPost failed: %s (http code %d)", urlPath, connection.getResponseCode()));
@@ -186,7 +187,8 @@ public class Proxy implements IProxy{
         HttpURLResponse myResponse;
         try {
             myResponse = doPost(url, myObjOne);
-            System.out.println(myResponse.getResponseBody().toString());
+            System.out.println(myResponse.getResponseBody());
+            System.out.println(myResponse.getCookie());
         } catch (ClientException e) {
             e.printStackTrace();
         }
