@@ -5,7 +5,8 @@ import shared.locations.VertexLocation;
 
 public abstract class VertexObject{
   int owner;
-  EdgeLocation edgelocation;
+  //EdgeLocation edgelocation;
+  VertexLocation vertexLocation;
   //VertexLocation vertexLocation;
   //edgelocation?
   
@@ -42,14 +43,14 @@ public abstract class VertexObject{
 	   this.owner = owner;
    }
 
-   public EdgeLocation getLocation() 
+   public VertexLocation getLocation() 
    {
-	   return edgelocation;
+	   return vertexLocation;
    }
 
-   public void setLocation(EdgeLocation location) 
+   public void setLocation(VertexLocation location) 
    {
-	   this.edgelocation = location;
+	   this.vertexLocation = location;
    }
    
 }
