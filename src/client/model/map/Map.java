@@ -238,7 +238,21 @@ public class Map
 		}
 		return true;
 	}
-
+	public ArrayList<Port> checkForPorts(ArrayList<VertexObject> builds)
+	{	
+		ArrayList<Port> playerPorts = new ArrayList<Port>();
+		for(int i=0; i<ports.size(); i++)
+		{
+			for(int j=0; j<builds.size(); j++)
+			{
+				if(ports[i].getLocation().equals(builds[j].getLocation()) && ports[i].getDirection.equals(builds[j].getDirection()))
+				{
+					playerPorts.add(ports[i]);
+				}
+			}
+		}
+		return playerPorts;
+	}
 	/**
 	 * moves robber to a new hex location
 	 *

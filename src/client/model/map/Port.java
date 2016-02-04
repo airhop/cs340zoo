@@ -1,16 +1,17 @@
 package client.model.map;
 
 import shared.locations.HexLocation;
+import shared.locations.VertexDirection;
 
 public class Port {
   
   HexLocation location;
   String resource;
-  String direction;
+  VertexDirection direction;
   int ratio;  //ratio type?  what is ratio for?
   //do we need an owner value as well?
   
-  public Port(int x, int y, String resrc, String dir, int rat)
+  public Port(int x, int y, String resrc, VertexDirection dir, int rat)
   {
 	  location = new HexLocation(x,y);
 	  resource = resrc;
@@ -38,12 +39,12 @@ public class Port {
 	  this.resource = resource;
   }
 
-  public String getDirection() 
+  public VertexDirection getDirection()
   {
 	  return direction;
   }
 
-  public void setDirection(String direction) 
+  public void setDirection(VertexDirection direction)
   {
 	  this.direction = direction;
   }
