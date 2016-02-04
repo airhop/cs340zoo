@@ -245,7 +245,7 @@ public class Map
 		{
 			for(int j=0; j<builds.size(); j++)
 			{
-				if(ports[i].getLocation().equals(builds[j].getLocation()) && ports[i].getDirection.equals(builds[j].getDirection()))
+				if(ports[i].getLocation().equals(builds[j].getLocation().getLocation()) && ports[i].getDirection.equals(builds[j].getLocation().getDirection()))
 				{
 					playerPorts.add(ports[i]);
 				}
