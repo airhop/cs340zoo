@@ -8,6 +8,10 @@ public class InsufficientResourcesException extends Exception
         message = msg;
     }
 
+    public InsufficientResourcesException() {
+
+    }
+
     public String getMessage()
     {
         return message;
