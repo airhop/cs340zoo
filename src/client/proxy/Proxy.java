@@ -184,7 +184,6 @@ public class Proxy implements IProxy{
         } catch (ClientException e) {
             e.printStackTrace();
         }
-
     }
 
     @Override
