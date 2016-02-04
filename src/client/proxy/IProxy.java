@@ -75,9 +75,9 @@ public interface IProxy {
 
     /**
      * Messages to be sent to all the players
-     * @param msg - The messages to be sent to the players
+     * @param content - The messages to be sent to the players
      */
-    void sendChat(MessageList msg);
+    boolean sendChat(String content, int id);
     /**
      * Rolls a number and shows the affect on the server
      * @param numRoled - Number that is rolled

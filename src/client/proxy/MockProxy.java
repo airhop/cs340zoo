@@ -91,8 +91,8 @@ public class MockProxy implements IProxy{
     }
 
     @Override
-    public void sendChat(MessageList msg) {
-
+    public boolean sendChat(String content, int id) {
+        return true;
     }
 
     @Override

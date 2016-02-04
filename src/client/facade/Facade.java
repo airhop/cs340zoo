@@ -531,6 +531,7 @@ public class Facade
             return false;
         boolean sc = game.canSendChat(msg, pid);
         if(sc)
-            return proxy.sendChat(pid, msg);
+            return proxy.sendChat(msg, pid);
+        return false;
     }
 }
