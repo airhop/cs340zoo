@@ -148,7 +148,11 @@ public class Facade
         if(game != null)
         {
             if(canPlaceSettlement(vl) && canBuildSettlement(pid))
-                proxy.buildSettlement(pid, vl);
+                try {
+                    proxy.buildSettlement(pid, vl);
+                } catch (IllegalBuildException e) {
+                    e.printStackTrace();
+                }
         }
     }
 
