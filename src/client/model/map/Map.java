@@ -139,13 +139,13 @@ public class Map
 	 * @param owner     - index of owner
 	 */
 	//public void addRoad(int x, int y, String direction, int owner) throws FailureToAddException
-	public void addRoad(int x, int y, EdgeDirection direction, int owner) throws FailureToAddException
+	public void addRoad(int x, int y, EdgeDirection direction, int pid) throws FailureToAddException
 	{
 		HexLocation hexLocation = new HexLocation(x,y);
 //    	EdgeDirection edgeDirection;
 //    	EdgeLocation edgeLocation = new EdgeLocation(hexLocation, edgeDirection);
 		EdgeLocation edgeLocation = new EdgeLocation(hexLocation,direction);
-		Road road = new Road(edgeLocation,owner);
+		Road road = new Road(edgeLocation,pid);
 		roads.add(road);
 	}
 
@@ -178,12 +178,12 @@ public class Map
 	 * @param      - index of owner
 	 */
 	//public void addSettlement(int x, int y, VertexDirection direction, int owner) throws FailureToAddException
-	public void addSettlement(int x, int y, VertexDirection direction) throws FailureToAddException
+	public void addSettlement(int x, int y, VertexDirection direction, int pid) throws FailureToAddException
 	{
 		HexLocation hex = new HexLocation(x,y);
 		VertexLocation location =  new VertexLocation(hex, direction);
 		//Settlement settlement = new Settlement(location,owner);
-		Settlement settlement = new Settlement(location, 3);//NEEDS TO BE FIXED!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		Settlement settlement = new Settlement(location, pid);
 		buildings.add(settlement);
 	}
 
@@ -216,12 +216,12 @@ public class Map
 	 * @param      - index of owner
 	 */
 	//public void addCity(int x, int y, VertexDirection direction, int owner) throws FailureToAddException
-	public void addCity(int x, int y, VertexDirection direction) throws FailureToAddException
+	public void addCity(int x, int y, VertexDirection direction, int pid) throws FailureToAddException
 	{
 		HexLocation hex = new HexLocation(x,y);
 		VertexLocation location =  new VertexLocation(hex, direction);
 		//City city = new City(location,owner);
-		City city = new City(location, 3);//NEEDS TO BE FIXED!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		City city = new City(location, pid);
 		buildings.add(city);
 	}
 
