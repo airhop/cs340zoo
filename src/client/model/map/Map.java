@@ -175,7 +175,7 @@ public class Map
 	 * @param x         - horizontal location of hex
 	 * @param y         - diagonal location of hex
 	 * @param direction - direction from hex that settlement is located
-	 * @param owner     - index of owner
+	 * @param      - index of owner
 	 */
 	//public void addSettlement(int x, int y, VertexDirection direction, int owner) throws FailureToAddException
 	public void addSettlement(int x, int y, VertexDirection direction) throws FailureToAddException
@@ -183,7 +183,7 @@ public class Map
 		HexLocation hex = new HexLocation(x,y);
 		VertexLocation location =  new VertexLocation(hex, direction);
 		//Settlement settlement = new Settlement(location,owner);
-		Settlement settlement = new Settlement(location);
+		Settlement settlement = new Settlement(location, 3);//NEEDS TO BE FIXED!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		buildings.add(settlement);
 	}
 
@@ -213,7 +213,7 @@ public class Map
 	 * @param x         - horizontal location of hex
 	 * @param y         - diagonal location of hex
 	 * @param direction - direction from hex that city is located
-	 * @param owner     - index of owner
+	 * @param      - index of owner
 	 */
 	//public void addCity(int x, int y, VertexDirection direction, int owner) throws FailureToAddException
 	public void addCity(int x, int y, VertexDirection direction) throws FailureToAddException
@@ -221,7 +221,7 @@ public class Map
 		HexLocation hex = new HexLocation(x,y);
 		VertexLocation location =  new VertexLocation(hex, direction);
 		//City city = new City(location,owner);
-		City city = new City(location);
+		City city = new City(location, 3);//NEEDS TO BE FIXED!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		buildings.add(city);
 	}
 

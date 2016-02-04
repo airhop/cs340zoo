@@ -173,10 +173,17 @@ public class Proxy implements IProxy{
     @Override
     public void userLogin(User u) throws InvalidUserException {
         JsonObject myObjOne = new JsonObject();
+        String url = "/user/login";
         myObjOne.addProperty("username", u.getUsername());
         myObjOne.addProperty("password", u.getPassword());
         System.out.println(myObjOne.toString());
-        doPost();
+        HttpURLResponse myResponse;
+        try {
+            myResponse = doPost(url, myObjOne);
+            System.out.println(myResponse.getResponseBody().toString());
+        } catch (ClientException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
