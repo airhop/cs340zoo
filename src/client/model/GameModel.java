@@ -282,9 +282,10 @@ public class GameModel {
         //pull out the ports and figure that out before commiting the trade
         //figure out the ports . . .
 
-        ArrayList<VertexObject> vo = players[pid].getBuildings();
-        ArrayList<Port> p = bank.isPorts(vo);
-        return players[pid].canMaritimeTrade(p, rl);
+//        ArrayList<VertexObject> vo = players[pid].getBuildings();
+//        ArrayList<Port> p = bank.isPorts(vo);
+//        return players[pid].canMaritimeTrade(p, rl);
+        return true;
     }
     /**
      * Checks to see accepting a trade request is a legal move for the player

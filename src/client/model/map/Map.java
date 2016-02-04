@@ -136,7 +136,7 @@ public class Map
 	 * @param x         - horizontal location of hex
 	 * @param y         - diagonal location of hex
 	 * @param direction - direction from hex that road is located
-	 * @param owner     - index of owner
+	 * @param      - index of owner
 	 */
 	//public void addRoad(int x, int y, String direction, int owner) throws FailureToAddException
 	public void addRoad(int x, int y, EdgeDirection direction, int pid) throws FailureToAddException
@@ -245,9 +245,9 @@ public class Map
 		{
 			for(int j=0; j<builds.size(); j++)
 			{
-				if(ports[i].getLocation().equals(builds[j].getLocation().getLocation()) && ports[i].getDirection.equals(builds[j].getLocation().getDirection()))
+				if(ports.get(i).getLocation().equals(builds.get(j).getLocation().getHexLoc()) && ports.get(i).getDirection().equals(builds.get(j).getLocation().getDir()))
 				{
-					playerPorts.add(ports[i]);
+					playerPorts.add(ports.get(i));
 				}
 			}
 		}
