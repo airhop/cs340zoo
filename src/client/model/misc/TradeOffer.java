@@ -15,6 +15,11 @@ public class TradeOffer {
   //Resource List of whats being recieved (positive)
   ResourceList recievedList = new ResourceList(0);
   
+    public TradeOffer()
+  {
+    offer = null;
+  }
+  
   public TradeOffer(ResourceList offr)
   {
     offer = offr;
