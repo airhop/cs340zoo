@@ -3,10 +3,13 @@ package client.proxy;
 import client.model.bank.ResourceList;
 import client.model.history.MessageList;
 import com.google.gson.*;
+import shared.definitions.ResourceType;
 import shared.exceptions.*;
 import shared.jsonobject.Resources;
 import shared.jsonobject.User;
 import shared.locations.EdgeLocation;
+import shared.locations.HexLocation;
+import shared.locations.VertexLocation;
 import shared.serialization.HttpURLResponse;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
@@ -257,7 +260,7 @@ public class Proxy implements IProxy{
     }
 
     @Override
-    public void robPlayer(int playerIdOne, int playerIdTwo, EdgeLocation El) {
+    public void robPlayer(int playerIdOne, int playerIdTwo, HexLocation Hl) {
 
     }
 
@@ -272,7 +275,7 @@ public class Proxy implements IProxy{
     }
 
     @Override
-    public void playYearOfPlenty(int playerId, Resources r1, Resources r2) {
+    public void playYearOfPlenty(int playerId, ResourceType r1, ResourceType r2) {
 
     }
 
@@ -282,12 +285,12 @@ public class Proxy implements IProxy{
     }
 
     @Override
-    public void playSoldier(int playerId, EdgeLocation El) {
+    public void playSoldier(int playerId, HexLocation El) {
 
     }
 
     @Override
-    public void playMonopoly(int playerId, String card) {
+    public void playMonopoly(int playerId, ResourceType r1) {
 
     }
 
@@ -302,12 +305,12 @@ public class Proxy implements IProxy{
     }
 
     @Override
-    public void buildSettlement(int playerId, EdgeLocation el) throws IllegalBuildException {
+    public void buildSettlement(int playerId, VertexLocation vl) throws IllegalBuildException {
 
     }
 
     @Override
-    public void buildCity(int playerId, EdgeLocation el) throws IllegalBuildException {
+    public void buildCity(int playerId, VertexLocation vl) throws IllegalBuildException {
 
     }
 
@@ -317,7 +320,12 @@ public class Proxy implements IProxy{
     }
 
     @Override
-    public void tradeBank(int playerId, ResourceList rl) {
+    public void acceptTrade(int playerIdOne, int playerIdTwo, ResourceList rl) {
+
+    }
+
+    @Override
+    public void meritimeTrade(int playerId, int ratio, ResourceList in, ResourceList out) {
 
     }
 
