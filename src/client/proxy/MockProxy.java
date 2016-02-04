@@ -3,12 +3,10 @@ package client.proxy;
 
 import client.model.bank.ResourceList;
 import client.model.history.MessageList;
-import client.model.map.EdgeLocation;
-import client.model.map.HexLocation;
 import shared.exceptions.*;
-import shared.jsonobject.Login;
 import shared.jsonobject.Resources;
 import shared.jsonobject.User;
+import shared.locations.EdgeLocation;
 
 public class MockProxy implements IProxy{
 
