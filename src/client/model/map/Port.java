@@ -11,7 +11,7 @@ public class Port {
   int ratio;  //ratio type?  what is ratio for?
   //do we need an owner value as well?
   
-  public Port(int x, int y, String resrc, String dir, int rat)
+  public Port(int x, int y, String resrc, VertexDirection dir, int rat)
   {
 	  location = new HexLocation(x,y);
 	  resource = resrc;
