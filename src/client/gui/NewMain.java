@@ -1,5 +1,6 @@
 package client.gui;
 
+import client.facade.Facade;
 import client.proxy.Cookie;
 import client.proxy.IProxy;
 import client.proxy.Proxy;
@@ -18,11 +19,13 @@ public class NewMain {
         System.out.println(myCook.getCookieName());
         System.out.println(myCook.getCookieValue());
         IProxy myProxy = new Proxy();
-        try {
-            myProxy.userLogin(new User("Sam", "sam"));
-        } catch (InvalidUserException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            myProxy.userLogin(new User("Sam", "sam"));
+//        } catch (InvalidUserException e) {
+//            e.printStackTrace();
+//        }
+        Facade myFacade = new Facade();
+
     }
 
 }
