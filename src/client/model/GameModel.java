@@ -2,7 +2,11 @@
  * David - canAcceptTrade - ResourceList param
  *       - canOfferTrade - ResourceList param
  *       - canDiscardCards(resourceList)
+ *      - canBuildCity - why checking settlements < MAX_SETTLEMENTS (check placed settlements)
+ *       - getCities/Settlements
+ *        - maritimeTrade (ports)
  *
+ * CanTradeBank - make sure you have resources
  * Mike - need to line up our methods, too many red things on my end
  *
  *       maritime trade?!
@@ -143,7 +147,7 @@ public class GameModel {
      */
     public boolean canPlaceSettlement(VertexLocation vl)
     {
-        return map.canAddSettlement(pid, vl);
+        return map.canAddSettlement(vl);
     }
 
 
@@ -167,19 +171,6 @@ public class GameModel {
     public boolean canPlaceCity(VertexLocation vl)
     {
         return map.canAddCity(vl);
-    }
-
-    /**
-     * Places a City at a given location on the map
-     *
-     * @return boolean whether or not the player placed the city
-     */
-    public void placeCity(EdgeLocation el) throws InvalidPositionException {
-        int cp = tt.getCurrentPlayer();
-        if (players[cp].canBuildCity() && map.canAddCity(el))
-            map.addCity(el, cp);
-        else
-            throw new InvalidPositionException("Error building a City");
     }
 
     /**

@@ -1,15 +1,8 @@
 /**
- *          also set up the main ant testing file.
- *  Josh - can SendChat - will want to send an int and string instead of messagelist
- *       - buildsettlement - vertexlocation not edgelocation
- *       - soldier - params
- *
- *  still got to work out maritimeTrade . . .
+ * Facade catch the exceptions
  *
  *
- * TAs - maritime trade - who owns what ports?  how does that work?
- *      - server pass back game model?
- *      -
+ *
  * need a ServerNotFunctioning exception?
  */
 
@@ -76,17 +69,26 @@ public class Facade
         return proxy.gamesList();
     }
 
-    public void gamesCreate(String s) throws FailedCreateGameException
+    public void gamesCreate(String s)
     {
-        proxy.gamesCreate(s);
+        try
+        {  proxy.gamesCreate(s);    }
+        catch(FailedCreateGameException e)
+        {
+            //exceptionair!!
+        }
     }
 
-    public void gamesJoin(String s, int playerId) throws InvalidUserException
+    public void gamesJoin(String s, int playerId)
     {
-        proxy.gamesJoin(s, playerId);
+        try
+        {     proxy.gamesJoin(s, playerId); }
+        catch(InvalidUserException e)
+        {
+            //exceptionair!!
+        }
     }
 
-    //can methods
     /**
      * Checks to see if building a road is a legal move for the player
      * @return boolean whether or not the player can build a road
