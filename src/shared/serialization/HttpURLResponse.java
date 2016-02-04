@@ -27,7 +27,7 @@ public class HttpURLResponse {
     /**
      * A user defined response object.  May be null.
      */
-    private Object responseBody;
+    private String responseBody;
 
     //Constructors
     public HttpURLResponse() {
@@ -36,7 +36,7 @@ public class HttpURLResponse {
         this.responseBody = null;
     }
 
-    public HttpURLResponse (int responseCode, int responseLength, Object responseBody) {
+    public HttpURLResponse (int responseCode, int responseLength, String responseBody) {
         this.responseCode = responseCode;
         this.responseLength = responseLength;
         this.responseBody = responseBody;
@@ -51,7 +51,7 @@ public class HttpURLResponse {
         return responseLength;
     }
 
-    public Object getResponseBody() {
+    public String getResponseBody() {
         return responseBody;
     }
 
@@ -81,7 +81,7 @@ public class HttpURLResponse {
         this.responseLength = responseLength;
     }
 
-    public void setResponseBody(Object responseBody) {
+    public void setResponseBody(String responseBody) {
         this.responseBody = responseBody;
     }
 

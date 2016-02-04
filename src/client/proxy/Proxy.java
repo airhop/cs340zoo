@@ -59,7 +59,7 @@ public class Proxy implements IProxy{
         return result;
     }
 
-    public HttpURLResponse doPost(String urlPath, Object postData) throws ClientException {
+    public HttpURLResponse doPost(String urlPath, JsonObject myObj) throws ClientException {
 
         HttpURLResponse result = new HttpURLResponse();
 
@@ -76,13 +76,11 @@ public class Proxy implements IProxy{
             if(gameCookie.isActive()){
                 connection.setRequestProperty(gameCookie.getCookieName(), gameCookie.getCookieValue());
             }
-            String temp;
 
-            temp = myGson.toJson(postData);
             ObjectOutputStream myOut = new ObjectOutputStream(connection.getOutputStream());
             OutputStream myOutStream = connection.getOutputStream();
-            JsonParser myParse = new JsonParser();
-            myOut.writeChars(temp);
+
+            myOut.writeChars(myObj.toString());
 
             result.setResponseCode(connection.getResponseCode());
             result.setResponseLength(connection.getContentLength());
@@ -90,7 +88,7 @@ public class Proxy implements IProxy{
 
             if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
                 if(connection.getContentLength() == 0) {
-                    result.setResponseBody(myParse);
+                    result.setResponseBody(connection.getResponseMessage());
                 }
             } else {
                 throw new ClientException(String.format("doPost failed: %s (http code %d)", urlPath, connection.getResponseCode()));
