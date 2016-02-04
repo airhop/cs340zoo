@@ -12,8 +12,6 @@ public class HttpURLResponse {
      */
     private int responseCode;
 
-    public HttpURLResponse NULL_HTTP_URL_RESPONSE = new HttpURLResponse();
-
     /**
      * The length of the body in the response message.<br>
      * <ol>

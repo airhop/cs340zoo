@@ -14,6 +14,7 @@ import shared.serialization.HttpURLResponse;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
@@ -65,7 +66,7 @@ public class Proxy implements IProxy{
     public HttpURLResponse doPost(String urlPath, JsonObject myObj) throws ClientException {
 
         HttpURLResponse result = new HttpURLResponse();
-
+        System.out.println("I am Here");
         try {
             URL url = new URL(URL_PREFIX + urlPath);
             HttpURLConnection connection = (HttpURLConnection)url.openConnection();
@@ -80,17 +81,19 @@ public class Proxy implements IProxy{
                 connection.setRequestProperty(gameCookie.getCookieName(), gameCookie.getCookieValue());
             }
 
-            ObjectOutputStream myOut = new ObjectOutputStream(connection.getOutputStream());
+            OutputStreamWriter myOut = new OutputStreamWriter(connection.getOutputStream());
             OutputStream myOutStream = connection.getOutputStream();
 
-            myOut.writeChars(myObj.toString());
-
-            result.setResponseCode(connection.getResponseCode());
-            result.setResponseLength(connection.getContentLength());
+            myOut.write(myObj.toString());
+            myOut.flush();
 
 
             if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
                 if(connection.getContentLength() == 0) {
+
+                }else{
+                    result.setResponseCode(connection.getResponseCode());
+                    result.setResponseLength(connection.getContentLength());
                     result.setResponseBody(connection.getResponseMessage());
                 }
             } else {
