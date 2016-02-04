@@ -4,6 +4,7 @@ import client.facade.Facade;
 import client.proxy.Cookie;
 import client.proxy.IProxy;
 import client.proxy.Proxy;
+import shared.definitions.CatanColor;
 import shared.exceptions.InvalidUserException;
 import shared.jsonobject.User;
 
@@ -24,7 +25,12 @@ public class NewMain {
         } catch (InvalidUserException e) {
             e.printStackTrace();
         }
-        Facade myFacade = new Facade();
+        CatanColor myColor = CatanColor.BLUE;
+        try {
+            myProxy.gamesJoin(myColor.toString(), 0);
+        } catch (InvalidUserException e) {
+            e.printStackTrace();
+        }
 
     }
 

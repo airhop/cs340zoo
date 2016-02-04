@@ -46,7 +46,7 @@ public class MockProxy implements IProxy{
     }
 
     @Override
-    public void gamesJoin(String s, int playerId) throws InvalidUserException {
+    public void gamesJoin(String color, int playerId) throws InvalidUserException {
 
     }
 

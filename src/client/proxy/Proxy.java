@@ -70,7 +70,7 @@ public class Proxy implements IProxy{
             HttpURLConnection connection = (HttpURLConnection)url.openConnection();
             connection.setRequestMethod(HTTP_POST);
             connection.setDoOutput(true);
-            connection.connect();
+
 
             if(userCookie.isActive()){
                 connection.setRequestProperty(userCookie.getCookieName(), userCookie.getCookieValue());
@@ -79,6 +79,7 @@ public class Proxy implements IProxy{
                 connection.setRequestProperty(gameCookie.getCookieName(), gameCookie.getCookieValue());
             }
 
+            connection.connect();
             OutputStreamWriter myOut = new OutputStreamWriter(connection.getOutputStream());
             OutputStream myOutStream = connection.getOutputStream();
 
@@ -189,6 +190,9 @@ public class Proxy implements IProxy{
             myResponse = doPost(url, myObjOne);
             System.out.println(myResponse.getResponseBody());
             System.out.println(myResponse.getCookie());
+            userCookie.setFullCookie(myResponse.getCookie());
+            System.out.println(userCookie.getCookieName());
+            System.out.println(userCookie.getCookieValue());
         } catch (ClientException e) {
             e.printStackTrace();
         }
@@ -210,8 +214,23 @@ public class Proxy implements IProxy{
     }
 
     @Override
-    public void gamesJoin(String s, int playerId) throws InvalidUserException {
-
+    public void gamesJoin(String color, int playerId) throws InvalidUserException {
+        JsonObject myObjOne = new JsonObject();
+        String url = "/games/join";
+        myObjOne.addProperty("id", "" + playerId);
+        myObjOne.addProperty("color", color);
+        System.out.println(myObjOne.toString());
+        HttpURLResponse myResponse;
+        try {
+            myResponse = doPost(url, myObjOne);
+            System.out.println(myResponse.getResponseBody());
+            System.out.println(myResponse.getCookie());
+            gameCookie.setFullCookie(myResponse.getCookie());
+            System.out.println(gameCookie.getCookieName());
+            System.out.println(gameCookie.getCookieValue());
+        } catch (ClientException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

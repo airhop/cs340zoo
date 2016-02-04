@@ -43,7 +43,7 @@ public interface IProxy {
      * @param s - The game that they want to join
      * @param playerId - The player that wants to join
      */
-    void gamesJoin(String s, int playerId) throws InvalidUserException;
+    void gamesJoin(String color, int playerId) throws InvalidUserException;
 
 
     void gamesSave();
