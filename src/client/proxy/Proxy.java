@@ -94,7 +94,7 @@ public class Proxy implements IProxy{
                     result.setResponseLength(connection.getContentLength());
                     BufferedReader myReader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
                     result.setResponseBody(myReader.readLine());
-                    result.setCookie(connection.getHeaderField("Cookie"));
+                    result.setCookie(connection.getHeaderField("Set-cookie"));
 //                    result.setResponseBody(connection.getResponseMessage());
                 }
             } else {
