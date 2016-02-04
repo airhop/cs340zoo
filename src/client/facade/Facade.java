@@ -30,6 +30,10 @@ public class Facade
         proxy = p;
     }
 
+    public Facade(){
+
+    }
+
     public void Reinitialize(GameModel g)
     {
         game = g;

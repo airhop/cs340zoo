@@ -19,12 +19,12 @@ public class NewMain {
         System.out.println(myCook.getCookieName());
         System.out.println(myCook.getCookieValue());
         IProxy myProxy = new Proxy();
-//        try {
-//            myProxy.userLogin(new User("Sam", "sam"));
-//        } catch (InvalidUserException e) {
-//            e.printStackTrace();
-//        }
-//        Facade myFacade = new Facade();
+        try {
+            myProxy.userLogin(new User("Sam", "sam"));
+        } catch (InvalidUserException e) {
+            e.printStackTrace();
+        }
+        Facade myFacade = new Facade();
 
     }
 
