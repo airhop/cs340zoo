@@ -9,6 +9,8 @@ import shared.jsonobject.User;
 import shared.locations.EdgeLocation;
 import shared.serialization.HttpURLResponse;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
@@ -32,11 +34,11 @@ public class Proxy implements IProxy{
     }
 
 
-    public HttpURLResponse doGet(String commandName) throws ClientException {
+    public HttpURLResponse doGet(String urlPath) throws ClientException {
 
         HttpURLResponse result = new HttpURLResponse();
         try {
-            URL url = new URL(URL_PREFIX + "/" + commandName);
+            URL url = new URL(URL_PREFIX + "/" + urlPath);
             HttpURLConnection connection = (HttpURLConnection)url.openConnection();
             connection.setRequestMethod(HTTP_GET);
             connection.connect();
@@ -48,7 +50,7 @@ public class Proxy implements IProxy{
 //                    result.setResponseBody(xmlStream.fromXML(connection.getInputStream()));
                 }
             } else {
-                throw new ClientException(String.format("doGet failed: %s (http code %d)", commandName, connection.getResponseCode()));
+                throw new ClientException(String.format("doGet failed: %s (http code %d)", urlPath, connection.getResponseCode()));
             }
         }
         catch (IOException e) {
@@ -57,29 +59,41 @@ public class Proxy implements IProxy{
         return result;
     }
 
-    public HttpURLResponse doPost(String commandName, Object postData) throws ClientException {
+    public HttpURLResponse doPost(String urlPath, Object postData) throws ClientException {
 
         HttpURLResponse result = new HttpURLResponse();
 
         try {
-            URL url = new URL(URL_PREFIX + commandName);
+            URL url = new URL(URL_PREFIX + urlPath);
             HttpURLConnection connection = (HttpURLConnection)url.openConnection();
             connection.setRequestMethod(HTTP_POST);
             connection.setDoOutput(true);
             connection.connect();
 
+            if(userCookie.isActive()){
+                connection.setRequestProperty(userCookie.getCookieName(), userCookie.getCookieValue());
+            }
+            if(gameCookie.isActive()){
+                connection.setRequestProperty(gameCookie.getCookieName(), gameCookie.getCookieValue());
+            }
+            String temp;
 
-//            xmlStream.toXML(postData, connection.getOutputStream());
-            connection.getOutputStream().close();
+            temp = myGson.toJson(postData);
+            ObjectOutputStream myOut = new ObjectOutputStream(connection.getOutputStream());
+            OutputStream myOutStream = connection.getOutputStream();
+            JsonParser myParse = new JsonParser();
+            myOut.writeChars(temp);
 
             result.setResponseCode(connection.getResponseCode());
             result.setResponseLength(connection.getContentLength());
+
+
             if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
                 if(connection.getContentLength() == 0) {
-//                    result.setResponseBody(xmlStream.fromXML(connection.getInputStream()));
+                    result.setResponseBody(myParse);
                 }
             } else {
-                throw new ClientException(String.format("doPost failed: %s (http code %d)", commandName, connection.getResponseCode()));
+                throw new ClientException(String.format("doPost failed: %s (http code %d)", urlPath, connection.getResponseCode()));
             }
         }
         catch (IOException e) {
@@ -160,12 +174,11 @@ public class Proxy implements IProxy{
 
     @Override
     public void userLogin(User u) throws InvalidUserException {
-        JsonElement myArray = new JsonArray();
         JsonObject myObjOne = new JsonObject();
-        JsonObject myObjTwo = new JsonObject();
         myObjOne.addProperty("username", u.getUsername());
         myObjOne.addProperty("password", u.getPassword());
         System.out.println(myObjOne.toString());
+        doPost();
     }
 
     @Override

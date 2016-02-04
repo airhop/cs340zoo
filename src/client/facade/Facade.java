@@ -1,11 +1,14 @@
 package client.facade;
 
+import client.model.GameModel;
 import shared.exceptions.IllegalMoveException;
 import shared.exceptions.InsufficientResourcesException;
 import shared.exceptions.InvalidPositionException;
 import shared.exceptions.InvalidWinnerException;
 
 public class Facade {
+    GameModel myModel = new GameModel();
+
 
     /**
      * This is used to see when the robber moves if the player can discard
