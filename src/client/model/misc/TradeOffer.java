@@ -31,11 +31,11 @@ public class TradeOffer {
     int sheep = offer.getSheep();
     int wheat = offer.getWheat();
     int wood = offer.getWood();
-    if(brick >= 0){recievedList.setBrick(brick)} else sentList.setBrick(brick);
-    if(ore >= 0){recievedList.setOre(ore)} else sentList.setOre(ore);
-    if(sheep >= 0){recievedList.setSheep(sheep)} else sentList.setSheep(sheep);
-    if(wheat >= 0){recievedList.setWheat(wheat)} else sentList.setWheat(wheat);
-    if(wood >= 0){recievedList.setWood(wood)} else sentList.setWood(wood);
+    if(brick >= 0){recievedList.setBrick(brick);} else sentList.setBrick(brick);
+    if(ore >= 0){recievedList.setOre(ore);} else sentList.setOre(ore);
+    if(sheep >= 0){recievedList.setSheep(sheep);} else sentList.setSheep(sheep);
+    if(wheat >= 0){recievedList.setWheat(wheat);} else sentList.setWheat(wheat);
+    if(wood >= 0){recievedList.setWood(wood);} else sentList.setWood(wood);
   }
   
   public int getSender()
