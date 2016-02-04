@@ -27,6 +27,7 @@ import shared.exceptions.*;
 import shared.definitions.*;
 import shared.locations.*;
 import sun.security.provider.certpath.Vertex;
+import java.util.ArrayList;
 
 public class GameModel {
     private Map map;
@@ -281,7 +282,9 @@ public class GameModel {
         //pull out the ports and figure that out before commiting the trade
         //figure out the ports . . .
 
-        return bank.canTrade(to);
+        ArrayList<VertexObject> vo = players[pid].getBuildings();
+        ArrayList<Port> p = bank.isPorts(vo);
+        return players[pid].canMaritimeTrade(p, rl);
     }
     /**
      * Checks to see accepting a trade request is a legal move for the player
