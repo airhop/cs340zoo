@@ -4,6 +4,8 @@ import client.model.GameModel;
 import client.model.bank.Bank;
 import client.model.bank.DevCardList;
 import client.model.bank.ResourceList;
+import client.model.history.MessageLine;
+import client.model.history.MessageList;
 import client.model.map.Map;
 import client.model.map.Road;
 import client.model.map.Settlement;
@@ -40,6 +42,9 @@ public class Deserializer {
         int ratio;
         ArrayList<Player> players = myModel.getPlayers();
         Player currentPlayer = null;
+        MessageList myMessages = myModel.getChat().getChatList();
+        String source = "";
+        String message = "";
 
 
         JsonParser myParse = new JsonParser();
@@ -278,11 +283,20 @@ public class Deserializer {
 
                                 break;
                             case "log":
-                                System.out.println(myTree.peek().name());
+
+                                myTree.beginObject();
+                                myTree.nextName();
                                 myTree.beginArray();
-//                                while(){
-//
-//                                }
+                                while(!myTree.peek().name().equals("END_ARRAY")){
+
+                                    myTree.beginObject();
+                                    myTree.nextName();
+                                    source = myTree.nextString();
+                                    myTree.nextName();
+                                    message = myTree.nextString();
+                                    System.out.println(myTree.peek().name());
+                                    myMessages.addMessage(new MessageLine(source, message));
+                                }
 
                                 break;
                             case "chat":

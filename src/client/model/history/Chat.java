@@ -2,7 +2,9 @@ package client.model.history;
 
 public class Chat 
 {
-	MessageList ChatList;
+
+
+	private MessageList ChatList;
 	/**
 	 * for printing or returning the list, however the history will need it.
 	*/
@@ -24,5 +26,17 @@ public class Chat
 	public void addMessage(String source, String message)
 	{
 		ChatList.addMessage(new MessageLine(message, source));
+	}
+
+	public void clearMessageList(){
+		ChatList.clearMessageList();
+	}
+
+	public MessageList getChatList() {
+		return ChatList;
+	}
+
+	public void setChatList(MessageList chatList) {
+		ChatList = chatList;
 	}
 }

@@ -50,6 +50,7 @@ public class GameModel {
         tt = new TurnTracker();
         to = new TradeOffer();
         dice = new Dice();
+        chat = new Chat();
         players = new ArrayList<>();
         players.add(new Player("",0));
         players.add(new Player("",1));
