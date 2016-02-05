@@ -31,8 +31,6 @@ public class Deserializer {
         int yValue;
         int chitValue;
 
-
-
         JsonParser myParse = new JsonParser();
         JsonElement myEle = myParse.parse(jsonString);
         JsonTreeReader myTree = new JsonTreeReader(myEle);
@@ -74,9 +72,8 @@ public class Deserializer {
                                     action = myTree.nextName();
                                     switch (action){
                                         case "resource":
-                                            myTree.nextName();
                                             resourceType = myTree.nextString();//for the resource Type
-
+                                            myTree.nextName();
                                         case "location":
                                             myTree.beginObject();
                                             myTree.nextName();
@@ -98,6 +95,35 @@ public class Deserializer {
                                 }
                                 System.out.println(myCurrent);
                                 break;
+                            case "cities":
+                                System.out.println(myTree.peek().name());
+                                break;
+                            case "settlements":
+                                System.out.println(myTree.peek().name());
+                                break;
+                            case "ports":
+                                System.out.println(myTree.peek().name());
+                                break;
+                            case "robber":
+                                System.out.println(myTree.peek().name());
+                                break;
+                            case "players":
+                                System.out.println(myTree.peek().name());
+                                break;
+                            case "log":
+                                System.out.println(myTree.peek().name());
+                                break;
+                            case "chat":
+                                System.out.println(myTree.peek().name());
+                                break;
+                            case "bank":
+                                System.out.println(myTree.peek().name());
+                                break;
+                            case "turnTracker":
+                                System.out.println(myTree.peek().name());
+                                break;
+
+
                             default:
                                 System.out.println(myCurrent);
                         }
