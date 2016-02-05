@@ -377,8 +377,8 @@ public class Proxy implements IProxy {
         JsonObject myObjOne = new JsonObject();
         String url = "/moves/rollNumber";
         myObjOne.addProperty("type", "rollNumber");
-        myObjOne.addProperty("playerIndex", "" + playerIndex);
-        myObjOne.addProperty("number", "" + numRoled);
+        myObjOne.addProperty("playerIndex", playerIndex);
+        myObjOne.addProperty("number",  "" + numRoled);
         System.out.println(myObjOne.toString());
         HttpURLResponse myResponse;
         try {
@@ -391,78 +391,307 @@ public class Proxy implements IProxy {
 
     @Override
     public void robPlayer(int playerIdOne, int playerIdTwo, HexLocation hl) {
-
+        JsonObject myObjOne = new JsonObject();
+        JsonObject myObjTwo = new JsonObject();
+        String url = "/moves/robPlayer";
+        myObjOne.addProperty("type", "robPlayer");
+        myObjOne.addProperty("playerIndex", playerIdOne);
+        myObjOne.addProperty("victimIndex", playerIdTwo);
+        myObjOne.add("location", locationObject(hl));
+        System.out.println(myObjOne.toString());
+        HttpURLResponse myResponse;
+        try {
+            myResponse = doPost(url, myObjOne);
+            System.out.println(myResponse.getResponseBody());
+        } catch (ClientException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
-    public void finishTurn(int playerId) {
-
+    public void finishTurn(int playerIndex) {
+        JsonObject myObjOne = new JsonObject();
+        String url = "/moves/finishTurn";
+        myObjOne.addProperty("type", "finishTurn");
+        myObjOne.addProperty("playerIndex", playerIndex);
+        System.out.println(myObjOne.toString());
+        HttpURLResponse myResponse;
+        try {
+            myResponse = doPost(url, myObjOne);
+            System.out.println(myResponse.getResponseBody());
+        } catch (ClientException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
-    public void buyDevCard(int playerId) throws InsufficientResourcesException {
-
+    public void buyDevCard(int playerIndex) {
+        JsonObject myObjOne = new JsonObject();
+        String url = "/moves/buyDevCard";
+        myObjOne.addProperty("type", "buyDevCard");
+        myObjOne.addProperty("playerIndex", playerIndex);
+        System.out.println(myObjOne.toString());
+        HttpURLResponse myResponse;
+        try {
+            myResponse = doPost(url, myObjOne);
+            System.out.println(myResponse.getResponseBody());
+        } catch (ClientException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
-    public void playYearOfPlenty(int playerId, ResourceType r1, ResourceType r2) {
-
+    public void playYearOfPlenty(int playerIndex, ResourceType r1, ResourceType r2) {
+        JsonObject myObjOne = new JsonObject();
+        String url = "/moves/Year_of_Plenty";
+        myObjOne.addProperty("type", "Year_of_Plenty");
+        myObjOne.addProperty("playerIndex", playerIndex);
+        myObjOne.addProperty("resource1",  r1.name());
+        myObjOne.addProperty("resource2",  r2.name());
+        System.out.println(myObjOne.toString());
+        HttpURLResponse myResponse;
+        try {
+            myResponse = doPost(url, myObjOne);
+            System.out.println(myResponse.getResponseBody());
+        } catch (ClientException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
-    public void playRoadBuilding(int playerId, EdgeLocation e1, EdgeLocation e2) {
-
+    public void playRoadBuilding(int playerIndex, EdgeLocation e1, EdgeLocation e2) {
+        JsonObject myObjOne = new JsonObject();
+        String url = "/moves/Road_Building";
+        myObjOne.addProperty("type", "Road_Building");
+        myObjOne.addProperty("playerIndex", playerIndex);
+        myObjOne.add("spot1",  edgeLocationObject(e1));
+        myObjOne.add("spot2",  edgeLocationObject(e2));
+        System.out.println(myObjOne.toString());
+        HttpURLResponse myResponse;
+        try {
+            myResponse = doPost(url, myObjOne);
+            System.out.println(myResponse.getResponseBody());
+        } catch (ClientException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
-    public void playSoldier(int playerId, int victimId, HexLocation El) {
-
+    public void playSoldier(int playerId, int victimId, HexLocation hl) {
+        JsonObject myObjOne = new JsonObject();
+        String url = "/moves/Soldier";
+        myObjOne.addProperty("type", "Soldier");
+        myObjOne.addProperty("playerIndex", playerId);
+        myObjOne.addProperty("victimIndex", victimId);
+        myObjOne.add("location", locationObject(hl));
+        System.out.println(myObjOne.toString());
+        HttpURLResponse myResponse;
+        try {
+            myResponse = doPost(url, myObjOne);
+            System.out.println(myResponse.getResponseBody());
+        } catch (ClientException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
-    public void playMonopoly(int playerId, ResourceType r1) {
-
+    public void playMonopoly(int playerIndex, ResourceType r1) {
+        JsonObject myObjOne = new JsonObject();
+        String url = "/moves/Monopoly";
+        myObjOne.addProperty("type", "Monopoly");
+        myObjOne.addProperty("resource",  "" + r1.name());
+        myObjOne.addProperty("playerIndex", playerIndex);
+        System.out.println(myObjOne.toString());
+        HttpURLResponse myResponse;
+        try {
+            myResponse = doPost(url, myObjOne);
+            System.out.println(myResponse.getResponseBody());
+        } catch (ClientException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
-    public void placeMonument(int playerId) {
-
+    public void placeMonument(int playerIndex) {
+        JsonObject myObjOne = new JsonObject();
+        String url = "/moves/Monument";
+        myObjOne.addProperty("type", "Monument");
+        myObjOne.addProperty("playerIndex", playerIndex);
+        System.out.println(myObjOne.toString());
+        HttpURLResponse myResponse;
+        try {
+            myResponse = doPost(url, myObjOne);
+            System.out.println(myResponse.getResponseBody());
+        } catch (ClientException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void buildRoad(int playerId, EdgeLocation el) {
-
+        JsonObject myObjOne = new JsonObject();
+        String url = "/moves/buildRoad";
+        myObjOne.addProperty("type", "rollNumber");
+        myObjOne.addProperty("playerIndex", "" + playerId);
+        myObjOne.add("roadLocation", edgeLocationObject(el));
+        myObjOne.addProperty("free", "" + true);
+        System.out.println(myObjOne.toString());
+        HttpURLResponse myResponse;
+        try {
+            myResponse = doPost(url, myObjOne);
+            System.out.println(myResponse.getResponseBody());
+        } catch (ClientException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void buildSettlement(int playerId, VertexLocation vl) throws IllegalBuildException {
-
+        JsonObject myObjOne = new JsonObject();
+        String url = "/moves/buildSettlement";
+        myObjOne.addProperty("type", "buildSettlement");
+        myObjOne.addProperty("playerIndex", "" + playerId);
+        myObjOne.add("vertexLocation", vertexLocationObject(vl));
+        myObjOne.addProperty("free", "" + true);
+        System.out.println(myObjOne.toString());
+        HttpURLResponse myResponse;
+        try {
+            myResponse = doPost(url, myObjOne);
+            System.out.println(myResponse.getResponseBody());
+            System.out.println(myResponse.getCookie());
+        } catch (ClientException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void buildCity(int playerId, VertexLocation vl) throws IllegalBuildException {
-
+        JsonObject myObjOne = new JsonObject();
+        String url = "/moves/buildCity";
+        myObjOne.addProperty("type", "buildCity");
+        myObjOne.addProperty("playerIndex", "" + playerId);
+        myObjOne.add("vertexLocation", vertexLocationObject(vl));
+        System.out.println(myObjOne.toString());
+        HttpURLResponse myResponse;
+        try {
+            myResponse = doPost(url, myObjOne);
+            System.out.println(myResponse.getResponseBody());
+            System.out.println(myResponse.getCookie());
+        } catch (ClientException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void offerTrade(int playerIdOne, int playerIdTwo, ResourceList rl) {
-
+        JsonObject myObjOne = new JsonObject();
+        String url = "/moves/offerTrade";
+        myObjOne.addProperty("type", "offerTrade");
+        myObjOne.addProperty("playerIndex", "" + playerIdOne);
+        myObjOne.add("offer", RLO(rl));
+        myObjOne.addProperty("reciever", "" + playerIdTwo);
+        System.out.println(myObjOne.toString());
+        HttpURLResponse myResponse;
+        try {
+            myResponse = doPost(url, myObjOne);
+            System.out.println(myResponse.getResponseBody());
+            System.out.println(myResponse.getCookie());
+        } catch (ClientException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void acceptTrade(int playerIdOne, boolean accept) {
-
+        JsonObject myObjOne = new JsonObject();
+        String url = "/moves/acceptTrade";
+        myObjOne.addProperty("type", "acceptTrade");
+        myObjOne.addProperty("playerIndex", "" + playerIdOne);
+        myObjOne.addProperty("willAccept", "" + accept);
+        System.out.println(myObjOne.toString());
+        HttpURLResponse myResponse;
+        try {
+            myResponse = doPost(url, myObjOne);
+            System.out.println(myResponse.getResponseBody());
+            System.out.println(myResponse.getCookie());
+        } catch (ClientException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void meritimeTrade(int playerId, int ratio, ResourceList in, ResourceList out) {
-
+        JsonObject myObjOne = new JsonObject();
+        String url = "/moves/maritimeTrade";
+        myObjOne.addProperty("type",  "maritimeTrade");
+        myObjOne.addProperty("playerIndex", "" + playerId);
+        myObjOne.addProperty("ratio", "" + ratio);
+        myObjOne.addProperty("inputResource", "" + in);
+        myObjOne.addProperty("outputResource", "" + out);
+        System.out.println(myObjOne.toString());
+        HttpURLResponse myResponse;
+        try {
+            myResponse = doPost(url, myObjOne);
+            System.out.println(myResponse.getResponseBody());
+            System.out.println(myResponse.getCookie());
+        } catch (ClientException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void discardCards(int playerId, ResourceList rl) throws InsufficientResourcesException {
-
+        JsonObject myObjOne = new JsonObject();
+        String url = "/moves/discardCards";
+        myObjOne.addProperty("type",  "discardCards");
+        myObjOne.addProperty("playerIndex", "" + playerId);
+        JsonObject RLO = RLO(rl);
+        myObjOne.add("dicardedCards", RLO);
+        System.out.println(myObjOne.toString());
+        HttpURLResponse myResponse;
+        try {
+            myResponse = doPost(url, myObjOne);
+            System.out.println(myResponse.getResponseBody());
+            System.out.println(myResponse.getCookie());
+        } catch (ClientException e) {
+            e.printStackTrace();
+        }
+    }
+    //resourcelistobject
+    public JsonObject RLO(ResourceList rl)
+    {
+        JsonObject RLO = new JsonObject();
+        RLO.addProperty("brick", ""+ rl.getBrick());
+        RLO.addProperty("ore", ""+ rl.getOre());
+        RLO.addProperty("sheep", "" + rl.getSheep());
+        RLO.addProperty("wheat", "" +rl.getWheat());
+        RLO.addProperty("wood", "" +rl.getWood());
+        return RLO;
     }
 
+    public JsonObject edgeLocationObject(EdgeLocation el)
+    {
+        JsonObject LO = new JsonObject();
+        LO.addProperty("x", "" + el.getHexLoc().getX());
+        LO.addProperty("y", "" + el.getHexLoc().getY());
+        LO.addProperty("direction", el.getDir().toString());
+        return LO;
+    }
 
+    //locationobject
+    public JsonObject vertexLocationObject(VertexLocation vl)
+    {
+        JsonObject LO = new JsonObject();
+        LO.addProperty("x", "" + vl.getHexLoc().getX());
+        LO.addProperty("y", "" + vl.getHexLoc().getY());
+        LO.addProperty("direction", vl.getDir().toString());
+        return LO;
+    }
+    public JsonObject locationObject(HexLocation hl)
+    {
+        JsonObject LO = new JsonObject();
+        LO.addProperty("x", "" + hl.getX());
+        LO.addProperty("y", "" + hl.getY());
+        return LO;
+    }
 }

@@ -37,7 +37,7 @@ public class NewMain {
         playerIndex = myGameModel.getPlayerIndex(playerId);
         myProxy.rollNumber(0, playerIndex);
 
-        myProxy.sendChat("Poop", playerIndex);
+        myProxy.sendChat("Help", playerIndex);
 
 
 //        myProxy.sendChat("plants", 0);
