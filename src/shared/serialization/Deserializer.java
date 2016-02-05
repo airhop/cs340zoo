@@ -60,7 +60,24 @@ public class Deserializer {
                                 myTree.nextName();
                                 myDevCards.setMonument(myTree.nextInt());
                                 break;
-                            case "map":
+                            case "hexes":
+                                System.out.println(myCurrent);
+                                myTree.beginArray();
+                                while(!myTree.peek().name().equals("END_ARRAY")){
+                                    myTree.beginObject();
+                                    action = myTree.nextName();
+                                    switch (action){
+                                        case "resource":
+                                        case "location":
+                                            break;
+                                    }
+                                    if(action.equals("resource")){
+
+                                    }else{
+
+                                    }
+
+                                }
                                 System.out.println(myCurrent);
                                 break;
                             default:

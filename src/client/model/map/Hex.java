@@ -4,13 +4,13 @@ public class Hex {
   
   shared.locations.HexLocation location;
   String resource;
-  String number;
+  int chit;
 
-  public Hex(int x, int y, String resrc, String num)
+  public Hex(int x, int y, String resrc, int num)
   {
     location = new  shared.locations.HexLocation(x,y);
     resource = resrc;
-    number = num;
+    chit = num;
   }
   //Getters and Setters
 
@@ -35,14 +35,14 @@ public class Hex {
 	  this.resource = resource;
   }
 
-  public String getNumber() 
+  public int getNumber()
   {
-	  return number;
+	  return chit;
   }
 
-  public void setNumber(String number) 
+  public void setNumber(int chit)
   {
-	  this.number = number;
+	  this.chit = chit;
   }
   
 }
