@@ -10,6 +10,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.internal.bind.JsonTreeReader;
+import shared.exceptions.FailureToAddException;
 
 import java.io.IOException;
 
@@ -25,6 +26,11 @@ public class Deserializer {
         Map myMap = myModel.getMap();
         ResourceList myResource = myBank.getResources();
         DevCardList myDevCards = myBank.getDevCards();
+        String resourceType = "";
+        int xValue;
+        int yValue;
+        int chitValue;
+
 
 
         JsonParser myParse = new JsonParser();
@@ -68,15 +74,27 @@ public class Deserializer {
                                     action = myTree.nextName();
                                     switch (action){
                                         case "resource":
+                                            myTree.nextName();
+                                            resourceType = myTree.nextString();//for the resource Type
+
                                         case "location":
+                                            myTree.beginObject();
+                                            myTree.nextName();
+                                            xValue = myTree.nextInt();//x
+                                            myTree.nextName();
+                                            yValue = myTree.nextInt();//y
+                                            myTree.endObject();
+                                            if(myTree.peek().name().equals("NAME")){
+                                                myTree.nextName();
+                                                chitValue = myTree.nextInt();
+                                                myMap.addHex(xValue, yValue, resourceType, chitValue);
+                                                myTree.endObject();
+                                            }else{
+                                                myMap.addHexDesert(xValue, yValue);
+                                                myTree.endObject();
+                                            }
                                             break;
                                     }
-                                    if(action.equals("resource")){
-
-                                    }else{
-
-                                    }
-
                                 }
                                 System.out.println(myCurrent);
                                 break;
@@ -130,6 +148,8 @@ public class Deserializer {
             myTree.close();
 
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (FailureToAddException e) {
             e.printStackTrace();
         }
 

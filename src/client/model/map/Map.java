@@ -67,6 +67,13 @@ public class Map
 
 	}//may not be used
 
+
+	public void addHexDesert(int x, int y) throws FailureToAddException//may not be used
+	{
+		Hex hex = new Hex(x,y);
+		hexes.put(hex.getLocation(), hex);
+	}
+
 	/**
 	 * adds a hex to the maps list of hexes
 	 *
@@ -79,7 +86,7 @@ public class Map
 	{
 
 		String numberString = new String(Integer.toString(number));
-		Hex hex = new Hex(x,y,resource,numberString);
+		Hex hex = new Hex(x,y,resource,number);
 		hexes.put(hex.getLocation(), hex);
 	}
 // This section suppose to be rolling dice method
