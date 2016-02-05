@@ -76,6 +76,7 @@ public class Proxy implements IProxy{
                 cookiesList = userCookie.getCookieName() + "=" + userCookie.getCookieValue();
                 if(gameCookie.isActive()){
                     cookiesList = cookiesList + ";" + gameCookie.getCookieName() + "=" + gameCookie.getCookieValue();
+                    System.out.println(cookiesList);
                     connection.setRequestProperty("Cookie", cookiesList);
                 }else{
                     connection.setRequestProperty("Cookie", cookiesList);
@@ -308,17 +309,17 @@ public class Proxy implements IProxy{
     }
 
     @Override
-    public void sendChat(String content, int playerId) {
+    public void sendChat(String content, int playerIndex) {
         JsonObject myObjOne = new JsonObject();
         String url = "/moves/sendChat";
         myObjOne.addProperty("type", "sendChat");
-        myObjOne.addProperty("playerIndex", "" + playerId);
+        myObjOne.addProperty("playerIndex", "" + playerIndex);
         myObjOne.addProperty("content", content);
         System.out.println(myObjOne.toString());
         HttpURLResponse myResponse;
         try {
             myResponse = doPost(url, myObjOne);
-            gameCookie.setFullCookie(myResponse.getCookie());
+            System.out.println(myResponse.getResponseBody());
         } catch (ClientException e) {
             e.printStackTrace();
         }
@@ -330,7 +331,7 @@ public class Proxy implements IProxy{
     }
 
     @Override
-    public void robPlayer(int playerIdOne, int playerIdTwo, HexLocation Hl) {
+    public void robPlayer(int playerIdOne, int playerIdTwo, HexLocation hl) {
 
     }
 
