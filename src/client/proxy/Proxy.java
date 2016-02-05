@@ -40,6 +40,7 @@ public class Proxy implements IProxy {
         myGson = new Gson();
         cookiesList = "";
         myDeSer = new Deserializer();
+        myGameModel = givenGameModel;
     }
 
 
