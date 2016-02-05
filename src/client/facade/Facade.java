@@ -107,10 +107,10 @@ public class Facade {
      *
      * @return boolean whether or not the player built the road (perhaps placeholder return values for all of the do methods)
      */
-    public void placeRoad(int pid, EdgeLocation el) {
+    public void placeRoad(int pid, EdgeLocation el, boolean free) {
         if (game != null) {
             if (game.canBuildRoad(pid) && game.canPlaceRoad(el))
-                proxy.buildRoad(pid, el);
+                proxy.buildRoad(pid, el, free);
         }
     }
 
@@ -130,10 +130,10 @@ public class Facade {
      *
      * @return boolean whether or not the player can place a settlement
      */
-    public boolean canPlaceSettlement(VertexLocation vl) {
+    public boolean canPlaceSettlement(VertexLocation vl, boolean free) {
         if (game == null)
             return false;
-        return game.canPlaceSettlement(vl);
+        return game.canPlaceSettlement(vl, free);
     }
 
     /**
