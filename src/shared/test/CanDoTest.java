@@ -165,11 +165,20 @@ public class CanDoTest
     {
         initializeFull();
         TurnTracker turnTracker = f.getGM().getTt();
-        ResourceList resourceList = new ResourceList(1,);
-        turnTracker.getCurrentPlayer(1);
+        ResourceList resourceList = new ResourceList(1,5,2,6,4);
+        turnTracker.setCurrentPlayer(1);
         f.getGM().setTt(turnTracker);
 
-        assert(f.canDiscardCards(1))
+        assert(f.canDiscardCards(1,resourceList));
+        assert(f.canDiscardCards(0,resourceList));
+
+        turnTracker.setCurrentPlayer(0);
+        f.getGM().setTt(turnTracker);
+        ResourceList emptyList = new ResourceList(0,0,0,0,0);
+        f.getGM().getPlayers().get(0).setResources(emptyList);
+        assert(!f.canDiscardCards(0,resourceList));
+
+        System.out.println("can Discard Cards - can Do, Not turn, Insuffient Materials");
 
     }
 
@@ -177,7 +186,15 @@ public class CanDoTest
     @Test
     public void testCanRollNumber()
     {
+        initializeFull();
+        TurnTracker turnTracker = f.getGM().getTt();
+        turnTracker.setCurrentPlayer(1);
+        f.getGM().setTt(turnTracker);
 
+        assert(f.canRoll(1));
+        assert(!f.canRoll(0));
+
+        System.out.println("can RollDice - can Do, Not Turn");
     }
 
 
