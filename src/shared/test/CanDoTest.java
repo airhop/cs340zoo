@@ -14,9 +14,8 @@ import client.model.GameModel;
 import client.model.player.*;
 import shared.definitions.ResourceType;
 import shared.locations.*;
-/**
- * Created by GaryPetersen on 2/5/2016.
- */
+
+
 public class CanDoTest
 {
     Facade f;
@@ -26,6 +25,7 @@ public class CanDoTest
     {
         f = new Facade();
         p = new Proxy(new GameModel());
+        f.Reinitialize(new GameModel());
     }
 
     //create a full game
@@ -41,7 +41,7 @@ public class CanDoTest
         p1.setSettlements(3);
         p1.setRoads(9);
         p1.setNewDevCards(new DevCardList(0, 0, 0 , 2, 0));
-        p1.setResources(new ResourceList(5, 2, 0, 0, 0));
+        p1.setResources(new ResourceList(0, 3, 0, 2, 0));
 
         Player p2 = new Player("Suzzie", 1);
         p2.setCities(3);
@@ -55,7 +55,7 @@ public class CanDoTest
         p3.setSettlements(3);
         p3.setRoads(10);
         p3.setNewDevCards(new DevCardList(0, 1, 0, 0, 1));
-        p3.setResources(new ResourceList(0, 0, 3, 0 , 0));
+        p3.setResources(new ResourceList(0, 1, 1, 1 , 0));
 
         Player p4 = new Player("Finale", 3);
         p4.setCities(4);
