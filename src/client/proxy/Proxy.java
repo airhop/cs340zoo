@@ -360,8 +360,8 @@ public class Proxy implements IProxy {
         JsonObject myObjOne = new JsonObject();
         String url = "/moves/sendChat";
         myObjOne.addProperty("type", "sendChat");
-        myObjOne.addProperty("playerIndex", "" + playerIndex);
-        myObjOne.addProperty("content", content);
+        myObjOne.addProperty("playerIndex", playerIndex);
+        myObjOne.addProperty("content", "" + content);
         System.out.println(myObjOne.toString());
         HttpURLResponse myResponse;
         try {
