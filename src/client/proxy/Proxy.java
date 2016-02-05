@@ -536,13 +536,13 @@ public class Proxy implements IProxy {
     }
 
     @Override
-    public void buildRoad(int playerId, EdgeLocation el) {
+    public void buildRoad(int playerId, EdgeLocation el, boolean free) {
         JsonObject myObjOne = new JsonObject();
         String url = "/moves/buildRoad";
         myObjOne.addProperty("type", "rollNumber");
         myObjOne.addProperty("playerIndex", "" + playerId);
         myObjOne.add("roadLocation", edgeLocationObject(el));
-        myObjOne.addProperty("free", "" + true);
+        myObjOne.addProperty("free", "" + free);
         System.out.println(myObjOne.toString());
         HttpURLResponse myResponse;
         try {
@@ -554,13 +554,13 @@ public class Proxy implements IProxy {
     }
 
     @Override
-    public void buildSettlement(int playerId, VertexLocation vl) throws IllegalBuildException {
+    public void buildSettlement(int playerId, VertexLocation vl, boolean free) throws IllegalBuildException {
         JsonObject myObjOne = new JsonObject();
         String url = "/moves/buildSettlement";
         myObjOne.addProperty("type", "buildSettlement");
         myObjOne.addProperty("playerIndex", "" + playerId);
         myObjOne.add("vertexLocation", vertexLocationObject(vl));
-        myObjOne.addProperty("free", "" + true);
+        myObjOne.addProperty("free", "" + free);
         System.out.println(myObjOne.toString());
         HttpURLResponse myResponse;
         try {
@@ -628,7 +628,7 @@ public class Proxy implements IProxy {
     }
 
     @Override
-    public void meritimeTrade(int playerId, int ratio, ResourceList in, ResourceList out) {
+    public void maritimeTrade(int playerId, int ratio, ResourceType in, ResourceType out) {
         JsonObject myObjOne = new JsonObject();
         String url = "/moves/maritimeTrade";
         myObjOne.addProperty("type",  "maritimeTrade");
