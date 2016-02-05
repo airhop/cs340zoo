@@ -182,6 +182,13 @@ public class Deserializer {
                                 System.out.println(myTree.peek().name());
                                 break;
                             case "robber":
+                                myTree.beginObject();
+                                myTree.nextName();
+                                xValue = myTree.nextInt();
+                                myTree.nextName();
+                                yValue = myTree.nextInt();
+                                myMap.getRobber().setHl(new HexLocation(xValue, yValue));
+                                myTree.endObject();
                                 System.out.println(myTree.peek().name());
                                 break;
                             case "players":
@@ -199,29 +206,8 @@ public class Deserializer {
                             case "turnTracker":
                                 System.out.println(myTree.peek().name());
                                 break;
-
-
                             default:
                                 System.out.println(myCurrent);
-                        }
-
-                        if(myCurrent.equals("map")){
-                            action = myCurrent;
-                        }
-                        if(myCurrent.equals("players")){
-                            action = myCurrent;
-                        }
-                        if(myCurrent.equals("log")){
-                            action = myCurrent;
-                        }
-                        if(myCurrent.equals("chat")){
-                            action = myCurrent;
-                        }
-                        if(myCurrent.equals("bank")){
-                            action = myCurrent;
-                        }
-                        if(myCurrent.equals("turnTracker")){
-                            action = myCurrent;
                         }
                         System.out.println(myCurrent);
                         break;

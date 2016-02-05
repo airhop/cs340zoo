@@ -34,6 +34,7 @@ public class Map
 		hexes = new TreeMap<HexLocation,Hex>();
 		ports = new ArrayList<Port>();
 		roads = new ArrayList<Road>();
+		robber = new Robber();
 //        settlements = new ArrayList<VertexObject>();
 //        cities = new ArrayList<VertexObject>();
 		buildings = new ArrayList<VertexObject>();
