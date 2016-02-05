@@ -19,6 +19,7 @@ public class Deserializer {
     public GameModel deserialize(String jsonString, GameModel myModel) {
         JsonParser myParse = new JsonParser();
         JsonElement myEle = myParse.parse(jsonString);
+        System.out.println(jsonString);
         JsonTreeReader myTree = new JsonTreeReader(myEle);
         JsonObject myObj = new JsonObject();
         try {
@@ -34,10 +35,12 @@ public class Deserializer {
                     case "STRING":
                         System.out.println(myTree.nextString());
                         break;
-
-
+                    case "NUMBER":
+                        System.out.println(myTree.nextInt());
+                        break;
                 }
             }
+
 
         } catch (IOException e) {
             e.printStackTrace();
