@@ -174,7 +174,7 @@ public interface IProxy {
      * @param playerId - playerIdOne passed to the server
      * @param ratio - Traded with the bank
      */
-    void meritimeTrade(int playerId, int ratio, ResourceType in, ResourceType out);
+    void maritimeTrade(int playerId, int ratio, ResourceType in, ResourceType out);
     /**
      * Discards cards
      * @param playerId - Player to discard
