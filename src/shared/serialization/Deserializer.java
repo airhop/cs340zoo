@@ -47,6 +47,10 @@ public class Deserializer {
                     case "END_ARRAY":
                         myTree.endArray();
                         break;
+                    case "BOOLEAN":
+                        myTree.nextBoolean();
+                        break;
+
                 }
             }
 
