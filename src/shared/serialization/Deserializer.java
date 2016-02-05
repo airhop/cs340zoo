@@ -30,6 +30,8 @@ public class Deserializer {
         int xValue;
         int yValue;
         int chitValue;
+        int owner;
+
 
         JsonParser myParse = new JsonParser();
         JsonElement myEle = myParse.parse(jsonString);
@@ -96,9 +98,19 @@ public class Deserializer {
                                 System.out.println(myCurrent);
                                 break;
                             case "cities":
+                                myTree.beginArray();
+                                myTree.endArray();
                                 System.out.println(myTree.peek().name());
                                 break;
                             case "settlements":
+                                myTree.beginArray();
+
+                                while(!myTree.peek().name().equals("END_ARRAY")){
+                                    myTree.beginObject();
+                                    myTree.nextName();
+                                    owner = myTree.nextInt();
+                                }
+
                                 System.out.println(myTree.peek().name());
                                 break;
                             case "ports":
