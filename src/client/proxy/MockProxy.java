@@ -13,21 +13,24 @@ import shared.locations.VertexLocation;
 
 public class MockProxy implements IProxy{
 
-    public MockProxy(){
-
+    public MockProxy()
+    {
+    	System.out.println("MockProxy.java: MockProxy() constructior is called");
     }
 
     /**
      * Sets up a mock Proxy
      */
-    public void runMock(){
-
+    public void runMock()
+    {
+    	System.out.println("MockProxy.java: runMock() is called");
     }
 
 
     @Override
     public int getPlayerId() 
     {
+    	System.out.println("MockProxy.java: getPlayerId() is called");
         return 0;
     }
 
