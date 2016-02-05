@@ -44,6 +44,10 @@ public class Map
 	public void clearHexes(){
 		hexes.clear();
 	}
+	public void clearBuildings(){
+		buildings.clear();
+	}
+
 
 	/**
 	 * initialize a new map when game is created
@@ -116,12 +120,12 @@ public class Map
 	 * @param x         - horizontal location of hex related to port
 	 * @param y         - diagonal location of hex related to port
 	 * @param resource  - type of resource obtained from hex
-	 * @param vd - direction from hex the port is located
+	 * @param ed - direction from hex the port is located
 	 * @param ratio     - the ratio of resources tradeable (i.e 1:2, 1:4)
 	 */
-	public void addPort(int x, int y, String resource, VertexDirection vd, int ratio) throws FailureToAddException
+	public void addPort(int x, int y, String resource, EdgeDirection ed, int ratio) throws FailureToAddException
 	{
-		Port port = new Port(x,y,resource, vd, ratio);
+		Port port = new Port(x,y,resource, ed, ratio);
 		ports.add(port);
 	}
 

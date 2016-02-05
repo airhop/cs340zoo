@@ -154,17 +154,27 @@ public class Deserializer {
                                     myTree.beginObject();
                                     myTree.nextName();
                                     ratio = myTree.nextInt();
-                                    myTree.nextName();//resource
-                                    resourceType = myTree.nextString();
-                                    myTree.nextName();//Dir
-                                    myDir = myTree.nextString();
-                                    myTree.nextName();
-                                    myTree.beginObject();//location
-                                    myTree.nextName();//x
-                                    xValue = myTree.nextInt();
-                                    myTree.nextName();//y
-                                    yValue = myTree.nextInt();
-                                    myMap.addPort(xValue, yValue, resourceType, VertexDirection.valueOf(myDir),ratio);
+                                    if(myTree.nextName().equals("resource")){
+                                        resourceType = myTree.nextString();
+                                        myTree.nextName();//Dir
+                                        myDir = myTree.nextString();
+                                        myTree.nextName();
+                                        myTree.beginObject();//location
+                                        myTree.nextName();//x
+                                        xValue = myTree.nextInt();
+                                        myTree.nextName();//y
+                                        yValue = myTree.nextInt();
+                                        myMap.addPort(xValue, yValue, resourceType, EdgeDirection.valueOf(myDir),ratio);
+                                    }else{
+                                        myDir = myTree.nextString();
+                                        myTree.nextName();
+                                        myTree.beginObject();//location
+                                        myTree.nextName();//x
+                                        xValue = myTree.nextInt();
+                                        myTree.nextName();//y
+                                        yValue = myTree.nextInt();
+                                        myMap.addPort(xValue, yValue, resourceType, EdgeDirection.valueOf(myDir),ratio);
+                                    }
                                     myTree.endObject();
                                     myTree.endObject();
                                     System.out.println(myTree.peek().name());

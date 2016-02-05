@@ -1,65 +1,69 @@
 package client.model.map;
 
+import shared.definitions.PortType;
+import shared.locations.EdgeDirection;
 import shared.locations.HexLocation;
 import shared.locations.VertexDirection;
 
 public class Port {
-  
-  HexLocation location;
-  String resource;
-  VertexDirection direction;
-  int ratio;
-  int owner = -1;
 
-  public Port(int x, int y, String resrc, VertexDirection dir, int rat)
-  {
-	  location = new HexLocation(x,y);
-	  resource = resrc;
-	  direction = dir;
-	  ratio = rat;
-  }
+    HexLocation location;
+    String resource;
+    EdgeDirection direction;
+    int ratio;
+    int owner = -1;
 
-  public HexLocation getLocation() 
-  {
-	  return location;
-  }
+    public Port(int x, int y, EdgeDirection dir, int rat) {
+        location = new HexLocation(x, y);
+        resource = PortType.THREE.toString();
+        direction = dir;
+        ratio = rat;
+    }
 
-  public void setLocation(HexLocation location) 
-  {
-	  this.location = location;
-  }
+    public Port(int x, int y, String resrc, EdgeDirection dir, int rat) {
+        location = new HexLocation(x, y);
+        resource = resrc;
+        direction = dir;
+        ratio = rat;
+    }
 
-  public String getResource() 
-  {
-	  return resource;
-  }
+    public HexLocation getLocation() {
+        return location;
+    }
 
-  public void setResource(String resource) 
-  {
-	  this.resource = resource;
-  }
+    public void setLocation(HexLocation location) {
+        this.location = location;
+    }
 
-  public VertexDirection getDirection()
-  {
-	  return direction;
-  }
+    public String getResource() {
+        return resource;
+    }
 
-  public void setDirection(VertexDirection direction)
-  {
-	  this.direction = direction;
-  }
+    public void setResource(String resource) {
+        this.resource = resource;
+    }
 
-  public int getRatio() 
-  {
-	  return ratio;
-  }
+    public EdgeDirection getDirection() {
+        return direction;
+    }
 
-  public void setRatio(int ratio) 
-  {
-	  this.ratio = ratio;
-  }
+    public void setDirection(EdgeDirection direction) {
+        this.direction = direction;
+    }
 
-  public int getOwner(){return this.owner;}
+    public int getRatio() {
+        return ratio;
+    }
 
-  public void setOwner(int playerID){this.owner = playerID;}
+    public void setRatio(int ratio) {
+        this.ratio = ratio;
+    }
+
+    public int getOwner() {
+        return this.owner;
+    }
+
+    public void setOwner(int playerID) {
+        this.owner = playerID;
+    }
 }
