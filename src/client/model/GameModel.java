@@ -34,7 +34,7 @@ import java.util.List;
 public class GameModel {
     private Map map;
     private Bank bank;
-    private Player[] players;
+    private ArrayList<Player> players;
     private TurnTracker tt;
     private TradeOffer to;
     private int version = 0;
@@ -44,13 +44,18 @@ public class GameModel {
     private Log log;
 
 
-    public GameModel(){
+    public GameModel() {
         map = new Map();
         bank = new Bank();
         tt = new TurnTracker();
         to = new TradeOffer();
         dice = new Dice();
-        players = new Player[4];
+        players = new ArrayList<>();
+        players.add(new Player("",0));
+        players.add(new Player("",1));
+        players.add(new Player("",2));
+        players.add(new Player("",3));
+
     }
 
     public GameModel(String[] names) {
@@ -59,9 +64,10 @@ public class GameModel {
         tt = new TurnTracker();
         to = new TradeOffer();
         dice = new Dice();
-        players = new Player[4];
-        for (int i = 0; i < names.length; i++)
-            players[i] = new Player(names[i], i);
+        players.add(new Player(names[0],0));
+        players.add(new Player(names[1],1));
+        players.add(new Player(names[2],2));
+        players.add(new Player(names[3],3));
     }
 
  /*   public void reinitialize(GameModel game) {
@@ -75,6 +81,7 @@ public class GameModel {
 //        dice = new Dice();
     }
 */
+
 
     public Map getMap() {
         return map;
@@ -92,11 +99,11 @@ public class GameModel {
         this.bank = bank;
     }
 
-    public Player[] getPlayers() {
+    public ArrayList<Player> getPlayers() {
         return players;
     }
 
-    public void setPlayers(Player[] players) {
+    public void setPlayers(ArrayList<Player> players) {
         this.players = players;
     }
 
@@ -171,7 +178,7 @@ public class GameModel {
     public boolean canWin() {
         //need to check if it is finish turn?
         int cp = tt.getCurrentPlayer();
-        return players[cp].canWin();
+        return players.get(cp).canWin();
     }
 
     /**
@@ -182,7 +189,7 @@ public class GameModel {
     public boolean canBuildRoad(int pid) {
         if (tt.getCurrentPlayer() != pid)
             return false;
-        return players[pid].canBuildRoad();
+        return players.get(pid).canBuildRoad();
     }
 
     /**
@@ -202,7 +209,7 @@ public class GameModel {
     public boolean canBuildSettlement(int pid) {
         if (tt.getCurrentPlayer() != pid)
             return false;
-        return players[pid].canBuildSettlement();
+        return players.get(pid).canBuildSettlement();
     }
 
     /**
@@ -223,7 +230,7 @@ public class GameModel {
     public boolean canBuildCity(int pid) {
         if (tt.getCurrentPlayer() != pid && tt.getStatus() != 2)
             return false;
-        return players[pid].canBuildCity();
+        return players.get(pid).canBuildCity();
     }
 
     /**
@@ -242,7 +249,7 @@ public class GameModel {
      */
     public boolean canPlayDevcard() {
         int cp = tt.getCurrentPlayer();
-        return players[cp].canPlayDevcard();
+        return players.get(cp).canPlayDevcard();
     }
 
     /**
@@ -253,7 +260,7 @@ public class GameModel {
     public boolean canMonopoly(int pid) {
         if (tt.getCurrentPlayer() != pid)
             return false;
-        return players[pid].canMonopoly();
+        return players.get(pid).canMonopoly();
     }
 
     /**
@@ -264,7 +271,7 @@ public class GameModel {
     public boolean canRoadBuilding(int pid) {
         if (tt.getCurrentPlayer() != pid)
             return false;
-        return players[pid].canPlayRoadBuilding();
+        return players.get(pid).canPlayRoadBuilding();
     }
 
     /**
@@ -275,7 +282,7 @@ public class GameModel {
     public boolean canUseMonument(int pid) {
         if (pid != tt.getCurrentPlayer())
             return false;
-        return players[pid].canPlaceMonument();
+        return players.get(pid).canPlaceMonument();
     }
 
     /**
@@ -286,7 +293,7 @@ public class GameModel {
     public boolean canYearOfPlenty(int pid) {
         if (tt.getCurrentPlayer() != pid)
             return false;
-        return players[pid].canYearOfPlenty();
+        return players.get(pid).canYearOfPlenty();
     }
 
     /**
@@ -297,13 +304,13 @@ public class GameModel {
     public boolean canPlaySoldier(int pid) {
         if (tt.getCurrentPlayer() != pid)
             return false;
-        return players[pid].canPlaceSoldier();
+        return players.get(pid).canPlaceSoldier();
     }
 
     public boolean canRob(int pid, int vid) {
         if (tt.getCurrentPlayer() != pid)
             return false;
-        return players[vid].canRob();
+        return players.get(vid).canRob();
     }
 
     /**
@@ -321,11 +328,11 @@ public class GameModel {
     }
 
     public boolean canDiscardCards(int pid, ResourceList rl) {
-        return players[pid].canDiscardCards(rl);
+        return players.get(pid).canDiscardCards(rl);
     }
 
     /**
-     *Set up the TradeOffer
+     * Set up the TradeOffer
      */
     public boolean canTradePlayer(int pid, int rid, ResourceList rl) throws IllegalMoveException, InsufficientResourcesException {
         if (tt.getStatus() != 1 && pid != tt.getCurrentPlayer())
@@ -335,7 +342,7 @@ public class GameModel {
             throw new IllegalMoveException("No trading yourself!");
 
         to = new TradeOffer(pid, rid, rl);
-        return players[pid].canOfferTrade(rl);
+        return players.get(pid).canOfferTrade(rl);
 
 
     }
@@ -349,6 +356,7 @@ public class GameModel {
 //        return players[pid].canMaritimeTrade(p, rl);
         return true;
     }
+
     /**
      * Checks to see if trading resources with the bank is a legal move for the player
      * based on the resources the player currently has.
@@ -357,11 +365,11 @@ public class GameModel {
      * @return boolean whether or not the player can trade with the bank
      */
     public boolean canMaritimeTrade(int pid) throws IllegalMoveException {
-        if(tt.getStatus() != 1 && pid != tt.getCurrentPlayer())
+        if (tt.getStatus() != 1 && pid != tt.getCurrentPlayer())
             throw new IllegalMoveException("not the trading phase, or not the player's turn");
 
-        ArrayList<Port> ports = (ArrayList)map.getPlayerPorts(pid);
-        return players[pid].canMaritimeTrade(ports);
+        ArrayList<Port> ports = (ArrayList) map.getPlayerPorts(pid);
+        return players.get(pid).canMaritimeTrade(ports);
     }
 
     /**
@@ -370,7 +378,7 @@ public class GameModel {
      * @return boolean whether or not the player can accept a trade offer from another player
      */
     public boolean canAcceptTrade(int pid) {
-        return players[pid].canAcceptTrade(to.getSentList());
+        return players.get(pid).canAcceptTrade(to.getSentList());
     }
 
     /**
@@ -401,7 +409,7 @@ public class GameModel {
     public boolean canBuyDevcard(int pid) {
         if (tt.getCurrentPlayer() != pid)
             return false;
-        return players[pid].canBuyDevcard();
+        return players.get(pid).canBuyDevcard();
     }
 
     /**
@@ -413,12 +421,12 @@ public class GameModel {
         int cp = tt.getCurrentPlayer();
         if (cp == pid)
             throw new IllegalMoveException("Can't rob yourself");
-        players[pid].depleteResource(rt);
-        players[cp].addResource(rt, 1);
+        players.get(pid).depleteResource(rt);
+        players.get(cp).addResource(rt, 1);
     }
 
     public boolean canSendChat(String msg, int pid) {
-        chat.addMessage(players[pid].getName(), msg);
+        chat.addMessage(players.get(pid).getName(), msg);
         return true;
     }
 

@@ -7,6 +7,7 @@ import client.model.bank.ResourceList;
 import client.model.map.Map;
 import client.model.map.Road;
 import client.model.map.Settlement;
+import client.model.player.Player;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -16,6 +17,7 @@ import shared.exceptions.FailureToAddException;
 import shared.locations.*;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class Deserializer {
 
@@ -36,6 +38,8 @@ public class Deserializer {
         int owner;
         String myDir = "";
         int ratio;
+        ArrayList<Player> players = myModel.getPlayers();
+        Player currentPlayer = null;
 
 
         JsonParser myParse = new JsonParser();
@@ -192,10 +196,94 @@ public class Deserializer {
                                 System.out.println(myTree.peek().name());
                                 break;
                             case "players":
-                                System.out.println(myTree.peek().name());
+                                myTree.beginArray();
+                                for(int i = 0; i < 4; i++){
+                                    currentPlayer = players.get(i);
+                                    myResource = currentPlayer.getResources();
+                                    myDevCards = currentPlayer.getOldDevCards();
+                                    myTree.beginObject();
+                                    myTree.nextName();
+                                    myTree.beginObject();
+                                    myTree.nextName();
+                                    myResource.setBrick(myTree.nextInt());
+                                    myTree.nextName();
+                                    myResource.setWood(myTree.nextInt());
+                                    myTree.nextName();
+                                    myResource.setSheep(myTree.nextInt());
+                                    myTree.nextName();
+                                    myResource.setWheat(myTree.nextInt());
+                                    myTree.nextName();
+                                    myResource.setOre(myTree.nextInt());
+                                    myTree.endObject();
+
+                                    myTree.nextName();
+                                    myTree.beginObject();//oldDevCards
+                                    myTree.nextName();
+                                    myDevCards.setYearOfPlenty(myTree.nextInt());
+                                    myTree.nextName();
+                                    myDevCards.setMonopoly(myTree.nextInt());
+                                    myTree.nextName();
+                                    myDevCards.setSoldier(myTree.nextInt());
+                                    myTree.nextName();
+                                    myDevCards.setRoadBuilding(myTree.nextInt());
+                                    myTree.nextName();
+                                    myDevCards.setMonument(myTree.nextInt());
+                                    myTree.endObject();
+
+                                    myDevCards = players.get(i).getNewDevCards();
+                                    myTree.nextName();
+                                    myTree.beginObject();//newDevCards
+                                    myTree.nextName();
+                                    myDevCards.setYearOfPlenty(myTree.nextInt());
+                                    myTree.nextName();
+                                    myDevCards.setMonopoly(myTree.nextInt());
+                                    myTree.nextName();
+                                    myDevCards.setSoldier(myTree.nextInt());
+                                    myTree.nextName();
+                                    myDevCards.setRoadBuilding(myTree.nextInt());
+                                    myTree.nextName();
+                                    myDevCards.setMonument(myTree.nextInt());
+                                    myTree.endObject();
+
+                                    myTree.nextName();
+                                    currentPlayer.setRoads(myTree.nextInt());
+                                    myTree.nextName();
+                                    currentPlayer.setCities(myTree.nextInt());
+                                    myTree.nextName();
+                                    currentPlayer.setSettlements(myTree.nextInt());
+                                    myTree.nextName();
+                                    currentPlayer.setSoldiers(myTree.nextInt());
+                                    myTree.nextName();
+                                    currentPlayer.setVictoryPoints(myTree.nextInt());
+                                    myTree.nextName();
+                                    currentPlayer.setMonuments(myTree.nextInt());
+                                    myTree.nextName();
+                                    currentPlayer.setPlayedDevCard(myTree.nextBoolean());
+                                    myTree.nextName();
+                                    currentPlayer.setDiscarded(myTree.nextBoolean());
+                                    myTree.nextName();
+                                    currentPlayer.setPlayerID(myTree.nextInt());
+                                    myTree.nextName();
+                                    currentPlayer.setPlayerIndex(myTree.nextInt());
+
+                                    myTree.nextName();
+                                    currentPlayer.setName(myTree.nextString());
+                                    myTree.nextName();
+                                    currentPlayer.setColor(myTree.nextString());
+
+                                    myTree.endObject();
+                                    System.out.println(myTree.peek().name());
+
+                                }
+
                                 break;
                             case "log":
                                 System.out.println(myTree.peek().name());
+                                myTree.beginArray();
+//                                while(){
+//
+//                                }
+
                                 break;
                             case "chat":
                                 System.out.println(myTree.peek().name());

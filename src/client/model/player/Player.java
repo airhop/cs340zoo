@@ -8,7 +8,39 @@ import shared.definitions.ResourceType;
 import shared.exceptions.InsufficientResourcesException;
 
 public class Player {
+
+    //player qualities
+    String color;
+    String name;
+    String password;
+    int biggestRoadLength;
+    int playerID;
+    int playerIndex;
+
+    //placeable items
+    int cities;//how many cities the player has left to play
+    int roads;//how many roads the player has left to play
+    int settlements;//how many settlements the player has left to play
+    //cards, resources, etc
+    int monuments;
+    int soldiers;
+    DevCardList newDevCards;
+    DevCardList oldDevCards;
+    boolean playedDevCard;
+    ResourceList resources;
+    boolean discarded;
+    int victoryPoints;
+    //these are the maximum values a player can have in a game and also the starting amount
+    final int MAX_CITIES = 4;
+    final int MAX_SETTLEMENTS = 5;
+    final int MAX_ROADS = 15;
+
+
+
     public Player(String playerName, int ID) {
+        resources = new ResourceList();
+        newDevCards = new DevCardList();
+        oldDevCards = new DevCardList();
         this.setName(playerName);
         this.setPlayerID(ID);
     }
@@ -33,30 +65,7 @@ public class Player {
         this.setVictoryPoints(newVictoryPointAmount);
     }
 
-    //player qualities
-    String color;
-    String name;
-    String password;
-    int biggestRoadLength;
-    int playerID;
 
-    //placeable items
-    int cities;//how many cities the player has left to play
-    int roads;//how many roads the player has left to play
-    int settlements;//how many settlements the player has left to play
-    //cards, resources, etc
-    int monuments;
-    int soldiers;
-    DevCardList newDevCards;
-    DevCardList oldDevCards;
-    boolean playedDevCard;
-    ResourceList resources;
-    boolean discarded;
-    int victoryPoints;
-    //these are the maximum values a player can have in a game and also the starting amount
-    final int MAX_CITIES = 4;
-    final int MAX_SETTLEMENTS = 5;
-    final int MAX_ROADS = 15;
 
     private boolean checkSufficientResources(ResourceList resourcesRequirements) {
         if (resources.getBrick() >= resourcesRequirements.getBrick() && resources.getWood() >= resourcesRequirements.getWood()
@@ -477,6 +486,13 @@ public class Player {
      *
      * @return boolean whether or not the player can be robbed
      */
+    public int getPlayerIndex() {
+        return playerIndex;
+    }
+
+    public void setPlayerIndex(int playerIndex) {
+        this.playerIndex = playerIndex;
+    }
 
     public int getRoads() {
         return roads;
