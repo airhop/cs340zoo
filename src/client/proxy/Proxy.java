@@ -307,7 +307,7 @@ public class Proxy implements IProxy {
 
     @Override
     public void getGameModel() {
-        String url = "/moves/sendChat";
+        String url = "/game/model";
         HttpURLResponse myResponse;
         try {
             myResponse = doGet(url);

@@ -35,6 +35,7 @@ public class NewMain {
         } catch (InvalidUserException e) {
             e.printStackTrace();
         }
+        myProxy.getGameModel();
 
 
 //        myProxy.sendChat("plants", 0);
