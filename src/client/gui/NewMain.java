@@ -26,6 +26,11 @@ public class NewMain {
         } catch (InvalidUserException e) {
             e.printStackTrace();
         }
+        try {
+            myProxy.gamesJoin(myColor.toString(), 0);
+        } catch (InvalidUserException e) {
+            e.printStackTrace();
+        }
         myProxy.sendChat("plants", 0);
 
 
