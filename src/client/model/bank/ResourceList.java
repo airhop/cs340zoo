@@ -1,5 +1,7 @@
 package client.model.bank;
 
+import javax.annotation.Resource;
+
 public class ResourceList {
 
     int numOfBrick;
@@ -33,6 +35,15 @@ public class ResourceList {
         numOfSheep = sh;
         numOfWheat = wh;
         numOfWood = wo;
+    }
+    //copy constructor
+    public ResourceList(ResourceList resourcesToCopy)
+    {
+        numOfBrick = resourcesToCopy.getBrick();
+        numOfOre = resourcesToCopy.getOre();
+        numOfSheep = resourcesToCopy.getSheep();
+        numOfWheat = resourcesToCopy.getWheat();
+        numOfWood = resourcesToCopy.getWood();
     }
     //overload the constructor so that RL can be used for trades, bank, map, players etc.
 

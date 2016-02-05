@@ -1,5 +1,5 @@
 package client.model.player;
-
+import java.util.ArrayList;
 import client.model.bank.DevCardList;
 import client.model.bank.ResourceList;
 import client.model.map.Port;
@@ -364,68 +364,46 @@ public class Player {
     }
 
     /**
-     * Checks to see if trading resources with the bank is a legal move for the player
-     *
+     * Checks if the player has the resources available to initiate an offer
+     * with the bank for a maritime trade
+     * @param ports the ports that the player owns
      * @return boolean whether or not the player can trade with the bank
      */
-    public boolean canMaritimeTrade(Port port, ResourceList resourceReqs)
-    {
-        if(port == null) {
-            if (resourceReqs.getBrick() > (resources.getBrick() / 4)) {
-                return false;
-            } else if (resourceReqs.getSheep() > (resources.getSheep() / 4)) {
-                return false;
-            } else if (resourceReqs.getOre() > (resources.getOre() / 4)) {
-                return false;
-            } else if (resourceReqs.getWood() > (resources.getWood() / 4)) {
-                return false;
-            } else if (resourceReqs.getWheat() > (resources.getWheat() / 4)) {
-                return false;
+    public boolean canMaritimeTrade(ArrayList<Port> ports)
+    {   //4 is the default that can be initiated at any time.
+        int ratio = 4;
+
+        //check if ports offer a lower ratio
+        for(Port port: ports)
+        {
+            if(port.getRatio() < ratio)
+            {
+                ratio = port.getRatio();
             }
-            return true;
         }
 
-        if(port.getResource() == "BRICK")
+        boolean canTrade = false;
+        if(resources.getBrick() >= ratio)
         {
-            if(resourceReqs.getBrick() > resources.getBrick()/port.getRatio())
-            {
-                return false;
-            }
-            return true;
+            canTrade = true;
         }
-        if(port.getResource() == "SHEEP")
+        else if(resources.getSheep() >= ratio)
         {
-            if(resourceReqs.getSheep() > resources.getSheep()/port.getRatio())
-            {
-                return false;
-            }
-            return true;
+            canTrade = true;
         }
-        if(port.getResource() == "ORE")
+        else if (resources.getOre() >= ratio)
         {
-            if(resourceReqs.getOre() > resources.getOre()/port.getRatio())
-            {
-                return false;
-            }
-            return true;
+            canTrade = true;
         }
-        if(port.getResource() == "WOOD")
+        else if(resources.getWheat() >= ratio)
         {
-            if(resourceReqs.getWood() > resources.getWood()/port.getRatio())
-            {
-                return false;
-            }
-            return true;
+            canTrade = true;
         }
-        if(port.getResource() == "WHEAT")
+        else if(resources.getWood() >= ratio)
         {
-            if(resourceReqs.getWheat() > resources.getWheat()/port.getRatio())
-            {
-                return false;
-            }
-            return true;
+            canTrade = true;
         }
-        return false;
+        return canTrade;
     }
 
     /**
@@ -626,5 +604,10 @@ public class Player {
 
     public void setVictoryPoints(int victoryPoints) {
         this.victoryPoints = victoryPoints;
+    }
+
+    public int getNumBuildings()
+    {
+        return settlements+cities;
     }
 }
