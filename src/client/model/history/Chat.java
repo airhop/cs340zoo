@@ -5,6 +5,11 @@ public class Chat
 
 
 	private MessageList ChatList;
+
+	public Chat(){
+		ChatList = new MessageList();
+	}
+
 	/**
 	 * for printing or returning the list, however the history will need it.
 	*/

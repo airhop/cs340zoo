@@ -6,6 +6,11 @@ public class MessageList {
 
     ArrayList<MessageLine> messages;
 
+
+    public MessageList(){
+        messages = new ArrayList<>();
+    }
+
     public void clearMessageList() {
         messages.clear();
     }

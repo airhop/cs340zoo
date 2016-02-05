@@ -294,8 +294,9 @@ public class Deserializer {
                                     source = myTree.nextString();
                                     myTree.nextName();
                                     message = myTree.nextString();
-                                    System.out.println(myTree.peek().name());
                                     myMessages.addMessage(new MessageLine(source, message));
+                                    myTree.endObject();
+                                    System.out.println(myTree.peek().name());
                                 }
 
                                 break;
