@@ -41,6 +41,10 @@ public class Map
 		deserializer = new Deserializer();
 	}
 
+	public void clearHexes(){
+		hexes.clear();
+	}
+
 	/**
 	 * initialize a new map when game is created
 	 */

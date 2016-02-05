@@ -27,8 +27,6 @@ public class Deserializer {
         DevCardList myDevCards = myBank.getDevCards();
 
 
-
-
         JsonParser myParse = new JsonParser();
         JsonElement myEle = myParse.parse(jsonString);
         JsonTreeReader myTree = new JsonTreeReader(myEle);
@@ -48,19 +46,27 @@ public class Deserializer {
                         break;
                     case "NAME":
                         myCurrent = myTree.nextName();
-                        if (myCurrent.equals("deck")) {
-                            myTree.nextName();
-                            myDevCards.setYearOfPlenty(myTree.nextInt());
-                            myTree.nextName();
-                            myDevCards.setMonopoly(myTree.nextInt());
-                            myTree.nextName();
-                            myDevCards.setSoldier(myTree.nextInt());
-                            myTree.nextName();
-                            myDevCards.setRoadBuilding(myTree.nextInt());
-                            myTree.nextName();
-                            myDevCards.setMonument(myTree.nextInt());
-                            action = myCurrent;
+                        switch (myCurrent){
+                            case "deck":
+                                myTree.beginObject();
+                                myTree.nextName();
+                                myDevCards.setYearOfPlenty(myTree.nextInt());
+                                myTree.nextName();
+                                myDevCards.setMonopoly(myTree.nextInt());
+                                myTree.nextName();
+                                myDevCards.setSoldier(myTree.nextInt());
+                                myTree.nextName();
+                                myDevCards.setRoadBuilding(myTree.nextInt());
+                                myTree.nextName();
+                                myDevCards.setMonument(myTree.nextInt());
+                                break;
+                            case "map":
+                                System.out.println(myCurrent);
+                                break;
+                            default:
+                                System.out.println(myCurrent);
                         }
+
                         if(myCurrent.equals("map")){
                             action = myCurrent;
                         }
