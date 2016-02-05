@@ -340,6 +340,15 @@ public class GameModel {
 
     }
 
+    public boolean canTradeBank(int pid, ResourceList rl) {
+        //pull out the ports and figure that out before commiting the trade
+        //figure out the ports . . .
+
+//        ArrayList<VertexObject> vo = players[pid].getBuildings();
+//        ArrayList<Port> p = bank.isPorts(vo);
+//        return players[pid].canMaritimeTrade(p, rl);
+        return true;
+    }
     /**
      * Checks to see if trading resources with the bank is a legal move for the player
      * based on the resources the player currently has.

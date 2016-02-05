@@ -42,16 +42,19 @@ public class Deserializer {
                         if(myCurrent.equals("map")){
                             action = myCurrent;
                         }
-                        if(myCurrent.equals("hexes")){
+                        if(myCurrent.equals("players")){
                             action = myCurrent;
                         }
-                        if(myCurrent.equals("location")){
+                        if(myCurrent.equals("log")){
                             action = myCurrent;
                         }
-                        if(myCurrent.equals("resource")){
+                        if(myCurrent.equals("chat")){
                             action = myCurrent;
                         }
-                        if(myCurrent.equals("location")){
+                        if(myCurrent.equals("bank")){
+                            action = myCurrent;
+                        }
+                        if(myCurrent.equals("turnTracker")){
                             action = myCurrent;
                         }
                         System.out.println(myCurrent);
