@@ -43,7 +43,7 @@ public class Proxy implements IProxy {
         try {
             URL url = new URL(URL_PREFIX + urlPath);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            connection.setRequestMethod(HTTP_POST);
+            connection.setRequestMethod(HTTP_GET);
             connection.setDoOutput(true);
 
             if (userCookie.isActive()) {
@@ -97,7 +97,7 @@ public class Proxy implements IProxy {
             if (userCookie.isActive()) {
                 cookiesList = userCookie.getCookieName() + "=" + userCookie.getCookieValue();
                 if (gameCookie.isActive()) {
-                    cookiesList = cookiesList + ";" + gameCookie.getCookieName() + "=" + gameCookie.getCookieValue();
+                    cookiesList = cookiesList + "; " + gameCookie.getCookieName() + "=" + gameCookie.getCookieValue();
                     System.out.println(cookiesList);
                     connection.setRequestProperty("Cookie", cookiesList);
                 } else {
