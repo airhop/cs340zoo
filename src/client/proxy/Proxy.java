@@ -31,6 +31,7 @@ public class Proxy implements IProxy {
     private String cookiesList;
     private GameModel myGameModel;
     private int playerId;
+    private HttpURLResponse lastResponse;
 
     public Proxy(GameModel givenGameModel) {
         SERVER_HOST = "localhost";
@@ -43,6 +44,7 @@ public class Proxy implements IProxy {
         myDeSer = new Deserializer();
         myGameModel = givenGameModel;
         playerId = -1;
+        lastResponse = new HttpURLResponse();
     }
 
     public int getPlayerId(){
@@ -99,6 +101,7 @@ public class Proxy implements IProxy {
         } catch (IOException e) {
             throw new ClientException(String.format("doGet failed: %s", e.getMessage()), e);
         }
+        lastResponse = result;
         return result;
     }
 
@@ -148,7 +151,13 @@ public class Proxy implements IProxy {
         } catch (IOException e) {
             throw new ClientException(String.format("doPost failed: %s", e.getMessage()), e);
         }
+        lastResponse = result;
         return result;
+    }
+
+
+    public int getResponseCode(){
+        return lastResponse.getResponseCode();
     }
 
 

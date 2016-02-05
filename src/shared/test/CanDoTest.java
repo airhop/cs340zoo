@@ -14,9 +14,8 @@ import client.model.GameModel;
 import client.model.player.*;
 import shared.definitions.ResourceType;
 import shared.locations.*;
-/**
- * Created by GaryPetersen on 2/5/2016.
- */
+
+
 public class CanDoTest
 {
     Facade f;
@@ -26,6 +25,7 @@ public class CanDoTest
     {
         f = new Facade();
         p = new Proxy(new GameModel());
+        f.Reinitialize(new GameModel());
     }
 
     //create a full game
@@ -41,7 +41,7 @@ public class CanDoTest
         p1.setSettlements(3);
         p1.setRoads(9);
         p1.setNewDevCards(new DevCardList(0, 0, 0 , 2, 0));
-        p1.setResources(new ResourceList(5, 2, 0, 0, 0));
+        p1.setResources(new ResourceList(0, 3, 0, 2, 0));
 
         Player p2 = new Player("Suzzie", 1);
         p2.setCities(3);
@@ -55,7 +55,7 @@ public class CanDoTest
         p3.setSettlements(3);
         p3.setRoads(10);
         p3.setNewDevCards(new DevCardList(0, 1, 0, 0, 1));
-        p3.setResources(new ResourceList(0, 0, 3, 0 , 0));
+        p3.setResources(new ResourceList(0, 1, 1, 1 , 0));
 
         Player p4 = new Player("Finale", 3);
         p4.setCities(4);
@@ -102,8 +102,67 @@ public class CanDoTest
         GameModel g = new GameModel(m, b, ps, tt, new TradeOffer(), new Chat(), new Log());
         f.Reinitialize(g);
     }
+
     @Test
     public void testCanBuildSettlement()
+    {
+        initializeFull();
+        TurnTracker tt = f.getGM().getTt();
+        tt.setCurrentPlayer(1);
+        f.getGM().setTt(tt);
+
+        assert(f.canBuildSettlement(1));
+        assert(!f.canBuildSettlement(0));
+
+        tt.setCurrentPlayer(0);
+        f.getGM().setTt(tt);
+        assert(!f.canBuildSettlement(0));
+
+        System.out.println("Can Build Settlement - can Do, Not turn, Insufficent Materials");
+    }
+
+    @Test
+    public void testCanBuildRoad()
+    {
+        initializeFull();
+        TurnTracker tt = f.getGM().getTt();
+        tt.setCurrentPlayer(1);
+        f.getGM().setTt(tt);
+
+        assert(f.canBuildSettlement(1));
+        assert(!f.canBuildSettlement(0));
+
+        tt.setCurrentPlayer(0);
+        f.getGM().setTt(tt);
+        assert(!f.canBuildSettlement(0));
+
+        System.out.println("Can Build Settlement - can Do, Not turn, Insufficent Materials");
+
+    }
+
+    @Test
+    public void testCanBuildCity()
+    {
+
+    }
+
+
+    @Test
+    public void testCanDiscardCards()
+    {
+
+    }
+
+
+    @Test
+    public void testCanRollNumber()
+    {
+
+    }
+
+
+    @Test
+    public void testCanOfferTrade()
     {
 
     }
