@@ -1,6 +1,8 @@
 package client.gui;
 
 import client.facade.Facade;
+import client.model.GameModel;
+import client.poller.Poller;
 import client.proxy.Cookie;
 import client.proxy.IProxy;
 import client.proxy.Proxy;
@@ -14,7 +16,9 @@ import shared.jsonobject.User;
  */
 public class NewMain {
     public static void main(String[] args){
-        IProxy myProxy = new Proxy();
+        GameModel myGameModel = new GameModel();
+        IProxy myProxy = new Proxy(myGameModel);
+        Poller myPoller = new Poller(myProxy);
         try {
             myProxy.userLogin(new User("Sam", "sam"));
         } catch (InvalidUserException e) {
@@ -31,9 +35,9 @@ public class NewMain {
         } catch (InvalidUserException e) {
             e.printStackTrace();
         }
-        myProxy.sendChat("plants", 0);
 
 
+//        myProxy.sendChat("plants", 0);
 //        try {
 //            myProxy.gamesCreate("hello");
 //        } catch (FailedCreateGameException e) {

@@ -43,6 +43,10 @@ public class GameModel {
     private Log log;
 
 
+    public GameModel(){
+
+    }
+
     public GameModel(String[] names) {
         map = new Map();
         bank = new Bank();

@@ -1,5 +1,6 @@
 package client.proxy;
 
+import client.model.GameModel;
 import client.model.bank.ResourceList;
 import client.model.history.MessageList;
 import com.google.gson.*;
@@ -10,6 +11,7 @@ import shared.jsonobject.User;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
+import shared.serialization.Deserializer;
 import shared.serialization.HttpURLResponse;
 
 import java.io.*;
@@ -24,10 +26,12 @@ public class Proxy implements IProxy {
     private final String HTTP_POST = "POST";
     private Cookie userCookie;
     private Cookie gameCookie;
+    private Deserializer myDeSer;
     private Gson myGson;
     private String cookiesList;
+    private GameModel myGameModel;
 
-    public Proxy() {
+    public Proxy(GameModel givenGameModel) {
         SERVER_HOST = "localhost";
         SERVER_PORT = 8081;
         URL_PREFIX = "http://" + SERVER_HOST + ":" + SERVER_PORT;
@@ -35,6 +39,7 @@ public class Proxy implements IProxy {
         gameCookie = new Cookie();
         myGson = new Gson();
         cookiesList = "";
+        myDeSer = new Deserializer();
     }
 
 
@@ -302,7 +307,15 @@ public class Proxy implements IProxy {
 
     @Override
     public void getGameModel() {
+        String url = "/moves/sendChat";
+        HttpURLResponse myResponse;
+        try {
+            myResponse = doGet(url);
+            System.out.println(myResponse.getResponseBody());
 
+        } catch (ClientException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
