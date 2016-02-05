@@ -35,7 +35,7 @@ public class GameModel {
     private Map map;
     private Bank bank;
     private ArrayList<Player> players;
-    private TurnTracker tt;
+    private TurnTracker turnTracker;
     private TradeOffer to;
     private int version = 0;
     private int winner = -1;
@@ -47,7 +47,7 @@ public class GameModel {
     public GameModel() {
         map = new Map();
         bank = new Bank();
-        tt = new TurnTracker();
+        turnTracker = new TurnTracker();
         to = new TradeOffer();
         dice = new Dice();
         chat = new Chat();
@@ -62,7 +62,7 @@ public class GameModel {
     public GameModel(String[] names) {
         map = new Map();
         bank = new Bank();
-        tt = new TurnTracker();
+        turnTracker = new TurnTracker();
         to = new TradeOffer();
         dice = new Dice();
         players.add(new Player(names[0],0));
@@ -109,11 +109,11 @@ public class GameModel {
     }
 
     public TurnTracker getTt() {
-        return tt;
+        return turnTracker;
     }
 
     public void setTt(TurnTracker tt) {
-        this.tt = tt;
+        this.turnTracker = tt;
     }
 
     public TradeOffer getTo() {
@@ -178,7 +178,7 @@ public class GameModel {
      */
     public boolean canWin() {
         //need to check if it is finish turn?
-        int cp = tt.getCurrentPlayer();
+        int cp = turnTracker.getCurrentPlayer();
         return players.get(cp).canWin();
     }
 
@@ -188,7 +188,7 @@ public class GameModel {
      * @return boolean whether or not the player can build a road
      */
     public boolean canBuildRoad(int pid) {
-        if (tt.getCurrentPlayer() != pid)
+        if (turnTracker.getCurrentPlayer() != pid)
             return false;
         return players.get(pid).canBuildRoad();
     }
@@ -208,7 +208,7 @@ public class GameModel {
      * @return boolean whether or not the player can build a settlement
      */
     public boolean canBuildSettlement(int pid) {
-        if (tt.getCurrentPlayer() != pid)
+        if (turnTracker.getCurrentPlayer() != pid)
             return false;
         return players.get(pid).canBuildSettlement();
     }
@@ -229,7 +229,7 @@ public class GameModel {
      * @return boolean whether or not the player can build a city
      */
     public boolean canBuildCity(int pid) {
-        if (tt.getCurrentPlayer() != pid && tt.getStatus() != 2)
+        if (turnTracker.getCurrentPlayer() != pid && turnTracker.getStatus().equals("Playing"))
             return false;
         return players.get(pid).canBuildCity();
     }
@@ -249,7 +249,7 @@ public class GameModel {
      * @return boolean whether or not the player can play a Developement card
      */
     public boolean canPlayDevcard() {
-        int cp = tt.getCurrentPlayer();
+        int cp = turnTracker.getCurrentPlayer();
         return players.get(cp).canPlayDevcard();
     }
 
@@ -259,7 +259,7 @@ public class GameModel {
      * @return boolean whether or not the player can monopoly
      */
     public boolean canMonopoly(int pid) {
-        if (tt.getCurrentPlayer() != pid)
+        if (turnTracker.getCurrentPlayer() != pid)
             return false;
         return players.get(pid).canMonopoly();
     }
@@ -270,7 +270,7 @@ public class GameModel {
      * @return boolean whether or not the player can road building
      */
     public boolean canRoadBuilding(int pid) {
-        if (tt.getCurrentPlayer() != pid)
+        if (turnTracker.getCurrentPlayer() != pid)
             return false;
         return players.get(pid).canPlayRoadBuilding();
     }
@@ -281,7 +281,7 @@ public class GameModel {
      * @return boolean whether or not the player can place a monument
      */
     public boolean canUseMonument(int pid) {
-        if (pid != tt.getCurrentPlayer())
+        if (pid != turnTracker.getCurrentPlayer())
             return false;
         return players.get(pid).canPlaceMonument();
     }
@@ -292,7 +292,7 @@ public class GameModel {
      * @return boolean whether or not the player can play the Year of Plenty card
      */
     public boolean canYearOfPlenty(int pid) {
-        if (tt.getCurrentPlayer() != pid)
+        if (turnTracker.getCurrentPlayer() != pid)
             return false;
         return players.get(pid).canYearOfPlenty();
     }
@@ -303,13 +303,13 @@ public class GameModel {
      * @return boolean whether or not the player can place the Soldier card
      */
     public boolean canPlaySoldier(int pid) {
-        if (tt.getCurrentPlayer() != pid)
+        if (turnTracker.getCurrentPlayer() != pid)
             return false;
         return players.get(pid).canPlaceSoldier();
     }
 
     public boolean canRob(int pid, int vid) {
-        if (tt.getCurrentPlayer() != pid)
+        if (turnTracker.getCurrentPlayer() != pid)
             return false;
         return players.get(vid).canRob();
     }
@@ -325,7 +325,7 @@ public class GameModel {
 
 
     public boolean canFinishTurn(int pid) {
-        return (tt.getStatus() == 3 && tt.getCurrentPlayer() == pid);
+        return (turnTracker.getStatus().equals("SecondRound") && turnTracker.getCurrentPlayer() == pid);
     }
 
     public boolean canDiscardCards(int pid, ResourceList rl) {
@@ -336,7 +336,7 @@ public class GameModel {
      * Set up the TradeOffer
      */
     public boolean canTradePlayer(int pid, int rid, ResourceList rl) throws IllegalMoveException, InsufficientResourcesException {
-        if (tt.getStatus() != 1 && pid != tt.getCurrentPlayer())
+        if (turnTracker.getStatus().equals("FirstRound") && pid != turnTracker.getCurrentPlayer())
             throw new IllegalMoveException("not the trading phase, or not the player's turn");
 
         if (pid == rid)
@@ -366,7 +366,7 @@ public class GameModel {
      * @return boolean whether or not the player can trade with the bank
      */
     public boolean canMaritimeTrade(int pid) throws IllegalMoveException {
-        if (tt.getStatus() != 1 && pid != tt.getCurrentPlayer())
+        if (!turnTracker.getStatus().equals("Robbing") && pid != turnTracker.getCurrentPlayer())
             throw new IllegalMoveException("not the trading phase, or not the player's turn");
 
         ArrayList<Port> ports = (ArrayList) map.getPlayerPorts(pid);
@@ -388,7 +388,7 @@ public class GameModel {
      * @return boolean whether or not the player can roll the dice
      */
     public boolean canRoll(int pid) {
-        if (tt.getStatus() == 0 && tt.getCurrentPlayer() == pid)
+        if (turnTracker.getStatus().equals("Rolling") && turnTracker.getCurrentPlayer() == pid)
             return true;
         return false;
     }
@@ -408,7 +408,7 @@ public class GameModel {
      * @return boolean whether or not the player can buy a Developement card
      */
     public boolean canBuyDevcard(int pid) {
-        if (tt.getCurrentPlayer() != pid)
+        if (turnTracker.getCurrentPlayer() != pid)
             return false;
         return players.get(pid).canBuyDevcard();
     }
@@ -419,7 +419,7 @@ public class GameModel {
      * @return boolean whether or not the player chose to rob
      */
     public void rob(int pid, ResourceType rt) throws IllegalMoveException, InsufficientResourcesException {
-        int cp = tt.getCurrentPlayer();
+        int cp = turnTracker.getCurrentPlayer();
         if (cp == pid)
             throw new IllegalMoveException("Can't rob yourself");
         players.get(pid).depleteResource(rt);

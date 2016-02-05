@@ -9,6 +9,7 @@ import client.model.history.MessageList;
 import client.model.map.Map;
 import client.model.map.Road;
 import client.model.map.Settlement;
+import client.model.misc.TurnTracker;
 import client.model.player.Player;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
@@ -45,6 +46,9 @@ public class Deserializer {
         MessageList myMessages = myModel.getChat().getChatList();
         String source = "";
         String message = "";
+        TurnTracker turnTracker = myModel.getTt();
+        int winner;
+        int version;
 
 
         JsonParser myParse = new JsonParser();
@@ -56,10 +60,10 @@ public class Deserializer {
         String myCurrent = "";
         int myIn = 0;
         boolean myBool = false;
-        System.out.println(myTree.toString());
+//        System.out.println(myTree.toString());
         try {
             while (!myTree.peek().name().equals("END_DOCUMENT")) {
-                System.out.println(myTree.peek().name());
+//                System.out.println(myTree.peek().name());
                 switch (myTree.peek().name()) {
                     case "BEGIN_OBJECT":
                         myTree.beginObject();
@@ -81,7 +85,7 @@ public class Deserializer {
                                 myDevCards.setMonument(myTree.nextInt());
                                 break;
                             case "hexes":
-                                System.out.println(myCurrent);
+//                                System.out.println(myCurrent);
                                 myTree.beginArray();
                                 while(!myTree.peek().name().equals("END_ARRAY")){
                                     myTree.beginObject();
@@ -109,7 +113,7 @@ public class Deserializer {
                                             break;
                                     }
                                 }
-                                System.out.println(myCurrent);
+//                                System.out.println(myCurrent);
                                 break;
                             case "roads":
                                 myTree.beginArray();
@@ -128,13 +132,13 @@ public class Deserializer {
                                     myMap.getRoads().add(new Road(new EdgeLocation(new HexLocation(xValue, yValue), EdgeDirection.valueOf(myDir)), owner));
                                     myTree.endObject();
                                     myTree.endObject();
-                                    System.out.println(myTree.peek().name());
+//                                    System.out.println(myTree.peek().name());
                                 }
                                 break;
                             case "cities":
                                 myTree.beginArray();
                                 myTree.endArray();
-                                System.out.println(myTree.peek().name());
+//                                System.out.println(myTree.peek().name());
                                 break;
                             case "settlements":
                                 myTree.beginArray();
@@ -153,7 +157,7 @@ public class Deserializer {
                                     myMap.getBuildings().add(new Settlement(new VertexLocation(new HexLocation(xValue, yValue), VertexDirection.valueOf(myDir)), owner));
                                     myTree.endObject();
                                     myTree.endObject();
-                                    System.out.println(myTree.peek().name());
+//                                    System.out.println(myTree.peek().name());
                                 }
                                 break;
                             case "ports":
@@ -186,9 +190,9 @@ public class Deserializer {
                                     }
                                     myTree.endObject();
                                     myTree.endObject();
-                                    System.out.println(myTree.peek().name());
+//                                    System.out.println(myTree.peek().name());
                                 }
-                                System.out.println(myTree.peek().name());
+//                                System.out.println(myTree.peek().name());
                                 break;
                             case "robber":
                                 myTree.beginObject();
@@ -198,7 +202,7 @@ public class Deserializer {
                                 yValue = myTree.nextInt();
                                 myMap.getRobber().setHl(new HexLocation(xValue, yValue));
                                 myTree.endObject();
-                                System.out.println(myTree.peek().name());
+//                                System.out.println(myTree.peek().name());
                                 break;
                             case "players":
                                 myTree.beginArray();
@@ -277,18 +281,15 @@ public class Deserializer {
                                     currentPlayer.setColor(myTree.nextString());
 
                                     myTree.endObject();
-                                    System.out.println(myTree.peek().name());
+//                                    System.out.println(myTree.peek().name());
 
                                 }
-
                                 break;
                             case "log":
-
                                 myTree.beginObject();
                                 myTree.nextName();
                                 myTree.beginArray();
                                 while(!myTree.peek().name().equals("END_ARRAY")){
-
                                     myTree.beginObject();
                                     myTree.nextName();
                                     source = myTree.nextString();
@@ -296,7 +297,7 @@ public class Deserializer {
                                     message = myTree.nextString();
                                     myMessages.addMessage(new MessageLine(source, message));
                                     myTree.endObject();
-                                    System.out.println(myTree.peek().name());
+//                                    System.out.println(myTree.peek().name());
                                 }
 
                                 break;
@@ -312,9 +313,9 @@ public class Deserializer {
                                     message = myTree.nextString();
                                     myMessages.addMessage(new MessageLine(source, message));
                                     myTree.endObject();
-                                    System.out.println(myTree.peek().name());
+//                                    System.out.println(myTree.peek().name());
                                 }
-                                System.out.println(myTree.peek().name());
+//                                System.out.println(myTree.peek().name());
 
                                 break;
                             case "bank":
@@ -331,19 +332,31 @@ public class Deserializer {
                                 myTree.nextName();
                                 myResource.setOre(myTree.nextInt());
                                 myTree.endObject();
-                                System.out.println(myTree.peek().name());
+//                                System.out.println(myTree.peek().name());
                                 break;
                             case "turnTracker":
-
+                                myTree.beginObject();
+                                myTree.nextName();
+                                turnTracker.updateStatus(myTree.nextString());
+                                myTree.nextName();
+                                turnTracker.setCurrentPlayer(myTree.nextInt());
+                                myTree.nextName();
+                                turnTracker.setLongestRoad(myTree.nextInt());
+                                myTree.nextName();
+                                turnTracker.setLongestRoad(myTree.nextInt());
+                                myTree.endObject();
                                 System.out.println(myTree.peek().name());
                                 break;
-                            default:
+                            case "winner":
+                                myModel.setWinner(myTree.nextInt());
                                 System.out.println(myCurrent);
+                                break;
+                            case "version":
+                                myModel.setVersion(myTree.nextInt());
+                                break;
+                            default:
+//                                System.out.println(myCurrent);
                         }
-                        System.out.println(myCurrent);
-                        break;
-                    case "STRING":
-                        myCurrent = myTree.nextString();
                         System.out.println(myCurrent);
                         break;
                     case "NUMBER":
@@ -358,10 +371,6 @@ public class Deserializer {
                         break;
                     case "END_ARRAY":
                         myTree.endArray();
-                        break;
-                    case "BOOLEAN":
-                        myBool = myTree.nextBoolean();
-                        System.out.println(myBool);
                         break;
                 }
             }
