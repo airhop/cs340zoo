@@ -1,24 +1,24 @@
 package client.poller;
 
-
 import client.model.GameModel;
 import client.proxy.IProxy;
+import javax.swing.Timer;
+import java.awt.event.*;
 
-public class Poller {
+public class Poller
+{
     IProxy myProxy;
-    GameModel myModel;
+    Timer timer;
 
-    public Poller(IProxy givenProxy, GameModel givenModel){
+    public Poller(IProxy givenProxy) {
         myProxy = givenProxy;
-        myModel = givenModel;
-    }
-
-    /**
-     * Every few seconds the poller grabs the model from the server
-     * and updates the ClientsModel
-     * @return
-     */
-    public GameModel getClientModel(){
-        return null;
+        //timer requires (miliseconds, actionlistener)
+        timer = new Timer(3000, new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                myProxy.getGameModel();
+                timer.restart();
+            }
+        });
+        timer.start();
     }
 }
