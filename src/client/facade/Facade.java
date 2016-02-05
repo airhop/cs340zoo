@@ -84,10 +84,10 @@ public class Facade {
      *
      * @return boolean whether or not the player can build a road
      */
-    public boolean canBuildRoad(int pid) {
+    public boolean canBuildRoad(int playerId) {
         if (game == null)
             return false;
-        return game.canBuildRoad(pid);
+        return game.canBuildRoad(playerId);
     }
 
     /**
