@@ -7,8 +7,8 @@ public class Bank {
     DevCardList dcl;
 
     public Bank() {
-        resources = new ResourceList(19, 19, 19, 19, 19);
-        dcl = new DevCardList(2, 5, 2, 14, 2);
+        resources = new ResourceList();
+        dcl = new DevCardList();
     }
 
     public Bank(ResourceList res, DevCardList devs) {

@@ -3,7 +3,7 @@ package shared.locations;
 /**
  * Represents the location of a hex on a hex map
  */
-public class HexLocation
+public class HexLocation implements Comparable
 {
 	
 	private int x;
@@ -72,23 +72,27 @@ public class HexLocation
 	{
 		switch (dir)
 		{
-			case NorthWest:
+			case NW:
 				return new HexLocation(x - 1, y);
-			case North:
+			case N:
 				return new HexLocation(x, y - 1);
-			case NorthEast:
+			case NE:
 				return new HexLocation(x + 1, y - 1);
-			case SouthWest:
+			case SW:
 				return new HexLocation(x - 1, y + 1);
-			case South:
+			case S:
 				return new HexLocation(x, y + 1);
-			case SouthEast:
+			case SE:
 				return new HexLocation(x + 1, y);
 			default:
 				assert false;
 				return null;
 		}
 	}
-	
+
+	@Override
+	public int compareTo(Object o) {
+		return ((HexLocation)o).getX() - getX();
+	}
 }
 

@@ -92,25 +92,25 @@ public class VertexLocation
 		
 		switch (dir)
 		{
-			case NorthWest:
-			case NorthEast:
+			case NW:
+			case NE:
 				return this;
-			case West:
+			case W:
 				return new VertexLocation(
-										  hexLoc.getNeighborLoc(EdgeDirection.SouthWest),
-										  VertexDirection.NorthEast);
-			case SouthWest:
+										  hexLoc.getNeighborLoc(EdgeDirection.SW),
+										  VertexDirection.NE);
+			case SW:
 				return new VertexLocation(
-										  hexLoc.getNeighborLoc(EdgeDirection.South),
-										  VertexDirection.NorthWest);
-			case SouthEast:
+										  hexLoc.getNeighborLoc(EdgeDirection.S),
+										  VertexDirection.NW);
+			case SE:
 				return new VertexLocation(
-										  hexLoc.getNeighborLoc(EdgeDirection.South),
-										  VertexDirection.NorthEast);
-			case East:
+										  hexLoc.getNeighborLoc(EdgeDirection.S),
+										  VertexDirection.NE);
+			case E:
 				return new VertexLocation(
-										  hexLoc.getNeighborLoc(EdgeDirection.SouthEast),
-										  VertexDirection.NorthWest);
+										  hexLoc.getNeighborLoc(EdgeDirection.SE),
+										  VertexDirection.NW);
 			default:
 				assert false;
 				return null;

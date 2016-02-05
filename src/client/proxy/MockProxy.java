@@ -26,6 +26,11 @@ public class MockProxy implements IProxy{
 
 
     @Override
+    public int getPlayerId() {
+        return 0;
+    }
+
+    @Override
     public void userLogin(User u) throws InvalidUserException {
 
     }
@@ -91,12 +96,12 @@ public class MockProxy implements IProxy{
     }
 
     @Override
-    public boolean sendChat(String content, int id) {
-        return true;
+    public void sendChat(String content, int id) {
+
     }
 
     @Override
-    public void rollNumber(int numRoled) {
+    public void rollNumber(int numRoled, int playerIndex) {
 
     }
 

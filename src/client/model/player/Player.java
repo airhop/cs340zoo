@@ -1,5 +1,5 @@
 package client.model.player;
-
+import java.util.ArrayList;
 import client.model.bank.DevCardList;
 import client.model.bank.ResourceList;
 import client.model.map.Port;
@@ -8,7 +8,39 @@ import shared.definitions.ResourceType;
 import shared.exceptions.InsufficientResourcesException;
 
 public class Player {
+
+    //player qualities
+    String color;
+    String name;
+    String password;
+    int biggestRoadLength;
+    int playerID;
+    int playerIndex;
+
+    //placeable items
+    int cities;//how many cities the player has left to play
+    int roads;//how many roads the player has left to play
+    int settlements;//how many settlements the player has left to play
+    //cards, resources, etc
+    int monuments;
+    int soldiers;
+    DevCardList newDevCards;
+    DevCardList oldDevCards;
+    boolean playedDevCard;
+    ResourceList resources;
+    boolean discarded;
+    int victoryPoints;
+    //these are the maximum values a player can have in a game and also the starting amount
+    final int MAX_CITIES = 4;
+    final int MAX_SETTLEMENTS = 5;
+    final int MAX_ROADS = 15;
+
+
+
     public Player(String playerName, int ID) {
+        resources = new ResourceList();
+        newDevCards = new DevCardList();
+        oldDevCards = new DevCardList();
         this.setName(playerName);
         this.setPlayerID(ID);
     }
@@ -33,30 +65,7 @@ public class Player {
         this.setVictoryPoints(newVictoryPointAmount);
     }
 
-    //player qualities
-    String color;
-    String name;
-    String password;
-    int biggestRoadLength;
-    int playerID;
 
-    //placeable items
-    int cities;//how many cities the player has left to play
-    int roads;//how many roads the player has left to play
-    int settlements;//how many settlements the player has left to play
-    //cards, resources, etc
-    int monuments;
-    int soldiers;
-    DevCardList newDevCards;
-    DevCardList oldDevCards;
-    boolean playedDevCard;
-    ResourceList resources;
-    boolean discarded;
-    int victoryPoints;
-    //these are the maximum values a player can have in a game and also the starting amount
-    final int MAX_CITIES = 4;
-    final int MAX_SETTLEMENTS = 5;
-    final int MAX_ROADS = 15;
 
     private boolean checkSufficientResources(ResourceList resourcesRequirements) {
         if (resources.getBrick() >= resourcesRequirements.getBrick() && resources.getWood() >= resourcesRequirements.getWood()
@@ -364,68 +373,46 @@ public class Player {
     }
 
     /**
-     * Checks to see if trading resources with the bank is a legal move for the player
-     *
+     * Checks if the player has the resources available to initiate an offer
+     * with the bank for a maritime trade
+     * @param ports the ports that the player owns
      * @return boolean whether or not the player can trade with the bank
      */
-    public boolean canMaritimeTrade(Port port, ResourceList resourceReqs)
-    {
-        if(port == null) {
-            if (resourceReqs.getBrick() > (resources.getBrick() / 4)) {
-                return false;
-            } else if (resourceReqs.getSheep() > (resources.getSheep() / 4)) {
-                return false;
-            } else if (resourceReqs.getOre() > (resources.getOre() / 4)) {
-                return false;
-            } else if (resourceReqs.getWood() > (resources.getWood() / 4)) {
-                return false;
-            } else if (resourceReqs.getWheat() > (resources.getWheat() / 4)) {
-                return false;
+    public boolean canMaritimeTrade(ArrayList<Port> ports)
+    {   //4 is the default that can be initiated at any time.
+        int ratio = 4;
+
+        //check if ports offer a lower ratio
+        for(Port port: ports)
+        {
+            if(port.getRatio() < ratio)
+            {
+                ratio = port.getRatio();
             }
-            return true;
         }
 
-        if(port.getResource() == "BRICK")
+        boolean canTrade = false;
+        if(resources.getBrick() >= ratio)
         {
-            if(resourceReqs.getBrick() > resources.getBrick()/port.getRatio())
-            {
-                return false;
-            }
-            return true;
+            canTrade = true;
         }
-        if(port.getResource() == "SHEEP")
+        else if(resources.getSheep() >= ratio)
         {
-            if(resourceReqs.getSheep() > resources.getSheep()/port.getRatio())
-            {
-                return false;
-            }
-            return true;
+            canTrade = true;
         }
-        if(port.getResource() == "ORE")
+        else if (resources.getOre() >= ratio)
         {
-            if(resourceReqs.getOre() > resources.getOre()/port.getRatio())
-            {
-                return false;
-            }
-            return true;
+            canTrade = true;
         }
-        if(port.getResource() == "WOOD")
+        else if(resources.getWheat() >= ratio)
         {
-            if(resourceReqs.getWood() > resources.getWood()/port.getRatio())
-            {
-                return false;
-            }
-            return true;
+            canTrade = true;
         }
-        if(port.getResource() == "WHEAT")
+        else if(resources.getWood() >= ratio)
         {
-            if(resourceReqs.getWheat() > resources.getWheat()/port.getRatio())
-            {
-                return false;
-            }
-            return true;
+            canTrade = true;
         }
-        return false;
+        return canTrade;
     }
 
     /**
@@ -499,6 +486,13 @@ public class Player {
      *
      * @return boolean whether or not the player can be robbed
      */
+    public int getPlayerIndex() {
+        return playerIndex;
+    }
+
+    public void setPlayerIndex(int playerIndex) {
+        this.playerIndex = playerIndex;
+    }
 
     public int getRoads() {
         return roads;
@@ -626,5 +620,10 @@ public class Player {
 
     public void setVictoryPoints(int victoryPoints) {
         this.victoryPoints = victoryPoints;
+    }
+
+    public int getNumBuildings()
+    {
+        return settlements+cities;
     }
 }

@@ -14,6 +14,9 @@ import shared.locations.VertexLocation;
 
 public interface IProxy {
 
+
+    int getPlayerId();
+
     /**
      * This is used to log a player in that has already registered
      * @param u - This is the Login or identification for the user
@@ -34,13 +37,13 @@ public interface IProxy {
 
     /**
      * You are making a game
-     * @param s - The name of the game
+     * @param gameName - The name of the game
      */
-    void gamesCreate(String s) throws FailedCreateGameException;
+    void gamesCreate(String gameName) throws FailedCreateGameException;
 
     /**
      * The player wants to join a game so they use this method
-     * @param s - The game that they want to join
+     * @param color - The game that they want to join
      * @param playerId - The player that wants to join
      */
     void gamesJoin(String color, int playerId) throws InvalidUserException;
@@ -77,12 +80,12 @@ public interface IProxy {
      * Messages to be sent to all the players
      * @param content - The messages to be sent to the players
      */
-    boolean sendChat(String content, int id);
+    void sendChat(String content, int playerId);
     /**
      * Rolls a number and shows the affect on the server
      * @param numRoled - Number that is rolled
      */
-    void rollNumber(int numRoled);
+    void rollNumber(int numRoled, int playerIndex);
     /**
      * This method is used by the player when they either move the robber or they roll a seven
      * @param playerIdOne - playerIdOne passed to the server

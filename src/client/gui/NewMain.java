@@ -1,10 +1,13 @@
 package client.gui;
 
 import client.facade.Facade;
+import client.model.GameModel;
+import client.poller.Poller;
 import client.proxy.Cookie;
 import client.proxy.IProxy;
 import client.proxy.Proxy;
 import shared.definitions.CatanColor;
+import shared.exceptions.FailedCreateGameException;
 import shared.exceptions.InvalidUserException;
 import shared.jsonobject.User;
 
@@ -13,15 +16,13 @@ import shared.jsonobject.User;
  */
 public class NewMain {
     public static void main(String[] args){
-        Cookie myCook = new Cookie();
-        System.out.println("This cow");
-        String temp = "catan.user=%7B%22name%22%3A%22Sam%22%2C%22password%22%3A%22sam%22%2C%22playerID%22%3A0%7D;Path=/;";
-        myCook.setFullCookie(temp);
-        System.out.println(myCook.getCookieName());
-        System.out.println(myCook.getCookieValue());
-        IProxy myProxy = new Proxy();
+        GameModel myGameModel = new GameModel();
+        IProxy myProxy = new Proxy(myGameModel);
+        int playerIndex;
+        int playerId;
+//        Poller myPoller = new Poller(myProxy);
         try {
-            myProxy.userLogin(new User("Pete", "pete"));
+            myProxy.userLogin(new User("Sam", "sam"));
         } catch (InvalidUserException e) {
             e.printStackTrace();
         }
@@ -31,6 +32,25 @@ public class NewMain {
         } catch (InvalidUserException e) {
             e.printStackTrace();
         }
+        myProxy.getGameModel();
+        playerId = myProxy.getPlayerId();
+        playerIndex = myGameModel.getPlayerIndex(playerId);
+        myProxy.rollNumber(0, playerIndex);
+
+        myProxy.sendChat("Help", playerIndex);
+
+
+//        myProxy.sendChat("plants", 0);
+//        try {
+//            myProxy.gamesCreate("hello");
+//        } catch (FailedCreateGameException e) {
+//            e.printStackTrace();
+//        }
+//        try {
+//            myProxy.gamesJoin(myColor.toString(), 0);
+//        } catch (InvalidUserException e) {
+//            e.printStackTrace();
+//        }
 
     }
 

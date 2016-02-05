@@ -1,62 +1,69 @@
 package client.model.map;
 
+import shared.definitions.PortType;
+import shared.locations.EdgeDirection;
 import shared.locations.HexLocation;
 import shared.locations.VertexDirection;
 
 public class Port {
-  
-  HexLocation location;
-  String resource;
-  VertexDirection direction;
-  int ratio;  //ratio type?  what is ratio for?
-  //do we need an owner value as well?
-  
-  public Port(int x, int y, String resrc, VertexDirection dir, int rat)
-  {
-	  location = new HexLocation(x,y);
-	  resource = resrc;
-	  direction = dir;
-	  ratio = rat;
-  }
 
-  public HexLocation getLocation() 
-  {
-	  return location;
-  }
+    HexLocation location;
+    String resource;
+    EdgeDirection direction;
+    int ratio;
+    int owner = -1;
 
-  public void setLocation(HexLocation location) 
-  {
-	  this.location = location;
-  }
+    public Port(int x, int y, EdgeDirection dir, int rat) {
+        location = new HexLocation(x, y);
+        resource = PortType.THREE.toString();
+        direction = dir;
+        ratio = rat;
+    }
 
-  public String getResource() 
-  {
-	  return resource;
-  }
+    public Port(int x, int y, String resrc, EdgeDirection dir, int rat) {
+        location = new HexLocation(x, y);
+        resource = resrc;
+        direction = dir;
+        ratio = rat;
+    }
 
-  public void setResource(String resource) 
-  {
-	  this.resource = resource;
-  }
+    public HexLocation getLocation() {
+        return location;
+    }
 
-  public VertexDirection getDirection()
-  {
-	  return direction;
-  }
+    public void setLocation(HexLocation location) {
+        this.location = location;
+    }
 
-  public void setDirection(VertexDirection direction)
-  {
-	  this.direction = direction;
-  }
+    public String getResource() {
+        return resource;
+    }
 
-  public int getRatio() 
-  {
-	  return ratio;
-  }
+    public void setResource(String resource) {
+        this.resource = resource;
+    }
 
-  public void setRatio(int ratio) 
-  {
-	  this.ratio = ratio;
-  }
-  
+    public EdgeDirection getDirection() {
+        return direction;
+    }
+
+    public void setDirection(EdgeDirection direction) {
+        this.direction = direction;
+    }
+
+    public int getRatio() {
+        return ratio;
+    }
+
+    public void setRatio(int ratio) {
+        this.ratio = ratio;
+    }
+
+    public int getOwner() {
+        return this.owner;
+    }
+
+    public void setOwner(int playerID) {
+        this.owner = playerID;
+    }
 }

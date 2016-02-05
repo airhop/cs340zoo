@@ -3,6 +3,7 @@
 package client.model.map;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.TreeMap;
 
 import client.model.bank.ResourceList;
@@ -33,12 +34,21 @@ public class Map
 		hexes = new TreeMap<HexLocation,Hex>();
 		ports = new ArrayList<Port>();
 		roads = new ArrayList<Road>();
+		robber = new Robber();
 //        settlements = new ArrayList<VertexObject>();
 //        cities = new ArrayList<VertexObject>();
 		buildings = new ArrayList<VertexObject>();
 		resources = new ArrayList<ResourceList>();
 		deserializer = new Deserializer();
 	}
+
+	public void clearHexes(){
+		hexes.clear();
+	}
+	public void clearBuildings(){
+		buildings.clear();
+	}
+
 
 	/**
 	 * initialize a new map when game is created
@@ -62,6 +72,13 @@ public class Map
 
 	}//may not be used
 
+
+	public void addHexDesert(int x, int y) throws FailureToAddException//may not be used
+	{
+		Hex hex = new Hex(x,y);
+		hexes.put(hex.getLocation(), hex);
+	}
+
 	/**
 	 * adds a hex to the maps list of hexes
 	 *
@@ -74,7 +91,7 @@ public class Map
 	{
 
 		String numberString = new String(Integer.toString(number));
-		Hex hex = new Hex(x,y,resource,numberString);
+		Hex hex = new Hex(x,y,resource,number);
 		hexes.put(hex.getLocation(), hex);
 	}
 // This section suppose to be rolling dice method
@@ -104,12 +121,12 @@ public class Map
 	 * @param x         - horizontal location of hex related to port
 	 * @param y         - diagonal location of hex related to port
 	 * @param resource  - type of resource obtained from hex
-	 * @param vd - direction from hex the port is located
+	 * @param ed - direction from hex the port is located
 	 * @param ratio     - the ratio of resources tradeable (i.e 1:2, 1:4)
 	 */
-	public void addPort(int x, int y, String resource, VertexDirection vd, int ratio) throws FailureToAddException
+	public void addPort(int x, int y, String resource, EdgeDirection ed, int ratio) throws FailureToAddException
 	{
-		Port port = new Port(x,y,resource, vd, ratio);
+		Port port = new Port(x,y,resource, ed, ratio);
 		ports.add(port);
 	}
 
@@ -278,6 +295,23 @@ public class Map
 		return ports;
 	}
 
+	/**
+	 * Returns all of the ports that belong to a player
+	 * @param playerID
+	 * @return
+	 */
+	public List<Port> getPlayerPorts(int playerID)
+	{
+		List<Port> playerPorts = new ArrayList<Port>();
+		for(Port port: ports)
+		{
+			if(port.getOwner() == playerID)
+			{
+				playerPorts.add(port);
+			}
+		}
+		return playerPorts;
+	}
 	public void setPorts(ArrayList<Port> ports) {
 		this.ports = ports;
 	}
