@@ -1,6 +1,10 @@
 package shared.serialization;
 
 import client.model.GameModel;
+import client.model.bank.Bank;
+import client.model.bank.DevCardList;
+import client.model.bank.ResourceList;
+import client.model.map.Map;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -17,6 +21,14 @@ public class Deserializer {
      * @return object, you must cast this object to the thing you are deseralizing.
      */
     public GameModel deserialize(String jsonString, GameModel myModel) {
+        Bank myBank = myModel.getBank();
+        Map myMap = myModel.getMap();
+        ResourceList myResource = myBank.getResources();
+        DevCardList myDevCards = myBank.getDevCards();
+
+
+
+
         JsonParser myParse = new JsonParser();
         JsonElement myEle = myParse.parse(jsonString);
         JsonTreeReader myTree = new JsonTreeReader(myEle);
@@ -37,6 +49,16 @@ public class Deserializer {
                     case "NAME":
                         myCurrent = myTree.nextName();
                         if (myCurrent.equals("deck")) {
+                            myTree.nextName();
+                            myDevCards.setYearOfPlenty(myTree.nextInt());
+                            myTree.nextName();
+                            myDevCards.setMonopoly(myTree.nextInt());
+                            myTree.nextName();
+                            myDevCards.setSoldier(myTree.nextInt());
+                            myTree.nextName();
+                            myDevCards.setRoadBuilding(myTree.nextInt());
+                            myTree.nextName();
+                            myDevCards.setMonument(myTree.nextInt());
                             action = myCurrent;
                         }
                         if(myCurrent.equals("map")){
