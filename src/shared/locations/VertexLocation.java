@@ -97,19 +97,19 @@ public class VertexLocation
 				return this;
 			case W:
 				return new VertexLocation(
-										  hexLoc.getNeighborLoc(EdgeDirection.SouthWest),
+										  hexLoc.getNeighborLoc(EdgeDirection.SW),
 										  VertexDirection.NE);
 			case SW:
 				return new VertexLocation(
-										  hexLoc.getNeighborLoc(EdgeDirection.South),
+										  hexLoc.getNeighborLoc(EdgeDirection.S),
 										  VertexDirection.NW);
 			case SE:
 				return new VertexLocation(
-										  hexLoc.getNeighborLoc(EdgeDirection.South),
+										  hexLoc.getNeighborLoc(EdgeDirection.S),
 										  VertexDirection.NE);
 			case E:
 				return new VertexLocation(
-										  hexLoc.getNeighborLoc(EdgeDirection.SouthEast),
+										  hexLoc.getNeighborLoc(EdgeDirection.SE),
 										  VertexDirection.NW);
 			default:
 				assert false;

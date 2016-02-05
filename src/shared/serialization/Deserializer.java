@@ -5,12 +5,15 @@ import client.model.bank.Bank;
 import client.model.bank.DevCardList;
 import client.model.bank.ResourceList;
 import client.model.map.Map;
+import client.model.map.Road;
+import client.model.map.Settlement;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.internal.bind.JsonTreeReader;
 import shared.exceptions.FailureToAddException;
+import shared.locations.*;
 
 import java.io.IOException;
 
@@ -31,6 +34,8 @@ public class Deserializer {
         int yValue;
         int chitValue;
         int owner;
+        String myDir = "";
+        int ratio;
 
 
         JsonParser myParse = new JsonParser();
@@ -97,6 +102,26 @@ public class Deserializer {
                                 }
                                 System.out.println(myCurrent);
                                 break;
+                            case "roads":
+                                myTree.beginArray();
+                                while(!myTree.peek().name().equals("END_ARRAY")){
+                                    myTree.beginObject();
+                                    myTree.nextName();
+                                    owner = myTree.nextInt();
+                                    myTree.nextName();//location
+                                    myTree.beginObject();
+                                    myTree.nextName();
+                                    myDir = myTree.nextString();
+                                    myTree.nextName();//x
+                                    xValue = myTree.nextInt();
+                                    myTree.nextName();//y
+                                    yValue = myTree.nextInt();
+                                    myMap.getRoads().add(new Road(new EdgeLocation(new HexLocation(xValue, yValue), EdgeDirection.valueOf(myDir)), owner));
+                                    myTree.endObject();
+                                    myTree.endObject();
+                                    System.out.println(myTree.peek().name());
+                                }
+                                break;
                             case "cities":
                                 myTree.beginArray();
                                 myTree.endArray();
@@ -104,16 +129,46 @@ public class Deserializer {
                                 break;
                             case "settlements":
                                 myTree.beginArray();
-
                                 while(!myTree.peek().name().equals("END_ARRAY")){
                                     myTree.beginObject();
                                     myTree.nextName();
                                     owner = myTree.nextInt();
+                                    myTree.nextName();//location
+                                    myTree.beginObject();
+                                    myTree.nextName();
+                                    myDir = myTree.nextString();
+                                    myTree.nextName();//x
+                                    xValue = myTree.nextInt();
+                                    myTree.nextName();//y
+                                    yValue = myTree.nextInt();
+                                    myMap.getBuildings().add(new Settlement(new VertexLocation(new HexLocation(xValue, yValue), VertexDirection.valueOf(myDir)), owner));
+                                    myTree.endObject();
+                                    myTree.endObject();
+                                    System.out.println(myTree.peek().name());
                                 }
-
-                                System.out.println(myTree.peek().name());
                                 break;
                             case "ports":
+                                myTree.beginArray();
+
+                                while(!myTree.peek().name().equals("END_ARRAY")){
+                                    myTree.beginObject();
+                                    myTree.nextName();
+                                    ratio = myTree.nextInt();
+                                    myTree.nextName();//resource
+                                    resourceType = myTree.nextString();
+                                    myTree.nextName();//Dir
+                                    myDir = myTree.nextString();
+                                    myTree.nextName();
+                                    myTree.beginObject();//location
+                                    myTree.nextName();//x
+                                    xValue = myTree.nextInt();
+                                    myTree.nextName();//y
+                                    yValue = myTree.nextInt();
+                                    myMap.addPort(xValue, yValue, resourceType, VertexDirection.valueOf(myDir),ratio);
+                                    myTree.endObject();
+                                    myTree.endObject();
+                                    System.out.println(myTree.peek().name());
+                                }
                                 System.out.println(myTree.peek().name());
                                 break;
                             case "robber":
