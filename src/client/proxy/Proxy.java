@@ -54,7 +54,7 @@ public class Proxy implements IProxy {
             if (userCookie.isActive()) {
                 cookiesList = userCookie.getCookieName() + "=" + userCookie.getCookieValue();
                 if (gameCookie.isActive()) {
-                    cookiesList = cookiesList + ";" + gameCookie.getCookieName() + "=" + gameCookie.getCookieValue();
+                    cookiesList = cookiesList + "; " + gameCookie.getCookieName() + "=" + gameCookie.getCookieValue();
                     System.out.println(cookiesList);
                     connection.setRequestProperty("Cookie", cookiesList);
                 } else {
@@ -82,10 +82,10 @@ public class Proxy implements IProxy {
                 System.out.println(connection.getResponseMessage());
                 int code = connection.getResponseCode();
                 connection.disconnect();
-                throw new ClientException(String.format("doPost failed: %s (http code %d)", urlPath, code));
+                throw new ClientException(String.format("doGet failed: %s (http code %d)", urlPath, code));
             }
         } catch (IOException e) {
-            throw new ClientException(String.format("doPost failed: %s", e.getMessage()), e);
+            throw new ClientException(String.format("doGet failed: %s", e.getMessage()), e);
         }
         return result;
     }
@@ -311,7 +311,7 @@ public class Proxy implements IProxy {
         HttpURLResponse myResponse;
         try {
             myResponse = doGet(url);
-            System.out.println(myResponse.getResponseBody());
+            myDeSer.deserialize(myResponse.getResponseBody(), myGameModel);
 
         } catch (ClientException e) {
             e.printStackTrace();

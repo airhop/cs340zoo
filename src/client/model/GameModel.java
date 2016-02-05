@@ -44,7 +44,12 @@ public class GameModel {
 
 
     public GameModel(){
-
+        map = new Map();
+        bank = new Bank();
+        tt = new TurnTracker();
+        to = new TradeOffer();
+        dice = new Dice();
+        players = new Player[4];
     }
 
     public GameModel(String[] names) {

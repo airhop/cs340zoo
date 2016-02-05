@@ -18,18 +18,13 @@ public class NewMain {
     public static void main(String[] args){
         GameModel myGameModel = new GameModel();
         IProxy myProxy = new Proxy(myGameModel);
-        Poller myPoller = new Poller(myProxy);
+//        Poller myPoller = new Poller(myProxy);
         try {
             myProxy.userLogin(new User("Sam", "sam"));
         } catch (InvalidUserException e) {
             e.printStackTrace();
         }
         CatanColor myColor = CatanColor.BLUE;
-        try {
-            myProxy.gamesJoin(myColor.toString(), 0);
-        } catch (InvalidUserException e) {
-            e.printStackTrace();
-        }
         try {
             myProxy.gamesJoin(myColor.toString(), 0);
         } catch (InvalidUserException e) {
