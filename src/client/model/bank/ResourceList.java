@@ -9,19 +9,22 @@ public class ResourceList {
     int numOfWood;
 
     public ResourceList() {
-        numOfBrick = 19;
-        numOfOre = 19;
-        numOfSheep = 19;
-        numOfWheat = 19;
-        numOfWood = 19;
-    }
-
-    public ResourceList(int given) {
         numOfBrick = 0;
         numOfOre = 0;
         numOfSheep = 0;
         numOfWheat = 0;
         numOfWood = 0;
+    }
+
+    public ResourceList(int given) {
+        if(given > 20 || given < 0){
+            given = 19;
+        }
+        numOfBrick = given;
+        numOfOre = given;
+        numOfSheep = given;
+        numOfWheat = given;
+        numOfWood = given;
     }
 
     public ResourceList(int br, int or, int sh, int wh, int wo) {
