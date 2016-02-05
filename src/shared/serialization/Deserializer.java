@@ -19,9 +19,14 @@ public class Deserializer {
     public GameModel deserialize(String jsonString, GameModel myModel) {
         JsonParser myParse = new JsonParser();
         JsonElement myEle = myParse.parse(jsonString);
-        System.out.println(jsonString);
         JsonTreeReader myTree = new JsonTreeReader(myEle);
+        System.out.println(jsonString);
         JsonObject myObj = new JsonObject();
+        String action = "";
+        String myCurrent = "";
+        int myIn = 0;
+        boolean myBool = false;
+        System.out.println(myTree.toString());
         try {
             while (!myTree.peek().name().equals("END_DOCUMENT")) {
                 System.out.println(myTree.peek().name());
@@ -30,13 +35,34 @@ public class Deserializer {
                         myTree.beginObject();
                         break;
                     case "NAME":
-                        System.out.println(myTree.nextName());
+                        myCurrent = myTree.nextName();
+                        if (myCurrent.equals("deck")) {
+                            action = myCurrent;
+                        }
+                        if(myCurrent.equals("map")){
+                            action = myCurrent;
+                        }
+                        if(myCurrent.equals("hexes")){
+                            action = myCurrent;
+                        }
+                        if(myCurrent.equals("location")){
+                            action = myCurrent;
+                        }
+                        if(myCurrent.equals("resource")){
+                            action = myCurrent;
+                        }
+                        if(myCurrent.equals("location")){
+                            action = myCurrent;
+                        }
+                        System.out.println(myCurrent);
                         break;
                     case "STRING":
-                        System.out.println(myTree.nextString());
+                        myCurrent = myTree.nextString();
+                        System.out.println(myCurrent);
                         break;
                     case "NUMBER":
-                        System.out.println(myTree.nextInt());
+                        myIn = myTree.nextInt();
+                        System.out.println(myIn);
                         break;
                     case "END_OBJECT":
                         myTree.endObject();
@@ -48,12 +74,12 @@ public class Deserializer {
                         myTree.endArray();
                         break;
                     case "BOOLEAN":
-                        myTree.nextBoolean();
+                        myBool = myTree.nextBoolean();
+                        System.out.println(myBool);
                         break;
                 }
             }
             myTree.close();
-
 
         } catch (IOException e) {
             e.printStackTrace();
