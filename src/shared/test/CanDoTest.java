@@ -160,18 +160,18 @@ public class CanDoTest
     }
 
 
-    @Test
-    public void testCanDiscardCards()
-    {
-        initializeFull();
-        TurnTracker turnTracker = f.getGM().getTt();
-        ResourceList resourceList = new ResourceList(1,);
-        turnTracker.getCurrentPlayer(1);
-        f.getGM().setTt(turnTracker);
-
-        assert(f.canDiscardCards(1))
-
-    }
+//    @Test
+//    public void testCanDiscardCards()
+//    {
+//        initializeFull();
+//        TurnTracker turnTracker = f.getGM().getTt();
+//        ResourceList resourceList = new ResourceList(1,);
+//        turnTracker.getCurrentPlayer(1);
+//        f.getGM().setTt(turnTracker);
+//
+//        assert(f.canDiscardCards(1))
+//
+//    }
 
 
     @Test

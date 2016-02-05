@@ -1,6 +1,7 @@
 package shared.test;
 
 import client.model.GameModel;
+import client.poller.Poller;
 import client.proxy.IProxy;
 import client.proxy.MockProxy;
 import org.junit.Test;

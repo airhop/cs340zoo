@@ -20,8 +20,8 @@ public class ProxyTest {
     int playerId;
 
     public ProxyTest() {
-        GameModel myGameModel = new GameModel();
-        IProxy myProxy = new Proxy(myGameModel);
+        myGameModel = new GameModel();
+        myProxy = new Proxy(myGameModel);
     }
 
 
@@ -63,18 +63,17 @@ public class ProxyTest {
     @Test
     public void testSendChat() {
         myProxy.sendChat("Help", playerIndex);
-        try {
-            myProxy.userLogin(new User("Sam", "sam"));
-        } catch (InvalidUserException e) {
-            fail();
-            e.printStackTrace();
-        }
     }
 
     @Test
     public void testRollNumber() {
         myProxy.rollNumber(0, playerIndex);
     }
+
+//    @Test
+//    public void testRollNumber() {
+//        myProxy.rollNumber(0, playerIndex);
+//    }
 
 //    @Test
 //    public void testGameModelAfter() {
