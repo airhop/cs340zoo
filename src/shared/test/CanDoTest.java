@@ -129,20 +129,33 @@ public class CanDoTest
         tt.setCurrentPlayer(1);
         f.getGM().setTt(tt);
 
-        assert(f.canBuildSettlement(1));
-        assert(!f.canBuildSettlement(0));
+        assert(f.canBuildRoad(1));
+        assert(!f.canBuildRoad(0));
 
         tt.setCurrentPlayer(0);
         f.getGM().setTt(tt);
-        assert(!f.canBuildSettlement(0));
+        assert(!f.canBuildRoad(0));
 
-        System.out.println("Can Build Settlement - can Do, Not turn, Insufficent Materials");
+        System.out.println("Can Build Road - can Do, Not turn, Insufficent Materials");
 
     }
 
     @Test
     public void testCanBuildCity()
     {
+        initializeFull();
+        TurnTracker turnTracker = f.getGM().getTt();
+        turnTracker.setCurrentPlayer(1);
+        f.getGM().setTt(turnTracker);
+
+        assert(f.canBuildCity(1));
+        assert(!f.canBuildCity(0));
+
+        turnTracker.setCurrentPlayer(0);
+        f.getGM().setTt(turnTracker);
+        assert(!f.canBuildCity(0));
+
+        System.out.println("Can Build City - can Do, Not turn, Insufficient Materials");
 
     }
 
@@ -150,6 +163,13 @@ public class CanDoTest
     @Test
     public void testCanDiscardCards()
     {
+        initializeFull();
+        TurnTracker turnTracker = f.getGM().getTt();
+        ResourceList resourceList = new ResourceList(1,);
+        turnTracker.getCurrentPlayer(1);
+        f.getGM().setTt(turnTracker);
+
+        assert(f.canDiscardCards(1))
 
     }
 

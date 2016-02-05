@@ -32,6 +32,7 @@ public class Facade {
 
     }
 
+    public GameModel getGM() {return game;}
     public void Reinitialize(GameModel g) {
         game = g;
     }
@@ -325,7 +326,7 @@ public class Facade {
      *
      * @return boolean whether or not the player traded with the bank
      */
-    public void meritimeTrade(int playerId, int ratio, ResourceList in, ResourceList out) {
+    public void meritimeTrade(int playerId, int ratio, ResourceType in, ResourceType out) {
         if (proxy != null)
             proxy.meritimeTrade(playerId, ratio, in, out);
     }

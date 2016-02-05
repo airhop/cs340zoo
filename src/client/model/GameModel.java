@@ -59,6 +59,18 @@ public class GameModel {
 
     }
 
+    public GameModel(Map m, Bank b, ArrayList<Player> ps, TurnTracker tt, TradeOffer tro, Chat c, Log l)
+    {
+        map = m;
+        bank = b;
+        players = ps;
+        turnTracker = tt;
+        to = tro;
+        chat = c;
+        dice = new Dice();
+        log = l;
+    }
+
     public GameModel(String[] names) {
         map = new Map();
         bank = new Bank();
