@@ -29,6 +29,7 @@ import shared.locations.*;
 import sun.security.provider.certpath.Vertex;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class GameModel {
     private Map map;
@@ -341,17 +342,17 @@ public class GameModel {
 
     /**
      * Checks to see if trading resources with the bank is a legal move for the player
+     * based on the resources the player currently has.
      *
+     * @param pid The id of the player making the trade
      * @return boolean whether or not the player can trade with the bank
      */
-    public boolean canTradeBank(int pid, ResourceList rl) {
-        //pull out the ports and figure that out before commiting the trade
-        //figure out the ports . . .
+    public boolean canMaritimeTrade(int pid) throws IllegalMoveException {
+        if(tt.getStatus() != 1 && pid != tt.getCurrentPlayer())
+            throw new IllegalMoveException("not the trading phase, or not the player's turn");
 
-//        ArrayList<VertexObject> vo = players[pid].getBuildings();
-//        ArrayList<Port> p = bank.isPorts(vo);
-//        return players[pid].canMaritimeTrade(p, rl);
-        return true;
+        ArrayList<Port> ports = (ArrayList)map.getPlayerPorts(pid);
+        return players[pid].canMaritimeTrade(ports);
     }
 
     /**

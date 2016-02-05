@@ -3,6 +3,7 @@
 package client.model.map;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.TreeMap;
 
 import client.model.bank.ResourceList;
@@ -278,6 +279,23 @@ public class Map
 		return ports;
 	}
 
+	/**
+	 * Returns all of the ports that belong to a player
+	 * @param playerID
+	 * @return
+	 */
+	public List<Port> getPlayerPorts(int playerID)
+	{
+		List<Port> playerPorts = new ArrayList<Port>();
+		for(Port port: ports)
+		{
+			if(port.getOwner() == playerID)
+			{
+				playerPorts.add(port);
+			}
+		}
+		return playerPorts;
+	}
 	public void setPorts(ArrayList<Port> ports) {
 		this.ports = ports;
 	}

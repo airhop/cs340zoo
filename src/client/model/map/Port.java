@@ -8,9 +8,9 @@ public class Port {
   HexLocation location;
   String resource;
   VertexDirection direction;
-  int ratio;  //ratio type?  what is ratio for?
-  //do we need an owner value as well?
-  
+  int ratio;
+  int owner = -1;
+
   public Port(int x, int y, String resrc, VertexDirection dir, int rat)
   {
 	  location = new HexLocation(x,y);
@@ -58,5 +58,8 @@ public class Port {
   {
 	  this.ratio = ratio;
   }
-  
+
+  public int getOwner(){return this.owner;}
+
+  public void setOwner(int playerID){this.owner = playerID;}
 }
