@@ -18,6 +18,8 @@ public class NewMain {
     public static void main(String[] args){
         GameModel myGameModel = new GameModel();
         IProxy myProxy = new Proxy(myGameModel);
+        int playerIndex;
+        int playerId;
 //        Poller myPoller = new Poller(myProxy);
         try {
             myProxy.userLogin(new User("Sam", "sam"));
@@ -31,6 +33,11 @@ public class NewMain {
             e.printStackTrace();
         }
         myProxy.getGameModel();
+        playerId = myProxy.getPlayerId();
+        playerIndex = myGameModel.getPlayerIndex(playerId);
+        myProxy.rollNumber(0, playerIndex);
+
+        myProxy.sendChat("Poop", playerIndex);
 
 
 //        myProxy.sendChat("plants", 0);

@@ -14,6 +14,9 @@ import shared.locations.VertexLocation;
 
 public interface IProxy {
 
+
+    int getPlayerId();
+
     /**
      * This is used to log a player in that has already registered
      * @param u - This is the Login or identification for the user
@@ -82,7 +85,7 @@ public interface IProxy {
      * Rolls a number and shows the affect on the server
      * @param numRoled - Number that is rolled
      */
-    void rollNumber(int numRoled);
+    void rollNumber(int numRoled, int playerIndex);
     /**
      * This method is used by the player when they either move the robber or they roll a seven
      * @param playerIdOne - playerIdOne passed to the server

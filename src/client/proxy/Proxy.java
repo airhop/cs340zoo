@@ -30,6 +30,7 @@ public class Proxy implements IProxy {
     private Gson myGson;
     private String cookiesList;
     private GameModel myGameModel;
+    private int playerId;
 
     public Proxy(GameModel givenGameModel) {
         SERVER_HOST = "localhost";
@@ -41,6 +42,16 @@ public class Proxy implements IProxy {
         cookiesList = "";
         myDeSer = new Deserializer();
         myGameModel = givenGameModel;
+        playerId = -1;
+    }
+
+    public int getPlayerId(){
+        if(playerId == -1){
+            playerId = Integer.parseInt(userCookie.getPlayerId());
+            return playerId;
+        }else{
+            return playerId;
+        }
     }
 
 
@@ -362,8 +373,20 @@ public class Proxy implements IProxy {
     }
 
     @Override
-    public void rollNumber(int numRoled) {
-
+    public void rollNumber(int numRoled, int playerIndex) {
+        JsonObject myObjOne = new JsonObject();
+        String url = "/moves/rollNumber";
+        myObjOne.addProperty("type", "rollNumber");
+        myObjOne.addProperty("playerIndex", "" + playerIndex);
+        myObjOne.addProperty("number", "" + numRoled);
+        System.out.println(myObjOne.toString());
+        HttpURLResponse myResponse;
+        try {
+            myResponse = doPost(url, myObjOne);
+            System.out.println(myResponse.getResponseBody());
+        } catch (ClientException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
