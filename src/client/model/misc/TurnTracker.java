@@ -2,17 +2,17 @@ package client.model.misc;
 
 public class TurnTracker {
     int currPlayer;
-    int status;
+    String status;
     int longestRoad = -1;
     int largestArmy = -1;
     //must be at least 3 to claim largest army, therefore if player army >  currLA they earn largest army and currLA = player army size
 
     public TurnTracker() {
         currPlayer = 0;
-        status = 0;
+        status = "";
     }
 
-    public TurnTracker(int currentP, int stat) {
+    public TurnTracker(int currentP, String stat) {
         currPlayer = currentP;
         status = stat;
     }
@@ -29,7 +29,6 @@ public class TurnTracker {
      */
     public void setCurrentPlayer(int pid) {
         currPlayer = pid;
-        return;
     }
 
     /**
@@ -37,13 +36,8 @@ public class TurnTracker {
      * If the player is in the last part of their turn, when called, this method moves on to the next player
      * and resets the status to zero.
      */
-    public void updateStatus() {
-        if (status == 3) {
-            status = 0;
-            if (currPlayer == 3) {
-                currPlayer = 0;
-            } else currPlayer += 1;
-        } else status += 1;
+    public void updateStatus(String givenStatus) {
+        status = givenStatus;
     }
 
     /**
@@ -53,7 +47,7 @@ public class TurnTracker {
      * 2 = BUILD
      * 3 = FINISH
      */
-    public int getStatus() {
+    public String getStatus() {
         return status;
     }
 

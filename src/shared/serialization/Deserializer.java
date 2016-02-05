@@ -31,7 +31,7 @@ public class Deserializer {
     public GameModel deserialize(String jsonString, GameModel myModel) {
         Bank myBank = myModel.getBank();
         Map myMap = myModel.getMap();
-        ResourceList myResource = myBank.getResources();
+        ResourceList myResource = null;
         DevCardList myDevCards = myBank.getDevCards();
         String resourceType = "";
         int xValue;
@@ -301,12 +301,40 @@ public class Deserializer {
 
                                 break;
                             case "chat":
+                                myTree.beginObject();
+                                myTree.nextName();
+                                myTree.beginArray();
+                                while(!myTree.peek().name().equals("END_ARRAY")){
+                                    myTree.beginObject();
+                                    myTree.nextName();
+                                    source = myTree.nextString();
+                                    myTree.nextName();
+                                    message = myTree.nextString();
+                                    myMessages.addMessage(new MessageLine(source, message));
+                                    myTree.endObject();
+                                    System.out.println(myTree.peek().name());
+                                }
                                 System.out.println(myTree.peek().name());
+
                                 break;
                             case "bank":
+                                myTree.beginObject();
+                                myResource = myBank.getResources();
+                                myTree.nextName();
+                                myResource.setBrick(myTree.nextInt());
+                                myTree.nextName();
+                                myResource.setWood(myTree.nextInt());
+                                myTree.nextName();
+                                myResource.setSheep(myTree.nextInt());
+                                myTree.nextName();
+                                myResource.setWheat(myTree.nextInt());
+                                myTree.nextName();
+                                myResource.setOre(myTree.nextInt());
+                                myTree.endObject();
                                 System.out.println(myTree.peek().name());
                                 break;
                             case "turnTracker":
+
                                 System.out.println(myTree.peek().name());
                                 break;
                             default:
