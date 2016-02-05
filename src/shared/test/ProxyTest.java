@@ -7,6 +7,7 @@ import org.junit.Test;
 import shared.definitions.CatanColor;
 import shared.exceptions.InvalidUserException;
 import shared.jsonobject.User;
+
 import static org.junit.Assert.*;
 
 /**
@@ -23,8 +24,9 @@ public class ProxyTest {
         IProxy myProxy = new Proxy(myGameModel);
     }
 
+
     @Test
-    public void testGameModelBefore() {
+    public void testLogin() {
         try {
             myProxy.userLogin(new User("Sam", "sam"));
         } catch (InvalidUserException e) {
@@ -32,7 +34,48 @@ public class ProxyTest {
             e.printStackTrace();
         }
     }
-//
+
+    @Test
+    public void testJoin() {
+        try {
+            myProxy.gamesJoin("blue", 0);
+        } catch (InvalidUserException e) {
+            fail();
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void testGetModel() {
+        myProxy.getGameModel();
+    }
+
+    @Test
+    public void testGetPlayerId() {
+        playerId = myProxy.getPlayerId();
+    }
+
+    @Test
+    public void testGetPlayerIndex() {
+        playerIndex = myGameModel.getPlayerIndex(playerId);
+    }
+
+    @Test
+    public void testSendChat() {
+        myProxy.sendChat("Help", playerIndex);
+        try {
+            myProxy.userLogin(new User("Sam", "sam"));
+        } catch (InvalidUserException e) {
+            fail();
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void testRollNumber() {
+        myProxy.rollNumber(0, playerIndex);
+    }
+
 //    @Test
 //    public void testGameModelAfter() {
 //        CatanColor myColor = CatanColor.BLUE;

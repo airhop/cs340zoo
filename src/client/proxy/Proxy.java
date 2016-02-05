@@ -333,7 +333,6 @@ public class Proxy implements IProxy {
         try {
             myResponse = doGet(url);
             myDeSer.deserialize(myResponse.getResponseBody(), myGameModel);
-
         } catch (ClientException e) {
             e.printStackTrace();
         }
