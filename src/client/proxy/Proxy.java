@@ -245,7 +245,7 @@ public class Proxy implements IProxy{
         try {
             myResponse = doPost(url, myObjOne);
             System.out.println(myResponse.getResponseBody());
-            //This is when i am going to create the deSerialization
+            //This is when i am going to create the deSerialization later
         } catch (ClientException e) {
             e.printStackTrace();
         }
@@ -308,8 +308,20 @@ public class Proxy implements IProxy{
     }
 
     @Override
-    public void sendChat(String content, int id) {
-
+    public void sendChat(String content, int playerId) {
+        JsonObject myObjOne = new JsonObject();
+        String url = "/moves/sendChat";
+        myObjOne.addProperty("type", "sendChat");
+        myObjOne.addProperty("playerIndex", "" + playerId);
+        myObjOne.addProperty("content", content);
+        System.out.println(myObjOne.toString());
+        HttpURLResponse myResponse;
+        try {
+            myResponse = doPost(url, myObjOne);
+            gameCookie.setFullCookie(myResponse.getCookie());
+        } catch (ClientException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

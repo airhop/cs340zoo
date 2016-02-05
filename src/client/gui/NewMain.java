@@ -22,11 +22,13 @@ public class NewMain {
         }
         CatanColor myColor = CatanColor.BLUE;
 
-        try {
-            myProxy.gamesCreate("hello");
-        } catch (FailedCreateGameException e) {
-            e.printStackTrace();
-        }
+
+
+//        try {
+//            myProxy.gamesCreate("hello");
+//        } catch (FailedCreateGameException e) {
+//            e.printStackTrace();
+//        }
 //        try {
 //            myProxy.gamesJoin(myColor.toString(), 0);
 //        } catch (InvalidUserException e) {
