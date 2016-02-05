@@ -102,8 +102,67 @@ public class CanDoTest
         GameModel g = new GameModel(m, b, ps, tt, new TradeOffer(), new Chat(), new Log());
         f.Reinitialize(g);
     }
+
     @Test
     public void testCanBuildSettlement()
+    {
+        initializeFull();
+        TurnTracker tt = f.getGM().getTt();
+        tt.setCurrentPlayer(1);
+        f.getGM().setTt(tt);
+
+        assert(f.canBuildSettlement(1));
+        assert(!f.canBuildSettlement(0));
+
+        tt.setCurrentPlayer(0);
+        f.getGM().setTt(tt);
+        assert(!f.canBuildSettlement(0));
+
+        System.out.println("Can Build Settlement - can Do, Not turn, Insufficent Materials");
+    }
+
+    @Test
+    public void testCanBuildRoad()
+    {
+        initializeFull();
+        TurnTracker tt = f.getGM().getTt();
+        tt.setCurrentPlayer(1);
+        f.getGM().setTt(tt);
+
+        assert(f.canBuildSettlement(1));
+        assert(!f.canBuildSettlement(0));
+
+        tt.setCurrentPlayer(0);
+        f.getGM().setTt(tt);
+        assert(!f.canBuildSettlement(0));
+
+        System.out.println("Can Build Settlement - can Do, Not turn, Insufficent Materials");
+
+    }
+
+    @Test
+    public void testCanBuildCity()
+    {
+
+    }
+
+
+    @Test
+    public void testCanDiscardCards()
+    {
+
+    }
+
+
+    @Test
+    public void testCanRollNumber()
+    {
+
+    }
+
+
+    @Test
+    public void testCanOfferTrade()
     {
 
     }
