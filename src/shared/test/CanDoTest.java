@@ -19,19 +19,19 @@ import shared.locations.*;
  */
 public class CanDoTest
 {
-    Facade facade;
+    Facade f;
     IProxy p;
 
     public void initializeEmpty()
     {
-        facade = new Facade();
+        f = new Facade();
         p = new Proxy(new GameModel());
     }
 
     //create a full game
     public void initializeFull()
     {
-        facade = new Facade();
+        f = new Facade();
         Bank b = new Bank(new ResourceList(13, 16, 12, 16, 18), new DevCardList(1, 4, 1, 10, 1));
         TurnTracker tt = new TurnTracker(3, "roll");
         tt.setLongestRoad(1);
@@ -100,6 +100,7 @@ public class CanDoTest
         m.setPorts(ports);
 
         GameModel g = new GameModel(m, b, ps, tt, new TradeOffer(), new Chat(), new Log());
+        f.Reinitialize(g);
     }
     @Test
     public void testCanBuildSettlement()
