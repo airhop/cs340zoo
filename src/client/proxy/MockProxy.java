@@ -26,142 +26,170 @@ public class MockProxy implements IProxy{
 
 
     @Override
-    public int getPlayerId() {
+    public int getPlayerId() 
+    {
         return 0;
     }
 
     @Override
-    public void userLogin(User u) throws InvalidUserException {
+    public void userLogin(User u) throws InvalidUserException 
+    {
 
     }
 
     @Override
-    public void userRegister(User u) throws InvalidUserException {
+    public void userRegister(User u) throws InvalidUserException 
+    {
 
     }
 
     @Override
-    public String[] gamesList() {
+    public String[] gamesList() 
+    {
         return new String[0];
     }
 
     @Override
-    public void gamesCreate(String s) throws FailedCreateGameException {
+    public void gamesCreate(String s) throws FailedCreateGameException 
+    {
 
     }
 
     @Override
-    public void gamesJoin(String color, int playerId) throws InvalidUserException {
+    public void gamesJoin(String color, int playerId) throws InvalidUserException 
+    {
 
     }
 
     @Override
-    public void gamesSave() {
+    public void gamesSave() 
+    {
 
     }
 
     @Override
-    public void gamesLoad() {
+    public void gamesLoad() 
+    {
 
     }
 
     @Override
-    public void getGameModel() {
+    public void getGameModel() 
+    {
 
     }
 
     @Override
-    public void resetCommands() {
+    public void resetCommands() 
+    {
 
     }
 
     @Override
-    public void runCommand() {
+    public void runCommand() 
+    {
 
     }
 
     @Override
-    public void listCommands() {
+    public void listCommands() 
+    {
 
     }
 
     @Override
-    public boolean gameAddAI() {
+    public boolean gameAddAI() 
+    {
         return false;
     }
 
     @Override
-    public String[] gameListAI() {
+    public String[] gameListAI() 
+    {
         return new String[0];
     }
 
     @Override
-    public void sendChat(String content, int id) {
+    public void sendChat(String content, int id) 
+    {
 
     }
 
     @Override
-    public void rollNumber(int numRoled, int playerIndex) {
+    public void rollNumber(int numRoled, int playerIndex) 
+    {
 
     }
 
     @Override
-    public void robPlayer(int playerIdOne, int playerIdTwo, HexLocation Hl) {
+    public void robPlayer(int playerIdOne, int playerIdTwo, HexLocation Hl) 
+    {
 
     }
 
     @Override
-    public void finishTurn(int playerId) {
+    public void finishTurn(int playerId) 
+    {
 
     }
 
     @Override
-    public void buyDevCard(int playerId) throws InsufficientResourcesException {
+    public void buyDevCard(int playerId) throws InsufficientResourcesException 
+    {
 
     }
 
     @Override
-    public void playYearOfPlenty(int playerId, ResourceType r1, ResourceType r2) {
+    public void playYearOfPlenty(int playerId, ResourceType r1, ResourceType r2) 
+    {
 
     }
 
     @Override
-    public void playRoadBuilding(int playerId, EdgeLocation e1, EdgeLocation e2) {
+    public void playRoadBuilding(int playerId, EdgeLocation e1, EdgeLocation e2) 
+    {
 
     }
 
     @Override
-    public void playSoldier(int playerId, int victimId, HexLocation El) {
+    public void playSoldier(int playerId, int victimId, HexLocation El) 
+    {
 
     }
 
     @Override
-    public void playMonopoly(int playerId, ResourceType r1) {
+    public void playMonopoly(int playerId, ResourceType r1) 
+    {
 
     }
 
     @Override
-    public void placeMonument(int playerId) {
+    public void placeMonument(int playerId) 
+    {
 
     }
 
     @Override
-    public void buildRoad(int playerId, EdgeLocation el) {
+    public void buildRoad(int playerId, EdgeLocation el) 
+    {
 
     }
 
     @Override
-    public void buildSettlement(int playerId, VertexLocation vl) throws IllegalBuildException {
+    public void buildSettlement(int playerId, VertexLocation vl) throws IllegalBuildException 
+    {
 
     }
 
     @Override
-    public void buildCity(int playerId, VertexLocation vl) throws IllegalBuildException {
+    public void buildCity(int playerId, VertexLocation vl) throws IllegalBuildException 
+    {
 
     }
 
     @Override
-    public void offerTrade(int playerIdOne, int playerIdTwo, ResourceList rl) {
+    public void offerTrade(int playerIdOne, int playerIdTwo, ResourceList rl) 
+    {
 
     }
 
