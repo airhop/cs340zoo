@@ -1,6 +1,7 @@
 package client.proxy;
 
 
+import client.model.GameModel;
 import client.model.bank.ResourceList;
 import client.model.history.MessageList;
 import shared.definitions.ResourceType;
@@ -12,9 +13,12 @@ import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
 
 public class MockProxy implements IProxy{
+    GameModel myModel;
 
-    public MockProxy()
+
+    public MockProxy(GameModel givenModel)
     {
+        myModel = givenModel;
     	System.out.println("MockProxy.java: MockProxy() constructior is called");
     }
 
