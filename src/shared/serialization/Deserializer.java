@@ -23,7 +23,7 @@ public class Deserializer {
         JsonTreeReader myTree = new JsonTreeReader(myEle);
         JsonObject myObj = new JsonObject();
         try {
-            while (myTree.hasNext()) {
+            while (myTree.peek() != null) {
                 System.out.println(myTree.peek().name());
                 switch (myTree.peek().name()) {
                     case "BEGIN_OBJECT":
@@ -37,6 +37,15 @@ public class Deserializer {
                         break;
                     case "NUMBER":
                         System.out.println(myTree.nextInt());
+                        break;
+                    case "END_OBJECT":
+                        myTree.endObject();
+                        break;
+                    case "BEGIN_ARRAY":
+                        myTree.beginArray();
+                        break;
+                    case "END_ARRAY":
+                        myTree.endArray();
                         break;
                 }
             }
