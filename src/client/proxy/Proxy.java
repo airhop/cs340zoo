@@ -64,16 +64,14 @@ public class Proxy implements IProxy{
     public HttpURLResponse doPost(String urlPath, JsonObject myObj) throws ClientException {
 
         HttpURLResponse result = new HttpURLResponse();
-        System.out.println("I am Here");
         try {
             URL url = new URL(URL_PREFIX + urlPath);
             HttpURLConnection connection = (HttpURLConnection)url.openConnection();
             connection.setRequestMethod(HTTP_POST);
             connection.setDoOutput(true);
 
-
             if(userCookie.isActive()){
-                connection.setRequestProperty(userCookie.getCookieName(), userCookie.getCookieValue());
+                connection.setRequestProperty("Cookie", userCookie.getCookieName() + "=" + userCookie.getCookieValue());
             }
             if(gameCookie.isActive()){
                 connection.setRequestProperty(gameCookie.getCookieName(), gameCookie.getCookieValue());
@@ -81,22 +79,16 @@ public class Proxy implements IProxy{
 
             connection.connect();
             OutputStreamWriter myOut = new OutputStreamWriter(connection.getOutputStream());
-            OutputStream myOutStream = connection.getOutputStream();
-
             myOut.write(myObj.toString());
             myOut.flush();
 
-
             if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
-                if(connection.getContentLength() == 0) {
-
-                }else{
+                if(connection.getContentLength() != 0) {
                     result.setResponseCode(connection.getResponseCode());
                     result.setResponseLength(connection.getContentLength());
                     BufferedReader myReader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
                     result.setResponseBody(myReader.readLine());
                     result.setCookie(connection.getHeaderField("Set-cookie"));
-//                    result.setResponseBody(connection.getResponseMessage());
                 }
             } else {
                 throw new ClientException(String.format("doPost failed: %s (http code %d)", urlPath, connection.getResponseCode()));
@@ -188,11 +180,9 @@ public class Proxy implements IProxy{
         HttpURLResponse myResponse;
         try {
             myResponse = doPost(url, myObjOne);
-            System.out.println(myResponse.getResponseBody());
-            System.out.println(myResponse.getCookie());
             userCookie.setFullCookie(myResponse.getCookie());
-            System.out.println(userCookie.getCookieName());
-            System.out.println(userCookie.getCookieValue());
+            userCookie.getPlayerId();
+            userCookie.getDecode();
         } catch (ClientException e) {
             e.printStackTrace();
         }
@@ -217,17 +207,13 @@ public class Proxy implements IProxy{
     public void gamesJoin(String color, int playerId) throws InvalidUserException {
         JsonObject myObjOne = new JsonObject();
         String url = "/games/join";
-        myObjOne.addProperty("id", "" + playerId);
+        myObjOne.addProperty("id", "" + userCookie.getPlayerId());
         myObjOne.addProperty("color", color);
         System.out.println(myObjOne.toString());
         HttpURLResponse myResponse;
         try {
             myResponse = doPost(url, myObjOne);
-            System.out.println(myResponse.getResponseBody());
-            System.out.println(myResponse.getCookie());
             gameCookie.setFullCookie(myResponse.getCookie());
-            System.out.println(gameCookie.getCookieName());
-            System.out.println(gameCookie.getCookieValue());
         } catch (ClientException e) {
             e.printStackTrace();
         }
