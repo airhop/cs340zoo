@@ -70,28 +70,80 @@ public class GameModel {
         return map;
     }
 
-    public TurnTracker getTurnTracker() {
-        return tt;
-    }
-
-    public TradeOffer getTradeOffer() {
-        return to;
-    }
-
-    public int getVersion() {
-        return version;
-    }
-
-    public int getWinner() {
-        return winner;
+    public void setMap(Map map) {
+        this.map = map;
     }
 
     public Bank getBank() {
         return bank;
     }
 
+    public void setBank(Bank bank) {
+        this.bank = bank;
+    }
+
     public Player[] getPlayers() {
         return players;
+    }
+
+    public void setPlayers(Player[] players) {
+        this.players = players;
+    }
+
+    public TurnTracker getTt() {
+        return tt;
+    }
+
+    public void setTt(TurnTracker tt) {
+        this.tt = tt;
+    }
+
+    public TradeOffer getTo() {
+        return to;
+    }
+
+    public void setTo(TradeOffer to) {
+        this.to = to;
+    }
+
+    public int getVersion() {
+        return version;
+    }
+
+    public void setVersion(int version) {
+        this.version = version;
+    }
+
+    public int getWinner() {
+        return winner;
+    }
+
+    public void setWinner(int winner) {
+        this.winner = winner;
+    }
+
+    public Dice getDice() {
+        return dice;
+    }
+
+    public void setDice(Dice dice) {
+        this.dice = dice;
+    }
+
+    public Chat getChat() {
+        return chat;
+    }
+
+    public void setChat(Chat chat) {
+        this.chat = chat;
+    }
+
+    public Log getLog() {
+        return log;
+    }
+
+    public void setLog(Log log) {
+        this.log = log;
     }
 
     /**
@@ -109,9 +161,7 @@ public class GameModel {
     public boolean canWin() {
         //need to check if it is finish turn?
         int cp = tt.getCurrentPlayer();
-        if (players[cp].canWin())
-            return true;
-        return false;
+        return players[cp].canWin();
     }
 
     /**
@@ -352,6 +402,5 @@ public class GameModel {
         chat.addMessage(players[pid].getName(), msg);
         return true;
     }
-    //random comment :)
-    //random comment again
+
 }
