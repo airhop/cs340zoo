@@ -79,7 +79,7 @@ public class Map
 	public void addHexDesert(int x, int y) throws FailureToAddException//may not be used
 	{
 		Hex hex = new Hex(x,y);
-		hex.setResource(HexType.DESERT.toString());
+		//hex.setResource(HexType.DESERT.toString());
 		hexes.put(hex.getLocation(), hex);
 	}
 
@@ -93,7 +93,7 @@ public class Map
 	 */
 	public void addHex(int x, int y, String resource, int number) throws FailureToAddException//may not be used
 	{
-
+		
 		String numberString = new String(Integer.toString(number));
 		Hex hex = new Hex(x,y,resource,number);
 		hexes.put(hex.getLocation(), hex);
