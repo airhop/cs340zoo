@@ -34,13 +34,13 @@ public interface IProxy {
 
     /**
      * You are making a game
-     * @param s - The name of the game
+     * @param gameName - The name of the game
      */
-    void gamesCreate(String s) throws FailedCreateGameException;
+    void gamesCreate(String gameName) throws FailedCreateGameException;
 
     /**
      * The player wants to join a game so they use this method
-     * @param s - The game that they want to join
+     * @param color - The game that they want to join
      * @param playerId - The player that wants to join
      */
     void gamesJoin(String color, int playerId) throws InvalidUserException;
@@ -77,7 +77,7 @@ public interface IProxy {
      * Messages to be sent to all the players
      * @param content - The messages to be sent to the players
      */
-    boolean sendChat(String content, int id);
+    void sendChat(String content, int id);
     /**
      * Rolls a number and shows the affect on the server
      * @param numRoled - Number that is rolled

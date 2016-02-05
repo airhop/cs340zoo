@@ -25,6 +25,7 @@ public class Proxy implements IProxy{
     private Cookie userCookie;
     private Cookie gameCookie;
     private Gson myGson;
+    private String cookiesList;
 
     public Proxy(){
         SERVER_HOST = "localhost";
@@ -33,6 +34,7 @@ public class Proxy implements IProxy{
         userCookie = new Cookie();
         gameCookie = new Cookie();
         myGson = new Gson();
+        cookiesList = "";
     }
 
 
@@ -71,16 +73,22 @@ public class Proxy implements IProxy{
             connection.setDoOutput(true);
 
             if(userCookie.isActive()){
-                connection.setRequestProperty("Cookie", userCookie.getCookieName() + "=" + userCookie.getCookieValue());
-            }
-            if(gameCookie.isActive()){
-                connection.setRequestProperty(gameCookie.getCookieName(), gameCookie.getCookieValue());
+                cookiesList = userCookie.getCookieName() + "=" + userCookie.getCookieValue();
+                if(gameCookie.isActive()){
+                    cookiesList = cookiesList + ";" + gameCookie.getCookieName() + "=" + gameCookie.getCookieValue();
+                    connection.setRequestProperty("Cookie", cookiesList);
+                }else{
+                    connection.setRequestProperty("Cookie", cookiesList);
+                }
+
             }
 
+            System.out.println(url.toString());
             connection.connect();
             OutputStreamWriter myOut = new OutputStreamWriter(connection.getOutputStream());
             myOut.write(myObj.toString());
             myOut.flush();
+//            System.out.println(connection.getResponseCode());
 
             if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
                 if(connection.getContentLength() != 0) {
@@ -89,9 +97,13 @@ public class Proxy implements IProxy{
                     BufferedReader myReader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
                     result.setResponseBody(myReader.readLine());
                     result.setCookie(connection.getHeaderField("Set-cookie"));
+                    connection.disconnect();
                 }
             } else {
-                throw new ClientException(String.format("doPost failed: %s (http code %d)", urlPath, connection.getResponseCode()));
+                System.out.println(connection.getResponseMessage());
+                int code = connection.getResponseCode();
+                connection.disconnect();
+                throw new ClientException(String.format("doPost failed: %s (http code %d)", urlPath, code));
             }
         }
         catch (IOException e) {
@@ -190,7 +202,19 @@ public class Proxy implements IProxy{
 
     @Override
     public void userRegister(User u) throws InvalidUserException {
-
+        JsonObject myObjOne = new JsonObject();
+        String url = "/user/register";
+        myObjOne.addProperty("username", u.getUsername());
+        myObjOne.addProperty("password", u.getPassword());
+        HttpURLResponse myResponse;
+        try {
+            myResponse = doPost(url, myObjOne);
+            userCookie.setFullCookie(myResponse.getCookie());
+            userCookie.getPlayerId();
+            userCookie.getDecode();
+        } catch (ClientException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -198,9 +222,33 @@ public class Proxy implements IProxy{
         return new String[0];
     }
 
+    /**
+     * {
+     "randomTiles": "boolean",
+     "randomNumbers": "boolean",
+     "randomPorts": "boolean",
+     "name": "string"
+     }
+     * @param gameName - The name of the game
+     * @throws FailedCreateGameException
+     */
     @Override
-    public void gamesCreate(String s) throws FailedCreateGameException {
-
+    public void gamesCreate(String gameName) throws FailedCreateGameException {
+        JsonObject myObjOne = new JsonObject();
+        String url = "/games/create";
+        myObjOne.addProperty("randomTiles", "true");
+        myObjOne.addProperty("randomNumbers", "true");
+        myObjOne.addProperty("randomPorts", "true");
+        myObjOne.addProperty("name", gameName);
+        System.out.println(myObjOne.toString());
+        HttpURLResponse myResponse;
+        try {
+            myResponse = doPost(url, myObjOne);
+            System.out.println(myResponse.getResponseBody());
+            //This is when i am going to create the deSerialization
+        } catch (ClientException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -208,7 +256,7 @@ public class Proxy implements IProxy{
         JsonObject myObjOne = new JsonObject();
         String url = "/games/join";
         myObjOne.addProperty("id", "" + userCookie.getPlayerId());
-        myObjOne.addProperty("color", color);
+        myObjOne.addProperty("color", color.toLowerCase());
         System.out.println(myObjOne.toString());
         HttpURLResponse myResponse;
         try {
@@ -260,8 +308,8 @@ public class Proxy implements IProxy{
     }
 
     @Override
-    public boolean sendChat(String content, int id) {
-        return true;
+    public void sendChat(String content, int id) {
+
     }
 
     @Override
