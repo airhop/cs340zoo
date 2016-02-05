@@ -139,13 +139,13 @@ public interface IProxy {
      * @param playerId - PlayerId passed to the server
      * @param el - Location on the board to build
      */
-    void buildRoad(int playerId, EdgeLocation el);
+    void buildRoad(int playerId, EdgeLocation el, boolean free);
     /**
      * Player builds a settlement
      * @param playerId - Player that wants to build the settlement
      * @param vl - Edge/Vertex that it is going to be built to
      */
-    void buildSettlement(int playerId, VertexLocation vl) throws IllegalBuildException;
+    void buildSettlement(int playerId, VertexLocation vl, boolean free) throws IllegalBuildException;
 
     /**
      * Player that wants to build a city pushes it to the server
@@ -174,7 +174,7 @@ public interface IProxy {
      * @param playerId - playerIdOne passed to the server
      * @param ratio - Traded with the bank
      */
-    void meritimeTrade(int playerId, int ratio, ResourceList in, ResourceList out);
+    void maritimeTrade(int playerId, int ratio, ResourceType in, ResourceType out);
     /**
      * Discards cards
      * @param playerId - Player to discard
