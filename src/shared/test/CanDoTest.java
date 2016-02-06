@@ -223,7 +223,15 @@ public class CanDoTest
     @Test
     public void canFinishTurn()
     {
+        //player 3 cannot finish turn on "roll" status so it declines
+        assert(!f.canFinishTurn(3));
         
+        initializeFull();
+        TurnTracker turnTracker = f.getGM().getTt();
+        turnTracker.updateStatus("finish");
+        f.getGM().setTt(turnTracker);
+        //changes player 3's status to finish and allows it to return true
+        assert(f.canFinishTurn(3));
     }
     @Test
     public void canBuyDevCard()
