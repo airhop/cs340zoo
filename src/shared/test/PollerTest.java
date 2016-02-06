@@ -7,6 +7,7 @@ import client.proxy.MockProxy;
 import org.junit.Test;
 import javax.swing.Timer;
 import java.awt.event.*;
+import java.util.concurrent.TimeUnit;
 
 
 public class PollerTest 
@@ -15,16 +16,13 @@ public class PollerTest
     public void pollerTest() 
     {
         Poller poller = new Poller(new MockProxy(new GameModel()));
-        Timer timer = new Timer(30000, new ActionListener()
+        try
+        {   TimeUnit.SECONDS.sleep(15); }
+        catch(java.lang.InterruptedException e)
         {
-            public void actionPerformed(ActionEvent evt)
-            {
-                System.out.println(poller.getAmount());
-                assert(poller.getAmount() == 9 || poller.getAmount() == 10);
-            }
-        });
-
-        //pause here!!!
+            System.out.println("Error with the sleeping timer . . . ");
+        }
+        assert(poller.getAmount() >= 4 && poller.getAmount() <= 6);
         
     }
 }
