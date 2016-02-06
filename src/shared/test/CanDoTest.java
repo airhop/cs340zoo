@@ -186,57 +186,57 @@ public class CanDoTest
     {
 
     }
-    @test
+    @Test
     public void canMaritimeTrade()
     {
         
     }
-    @test
+    @Test
     public void canFinishTurn()
     {
         
     }
-    @test
+    @Test
     public void canBuyDevCard()
     {
         
     }
-    @test
+    @Test
     public void canUseYearOfPlenty()
     {
         
     }
-    @test
+    @Test
     public void canUseRoadBuilding()
     {
         
     }
-    @test
+    @Test
     public void canUseSoldier()
     {
         
     }
-    @test
+    @Test
     public void canUseMonopoly()
     {
         
     }
-    @test
+    @Test
     public void canUseMonument()
     {
         
     }
-    @test
+    @Test
     public void canPlaceRobber()
     {
         
     }
-    @test
+    @Test
     public void canSendChat()
     {
         
     }
-    @test
+    @Test
     public void canAcceptTrade()
     {
         
