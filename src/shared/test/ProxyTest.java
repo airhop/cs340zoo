@@ -12,9 +12,7 @@ import shared.exceptions.IllegalBuildException;
 import shared.exceptions.InsufficientResourcesException;
 import shared.exceptions.InvalidUserException;
 import shared.jsonobject.User;
-import shared.locations.EdgeDirection;
-import shared.locations.EdgeLocation;
-import shared.locations.HexLocation;
+import shared.locations.*;
 
 import static org.junit.Assert.*;
 
@@ -257,7 +255,7 @@ public class ProxyTest {
         myProxy.getGameModel();
         Map myMap = myGameModel.getMap();
         try {
-            myProxy.buildSettlement(playerIndex, myMap.getBuildings().get(1).getLocation(), true);
+            myProxy.buildSettlement(playerIndex, new VertexLocation(new HexLocation(1, 2), VertexDirection.NW), true);
         } catch (IllegalBuildException e) {
             e.printStackTrace();
         }
@@ -275,7 +273,7 @@ public class ProxyTest {
         myProxy.getGameModel();
         Map myMap = myGameModel.getMap();
         try {
-            myProxy.buildCity(playerIndex, myMap.getBuildings().get(1).getLocation());
+            myProxy.buildCity(playerIndex, new VertexLocation(new HexLocation(1, 2), VertexDirection.NW));
         } catch (IllegalBuildException e) {
             e.printStackTrace();
         }
