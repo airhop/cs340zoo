@@ -341,7 +341,12 @@ public class CanDoTest
     @Test
     public void canSendChat()
     {
+        initializeFull();
         
+        assert(!f.canSendChat("This shouldnt work", 0));
+        assert(f.canSendChat("This should work", 1));
+        
+        System.out.println("Can Send Chat - can Do, Not turn, Insufficent Materials");  
     }
     @Test
     public void canAcceptTrade()
