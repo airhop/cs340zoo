@@ -1,6 +1,8 @@
 package shared.test;
 
 import java.util.ArrayList;
+import java.util.TreeMap;
+
 import client.model.bank.Bank;
 import client.model.bank.DevCardList;
 import client.model.bank.ResourceList;
@@ -71,7 +73,7 @@ public class CanDoTest
         ps.add(p4);
 
         Map m = new Map();
-        TreeMap<HexLocation, Hex> hexes = new TreeMap<HexLocation, Hex> ();
+        TreeMap<HexLocation, Hex> hexes = new TreeMap<HexLocation, Hex>();
         hexes.put(new HexLocation(-1,-1), new Hex());
         hexes.put(new HexLocation(3,4), new Hex("BRICK", 9));
         hexes.put(new HexLocation(4,2), new Hex("ORE", 4));
