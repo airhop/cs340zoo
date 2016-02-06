@@ -24,5 +24,5 @@ public class Poller
         timer.start();
     }
     
-    public int getAmount() {return amount);
+    public int getAmount() {return amount;}
 }
