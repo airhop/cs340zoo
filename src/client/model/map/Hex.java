@@ -14,6 +14,11 @@ public class Hex {
     chit = 0;
   }
 
+  public Hex(int x, int y)
+  {
+    hl = new HexLocation(x, y);
+  }
+
   public Hex(String resrc, int num)
   {
     resource = resrc.toUpperCase();
@@ -25,6 +30,13 @@ public class Hex {
     resource = resc;
     chit = num;
     HL = hl;
+  }
+
+  public Hex(int x, int y, String resc, int num)
+  {
+    hl = new HexLocation(x, y);
+    resource = resc;
+    chit = num;
   }
   //Getters and Setters
 
