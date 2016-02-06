@@ -77,6 +77,9 @@
 			</classpath>
 			<formatter type="plain" usefile="true" extension=".log" />
 			<test name="shared.test.ExperimentTest" haltonfailure="no"/>
+			<test name="shared.test.CanDoTest" haltonfailure="no"/>
+			<test name="shared.test.PollerTest" haltonerror="no"/>
+			<test name="shared.test.ProxyTest" haltonfailure="no"/>
 		</junit>
 	</target>
 
