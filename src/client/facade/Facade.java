@@ -477,7 +477,7 @@ public class Facade {
      *
      * @return boolean whether or not the player can accept a trade offer from another player
      */
-    public boolean canAcceptTrade(int pid, ResourceList offer) {
+    public boolean canAcceptTrade(int pid, int vid, ResourceList offer) {
         if (game == null)
             return false;
         return game.canAcceptTrade(pid);
