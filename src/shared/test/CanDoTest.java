@@ -201,7 +201,7 @@ public class CanDoTest
 
 
     @Test
-    public void testCanOfferTrade()
+    public void canOfferTrade()
     {
 
     }
@@ -346,6 +346,11 @@ public class CanDoTest
     @Test
     public void canAcceptTrade()
     {
+        initializeFull();
         
+        assert(!f.canAcceptTrade(0,1, new ResourceList(-1, 1, 0, 0, 0))));
+        assert(f.canAcceptTrade(0,1, new ResourceList(0, -1, 1, 0, 0))));
+        
+        System.out.println("Can Accept Trade - can Do, Not turn, Insufficent Materials");
     }
 }
