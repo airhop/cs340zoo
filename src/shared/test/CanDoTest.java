@@ -227,14 +227,14 @@ public class CanDoTest
         
     }
     @Test
-    public void canPlaceRobber()
+    public void canMoveRobber()
     {
         initializeFull();
         TurnTracker tt = f.getGM().getTt();
         tt.setCurrentPlayer(1);
         f.getGM().setTt(tt);
         
-        assert(f.canPlaceRobber());
+        assert(f.canMoveRobber());
     }
     @Test
     public void canSendChat()
