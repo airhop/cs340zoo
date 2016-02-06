@@ -1,10 +1,12 @@
 package client.model.map;
 
 import shared.definitions.HexType;
+import shared.locations.HexLocation;
 
 public class Hex {
   String resource;
   int chit;
+  HexLocation hl;
 
   public Hex()//desert tile
   {
@@ -16,6 +18,13 @@ public class Hex {
   {
     resource = resrc.toUpperCase();
     chit = num;
+  }
+
+  public Hex(String resc, int num, HexLocation HL)
+  {
+    resource = resc;
+    chit = num;
+    HL = hl;
   }
   //Getters and Setters
 
@@ -38,5 +47,7 @@ public class Hex {
   {
 	  this.chit = chit;
   }
-  
+
+  public HexLocation getLocation()  {return hl; }
+  public void setLocation(HexLocation HL)  {hl = HL; }
 }

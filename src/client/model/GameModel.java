@@ -356,7 +356,7 @@ public class GameModel {
      * Set up the TradeOffer
      */
     public boolean canTradePlayer(int pid, int rid, ResourceList rl) throws IllegalMoveException, InsufficientResourcesException {
-        if (turnTracker.getStatus().equals("FirstRound") && pid != turnTracker.getCurrentPlayer())
+        if (turnTracker.getStatus().equals("FirstRoundound") && pid != turnTracker.getCurrentPlayer())
             throw new IllegalMoveException("not the trading phase, or not the player's turn");
 
         if (pid == rid)
