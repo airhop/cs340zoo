@@ -229,7 +229,12 @@ public class CanDoTest
     @Test
     public void canPlaceRobber()
     {
+        initializeFull();
+        TurnTracker tt = f.getGM().getTt();
+        tt.setCurrentPlayer(1);
+        f.getGM().setTt(tt);
         
+        assert(f.canPlaceRobber());
     }
     @Test
     public void canSendChat()
