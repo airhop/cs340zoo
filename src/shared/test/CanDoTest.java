@@ -213,7 +213,12 @@ public class CanDoTest
     @Test
     public void canMaritimeTrade()
     {
+        initializeFull();
         
+        assert(f.canTradeBank(0, p1.getResources());
+        assert(!f.canTradeBank(1, p2.getResources());
+        
+        System.out.println("Can Offer Trade - can Do, Not turn, Insufficent Materials");
     }
     @Test
     public void canFinishTurn()
