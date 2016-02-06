@@ -71,7 +71,9 @@ public class CanDoTest
         ps.add(p4);
 
         Map m = new Map();
-        m.hexes.put(new HexLocation(-1,-1), new Hex())
+        m.hexes.put(new HexLocation(-1,-1), new Hex());
+        m.hexes.put(new HexLocation(3,4), new Hex("BRICK", 9));
+        m.hexes.put(new HexLocation(4,2), new Hex("ORE", 4));
         Robber r = new Robber();
         r.setHl(new HexLocation(3,4));
         m.setRobber(r);
