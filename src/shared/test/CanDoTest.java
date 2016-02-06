@@ -240,6 +240,8 @@ public class CanDoTest
         assert(!f.canMoveRobber(new HexLocation(-1,-1)));
         assert(!f.canMoveRobber(new HexLocation(3,4)));
         assert(f.canMoveRobber(new HexLocation(4,2)));
+        
+        System.out.println("Can Move Robber - can Do, Not turn, Insufficent Materials");
     }
     @Test
     public void canSendChat()
