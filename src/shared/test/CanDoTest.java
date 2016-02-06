@@ -203,7 +203,12 @@ public class CanDoTest
     @Test
     public void canOfferTrade()
     {
-
+        initializeFull();
+        
+        assert(!f.canTradePlayer(0,1, new ResourceList(-1, 1, 0, 0, 0))));
+        assert(f.canTradePlayer(0,1, new ResourceList(0, -1, 1, 0, 0))));
+        
+        System.out.println("Can Offer Trade - can Do, Not turn, Insufficent Materials");
     }
     @Test
     public void canMaritimeTrade()
@@ -336,7 +341,6 @@ public class CanDoTest
         assert(!f.canMoveRobber(new HexLocation(3,4)));
         assert(f.canMoveRobber(new HexLocation(4,2)));
         
-        System.out.println("Can Move Robber - can Do, Not turn, Insufficent Materials");
     }
     @Test
     public void canSendChat()
@@ -345,8 +349,7 @@ public class CanDoTest
         
         assert(!f.canSendChat("This shouldnt work", 0));
         assert(f.canSendChat("This should work", 1));
-        
-        System.out.println("Can Send Chat - can Do, Not turn, Insufficent Materials");  
+
     }
     @Test
     public void canAcceptTrade()
