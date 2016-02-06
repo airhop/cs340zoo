@@ -107,10 +107,10 @@ public class Facade {
      *
      * @return boolean whether or not the player built the road (perhaps placeholder return values for all of the do methods)
      */
-    public void placeRoad(int pid, EdgeLocation el) {
+    public void placeRoad(int pid, EdgeLocation el, boolean free) {
         if (game != null) {
             if (game.canBuildRoad(pid) && game.canPlaceRoad(el))
-                proxy.buildRoad(pid, el);
+                proxy.buildRoad(pid, el, free);
         }
     }
 
@@ -141,11 +141,11 @@ public class Facade {
      *
      * @return boolean whether or not the player placed a settlement
      */
-    public void placeSettlement(int pid, VertexLocation vl) {
+    public void placeSettlement(int pid, VertexLocation vl, boolean free) {
         if (game != null) {
             if (canPlaceSettlement(vl) && canBuildSettlement(pid))
                 try {
-                    proxy.buildSettlement(pid, vl);
+                    proxy.buildSettlement(pid, vl, free);
                 } catch (IllegalBuildException e) {
                     e.printStackTrace();
                 }
@@ -328,7 +328,7 @@ public class Facade {
      */
     public void meritimeTrade(int playerId, int ratio, ResourceType in, ResourceType out) {
         if (proxy != null)
-            proxy.meritimeTrade(playerId, ratio, in, out);
+            proxy.maritimeTrade(playerId, ratio, in, out);
     }
 
     /**

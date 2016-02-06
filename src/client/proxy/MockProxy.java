@@ -180,13 +180,13 @@ public class MockProxy implements IProxy{
     }
 
     @Override
-    public void buildRoad(int playerId, EdgeLocation el) 
+    public void buildRoad(int playerId, EdgeLocation el, boolean free) 
     {
     	System.out.println("MockProxy.java: buildRoad(int playerId, EdgeLocation el) is called");
     }
 
     @Override
-    public void buildSettlement(int playerId, VertexLocation vl) throws IllegalBuildException 
+    public void buildSettlement(int playerId, VertexLocation vl, boolean free) throws IllegalBuildException 
     {
     	System.out.println("MockProxy.java: buildSettlement(int playerId, VertexLocation vl) throws IllegalBuildException is called");
     }
@@ -210,7 +210,7 @@ public class MockProxy implements IProxy{
     }
 
     @Override
-    public void meritimeTrade(int playerId, int ratio, ResourceList in, ResourceList out) 
+    public void maritimeTrade(int playerId, int ratio, ResourceType in, ResourceType out) 
     {
     	System.out.println("MockProxy.java: meritimeTrade(int playerId, int ratio, ResourceList in, ResourceList out) is called");
     }
