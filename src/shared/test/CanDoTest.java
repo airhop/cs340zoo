@@ -237,7 +237,8 @@ public class CanDoTest
         tt.setCurrentPlayer(1);
         f.getGM().setTt(tt);
         
-        assert(f.canMoveRobber());
+        assert(!f.canMoveRobber(new HexLocation(-1,-1)));
+        assert(!f.canMoveRobber(new HexLocation(-1,-1)));
     }
     @Test
     public void canSendChat()
