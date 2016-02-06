@@ -20,13 +20,11 @@ import client.model.bank.ResourceList;
 import client.model.map.*;
 import client.model.misc.*;
 import client.model.player.Player;
-import com.sun.xml.internal.ws.api.ResourceLoader;
 import org.omg.CORBA.DynAnyPackage.Invalid;
 import client.model.history.*;
 import shared.exceptions.*;
 import shared.definitions.*;
 import shared.locations.*;
-import sun.security.provider.certpath.Vertex;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -17,7 +17,6 @@ import client.model.player.*;
 import shared.definitions.ResourceType;
 import shared.locations.*;
 
-
 public class CanDoTest
 {
     Facade f;
@@ -205,8 +204,8 @@ public class CanDoTest
     {
         initializeFull();
         
-        assert(!f.canTradePlayer(0,1, new ResourceList(-1, 1, 0, 0, 0))));
-        assert(f.canTradePlayer(0,1, new ResourceList(0, -1, 1, 0, 0))));
+        assert(!f.canTradePlayer(0,1, new ResourceList(-1, 1, 0, 0, 0)));
+        assert(f.canTradePlayer(0,1, new ResourceList(0, -1, 1, 0, 0)));
         
         System.out.println("Can Offer Trade - can Do, Not turn, Insufficent Materials");
     }
@@ -215,8 +214,8 @@ public class CanDoTest
     {
         initializeFull();
         
-        assert(f.canTradeBank(0, p1.getResources());
-        assert(!f.canTradeBank(1, p2.getResources());
+        assert(f.canTradeBank(0, new ResourceList(0, 3, 0, 2, 0)));
+        assert(!f.canTradeBank(1, new ResourceList(1, 1, 1, 1, 1)));
         
         System.out.println("Can Offer Trade - can Do, Not turn, Insufficent Materials");
     }
@@ -369,8 +368,8 @@ public class CanDoTest
     {
         initializeFull();
         
-        assert(!f.canAcceptTrade(0,1, new ResourceList(-1, 1, 0, 0, 0))));
-        assert(f.canAcceptTrade(0,1, new ResourceList(0, -1, 1, 0, 0))));
+        assert(!f.canAcceptTrade(0,1, new ResourceList(-1, 1, 0, 0, 0)));
+        assert(f.canAcceptTrade(0,1, new ResourceList(0, -1, 1, 0, 0)));
         
         System.out.println("Can Accept Trade - can Do, Not turn, Insufficent Materials");
     }
