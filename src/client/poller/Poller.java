@@ -9,6 +9,7 @@ public class Poller
 {
     IProxy myProxy;
     Timer timer;
+    int amount = 0;
 
     public Poller(IProxy givenProxy) {
         myProxy = givenProxy;
@@ -17,8 +18,11 @@ public class Poller
             public void actionPerformed(ActionEvent evt) {
                 myProxy.getGameModel();
                 timer.restart();
+                amount++;
             }
         });
         timer.start();
     }
+    
+    public int getAmount() {return amount;}
 }

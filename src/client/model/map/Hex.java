@@ -1,38 +1,44 @@
 package client.model.map;
 
 import shared.definitions.HexType;
+import shared.locations.HexLocation;
 
 public class Hex {
-  
-  shared.locations.HexLocation location;
   String resource;
   int chit;
+  HexLocation hl;
 
-  public Hex(int x, int y)//desert tile
+  public Hex()//desert tile
   {
-    location = new  shared.locations.HexLocation(x,y);
     resource = HexType.DESERT.toString();
     chit = 0;
   }
 
-  public Hex(int x, int y, String resrc, int num)
+  public Hex(int x, int y)
   {
-    location = new  shared.locations.HexLocation(x,y);
+    hl = new HexLocation(x, y);
+  }
+
+  public Hex(String resrc, int num)
+  {
     resource = resrc.toUpperCase();
     chit = num;
   }
+
+  public Hex(String resc, int num, HexLocation HL)
+  {
+    resource = resc;
+    chit = num;
+    HL = hl;
+  }
+
+  public Hex(int x, int y, String resc, int num)
+  {
+    hl = new HexLocation(x, y);
+    resource = resc;
+    chit = num;
+  }
   //Getters and Setters
-
-
-  public shared.locations.HexLocation getLocation() 
-  {
-	  return location;
-  }
-
-  public void setLocation(shared.locations.HexLocation location) 
-  {
-	  this.location = location;
-  }
 
   public String getResource() 
   {
@@ -53,5 +59,7 @@ public class Hex {
   {
 	  this.chit = chit;
   }
-  
+
+  public HexLocation getLocation()  {return hl; }
+  public void setLocation(HexLocation HL)  {hl = HL; }
 }

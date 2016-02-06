@@ -20,13 +20,11 @@ import client.model.bank.ResourceList;
 import client.model.map.*;
 import client.model.misc.*;
 import client.model.player.Player;
-import com.sun.xml.internal.ws.api.ResourceLoader;
 import org.omg.CORBA.DynAnyPackage.Invalid;
 import client.model.history.*;
 import shared.exceptions.*;
 import shared.definitions.*;
 import shared.locations.*;
-import sun.security.provider.certpath.Vertex;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -356,7 +354,7 @@ public class GameModel {
      * Set up the TradeOffer
      */
     public boolean canTradePlayer(int pid, int rid, ResourceList rl) throws IllegalMoveException, InsufficientResourcesException {
-        if (turnTracker.getStatus().equals("FirstRound") && pid != turnTracker.getCurrentPlayer())
+        if (turnTracker.getStatus().equals("FirstRoundound") && pid != turnTracker.getCurrentPlayer())
             throw new IllegalMoveException("not the trading phase, or not the player's turn");
 
         if (pid == rid)

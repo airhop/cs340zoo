@@ -130,10 +130,10 @@ public class Facade {
      *
      * @return boolean whether or not the player can place a settlement
      */
-    public boolean canPlaceSettlement(VertexLocation vl, boolean free) {
+    public boolean canPlaceSettlement(VertexLocation vl) {
         if (game == null)
             return false;
-        return game.canPlaceSettlement(vl, free);
+        return game.canPlaceSettlement(vl);
     }
 
     /**
@@ -141,11 +141,11 @@ public class Facade {
      *
      * @return boolean whether or not the player placed a settlement
      */
-    public void placeSettlement(int pid, VertexLocation vl) {
+    public void placeSettlement(int pid, VertexLocation vl, boolean free) {
         if (game != null) {
             if (canPlaceSettlement(vl) && canBuildSettlement(pid))
                 try {
-                    proxy.buildSettlement(pid, vl);
+                    proxy.buildSettlement(pid, vl, free);
                 } catch (IllegalBuildException e) {
                     e.printStackTrace();
                 }
@@ -328,7 +328,7 @@ public class Facade {
      */
     public void meritimeTrade(int playerId, int ratio, ResourceType in, ResourceType out) {
         if (proxy != null)
-            proxy.meritimeTrade(playerId, ratio, in, out);
+            proxy.maritimeTrade(playerId, ratio, in, out);
     }
 
     /**
@@ -477,7 +477,7 @@ public class Facade {
      *
      * @return boolean whether or not the player can accept a trade offer from another player
      */
-    public boolean canAcceptTrade(int pid) {
+    public boolean canAcceptTrade(int pid, int vid, ResourceList offer) {
         if (game == null)
             return false;
         return game.canAcceptTrade(pid);
