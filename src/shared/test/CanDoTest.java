@@ -211,27 +211,92 @@ public class CanDoTest
     @Test
     public void canUseYearOfPlenty()
     {
-        
+        initializeFull();
+        TurnTracker turnTracker = f.getGM().getTt();
+        turnTracker.setCurrentPlayer(1);
+        f.getGM().setTt(turnTracker);
+        f.getGM().getPlayers().get(1).getOldDevCards().setYearOfPlenty(5);
+        assert(f.canYearOfPlenty(1));
+        assert(!f.canYearOfPlenty(0));
+
+        f.getGM().getPlayers().get(0).getOldDevCards().setYearOfPlenty(0);
+        turnTracker.setCurrentPlayer(0);
+        f.getGM().setTt(turnTracker);
+        assert(!f.canYearOfPlenty(0));
+
+        System.out.println("Can use YearOfPlenty - can Do, Not turn, Insufficient Materials");
     }
     @Test
     public void canUseRoadBuilding()
     {
-        
+        initializeFull();
+        TurnTracker turnTracker = f.getGM().getTt();
+        turnTracker.setCurrentPlayer(1);
+        f.getGM().setTt(turnTracker);
+        f.getGM().getPlayers().get(1).getOldDevCards().setRoadBuilding(5);
+        assert(f.canRoadBuilding(1));
+        assert(!f.canRoadBuilding(0));
+
+        turnTracker.setCurrentPlayer(0);
+        f.getGM().getPlayers().get(0).getOldDevCards().setRoadBuilding(0);
+        f.getGM().setTt(turnTracker);
+        assert(!f.canRoadBuilding(0));
+
+        System.out.println("Can use RoadBuilding card - can Do, Not turn, Insufficient Materials");
     }
     @Test
     public void canUseSoldier()
     {
-        
+        initializeFull();
+        TurnTracker turnTracker = f.getGM().getTt();
+        turnTracker.setCurrentPlayer(1);
+        f.getGM().setTt(turnTracker);
+        f.getGM().getPlayers().get(1).getOldDevCards().setSoldier(5);
+        assert(f.canPlaySoldier(1));
+        assert(!f.canPlaySoldier(0));
+
+        turnTracker.setCurrentPlayer(0);
+        f.getGM().getPlayers().get(0).getOldDevCards().setSoldier(0);
+        f.getGM().setTt(turnTracker);
+        assert(!f.canPlaySoldier(0));
+
+        System.out.println("Can use Soldier card - can Do, Not turn, Insufficient Materials");
     }
     @Test
     public void canUseMonopoly()
     {
-        
+        initializeFull();
+        TurnTracker turnTracker = f.getGM().getTt();
+        turnTracker.setCurrentPlayer(1);
+        f.getGM().setTt(turnTracker);
+        f.getGM().getPlayers().get(1).getOldDevCards().setMonopoly(5);
+        assert(f.canMonopoly(1));
+        assert(!f.canMonopoly(0));
+
+        turnTracker.setCurrentPlayer(0);
+        f.getGM().getPlayers().get(0).getOldDevCards().setMonopoly(0);
+        f.getGM().setTt(turnTracker);
+        assert(!f.canMonopoly(0));
+
+        System.out.println("Can use Montopoly card - can Do, Not turn, Insufficient Materials");
     }
     @Test
     public void canUseMonument()
     {
-        
+        initializeFull();
+        TurnTracker turnTracker = f.getGM().getTt();
+        turnTracker.setCurrentPlayer(1);
+        f.getGM().setTt(turnTracker);
+        f.getGM().getPlayers().get(1).getOldDevCards().setMonument(5);
+        assert(f.canUseMonument(1));
+        assert(!f.canUseMonument(0));
+
+        turnTracker.setCurrentPlayer(0);
+        f.getGM().getPlayers().get(0).getOldDevCards().setMonument(0);
+        f.getGM().setTt(turnTracker);
+        assert(!f.canUseMonument(0));
+
+        System.out.println("Can use Soldier card - can Do, Not turn, Insufficient Materials");
     }
     @Test
     public void canMoveRobber()
