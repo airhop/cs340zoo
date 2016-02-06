@@ -71,9 +71,11 @@ public class CanDoTest
         ps.add(p4);
 
         Map m = new Map();
-        m.hexes.put(new HexLocation(-1,-1), new Hex());
-        m.hexes.put(new HexLocation(3,4), new Hex("BRICK", 9));
-        m.hexes.put(new HexLocation(4,2), new Hex("ORE", 4));
+        TreeMap<HexLocation, Hex> hexes = new TreeMap<HexLocation, Hex> ();
+        hexes.put(new HexLocation(-1,-1), new Hex());
+        hexes.put(new HexLocation(3,4), new Hex("BRICK", 9));
+        hexes.put(new HexLocation(4,2), new Hex("ORE", 4));
+        m.setHexes(hexes);
         Robber r = new Robber();
         r.setHl(new HexLocation(3,4));
         m.setRobber(r);
@@ -240,6 +242,8 @@ public class CanDoTest
         assert(!f.canMoveRobber(new HexLocation(-1,-1)));
         assert(!f.canMoveRobber(new HexLocation(3,4)));
         assert(f.canMoveRobber(new HexLocation(4,2)));
+        
+        System.out.println("Can Move Robber - can Do, Not turn, Insufficent Materials");
     }
     @Test
     public void canSendChat()
