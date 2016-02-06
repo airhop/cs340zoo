@@ -238,7 +238,8 @@ public class CanDoTest
         f.getGM().setTt(tt);
         
         assert(!f.canMoveRobber(new HexLocation(-1,-1)));
-        assert(!f.canMoveRobber(new HexLocation(-1,-1)));
+        assert(!f.canMoveRobber(new HexLocation(3,4)));
+        assert(f.canMoveRobber(new HexLocation(4,2)));
     }
     @Test
     public void canSendChat()
