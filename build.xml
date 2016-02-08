@@ -132,7 +132,7 @@
 		</copy>
  		<jar jarfile="${java.dist}/catan-client.jar" basedir="${java.build}">
 			<manifest>
-				<attribute name="Main-Class" value="client.main.Catan"/>
+				<attribute name="Main-Class" value="client.MVC.main.Catan"/>
 				<attribute name="Class-Path" 
 					value="lib/gson-2.2.4.jar" />
 			</manifest>
