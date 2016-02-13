@@ -1,13 +1,13 @@
 Aaron:
--Map Controller
+-Map Controller - Focus on roads and settlements, Domestic, Robber
 Mike:
 -Login controller, Make sure check input --TurnTracker
 Rebecca:
--Stub out states for Map
+-Stub out states for Map, Discard, Chat+Game History
 Josh:
-- Join Game, Points
+- Join Game, Points, Resources/DevCard
 David:
--Player Waiting, waiting for four player to join the game, Roll
+-Player Waiting, waiting for four player to join the game, Roll, Maritime
 
 Total Task:
 Login Controller - check input parameters
@@ -15,16 +15,16 @@ Join and Waiting Screen
 Get Map to Draw
 States for the map
 
-Login
-Join
-Waiting
-Map
-Roll
-TurnTracker
-Points
-Maritime
-Resources/DevCard
-Domestic
+Login --
+Join --
+Waiting --
+Map --
+Roll --
+TurnTracker --
+Points --
+Maritime --
+Resources/DevCard --
+Domestic --
 Discard
-Robber
-Chat+Game History
+Robber --
+Chat+Game History --
