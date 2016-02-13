@@ -6,11 +6,10 @@ import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
 
-/**
- * Created by GaryPetersen on 2/13/2016.
- */
+
 public class StateRobbing extends StateAbstract
 {
+    public StateRobbing(){}
     public void startMove(PieceType pieceType, boolean isFree, boolean allowDisconnected){}
 
     public void cancelMove(){}

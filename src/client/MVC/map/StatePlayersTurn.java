@@ -4,9 +4,7 @@ import shared.definitions.PieceType;
 import shared.locations.EdgeLocation;
 import shared.locations.VertexLocation;
 
-/**
- * Created by GaryPetersen on 2/13/2016.
- */
+
 public class StatePlayersTurn extends StateAbstract
 {
     public StatePlayersTurn(){}

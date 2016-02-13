@@ -3,13 +3,11 @@ package client.MVC.map;
 import shared.definitions.PieceType;
 import shared.locations.EdgeLocation;
 
-/**
- * Created by GaryPetersen on 2/13/2016.
- */
+
 public class StateRoadBuilding extends StateAbstract
 {
     int RoadsLaid = 0;
-
+    public StateRoadBuilding(){}
 
     public boolean canPlaceRoad(EdgeLocation edgeLoc) {return false;}
     public void placeRoad(EdgeLocation edgeLoc){}
