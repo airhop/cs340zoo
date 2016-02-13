@@ -5,6 +5,7 @@ Josh:
 David:
 
 Total Task:
-Login Controller
-Join Game
+Login Controller - check input parameters
+Join and Waiting Screen
 Get Map to Draw
+States for the map
