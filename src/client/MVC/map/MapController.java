@@ -17,14 +17,14 @@ import java.util.Random;
 public class MapController extends Controller implements IMapController {
 
     private IRobView robView;
+    private StateAbstract state;
 
     public MapController(IMapView view, IRobView robView) {
 
         super(view);
-
         setRobView(robView);
-
         initFromModel();
+        state = new StateDefault();
     }
 
     public IMapView getView() {
@@ -40,7 +40,66 @@ public class MapController extends Controller implements IMapController {
         this.robView = robView;
     }
 
-    protected void initFromModel() {
+    protected void initFromModel()
+    {
+        //change the state here . . .
+        state.initFromModel();
+    }
+
+
+    public boolean canPlaceRoad(EdgeLocation edgeLoc) {
+        return state.canPlaceRoad(edgeLoc);
+    }
+
+    public boolean canPlaceSettlement(VertexLocation vertLoc) {
+        return state.canPlaceSettlement(vertLoc);
+    }
+
+    public boolean canPlaceCity(VertexLocation vertLoc) {
+        return state.canPlaceCity(vertLoc);
+    }
+
+    public boolean canPlaceRobber(HexLocation hexLoc) {
+        return state.canPlaceRobber(hexLoc);
+    }
+
+    public void placeRoad(EdgeLocation edgeLoc) {
+        state.placeRoad(edgeLoc);
+//        getView().placeRoad(edgeLoc, CatanColor.ORANGE);
+    }
+
+    public void placeSettlement(VertexLocation vertLoc) {
+        state.placeSettlement(vertLoc);
+//        getView().placeSettlement(vertLoc, CatanColor.ORANGE);
+    }
+
+    public void placeCity(VertexLocation vertLoc) {
+        state.placeCity(vertLoc);
+//        getView().placeCity(vertLoc, CatanColor.ORANGE);
+    }
+
+    public void placeRobber(HexLocation hexLoc) {
+        state.placeRobber(hexLoc);
+//        getView().placeRobber(hexLoc);
+//        getRobView().showModal();
+    }
+
+    public void startMove(PieceType pieceType, boolean isFree, boolean allowDisconnected) {
+        state.startMove(pieceType, isFree, allowDisconnected);
+//        getView().startDrop(pieceType, CatanColor.ORANGE, true);
+    }
+
+    public void cancelMove() { state.cancelMove();     }
+
+    public void playSoldierCard() { state.playSoldierCard();    }
+
+    public void playRoadBuildingCard() { state.playRoadBuildingCard();   }
+
+    public void robPlayer(RobPlayerInfo victim) { state.robPlayer(victim);    }
+
+}
+
+/* temporary initFromModel for debugging to see if it works . . .
 
         //<temp>
 
@@ -105,70 +164,5 @@ public class MapController extends Controller implements IMapController {
         getView().addNumber(new HexLocation(2, 0), 12);
 
         //</temp>
-    }
 
-    public boolean canPlaceRoad(EdgeLocation edgeLoc) {
-
-        return true;
-    }
-
-    public boolean canPlaceSettlement(VertexLocation vertLoc) {
-
-        return true;
-    }
-
-    public boolean canPlaceCity(VertexLocation vertLoc) {
-
-        return true;
-    }
-
-    public boolean canPlaceRobber(HexLocation hexLoc) {
-
-        return true;
-    }
-
-    public void placeRoad(EdgeLocation edgeLoc) {
-
-        getView().placeRoad(edgeLoc, CatanColor.ORANGE);
-    }
-
-    public void placeSettlement(VertexLocation vertLoc) {
-
-        getView().placeSettlement(vertLoc, CatanColor.ORANGE);
-    }
-
-    public void placeCity(VertexLocation vertLoc) {
-
-        getView().placeCity(vertLoc, CatanColor.ORANGE);
-    }
-
-    public void placeRobber(HexLocation hexLoc) {
-
-        getView().placeRobber(hexLoc);
-
-        getRobView().showModal();
-    }
-
-    public void startMove(PieceType pieceType, boolean isFree, boolean allowDisconnected) {
-
-        getView().startDrop(pieceType, CatanColor.ORANGE, true);
-    }
-
-    public void cancelMove() {
-
-    }
-
-    public void playSoldierCard() {
-
-    }
-
-    public void playRoadBuildingCard() {
-
-    }
-
-    public void robPlayer(RobPlayerInfo victim) {
-
-    }
-
-}
-
+ */
