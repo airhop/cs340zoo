@@ -1,5 +1,10 @@
 package client.MVC.login;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import com.google.common.base.CharMatcher;
+
 import client.MVC.base.*;
 import client.MVC.misc.*;
 
@@ -11,6 +16,9 @@ public class LoginController extends Controller implements ILoginController {
 
     private IMessageView messageView;
     private IAction loginAction;
+    //added by Mike Lo
+    private String usernameRegex = "[0-9a-zA-Z]+";
+    private String passwordRegex = "[\u0000-\u00FF]+";
 
     /**
      * LoginController constructor
@@ -65,21 +73,65 @@ public class LoginController extends Controller implements ILoginController {
     public void signIn() {
 
         // TODO: log in user
-
-
+    	//CharMatcher unicodeChecker;
+    	
+    	String username;
+    	String password;
+    	username = getLoginView().getLoginUsername();
+    	password = getLoginView().getLoginPassword();
+    	if(!username.matches(usernameRegex))
+    	{
+    		System.out.println("LoginController.java: invalid character(s) in username");
+    	}
+    	if(!password.matches(passwordRegex))
+    	{
+    		System.out.println("LoginController.java: password should only contain ASCII characters");
+    	}
+    	
         // If log in succeeded
-        getLoginView().closeModal();
-        loginAction.execute();
+    	if (username.matches(usernameRegex)&&password.matches(passwordRegex))
+    	{
+    		getLoginView().closeModal();
+            loginAction.execute();
+    	}
+        
     }
 
     @Override
     public void register() {
 
         // TODO: register new user (which, if successful, also logs them in)
-
+    	String username;
+    	String password;
+    	String confirmPassword;
+    	
+    	username = getLoginView().getRegisterUsername();
+    	password = getLoginView().getRegisterPasswordRepeat();
+    	confirmPassword = getLoginView().getRegisterPasswordRepeat();
+    	
         // If register succeeded
-        getLoginView().closeModal();
-        loginAction.execute();
+    	if (!username.matches(usernameRegex))
+    	{
+    		System.out.println("LoginController.java: username should only include alphbate");
+    	}
+    	if (!password.matches(passwordRegex))
+    	{
+    		System.out.println("LoginController.java: password include invalid charaters, such as unicode?");
+    	}
+    	if (!confirmPassword.matches(passwordRegex))
+    	{
+    		System.out.println("LoginController.java: password include invalid charaters, such as unicode?");
+    	}
+    	if (!confirmPassword.equals(password))
+    	{
+    		System.out.println("LoginController.java: Password does not match");
+    	}
+    	if (username.matches(usernameRegex)&&password.matches(passwordRegex)&&confirmPassword.matches(passwordRegex) && confirmPassword.equals(password))
+    	{
+    		getLoginView().closeModal();
+            loginAction.execute();
+    	}
+        
     }
 
 }
