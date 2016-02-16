@@ -24,7 +24,7 @@ public class MapController extends Controller implements IMapController {
         super(view);
         setRobView(robView);
         initFromModel();
-        state = new StateDefault();
+        state = new StateDefault(view, robView);
     }
 
     public IMapView getView() {

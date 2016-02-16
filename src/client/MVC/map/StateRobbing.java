@@ -9,7 +9,11 @@ import shared.locations.VertexLocation;
 
 public class StateRobbing extends StateAbstract
 {
-    public StateRobbing(){}
+    public StateRobbing(IMapView view, IRobView robView)
+    {
+        super(view, robView);
+    }
+
     public void startMove(PieceType pieceType, boolean isFree, boolean allowDisconnected){}
 
     public void cancelMove(){}
