@@ -15,6 +15,7 @@ import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
 import shared.serialization.Deserializer;
 import shared.locations.*;
+import shared.definitions.*;
 
 public class Map
 {
@@ -35,17 +36,19 @@ public class Map
 		ports = new ArrayList<Port>();
 		roads = new ArrayList<Road>();
 		robber = new Robber();
-//        settlements = new ArrayList<VertexObject>();
-//        cities = new ArrayList<VertexObject>();
+		//settlements = new ArrayList<VertexObject>();
+		//cities = new ArrayList<VertexObject>();
 		buildings = new ArrayList<VertexObject>();
 		resources = new ArrayList<ResourceList>();
 		deserializer = new Deserializer();
 	}
 
-	public void clearHexes(){
+	public void clearHexes()
+	{
 		hexes.clear();
 	}
-	public void clearBuildings(){
+	public void clearBuildings()
+	{
 		buildings.clear();
 	}
 
@@ -64,7 +67,7 @@ public class Map
 	 */
 	public boolean canAddHex()
 	{
-		if (hexes.size() > 32)
+		if (hexes.size() > 37)
 		{
 			return false;
 		}
@@ -76,6 +79,7 @@ public class Map
 	public void addHexDesert(int x, int y) throws FailureToAddException//may not be used
 	{
 		Hex hex = new Hex(x,y);
+		//hex.setResource(HexType.DESERT.toString());
 		hexes.put(hex.getLocation(), hex);
 	}
 
@@ -89,7 +93,7 @@ public class Map
 	 */
 	public void addHex(int x, int y, String resource, int number) throws FailureToAddException//may not be used
 	{
-
+		
 		String numberString = new String(Integer.toString(number));
 		Hex hex = new Hex(x,y,resource,number);
 		hexes.put(hex.getLocation(), hex);
