@@ -7,7 +7,9 @@ import shared.definitions.HexType;
 import shared.definitions.PieceType;
 import shared.definitions.PortType;
 import shared.locations.*;
+import client.model.map.*;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 
@@ -42,8 +44,40 @@ public class MapController extends Controller implements IMapController {
 
     protected void initFromModel()
     {
-        //change the state here . . .
-        state.initFromModel();
+        changeState();
+        Map map = facade.getMap();
+        ArrayList<Hex> hexes = map.getHexMap();
+        for(int i = 0; i < hexes.size(); i++)
+        {
+            getView().addHex(hexes.get(i).getLocation(), HexType.convert(hexes.get(i).getResource()));
+            getView().addNumber(hexes.get(i).getLocation(), hexes.get(i).getNumber());
+        }
+
+        //repeat with ports, roads, settlements, cities, robber
+
+        ArrayList<Port> ports = map.getPorts();
+        for(int i = 0; i < ports.size(); i++)
+        {
+            EdgeLocation el = new EdgeLocation(ports.get(i).getLocation(), ports.get(i).getDirection());
+            getView().addPort(el, PortType.convert(ports.get(i).getResource()));
+        }
+
+        ArrayList<Road> roads = map.getRoads();
+        for(int i = 0; i < roads.size(); i++)
+        {
+            getView().placeRoad(roads.get(i).getLocation(), facade.getPlayerColor(roads.get(i).getOwner()));
+        }
+
+        ArrayList<VertexObject> buildings = map.getBuildings();
+        for(int i = 0; i < buildings.size(); i++)
+        {
+            if((buildings.get(i)) instanceof Settlement)
+                getView().placeSettlement(buildings.get(i).getLocation(), facade.getPlayerColor(buildings.get(i).getOwner()));
+            else
+                getView().placeCity(buildings.get(i).getLocation(), facade.getPlayerColor(buildings.get(i).getOwner()));
+        }
+
+        getView().placeRobber(map.getRobber().getHl());
     }
 
 

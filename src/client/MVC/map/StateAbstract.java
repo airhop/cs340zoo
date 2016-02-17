@@ -9,13 +9,6 @@ import shared.locations.VertexLocation;
 
 public abstract class StateAbstract
 {
-    //implement these two . . .
-    public void initFromModel()
-    {
-
-    }
-
-
 //don't implement . . .
     public boolean canPlaceRoad(EdgeLocation edgeLoc) {return false;}
     public boolean canPlaceSettlement(VertexLocation vertLoc){return false;}

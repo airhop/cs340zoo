@@ -52,6 +52,20 @@ public class Map
 		buildings.clear();
 	}
 
+	public ArrayList<Hex> getHexMap()
+	{
+		ArrayList<Hex> returnHexes = new ArrayList<>();
+		for(int x = -3; x < 4; x++)
+		{
+			for(int y = -3; y < 4; y++)
+			{
+				HexLocation hl = new HexLocation(x, y);
+
+				returnHexes.add(hexes.get(hl));
+			}
+		}
+		return returnHexes;
+	}
 
 	/**
 	 * initialize a new map when game is created

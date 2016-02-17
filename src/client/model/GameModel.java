@@ -182,6 +182,13 @@ public class GameModel {
         this.log = log;
     }
 
+    public CatanColor getCurrentColor()
+    {
+        return CatanColor.convert(players.get(getTt().getCurrentPlayer()).getColor());
+    }
+    public CatanColor getPlayerColor (int player)
+    {   return CatanColor.convert(players.get(player).getColor());}
+
     /**
      * updates version of the game model
      */

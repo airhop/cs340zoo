@@ -25,5 +25,30 @@ public enum CatanColor
 	{
 		return color;
 	}
+
+	public static CatanColor convert(String color)
+	{
+		if(color.equalsIgnoreCase("RED"))
+			return CatanColor.RED;
+		if(color.equalsIgnoreCase("ORANGE"))
+			return ORANGE;
+		if(color.equalsIgnoreCase("Yellow"))
+			return YELLOW;
+		if(color.equalsIgnoreCase("Blue"))
+			return BLUE;
+		if(color.equalsIgnoreCase("Green"))
+			return GREEN;
+		if(color.equalsIgnoreCase("Purple"))
+			return PURPLE;
+		if(color.equalsIgnoreCase("Puce"))
+			return PUCE;
+		if(color.equalsIgnoreCase("White"))
+			return WHITE;
+		if(color.equalsIgnoreCase("Brown"))
+			return BROWN;
+
+		System.out.println("major error here :)");
+		return WHITE;
+	}
 }
 

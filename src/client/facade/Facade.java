@@ -37,6 +37,9 @@ public class Facade {
         game = g;
     }
 
+    public CatanColor getCatanColor()    {        return game.getCurrentColor();    }
+    public Map getMap()    {        return game.getMap();    }
+    public CatanColor getPlayerColor(int player) {return game.getPlayerColor(player); }
     //login and register may need to print
     //register - user already exists, GUI in charge of checking lengths and that passwords match
     public boolean Login(String username, String password) {
