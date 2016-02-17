@@ -7,14 +7,13 @@ import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
 
-public abstract class StateAbstract extends MapController
+public abstract class StateAbstract
 {
-    public StateAbstract(IMapView view, IRobView robView) {
-        super(view, robView);
-    }
-
     //implement these two . . .
-    public void initFromModel(){}
+    public void initFromModel()
+    {
+
+    }
 
 
 //don't implement . . .

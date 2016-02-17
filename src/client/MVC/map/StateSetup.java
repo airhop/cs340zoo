@@ -11,44 +11,45 @@ import shared.locations.VertexLocation;
 
 public class StateSetup extends StateAbstract
 {
-    public StateSetup(IMapView view, IRobView robView)
+    private IMapView view;
+    private IRobView robView;
+    CatanColor color;
+
+    public StateSetup(IMapView v, IRobView rv)
     {
-        super(view, robView);
+        view = v;
+        robView = rv;
+        color = facade.getCatanColor();
     }
 
     public boolean canPlaceRoad(EdgeLocation edgeLoc)
     {
-        boolean response = facade.canPlaceRoad(edgeLoc);
-        getView().startDrop(PieceType.ROAD, PlayerInfo.getColor(), response);
-        return response;
+        return facade.canPlaceRoad(edgeLoc);
     }
 
     public boolean canPlaceSettlement(VertexLocation vertLoc)
     {
-        boolean response = facade.canPlaceSettlement(vertLoc);
-        getView().startDrop(PieceType.SETTLEMENT, PlayerInfo.getColor(), response);
-        return response;
-
+      return facade.canPlaceSettlement(vertLoc);
     }
 
     public void placeRoad(EdgeLocation edgeLoc)
     {
-        getView().placeRoad(edgeLoc, PlayerInfo.getColor());
+        view.placeRoad(edgeLoc, color);
     }
 
     public void placeSettlement(VertexLocation vertLoc)
     {
-        getView().placeSettlement(vertLoc, PlayerInfo.getColor());
+        view.placeSettlement(vertLoc, color);
     }
 
     public void startMove(PieceType pieceType, boolean isFree, boolean allowDisconnected)
     {
-
+        view.startDrop(pieceType, color, true);
     }
 
-    public void cancelMove()
-    {
-
-    }
+//    public void cancelMove()
+//    {
+//        view.cancelDrop();
+//    }
 
 }

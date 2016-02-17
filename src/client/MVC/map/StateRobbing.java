@@ -7,11 +7,15 @@ import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
 
 
-public class StateRobbing extends StateAbstract
+public class StateRobbing
 {
-    public StateRobbing(IMapView view, IRobView robView)
+    private IMapView view;
+    private IRobView robView;
+
+    public StateRobbing(IMapView v, IRobView rv)
     {
-        super(view, robView);
+        view = v;
+        robView = rv;
     }
 
     public void startMove(PieceType pieceType, boolean isFree, boolean allowDisconnected){}

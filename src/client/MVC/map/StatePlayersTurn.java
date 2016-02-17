@@ -5,9 +5,13 @@ import shared.locations.EdgeLocation;
 import shared.locations.VertexLocation;
 
 
-public class StatePlayersTurn extends StateAbstract
+public class StatePlayersTurn
 {
-    public StatePlayersTurn(){}
+    private IMapView view;
+    public StatePlayersTurn(IMapView v, IRobView rv)
+    {
+        view = v;
+    }
 
     public boolean canPlaceRoad(EdgeLocation edgeLoc) {return false;}
     public boolean canPlaceSettlement(VertexLocation vertLoc){return false;}
