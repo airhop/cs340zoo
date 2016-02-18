@@ -101,9 +101,6 @@ public class Catan extends JFrame {
 
                 loginController.start();
 
-                facade.addController(loginController);
-                facade.addController(joinController);
-                facade.addController(playerWaitingController);
             }
         });
     }

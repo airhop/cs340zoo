@@ -591,11 +591,11 @@ public class MapComponent extends JComponent {
 
         for (Map.Entry<HexLocation, Integer> entry : numbers.entrySet()) {
 
-            BufferedImage numImage = getNumberImage(entry.getValue());
-
-            Point2D hexCenter = getHexPoint(entry.getKey());
-
-            drawImage(g2, numImage, hexCenter);
+            if(entry.getValue() != 0) {
+                BufferedImage numImage = getNumberImage(entry.getValue());
+                Point2D hexCenter = getHexPoint(entry.getKey());
+                drawImage(g2, numImage, hexCenter);
+            }
         }
     }
 

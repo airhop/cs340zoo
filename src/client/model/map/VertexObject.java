@@ -7,6 +7,12 @@ public abstract class VertexObject{
   int owner;
   //EdgeLocation edgelocation;
   VertexLocation vertexLocation;
+
+    public VertexObject(VertexLocation vl, int player)
+    {
+        owner = player;
+        vertexLocation = vl;
+    }
   //VertexLocation vertexLocation;
   //edgelocation?
   

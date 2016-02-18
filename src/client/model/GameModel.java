@@ -3,6 +3,7 @@ package client.model;
 import client.model.bank.Bank;
 import client.model.bank.ResourceList;
 import client.model.map.*;
+import client.model.map.Map;
 import client.model.misc.*;
 import client.model.player.Player;
 import org.omg.CORBA.DynAnyPackage.Invalid;
@@ -11,8 +12,7 @@ import shared.exceptions.*;
 import shared.definitions.*;
 import shared.locations.*;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class GameModel {
     private Map map;
@@ -444,7 +444,15 @@ public class GameModel {
 
     public String toString()
     {
-        String s = map.getHexes().size() + " " + map.getHexMap().size() + " " + map.getBuildings().size() + " ";
+//        TreeMap<HexLocation, Hex> hexmap = map.getHexes();
+//        Set keys = hexmap.keySet();
+//        for(Iterator i = keys.iterator(); i.hasNext();)
+//        {
+//            HexLocation hl = (HexLocation)i.next();
+//            Hex h = (Hex)hexmap.get(hl);
+//            System.out.println(hl.getX() + " " + hl.getY() + "\t" + h.getResource());
+//        }
+        String s = map.getHexMap().size() + " " + map.getBuildings().size() + " ";
         return s;
     }
 }

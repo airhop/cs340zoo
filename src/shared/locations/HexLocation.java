@@ -91,8 +91,14 @@ public class HexLocation implements Comparable
 	}
 
 	@Override
-	public int compareTo(Object o) {
-		return ((HexLocation)o).getX() - getX();
+	public int compareTo(Object o)
+	{
+		//5x +y
+		int current = 5*getX() + getY();
+		HexLocation x = (HexLocation)o;
+		int compare = 5*x.getX() + x.getY();
+
+		return current - compare;
 	}
 }
 

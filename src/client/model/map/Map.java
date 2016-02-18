@@ -2,9 +2,7 @@
 // need arraylist of vertexobject. Need to know which one is build on port.
 package client.model.map;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.TreeMap;
+import java.util.*;
 
 import client.model.bank.ResourceList;
 import client.proxy.Proxy;
@@ -55,15 +53,31 @@ public class Map
 	public ArrayList<Hex> getHexMap()
 	{
 		ArrayList<Hex> returnHexes = new ArrayList<>();
-		for(int x = -3; x < 4; x++)
-		{
-			for(int y = -3; y < 4; y++)
-			{
-				HexLocation hl = new HexLocation(x, y);
 
-				returnHexes.add(hexes.get(hl));
-			}
+		Set keys = hexes.keySet();
+		for(Iterator i = keys.iterator(); i.hasNext();)
+        {
+            HexLocation hl = (HexLocation)i.next();
+            returnHexes.add(hexes.get(hl));
+			if(hexes.get(hl) == null)
+				System.out.println("oops");
+        }
+
+		for(int i = 0; i < 4; i++)
+		{
+			returnHexes.add(new Hex(-3, i, "OCEAN", 0));
+			returnHexes.add(new Hex(3, (-1*i), "OCEAN", 0));
 		}
+		returnHexes.add(new Hex(-2, -1, "OCEAN", 0));
+		returnHexes.add(new Hex(-2, 3, "OCEAN", 0));
+		returnHexes.add(new Hex(-1, -2, "OCEAN", 0));
+		returnHexes.add(new Hex(-1, 3, "OCEAN", 0));
+		returnHexes.add(new Hex(0, -3, "OCEAN", 0));
+		returnHexes.add(new Hex(0, 3, "OCEAN", 0));
+		returnHexes.add(new Hex(1, -3, "OCEAN", 0));
+		returnHexes.add(new Hex(1, 2, "OCEAN", 0));
+		returnHexes.add(new Hex(2, -3, "OCEAN", 0));
+		returnHexes.add(new Hex(2, 1, "OCEAN", 0));
 		return returnHexes;
 	}
 
@@ -110,7 +124,12 @@ public class Map
 		
 		String numberString = new String(Integer.toString(number));
 		Hex hex = new Hex(x,y,resource,number);
-		hexes.put(hex.getLocation(), hex);
+		Hex xomething = hexes.put(hex.getLocation(), hex);
+//		if(xomething == null)
+//			System.out.println("awesome!!");
+//		else
+//			System.out.println(xomething.getLocation().getX() + " " + xomething.getLocation().getY() + " " + xomething.getResource() + "\n");
+//		System.out.println("added " + x + " " + y + " \t" + hex.getLocation().getX() + " " + hex.getLocation().getY() + " " +  hexes.size());
 	}
 // This section suppose to be rolling dice method
 //    public void

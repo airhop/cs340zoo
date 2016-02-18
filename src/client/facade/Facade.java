@@ -16,11 +16,15 @@ import shared.jsonobject.*;
 import shared.locations.*;
 
 import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Observer;
 
-public class Facade {
+public class Facade extends Observable
+{
     private GameModel game;
     private IProxy proxy;
-    private ArrayList<Controller> controllers = new ArrayList<Controller>();
+    private ArrayList<Observer> observers = new ArrayList<Observer>();
+    private boolean loggedIn = false, Joined = false, Created = false;
 
     private static Facade facade = new Facade();
     private Facade(){game = new GameModel();}
@@ -37,21 +41,31 @@ public class Facade {
 
     public void retrieveGameModel()
     {
+        if(!loggedIn || !Joined || !Created)
+            return;
         GameModel gm = proxy.getGameModel();
         if (gm != null)
         {
             game = gm;
-            //tell the observers!!!
+
+            System.out.println("\n\n" + game.getMap().getHexes().size() + " \n\n");
+            for(int i = 0; i < observers.size(); i++) {
+                observers.get(i).update(facade, "");
+                System.out.println(observers.get(i).getClass());
+            }
         }
     }
     public GameModel getGM() {return game;}
     public void Reinitialize(GameModel g) {
         game = g;
     }
-    public void addController(Controller x)
+
+    //observer methods
+    public void addObserver(Observer x)
     {
-        controllers.add(x);
+        observers.add(x);
     }
+
 
     public CatanColor getCatanColor()    {        return game.getCurrentColor();    }
     public Map getMap()    {        return game.getMap();    }
@@ -63,8 +77,10 @@ public class Facade {
         try {
             proxy.userLogin(u);
         } catch (InvalidUserException e) {
+            System.out.println("oops");
             return false;
         }
+        loggedIn = true;
         return true;
     }
 
@@ -86,6 +102,7 @@ public class Facade {
     public void gamesCreate(String s) {
         try {
             proxy.gamesCreate(s);
+            Created = true;
         } catch (FailedCreateGameException e) {
             //exceptionair!!
         }
@@ -94,6 +111,7 @@ public class Facade {
     public void gamesJoin(String s, int playerId) {
         try {
             proxy.gamesJoin(s, playerId);
+            Joined = true;
         } catch (InvalidUserException e) {
             //exceptionair!!
         }

@@ -11,13 +11,15 @@ import shared.locations.*;
 import client.model.map.*;
 
 import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.Random;
 
 
 /**
  * Implementation for the map controller
  */
-public class MapController extends Controller implements IMapController {
+public class MapController extends Controller implements IMapController, Observer {
 
     private IRobView robView;
     private StateAbstract state;
@@ -28,6 +30,8 @@ public class MapController extends Controller implements IMapController {
         super(view);
         setRobView(robView);
         state = new StateDefault(view, robView);
+        facade.addObserver(this);
+        System.out.println("hey!");
     }
 
     public IMapView getView() {
@@ -49,13 +53,19 @@ public class MapController extends Controller implements IMapController {
         //switch here between the states and set it up
     }
 
+    public void update(Observable observable, Object args)
+    {
+        initFromModel();
+    }
+
     protected void initFromModel()
     {
         facade = Facade.getInstance();
         changeState();
-        System.out.println(facade.getGM().toString() + "\n\n\n");
+        System.out.println("I is here!!!");
         Map map = facade.getMap();
         ArrayList<Hex> hexes = map.getHexMap();
+        System.out.println(hexes.size());
         for(int i = 0; i < hexes.size(); i++)
         {
             getView().addHex(hexes.get(i).getLocation(), HexType.convert(hexes.get(i).getResource()));

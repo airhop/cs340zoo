@@ -7,6 +7,7 @@ import java.util.regex.Pattern;
 
 import client.MVC.base.*;
 import client.MVC.misc.*;
+import client.facade.Facade;
 
 
 /**
@@ -92,7 +93,8 @@ public class LoginController extends Controller implements ILoginController {
     	if (username.matches(usernameRegex)&&password.matches(passwordRegex))
     	{
     		getLoginView().closeModal();
-            loginAction.execute();
+			Facade.getInstance().Login(password, username);
+			loginAction.execute();
     	}
         
     }
@@ -129,8 +131,9 @@ public class LoginController extends Controller implements ILoginController {
     	if (username.matches(usernameRegex)&&password.matches(passwordRegex)&&confirmPassword.matches(passwordRegex) && confirmPassword.equals(password))
     	{
     		getLoginView().closeModal();
-            loginAction.execute();
-    	}
+			Facade.getInstance().register(username, password);
+			loginAction.execute();
+		}
         
     }
 

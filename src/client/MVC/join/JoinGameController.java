@@ -3,6 +3,7 @@ package client.MVC.join;
 import client.MVC.base.*;
 import client.MVC.data.*;
 import client.MVC.misc.*;
+import client.facade.Facade;
 import shared.definitions.CatanColor;
 
 
@@ -131,6 +132,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
         // If join succeeded
         getSelectColorView().closeModal();
         getJoinGameView().closeModal();
+        Facade.getInstance().gamesJoin(CatanColor.toString(color), 0);
         joinAction.execute();
     }
 

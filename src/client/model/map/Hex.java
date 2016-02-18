@@ -17,6 +17,8 @@ public class Hex {
   public Hex(int x, int y)
   {
     hl = new HexLocation(x, y);
+    chit = 0;
+    resource = HexType.DESERT.toString();
   }
 
   public Hex(String resrc, int num)

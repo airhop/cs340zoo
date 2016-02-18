@@ -50,5 +50,21 @@ public enum CatanColor
 		System.out.println("major error here :)");
 		return WHITE;
 	}
+
+	public static String toString(CatanColor color)
+	{
+		switch(color)
+		{
+			case RED: return "red";
+			case ORANGE: return "orange";
+			case YELLOW: return "yellow";
+			case BLUE: return "blue";
+			case GREEN: return "green";
+			case PURPLE: return "purple";
+			case PUCE: return "puce";
+			case WHITE: return "white";
+			default: return "brown";
+		}
+	}
 }
 

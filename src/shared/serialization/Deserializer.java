@@ -30,8 +30,9 @@ public class Deserializer {
      * @return object, you must cast this object to the thing you are deseralizing.
      */
     public GameModel deserialize(String jsonString, GameModel myModel) {
-        Bank myBank = myModel.getBank();
-        Map myMap = myModel.getMap();
+        int jellybean = 0;
+        Bank myBank = new Bank();
+        Map myMap = new Map();
         ResourceList myResource = null;
         DevCardList myDevCards = myBank.getDevCards();
         String resourceType = "";
@@ -43,10 +44,10 @@ public class Deserializer {
         int ratio;
         ArrayList<Player> players = myModel.getPlayers();
         Player currentPlayer = null;
-        MessageList myMessages = myModel.getChat().getChatList();
+        MessageList myMessages = new MessageList();
         String source = "";
         String message = "";
-        TurnTracker turnTracker = myModel.getTt();
+        TurnTracker turnTracker = new TurnTracker();
         int winner;
         int version;
 
@@ -60,7 +61,7 @@ public class Deserializer {
         String myCurrent = "";
         int myIn = 0;
         boolean myBool = false;
-//        System.out.println(myTree.toString());
+        System.out.println(myTree.toString());
         try {
             while (!myTree.peek().name().equals("END_DOCUMENT")) {
 //                System.out.println(myTree.peek().name());
@@ -186,7 +187,7 @@ public class Deserializer {
                                         xValue = myTree.nextInt();
                                         myTree.nextName();//y
                                         yValue = myTree.nextInt();
-                                        myMap.addPort(xValue, yValue, resourceType, EdgeDirection.valueOf(myDir),ratio);
+                                        myMap.addPort(xValue, yValue, "THREE", EdgeDirection.valueOf(myDir),ratio);
                                     }
                                     myTree.endObject();
                                     myTree.endObject();
@@ -382,7 +383,11 @@ public class Deserializer {
             e.printStackTrace();
         }
 
-
+//        System.out.println("Information: " + myMap.getHexes().size() +  " " + myMap.getHexMap().size() + "\t");
+        myModel.setMap(myMap);
+        myModel.setTt(turnTracker);
+        myModel.setBank(myBank);
+        myModel.setPlayers(players);
         return myModel;
     }
 

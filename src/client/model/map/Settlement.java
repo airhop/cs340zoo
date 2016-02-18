@@ -6,29 +6,9 @@ import shared.locations.VertexLocation;
 
 public class Settlement extends VertexObject 
 {
-	int owner;
-	VertexLocation vertextLocation;
-	
-	public Settlement(VertexLocation vertexLocation, int player)
+	public Settlement (VertexLocation vl, int player)
 	{
-		owner = player;
-		this.vertextLocation =vertexLocation;
-	}
-	
-	public int getOwner() {
-		return owner;
-	}
-
-	public void setOwner(int owner) {
-		this.owner = owner;
-	}
-
-	public VertexLocation getVertextLocation() {
-		return vertextLocation;
-	}
-
-	public void setVertextLocation(VertexLocation vertextLocation) {
-		this.vertextLocation = vertextLocation;
+		super(vl, player);
 	}
 
 	public boolean canPlaceAtLocation()  

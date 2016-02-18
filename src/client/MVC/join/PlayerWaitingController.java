@@ -1,6 +1,7 @@
 package client.MVC.join;
 
 import client.MVC.base.*;
+import client.facade.Facade;
 
 
 /**
@@ -30,6 +31,7 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 
         // TEMPORARY
         getView().closeModal();
+        Facade.getInstance().gamesCreate("New Game");
     }
 
 }

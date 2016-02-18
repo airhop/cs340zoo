@@ -11,9 +11,6 @@ import shared.exceptions.FailedCreateGameException;
 import shared.exceptions.InvalidUserException;
 import shared.jsonobject.User;
 
-/**
- * Created by Joshua on 1/22/2016.
- */
 public class NewMain {
     public static void main(String[] args){
         GameModel myGameModel = new GameModel();
