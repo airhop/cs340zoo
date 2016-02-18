@@ -1,18 +1,3 @@
-/**
- * David - canAcceptTrade - ResourceList param
- * - canOfferTrade - ResourceList param
- * - canDiscardCards(resourceList)
- * - canBuildCity - why checking settlements < MAX_SETTLEMENTS (check placed settlements)
- * - getCities/Settlements
- * - maritimeTrade (ports)
- * <p>
- * CanTradeBank - make sure you have resources
- * Mike - need to line up our methods, too many red things on my end
- * <p>
- * maritime trade?!
- */
-
-
 package client.model;
 
 import client.model.bank.Bank;
@@ -456,4 +441,10 @@ public class GameModel {
         return true;
     }
 
+
+    public String toString()
+    {
+        String s = map.getHexes().size() + " " + map.getHexMap().size() + " " + map.getBuildings().size() + " ";
+        return s;
+    }
 }

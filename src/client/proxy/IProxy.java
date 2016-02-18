@@ -1,7 +1,7 @@
 package client.proxy;
 
 
-
+import client.model.GameModel;
 import client.model.bank.ResourceList;
 import client.model.history.MessageList;
 import shared.definitions.ResourceType;
@@ -56,7 +56,7 @@ public interface IProxy {
     /**
      * Returns the ClientModel when called
      */
-    void getGameModel();
+    GameModel getGameModel();
 
     void resetCommands();
 

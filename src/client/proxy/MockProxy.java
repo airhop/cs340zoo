@@ -82,9 +82,10 @@ public class MockProxy implements IProxy{
     }
 
     @Override
-    public void getGameModel() 
+    public GameModel getGameModel()
     {
     	System.out.println("MockProxy.java: getGameModel() is called");
+        return new GameModel();
     }
 
     @Override

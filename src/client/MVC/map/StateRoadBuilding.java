@@ -14,12 +14,13 @@ public class StateRoadBuilding extends StateAbstract
     public StateRoadBuilding(IMapView v, IRobView robView)
     {
         view = v;
-        color = facade.getCatanColor();
+     //   color = facade.getCatanColor();
     }
 
     public boolean canPlaceRoad(EdgeLocation edgeLoc)
     {
-       return facade.canPlaceRoad(edgeLoc);
+        return true;
+       //return facade.canPlaceRoad(edgeLoc);
     }
 
     public void placeRoad(EdgeLocation edgeLoc)

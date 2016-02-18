@@ -327,15 +327,21 @@ public class Proxy implements IProxy {
     }
 
     @Override
-    public void getGameModel() {
+    public GameModel getGameModel() {
         String url = "/game/model";
         HttpURLResponse myResponse;
+        GameModel gm = null;
         try {
+            System.out.println("\n Heyo!!\n" + myGameModel.toString() + "\n");
             myResponse = doGet(url);
-            myDeSer.deserialize(myResponse.getResponseBody(), myGameModel);
+            gm = myDeSer.deserialize(myResponse.getResponseBody(), myGameModel);
+            System.out.println("\n Heyo!!\n" + myGameModel.toString() + "\n");
         } catch (ClientException e) {
             e.printStackTrace();
         }
+        if (gm!= null)
+            myGameModel = gm;
+        return gm;
     }
 
     @Override

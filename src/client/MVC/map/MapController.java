@@ -2,6 +2,7 @@ package client.MVC.map;
 
 import client.MVC.base.*;
 import client.MVC.data.*;
+import client.facade.Facade;
 import shared.definitions.CatanColor;
 import shared.definitions.HexType;
 import shared.definitions.PieceType;
@@ -20,12 +21,12 @@ public class MapController extends Controller implements IMapController {
 
     private IRobView robView;
     private StateAbstract state;
+    private Facade facade = Facade.getInstance();
 
     public MapController(IMapView view, IRobView robView) {
 
         super(view);
         setRobView(robView);
-        initFromModel();
         state = new StateDefault(view, robView);
     }
 
@@ -42,9 +43,17 @@ public class MapController extends Controller implements IMapController {
         this.robView = robView;
     }
 
+    private void changeState()
+    {
+        String s = facade.getGM().getTt().getStatus();
+        //switch here between the states and set it up
+    }
+
     protected void initFromModel()
     {
+        facade = Facade.getInstance();
         changeState();
+        System.out.println(facade.getGM().toString() + "\n\n\n");
         Map map = facade.getMap();
         ArrayList<Hex> hexes = map.getHexMap();
         for(int i = 0; i < hexes.size(); i++)
@@ -52,8 +61,6 @@ public class MapController extends Controller implements IMapController {
             getView().addHex(hexes.get(i).getLocation(), HexType.convert(hexes.get(i).getResource()));
             getView().addNumber(hexes.get(i).getLocation(), hexes.get(i).getNumber());
         }
-
-        //repeat with ports, roads, settlements, cities, robber
 
         ArrayList<Port> ports = map.getPorts();
         for(int i = 0; i < ports.size(); i++)

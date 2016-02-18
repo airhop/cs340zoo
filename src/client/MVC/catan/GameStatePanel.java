@@ -1,6 +1,6 @@
 package client.MVC.catan;
 
-import client.base.IAction;
+import client.MVC.base.IAction;
 
 import javax.swing.*;
 import java.awt.*;

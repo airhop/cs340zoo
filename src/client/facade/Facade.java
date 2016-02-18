@@ -4,6 +4,7 @@
 
 package client.facade;
 
+import client.MVC.base.Controller;
 import shared.definitions.*;
 import shared.exceptions.*;
 import client.model.*;
@@ -14,27 +15,42 @@ import client.proxy.*;
 import shared.jsonobject.*;
 import shared.locations.*;
 
+import java.util.ArrayList;
+
 public class Facade {
-    GameModel game;
-    IProxy proxy;
+    private GameModel game;
+    private IProxy proxy;
+    private ArrayList<Controller> controllers = new ArrayList<Controller>();
 
-    public Facade(Proxy p) {
-        game = null;
-        proxy = p;
+    private static Facade facade = new Facade();
+    private Facade(){game = new GameModel();}
+
+    public static Facade getInstance()
+    {
+        return facade;
     }
 
-    public Facade(MockProxy p) {
-        game = null;
-        proxy = p;
+    public void setProxy(IProxy proxy)
+    {
+        this.proxy = proxy;
     }
 
-    public Facade() {
-
+    public void retrieveGameModel()
+    {
+        GameModel gm = proxy.getGameModel();
+        if (gm != null)
+        {
+            game = gm;
+            //tell the observers!!!
+        }
     }
-
     public GameModel getGM() {return game;}
     public void Reinitialize(GameModel g) {
         game = g;
+    }
+    public void addController(Controller x)
+    {
+        controllers.add(x);
     }
 
     public CatanColor getCatanColor()    {        return game.getCurrentColor();    }

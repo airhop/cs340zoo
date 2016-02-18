@@ -3,6 +3,7 @@ package client.MVC.map;
 import client.MVC.base.*;
 import client.MVC.data.*;
 import client.MVC.data.RobPlayerInfo;
+import client.facade.Facade;
 import shared.definitions.CatanColor;
 import shared.definitions.PieceType;
 import shared.locations.EdgeLocation;
@@ -14,11 +15,13 @@ public class StateSetup extends StateAbstract
     private IMapView view;
     private IRobView robView;
     CatanColor color;
+    Facade facade;
 
     public StateSetup(IMapView v, IRobView rv)
     {
         view = v;
         robView = rv;
+        facade = Facade.getInstance();
         color = facade.getCatanColor();
     }
 

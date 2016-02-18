@@ -5,8 +5,13 @@ import client.MVC.catan.*;
 import client.MVC.join.*;
 import client.MVC.login.*;
 import client.MVC.misc.*;
+import client.facade.Facade;
+import client.model.GameModel;
+import client.poller.Poller;
+import client.proxy.Proxy;
 
 import javax.swing.*;
+import java.util.ArrayList;
 
 /**
  * Main entry point for the Catan program
@@ -49,6 +54,12 @@ public class Catan extends JFrame {
             public void run() {
                 new Catan();
 
+                Facade facade = Facade.getInstance();
+                GameModel GM = new GameModel();
+                Proxy myProxy = new Proxy(GM);
+                facade.setProxy(myProxy);
+                Poller poller = new Poller(myProxy);
+
                 PlayerWaitingView playerWaitingView = new PlayerWaitingView();
                 final PlayerWaitingController playerWaitingController = new PlayerWaitingController(
                         playerWaitingView);
@@ -89,6 +100,10 @@ public class Catan extends JFrame {
                 loginView.setController(loginController);
 
                 loginController.start();
+
+                facade.addController(loginController);
+                facade.addController(joinController);
+                facade.addController(playerWaitingController);
             }
         });
     }

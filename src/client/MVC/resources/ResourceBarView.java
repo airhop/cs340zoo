@@ -1,6 +1,6 @@
 package client.MVC.resources;
 
-import client.base.*;
+import client.MVC.base.*;
 import client.MVC.utils.FontUtils;
 import client.MVC.utils.ImageUtils;
 

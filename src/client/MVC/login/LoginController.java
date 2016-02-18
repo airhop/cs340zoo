@@ -3,7 +3,7 @@ package client.MVC.login;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import com.google.common.base.CharMatcher;
+//import com.google.common.base.CharMatcher;
 
 import client.MVC.base.*;
 import client.MVC.misc.*;

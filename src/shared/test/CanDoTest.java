@@ -24,7 +24,7 @@ public class CanDoTest
 
     public void initializeEmpty()
     {
-        f = new Facade();
+        f = Facade.getInstance();
         p = new Proxy(new GameModel());
         f.Reinitialize(new GameModel());
     }
@@ -32,7 +32,7 @@ public class CanDoTest
     //create a full game
     public void initializeFull()
     {
-        f = new Facade();
+        f = Facade.getInstance();
         Bank b = new Bank(new ResourceList(13, 16, 12, 16, 18), new DevCardList(1, 4, 1, 10, 1));
         TurnTracker tt = new TurnTracker(3, "roll");
         tt.setLongestRoad(1);

@@ -1,6 +1,6 @@
 package client.MVC.catan;
 
-import client.base.*;
+import client.MVC.base.*;
 import client.MVC.devcards.*;
 import client.MVC.map.*;
 import client.MVC.points.*;

@@ -16,9 +16,6 @@ import shared.locations.*;
 
 import static org.junit.Assert.*;
 
-/**
- * Created by GaryPetersen on 2/5/2016.
- */
 public class ProxyTest {
     GameModel myGameModel;
     IProxy myProxy;
