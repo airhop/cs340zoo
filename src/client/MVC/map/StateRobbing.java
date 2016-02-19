@@ -7,7 +7,7 @@ import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
 
 
-public class StateRobbing
+public class StateRobbing extends StateAbstract
 {
     private IMapView view;
     private IRobView robView;

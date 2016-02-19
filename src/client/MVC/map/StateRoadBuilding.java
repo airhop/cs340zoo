@@ -11,6 +11,7 @@ public class StateRoadBuilding extends StateAbstract
     int RoadsLaid = 0;
     private IMapView view;
     CatanColor color;
+
     public StateRoadBuilding(IMapView v, IRobView robView)
     {
         view = v;
@@ -26,6 +27,9 @@ public class StateRoadBuilding extends StateAbstract
     public void placeRoad(EdgeLocation edgeLoc)
     {
         view.placeRoad(edgeLoc, color);
+        RoadsLaid++;
+//        if(RoadsLaid == 2)
+//            MapController.changeState(new StatePlayersTurn(view, new IRobView robView));
     }
 
     public void startMove(PieceType pieceType, boolean isFree, boolean allowDisconnected)

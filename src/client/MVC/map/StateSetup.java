@@ -16,6 +16,7 @@ public class StateSetup extends StateAbstract
     private IRobView robView;
     CatanColor color;
     Facade facade;
+    boolean setRoad = false, setSettlement = false;
 
     public StateSetup(IMapView v, IRobView rv)
     {
@@ -27,22 +28,28 @@ public class StateSetup extends StateAbstract
 
     public boolean canPlaceRoad(EdgeLocation edgeLoc)
     {
+        if(setRoad)
+            return false;
         return facade.canPlaceRoad(edgeLoc);
     }
 
     public boolean canPlaceSettlement(VertexLocation vertLoc)
     {
+        if(setSettlement)
+            return false;
       return facade.canPlaceSettlement(vertLoc);
     }
 
     public void placeRoad(EdgeLocation edgeLoc)
     {
         view.placeRoad(edgeLoc, color);
+        setRoad = true;
     }
 
     public void placeSettlement(VertexLocation vertLoc)
     {
         view.placeSettlement(vertLoc, color);
+        setSettlement = true;
     }
 
     public void startMove(PieceType pieceType, boolean isFree, boolean allowDisconnected)
@@ -50,6 +57,10 @@ public class StateSetup extends StateAbstract
         view.startDrop(pieceType, color, true);
     }
 
+    public boolean finishedSetup()
+    {
+        return (setRoad && setSettlement);
+    }
 //    public void cancelMove()
 //    {
 //        view.cancelDrop();

@@ -61,7 +61,7 @@ public class Deserializer {
         String myCurrent = "";
         int myIn = 0;
         boolean myBool = false;
-        System.out.println(myTree.toString());
+        //System.out.println(myTree.toString());
         try {
             while (!myTree.peek().name().equals("END_DOCUMENT")) {
 //                System.out.println(myTree.peek().name());
@@ -346,11 +346,11 @@ public class Deserializer {
                                 myTree.nextName();
                                 turnTracker.setLongestRoad(myTree.nextInt());
                                 myTree.endObject();
-                                System.out.println(myTree.peek().name());
+                                //System.out.println(myTree.peek().name());
                                 break;
                             case "winner":
                                 myModel.setWinner(myTree.nextInt());
-                                System.out.println(myCurrent);
+                                //System.out.println(myCurrent);
                                 break;
                             case "version":
                                 myModel.setVersion(myTree.nextInt());
@@ -358,11 +358,11 @@ public class Deserializer {
                             default:
 //                                System.out.println(myCurrent);
                         }
-                        System.out.println(myCurrent);
+                        //System.out.println(myCurrent);
                         break;
                     case "NUMBER":
                         myIn = myTree.nextInt();
-                        System.out.println(myIn);
+                        //System.out.println(myIn);
                         break;
                     case "END_OBJECT":
                         myTree.endObject();
@@ -383,7 +383,7 @@ public class Deserializer {
             e.printStackTrace();
         }
 
-//        System.out.println("Information: " + myMap.getHexes().size() +  " " + myMap.getHexMap().size() + "\t");
+
         myModel.setMap(myMap);
         myModel.setTt(turnTracker);
         myModel.setBank(myBank);

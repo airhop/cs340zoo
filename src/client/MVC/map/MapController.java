@@ -47,12 +47,37 @@ public class MapController extends Controller implements IMapController, Observe
         this.robView = robView;
     }
 
+    public boolean finishedSetup()
+    {
+        StateSetup s =  new StateSetup(getView(), robView);
+        if(s.getClass() != state.getClass())
+            return false;
+        return ((StateSetup)state).finishedSetup();
+    }
+
     private void changeState()
     {
         String s = facade.getGM().getTt().getStatus();
+
+        System.out.println(s + " " + facade.getGM().getTt().getCurrentPlayer());
         //switch here between the states and set it up
+
+        //find a way to switch out of stateRoadBuilding when it has finished.
     }
 
+    private void changeState(String s)
+    {
+        if(s.equalsIgnoreCase("Setup"))
+            state = new StateSetup(getView(), robView);
+        else if(s.equalsIgnoreCase("RoadBuilding"))
+            state = new StateSetup(getView(), robView);
+        else if(s.equalsIgnoreCase("Robbing"))
+            state = new StateRobbing(getView(), robView);
+        else if(s.equalsIgnoreCase("playersturn"))
+            state = new StatePlayersTurn(getView(), robView);
+        else
+            state = new StateDefault(getView(), robView);
+    }
     public void update(Observable observable, Object args)
     {
         initFromModel();
@@ -62,7 +87,6 @@ public class MapController extends Controller implements IMapController, Observe
     {
         facade = Facade.getInstance();
         changeState();
-        System.out.println("I is here!!!");
         Map map = facade.getMap();
         ArrayList<Hex> hexes = map.getHexMap();
         System.out.println(hexes.size());
@@ -98,7 +122,8 @@ public class MapController extends Controller implements IMapController, Observe
     }
 
 
-    public boolean canPlaceRoad(EdgeLocation edgeLoc) {
+    public boolean canPlaceRoad(EdgeLocation edgeLoc)
+    {
         return state.canPlaceRoad(edgeLoc);
     }
 
@@ -114,7 +139,8 @@ public class MapController extends Controller implements IMapController, Observe
         return state.canPlaceRobber(hexLoc);
     }
 
-    public void placeRoad(EdgeLocation edgeLoc) {
+    public void placeRoad(EdgeLocation edgeLoc)
+    {
         state.placeRoad(edgeLoc);
 //        getView().placeRoad(edgeLoc, CatanColor.ORANGE);
     }

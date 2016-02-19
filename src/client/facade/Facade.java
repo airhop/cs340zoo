@@ -48,10 +48,9 @@ public class Facade extends Observable
         {
             game = gm;
 
-            System.out.println("\n\n" + game.getMap().getHexes().size() + " \n\n");
             for(int i = 0; i < observers.size(); i++) {
                 observers.get(i).update(facade, "");
-                System.out.println(observers.get(i).getClass());
+               // System.out.println(observers.get(i).getClass());
             }
         }
     }

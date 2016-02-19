@@ -5,7 +5,7 @@ import shared.locations.EdgeLocation;
 import shared.locations.VertexLocation;
 
 
-public class StatePlayersTurn
+public class StatePlayersTurn extends StateAbstract
 {
     private IMapView view;
     public StatePlayersTurn(IMapView v, IRobView rv)
