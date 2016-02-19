@@ -156,6 +156,7 @@ public class Proxy implements IProxy {
     }
 
 
+
     public int getResponseCode(){
         return lastResponse.getResponseCode();
     }
