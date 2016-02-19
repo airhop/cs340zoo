@@ -267,6 +267,7 @@ public class Proxy implements IProxy {
 
     @Override
     public String[] gamesList() {
+
         return new String[0];
     }
 
