@@ -41,6 +41,9 @@ public class GameModel {
         players.add(new Player("",3));
 
     }
+    public void updateGameModel(GameModel givenModel){
+
+    }
 
     public GameModel(Map m, Bank b, ArrayList<Player> ps, TurnTracker tt, TradeOffer tro, Chat c, Log l)
     {

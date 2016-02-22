@@ -25,8 +25,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
      * @param selectColorView Select color view
      * @param messageView     Message view (used to display error messages that occur while the user is joining a game)
      */
-    public JoinGameController(IJoinGameView view, INewGameView newGameView,
-                              ISelectColorView selectColorView, IMessageView messageView) {
+    public JoinGameController(IJoinGameView view, INewGameView newGameView, ISelectColorView selectColorView, IMessageView messageView) {
 
         super(view);
 
