@@ -11,7 +11,6 @@ import client.model.map.Road;
 import client.model.map.Settlement;
 import client.model.misc.TurnTracker;
 import client.model.player.Player;
-import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -277,7 +276,7 @@ public class Deserializer {
                                     currentPlayer.setPlayerIndex(myTree.nextInt());
 
                                     myTree.nextName();
-                                    currentPlayer.setName(myTree.nextString());
+                                    currentPlayer.setUsername(myTree.nextString());
                                     myTree.nextName();
                                     currentPlayer.setColor(myTree.nextString());
 

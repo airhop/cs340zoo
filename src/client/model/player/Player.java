@@ -3,7 +3,6 @@ import java.util.ArrayList;
 import client.model.bank.DevCardList;
 import client.model.bank.ResourceList;
 import client.model.map.Port;
-import client.model.misc.TradeOffer;
 import shared.definitions.ResourceType;
 import shared.exceptions.InsufficientResourcesException;
 
@@ -11,7 +10,7 @@ public class Player {
 
     //player qualities
     String color;
-    String name;
+    String username;
     String password;
     int biggestRoadLength;
     int playerID;
@@ -41,14 +40,14 @@ public class Player {
         resources = new ResourceList();
         newDevCards = new DevCardList();
         oldDevCards = new DevCardList();
-        this.setName(playerName);
+        this.setUsername(playerName);
         this.setPlayerID(ID);
     }
 
     public Player(String newColor, String newName, String newPassword, int newBiggestRoadLength, int ID, int newCityAmount, int newRoadAmount, int newSettlementAmount, int newMonumentAmount,
                   int newSoldierAmount, DevCardList newNewDevCardList, DevCardList newOldDevCardList, boolean newPlayedDevCard, ResourceList newResourcesAmounts, boolean newDiscarded, int newVictoryPointAmount) {
         this.setColor(newColor);
-        this.setName(newName);
+        this.setUsername(newName);
         this.setPassword(newPassword);
         this.setBiggestRoadLength(newBiggestRoadLength);
         this.setPlayerID(ID);
@@ -510,12 +509,12 @@ public class Player {
         this.color = color;
     }
 
-    public String getName() {
-        return name;
+    public String getUsername() {
+        return username;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {

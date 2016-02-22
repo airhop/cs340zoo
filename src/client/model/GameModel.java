@@ -24,6 +24,7 @@ public class GameModel extends Observable{
     private Dice dice;
     private Chat chat;
     private Log log;
+    private Player currentPlayer;
 
 
     public GameModel() {
@@ -450,7 +451,7 @@ public class GameModel extends Observable{
     }
 
     public boolean canSendChat(String msg, int pid) {
-        chat.addMessage(players.get(pid).getName(), msg);
+        chat.addMessage(players.get(pid).getUsername(), msg);
         return true;
     }
 
