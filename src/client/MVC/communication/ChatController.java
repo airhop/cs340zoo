@@ -2,6 +2,7 @@ package client.MVC.communication;
 
 import client.MVC.base.*;
 import client.facade.Facade;
+import client.model.GameModel;
 import client.model.history.Chat;
 import client.model.history.MessageLine;
 import client.model.history.MessageList;
@@ -36,10 +37,11 @@ public class ChatController extends Controller implements IChatController {
     }
 
     @Override
-    public void update(Observable o, Object arg) {
-
-        ArrayList<MessageLine> ml = Facade.getInstance().getGM().getChat().getChatList().getMessages();
-        ArrayList<Player> players = Facade.getInstance().getGM().getPlayers();
+    public void update(Observable o, Object arg)
+    {
+        GameModel gm = (GameModel)o;
+        ArrayList<MessageLine> ml = gm.getChat().getChatList().getMessages();
+        ArrayList<Player> players = gm.getPlayers();
         Map<String, CatanColor> conversion = new TreeMap<String, CatanColor>();
 
         for(int i = 0; i < players.size(); i++)
@@ -47,7 +49,7 @@ public class ChatController extends Controller implements IChatController {
             String color = players.get(i).getColor();
             if(color == null || color.isEmpty()) //happens at start up
                 return;
-            conversion.put(players.get(i).getName(), CatanColor.convert(color));
+            conversion.put(players.get(i).getUsername(), CatanColor.convert(color));
         }
         List<LogEntry> logs = new ArrayList<LogEntry>();
         for(int i = 0;  i< ml.size(); i++)

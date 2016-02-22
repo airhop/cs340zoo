@@ -3,6 +3,7 @@ package client.MVC.map;
 import client.MVC.base.*;
 import client.MVC.data.*;
 import client.facade.Facade;
+import client.model.GameModel;
 import shared.definitions.HexType;
 import shared.definitions.PieceType;
 import shared.definitions.PortType;
@@ -98,13 +99,14 @@ public class MapController extends Controller implements IMapController {
     }
 
     public void update(Observable observable, Object args) {
-        initFromModel();
-    }
 
-    protected void initFromModel() {
-        facade = Facade.getInstance();
+        GameModel gm = (GameModel)observable;
+       //without input it will change the phase automatically for playing with
         changeState();
-        Map map = facade.getMap();
+
+        //with input, it will change based on the updating to work with everyone else
+        //changeState(gm.getTurnTracker().getStatus());
+        Map map = gm.getMap();
         ArrayList<Hex> hexes = map.getHexMap();
         System.out.println(hexes.size());
         for (int i = 0; i < hexes.size(); i++) {
