@@ -5,7 +5,7 @@ import client.MVC.data.*;
 import client.MVC.misc.*;
 import client.facade.Facade;
 import shared.definitions.CatanColor;
-import shared.serialization.CreateGame;
+import shared.serialization.CreateGamePassObject;
 
 import java.util.List;
 import java.util.Observable;
@@ -73,12 +73,10 @@ public class JoinGameController extends Controller implements IJoinGameControlle
     }
 
     public ISelectColorView getSelectColorView() {
-
         return selectColorView;
     }
 
     public void setSelectColorView(ISelectColorView selectColorView) {
-
         this.selectColorView = selectColorView;
     }
 
@@ -94,9 +92,10 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 
     @Override
     public void start() {
+        System.out.println("start");
         List<GameInfo> games = Facade.getInstance().gamesList();
         GameInfo[] myType = new GameInfo[games.size()];
-        for(int i = 0; i < games.size(); i++){
+        for (int i = 0; i < games.size(); i++) {
             myType[i] = games.get(i);
         }
         getJoinGameView().setGames(myType, new PlayerInfo());
@@ -105,47 +104,52 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 
     @Override
     public void startCreateNewGame() {
-
+        System.out.println("startCreateNewGame");
         getNewGameView().showModal();
     }
 
     @Override
     public void cancelCreateNewGame() {
-
+        System.out.println("cancelNewGame");
         getNewGameView().closeModal();
     }
 
     @Override
     public void createNewGame() {
-        CreateGame gameNew = new CreateGame();
+        System.out.println("createNewGame");
+        CreateGamePassObject gameNew = new CreateGamePassObject();
         gameNew.setGameName(getNewGameView().getTitle());
         gameNew.setRandomNumbers(getNewGameView().getRandomlyPlaceNumbers());
         gameNew.setRandomPorts(getNewGameView().getUseRandomPorts());
         gameNew.setRandomTiles(getNewGameView().getRandomlyPlaceHexes());
         Facade.getInstance().gamesCreate(gameNew);
+        List<GameInfo> games = Facade.getInstance().gamesList();
+        GameInfo[] myType = new GameInfo[games.size()];
+        for (int i = 0; i < games.size(); i++) {
+            myType[i] = games.get(i);
+        }
+        getJoinGameView().setGames(myType, new PlayerInfo());
         getNewGameView().closeModal();
     }
 
     @Override
     public void startJoinGame(GameInfo game) {
-
+        System.out.println("startJoinGame");
         getSelectColorView().showModal();
     }
 
     @Override
     public void cancelJoinGame() {
-
         getJoinGameView().closeModal();
     }
 
     @Override
     public void joinGame(CatanColor color) {
-
         System.out.println("Game Joining");
+        getSelectColorView().closeModal();
+        getJoinGameView().closeModal();
+//        Facade.getInstance().playerLogin();
 
-//        // If join succeeded
-//        getSelectColorView().closeModal();
-//        getJoinGameView().closeModal();
 //        Facade.getInstance().gamesJoin(CatanColor.toString(color), 0);
 //
 //    //to Add 3 extra players so that the game will actually play for testing

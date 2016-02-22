@@ -4,14 +4,13 @@ package client.proxy;
 import client.MVC.data.GameInfo;
 import client.model.GameModel;
 import client.model.bank.ResourceList;
-import client.model.history.MessageList;
 import shared.definitions.ResourceType;
 import shared.exceptions.*;
 import shared.jsonobject.User;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
-import shared.serialization.CreateGame;
+import shared.serialization.CreateGamePassObject;
 
 import java.util.List;
 
@@ -43,7 +42,7 @@ public interface IProxy {
      * You are making a game
      * @param gameName - The name of the game
      */
-    void gamesCreate(CreateGame gameName) throws FailedCreateGameException;
+    void gamesCreate(CreateGamePassObject gameName) throws FailedCreateGameException;
 
     /**
      * The player wants to join a game so they use this method

@@ -4,15 +4,13 @@ package client.proxy;
 import client.MVC.data.GameInfo;
 import client.model.GameModel;
 import client.model.bank.ResourceList;
-import client.model.history.MessageList;
 import shared.definitions.ResourceType;
 import shared.exceptions.*;
-import shared.jsonobject.Resources;
 import shared.jsonobject.User;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
-import shared.serialization.CreateGame;
+import shared.serialization.CreateGamePassObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,7 +56,7 @@ public class MockProxy implements IProxy {
     }
 
     @Override
-    public void gamesCreate(CreateGame s) throws FailedCreateGameException {
+    public void gamesCreate(CreateGamePassObject s) throws FailedCreateGameException {
         System.out.println("MockProxy.java: gamesCreate(String s) is called");
     }
 

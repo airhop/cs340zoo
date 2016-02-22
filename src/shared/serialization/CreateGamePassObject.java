@@ -3,13 +3,13 @@ package shared.serialization;
 /**
  * Created by Joshua on 2/22/2016.
  */
-public class CreateGame {
+public class CreateGamePassObject {
     private boolean randomTiles;
     private boolean randomNumbers;
     private boolean randomPorts;
     private String gameName;
 
-    public CreateGame(){
+    public CreateGamePassObject(){
 
     }
 

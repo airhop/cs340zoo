@@ -3,16 +3,14 @@ package client.proxy;
 import client.MVC.data.GameInfo;
 import client.model.GameModel;
 import client.model.bank.ResourceList;
-import client.model.history.MessageList;
 import com.google.gson.*;
 import shared.definitions.ResourceType;
 import shared.exceptions.*;
-import shared.jsonobject.Resources;
 import shared.jsonobject.User;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
-import shared.serialization.CreateGame;
+import shared.serialization.CreateGamePassObject;
 import shared.serialization.Deserializer;
 import shared.serialization.GameListDeserialize;
 import shared.serialization.HttpURLResponse;
@@ -300,7 +298,7 @@ public class Proxy implements IProxy {
      * @throws FailedCreateGameException
      */
     @Override
-    public void gamesCreate(CreateGame gameName) throws FailedCreateGameException {
+    public void gamesCreate(CreateGamePassObject gameName) throws FailedCreateGameException {
         JsonObject myObjOne = new JsonObject();
         String url = "/games/create";
         myObjOne.addProperty("randomTiles", gameName.isRandomTiles());

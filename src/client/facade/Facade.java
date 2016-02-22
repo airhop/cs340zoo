@@ -11,11 +11,10 @@ import shared.exceptions.*;
 import client.model.*;
 import client.model.map.*;
 import client.model.bank.ResourceList;
-import client.model.misc.*;
 import client.proxy.*;
 import shared.jsonobject.*;
 import shared.locations.*;
-import shared.serialization.CreateGame;
+import shared.serialization.CreateGamePassObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -113,7 +112,7 @@ public class Facade {
         return proxy.gamesList();
     }
 
-    public void gamesCreate(CreateGame gameNew) {
+    public void gamesCreate(CreateGamePassObject gameNew) {
         try {
             proxy.gamesCreate(gameNew);
             Created = true;
