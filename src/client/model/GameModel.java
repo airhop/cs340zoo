@@ -5,6 +5,7 @@ import client.model.bank.ResourceList;
 import client.model.map.*;
 import client.model.map.Map;
 import client.model.misc.*;
+import client.model.player.CurrentPlayer;
 import client.model.player.Player;
 import client.model.history.*;
 import shared.exceptions.*;
@@ -24,7 +25,7 @@ public class GameModel extends Observable{
     private Dice dice;
     private Chat chat;
     private Log log;
-    private Player currentPlayer;
+    private CurrentPlayer currentPlayer;
 
 
     public GameModel() {
@@ -39,7 +40,7 @@ public class GameModel extends Observable{
         players.add(new Player("",1));
         players.add(new Player("",2));
         players.add(new Player("",3));
-
+        currentPlayer = new CurrentPlayer();
     }
     public void updateGameModel(GameModel givenModel){
         this.map = givenModel.getMap();
@@ -468,5 +469,13 @@ public class GameModel extends Observable{
 //        }
         String s = map.getHexMap().size() + " " + map.getBuildings().size() + " ";
         return s;
+    }
+
+    public CurrentPlayer getCurrentPlayer() {
+        return currentPlayer;
+    }
+
+    public void setCurrentPlayer(CurrentPlayer currentPlayer) {
+        this.currentPlayer = currentPlayer;
     }
 }

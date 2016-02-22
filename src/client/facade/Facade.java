@@ -89,6 +89,8 @@ public class Facade {
         User u = new User(username, password);
         try {
             proxy.userLogin(u);
+            game.getCurrentPlayer().setUsername(username);
+            game.getCurrentPlayer().setPassword(password);
         } catch (InvalidUserException e) {
             System.out.println("oops");
             return false;
