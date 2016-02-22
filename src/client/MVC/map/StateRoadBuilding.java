@@ -1,6 +1,7 @@
 package client.MVC.map;
 
 import client.MVC.data.PlayerInfo;
+import client.model.map.Road;
 import shared.definitions.CatanColor;
 import shared.definitions.PieceType;
 import shared.locations.EdgeLocation;
@@ -18,6 +19,10 @@ public class StateRoadBuilding extends StateAbstract
      //   color = facade.getCatanColor();
     }
 
+    public int getRoadsLaid()
+    {
+        return RoadsLaid;
+    }
     public boolean canPlaceRoad(EdgeLocation edgeLoc)
     {
         return true;
@@ -29,7 +34,7 @@ public class StateRoadBuilding extends StateAbstract
         view.placeRoad(edgeLoc, color);
         RoadsLaid++;
 //        if(RoadsLaid == 2)
-//            MapController.changeState(new StatePlayersTurn(view, new IRobView robView));
+//            MapController.changeState("Playing");
     }
 
     public void startMove(PieceType pieceType, boolean isFree, boolean allowDisconnected)
@@ -37,8 +42,5 @@ public class StateRoadBuilding extends StateAbstract
         view.startDrop(pieceType, color, true);
     }
 
-    public void cancelMove()
-    {
-
-    }
+//    public void cancelMove() {}
 }

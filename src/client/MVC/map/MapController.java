@@ -85,11 +85,16 @@ public class MapController extends Controller implements IMapController {
         //find a way to switch out of stateRoadBuilding when it has finished.
     }
 
-    private void changeState(String s) {
+    private void changeState(String s)
+    {
+        //don't create new state if it is the same
         if (s.equalsIgnoreCase("Setup"))
             state = new StateSetup(getView(), robView);
         else if (s.equalsIgnoreCase("RoadBuilding"))
-            state = new StateSetup(getView(), robView);
+        {
+            state = new StateRoadBuilding(getView(), robView);
+
+        }
         else if (s.equalsIgnoreCase("Robbing"))
             state = new StateRobbing(getView(), robView);
         else if (s.equalsIgnoreCase("playersturn"))

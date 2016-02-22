@@ -5,6 +5,7 @@ import client.model.bank.ResourceList;
 import client.model.map.*;
 import client.model.map.Map;
 import client.model.misc.*;
+import client.model.player.CurrentPlayer;
 import client.model.player.Player;
 import client.model.history.*;
 import shared.exceptions.*;
@@ -24,7 +25,7 @@ public class GameModel extends Observable{
     private Dice dice;
     private Chat chat;
     private Log log;
-
+    private CurrentPlayer currentPlayer;
 
     public GameModel() {
         map = new Map();
@@ -33,12 +34,13 @@ public class GameModel extends Observable{
         tradeOffer = new TradeOffer();
         dice = new Dice();
         chat = new Chat();
+        log = new Log();
         players = new ArrayList<>();
         players.add(new Player("",0));
         players.add(new Player("",1));
         players.add(new Player("",2));
         players.add(new Player("",3));
-
+        currentPlayer = new CurrentPlayer();
     }
     public void updateGameModel(GameModel givenModel){
         this.map = givenModel.getMap();
@@ -53,6 +55,7 @@ public class GameModel extends Observable{
         this.log = givenModel.getLog();
         this.setChanged();
         this.notifyObservers();
+        this.currentPlayer = givenModel.getCurrentPlayer();
     }
 
     public GameModel(Map m, Bank b, ArrayList<Player> ps, TurnTracker tt, TradeOffer tro, Chat c, Log l)
@@ -77,6 +80,8 @@ public class GameModel extends Observable{
         players.add(new Player(names[1],1));
         players.add(new Player(names[2],2));
         players.add(new Player(names[3],3));
+        log = new Log();
+        chat = new Chat();
     }
 
  /*   public void reinitialize(GameModel game) {
@@ -178,6 +183,16 @@ public class GameModel extends Observable{
 
     public void setLog(Log log) {
         this.log = log;
+    }
+
+    public CurrentPlayer getCurrentPlayer()
+    {
+        return currentPlayer;
+    }
+
+    public void setCurrentPlayer(CurrentPlayer cp)
+    {
+        currentPlayer = cp;
     }
 
     public CatanColor getCurrentColor()
@@ -450,7 +465,7 @@ public class GameModel extends Observable{
     }
 
     public boolean canSendChat(String msg, int pid) {
-        chat.addMessage(players.get(pid).getName(), msg);
+        chat.addMessage(players.get(pid).getUsername(), msg);
         return true;
     }
 
