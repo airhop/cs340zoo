@@ -2,6 +2,8 @@ package client.MVC.discard;
 
 import client.MVC.base.*;
 import client.MVC.misc.*;
+import client.facade.Facade;
+import client.model.bank.ResourceList;
 import shared.definitions.ResourceType;
 
 import java.util.Observable;
@@ -13,6 +15,7 @@ import java.util.Observable;
 public class DiscardController extends Controller implements IDiscardController {
 
     private IWaitView waitView;
+    int brick, ore, sheep, wheat, wood;
 
     /**
      * DiscardController constructor
@@ -25,6 +28,11 @@ public class DiscardController extends Controller implements IDiscardController 
         super(view);
 
         this.waitView = waitView;
+        brick = 0;
+        ore = 0;
+        sheep = 0;
+        wheat = 0;
+        wood = 0;
     }
 
     public IDiscardView getDiscardView() {
@@ -36,24 +44,52 @@ public class DiscardController extends Controller implements IDiscardController 
     }
 
     @Override
-    public void increaseAmount(ResourceType resource) {
-
+    public void increaseAmount(ResourceType resource)
+    {
+        changeAmount(resource, 1);
     }
 
     @Override
-    public void decreaseAmount(ResourceType resource) {
+    public void decreaseAmount(ResourceType resource)
+    {
+        changeAmount(resource, -1);
+    }
 
+
+    public void changeAmount(ResourceType resource, int change)
+    {
+        switch(resource)
+        {
+            case BRICK: brick += change;
+                        return;
+            case ORE: ore += change;
+                        return;
+            case SHEEP: sheep += change;
+                        return;
+            case WHEAT: wheat += change;
+                        return;
+            case WOOD: wood += change;
+                        return;
+            default:
+                System.out.println("oops!!!");
+        }
     }
 
     @Override
-    public void discard() {
+    public void discard()
+    {
+        int pid = Facade.getInstance().getPlayerID();
+        ResourceList rl = new ResourceList(brick, ore, sheep, wheat, wood);
 
+        //canDiscardCards is called by Discard cards so no need to call it twice
+        Facade.getInstance().DiscardCards(pid, rl);
         getDiscardView().closeModal();
     }
 
     @Override
-    public void update(Observable o, Object arg) {
-
+    public void update(Observable o, Object arg)
+    {
+        //nothing to update
     }
 }
 
