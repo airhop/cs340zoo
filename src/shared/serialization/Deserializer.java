@@ -33,7 +33,7 @@ public class Deserializer {
         int jellybean = 0;
         Bank myBank = new Bank();
         Map myMap = new Map();
-        ResourceList myResource = null;
+        ResourceList myResource;
         DevCardList myDevCards = myBank.getDevCards();
         String resourceType = "";
         int xValue;
@@ -43,7 +43,7 @@ public class Deserializer {
         String myDir = "";
         int ratio;
         ArrayList<Player> players = myModel.getPlayers();
-        Player currentPlayer = null;
+        Player currentPlayer;
         MessageList myMessages = new MessageList();
         String source = "";
         String message = "";

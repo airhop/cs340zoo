@@ -11,6 +11,8 @@ import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
 
+import java.util.List;
+
 
 public interface IProxy {
 
@@ -33,7 +35,7 @@ public interface IProxy {
      * Calls this method to get a list of the games to join
      * @return The names of all the gamse
      */
-    String[] gamesList();
+    List<String> gamesList();
 
     /**
      * You are making a game

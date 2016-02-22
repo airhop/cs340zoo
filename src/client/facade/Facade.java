@@ -16,6 +16,7 @@ import shared.jsonobject.*;
 import shared.locations.*;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Observer;
 
 public class Facade {
@@ -105,7 +106,7 @@ public class Facade {
         return true;
     }
 
-    public String[] gamesList() {
+    public List<String> gamesList() {
 
         return proxy.gamesList();
     }

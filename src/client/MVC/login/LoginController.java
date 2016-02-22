@@ -75,72 +75,68 @@ public class LoginController extends Controller implements ILoginController {
     public void signIn() {
 
         // TODO: log in user
-    	//CharMatcher unicodeChecker;
-    	
-    	String username;
-    	String password;
-    	username = getLoginView().getLoginUsername();
-    	password = getLoginView().getLoginPassword();
-    	if(!username.matches(usernameRegex))
-    	{
-    		System.out.println("LoginController.java: invalid character(s) in username");
-    	}
-    	if(!password.matches(passwordRegex))
-    	{
-    		System.out.println("LoginController.java: password should only contain ASCII characters");
-    	}
-    	
+        //CharMatcher unicodeChecker;
+        System.out.println("In the sign in");
+        String username;
+        String password;
+        username = getLoginView().getLoginUsername();
+        password = getLoginView().getLoginPassword();
+        if (!username.matches(usernameRegex)) {
+            System.out.println("LoginController.java: invalid character(s) in username");
+        }
+        if (!password.matches(passwordRegex)) {
+            System.out.println("LoginController.java: password should only contain ASCII characters");
+        }
+
         // If log in succeeded
-    	if (username.matches(usernameRegex)&&password.matches(passwordRegex))
-    	{
-    		getLoginView().closeModal();
-			Facade.getInstance().Login(password, username);
-			loginAction.execute();
-    	}
-        
+        if (username.matches(usernameRegex) && password.matches(passwordRegex)) {//going to need some work
+            System.out.println("User Login!! Username = " + username + "Password = " + password);
+            getLoginView().closeModal();
+            Facade.getInstance().Login(username, password);
+            loginAction.execute();
+        } else {
+            System.out.println("User NOT Login!! Username = " + username + "Password = " + password);
+
+        }
+
     }
 
     @Override
     public void register() {
 
         // TODO: register new user (which, if successful, also logs them in)
-    	String username;
-    	String password;
-    	String confirmPassword;
-    	
-    	username = getLoginView().getRegisterUsername();
-    	password = getLoginView().getRegisterPasswordRepeat();
-    	confirmPassword = getLoginView().getRegisterPasswordRepeat();
-    	
+        String username;
+        String password;
+        String confirmPassword;
+
+        username = getLoginView().getRegisterUsername();
+        password = getLoginView().getRegisterPasswordRepeat();
+        confirmPassword = getLoginView().getRegisterPasswordRepeat();
+
         // If register succeeded
-    	if (!username.matches(usernameRegex))
-    	{
-    		System.out.println("LoginController.java: username should only include alphbate");
-    	}
-    	if (!password.matches(passwordRegex))
-    	{
-    		System.out.println("LoginController.java: password include invalid charaters, such as unicode?");
-    	}
-    	if (!confirmPassword.matches(passwordRegex))
-    	{
-    		System.out.println("LoginController.java: password include invalid charaters, such as unicode?");
-    	}
-    	if (!confirmPassword.equals(password))
-    	{
-    		System.out.println("LoginController.java: Password does not match");
-    	}
-    	if (username.matches(usernameRegex)&&password.matches(passwordRegex)&&confirmPassword.matches(passwordRegex) && confirmPassword.equals(password))
-    	{
-    		getLoginView().closeModal();
-			Facade.getInstance().register(username, password);
-			loginAction.execute();
-		}
-        
+        if (!username.matches(usernameRegex)) {
+            System.out.println("LoginController.java: username should only include alphbate");
+        }
+        if (!password.matches(passwordRegex)) {
+            System.out.println("LoginController.java: password include invalid charaters, such as unicode?");
+        }
+        if (!confirmPassword.matches(passwordRegex)) {
+            System.out.println("LoginController.java: password include invalid charaters, such as unicode?");
+        }
+        if (!confirmPassword.equals(password)) {
+            System.out.println("LoginController.java: Password does not match");
+        }
+        if (username.matches(usernameRegex) && password.matches(passwordRegex) && confirmPassword.matches(passwordRegex) && confirmPassword.equals(password)) {
+            getLoginView().closeModal();
+            Facade.getInstance().register(username, password);
+            loginAction.execute();
+        }
+
     }
 
-	@Override
-	public void update(Observable o, Object arg) {
+    @Override
+    public void update(Observable o, Object arg) {
 
-	}
+    }
 }
 

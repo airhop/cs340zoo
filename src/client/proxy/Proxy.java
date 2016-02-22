@@ -17,6 +17,8 @@ import shared.serialization.HttpURLResponse;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Proxy implements IProxy {
     private String SERVER_HOST;
@@ -47,11 +49,11 @@ public class Proxy implements IProxy {
         lastResponse = new HttpURLResponse();
     }
 
-    public int getPlayerId(){
-        if(playerId == -1){
+    public int getPlayerId() {
+        if (playerId == -1) {
             playerId = Integer.parseInt(userCookie.getPlayerId());
             return playerId;
-        }else{
+        } else {
             return playerId;
         }
     }
@@ -156,8 +158,7 @@ public class Proxy implements IProxy {
     }
 
 
-
-    public int getResponseCode(){
+    public int getResponseCode() {
         return lastResponse.getResponseCode();
     }
 
@@ -267,9 +268,11 @@ public class Proxy implements IProxy {
     }
 
     @Override
-    public String[] gamesList() {
+    public List<String> gamesList() {
+        List<String> games = new ArrayList<>();
 
-        return new String[0];
+
+        return games;
     }
 
     /**
@@ -336,11 +339,11 @@ public class Proxy implements IProxy {
         try {
             myResponse = doGet(url);
             gm = myDeSer.deserialize(myResponse.getResponseBody(), myGameModel);
-          // System.out.println("\n Heyo!!\n" + myGameModel.toString() + "\n");
+            // System.out.println("\n Heyo!!\n" + myGameModel.toString() + "\n");
         } catch (ClientException e) {
             e.printStackTrace();
         }
-        if (gm!= null)
+        if (gm != null)
             myGameModel = gm;
         return gm;
     }
@@ -393,7 +396,7 @@ public class Proxy implements IProxy {
         String url = "/moves/rollNumber";
         myObjOne.addProperty("type", "rollNumber");
         myObjOne.addProperty("playerIndex", playerIndex);
-        myObjOne.addProperty("number",  "" + numRoled);
+        myObjOne.addProperty("number", "" + numRoled);
         System.out.println(myObjOne.toString());
         HttpURLResponse myResponse;
         try {
@@ -461,8 +464,8 @@ public class Proxy implements IProxy {
         String url = "/moves/Year_of_Plenty";
         myObjOne.addProperty("type", "Year_of_Plenty");
         myObjOne.addProperty("playerIndex", playerIndex);
-        myObjOne.addProperty("resource1",  r1.name());
-        myObjOne.addProperty("resource2",  r2.name());
+        myObjOne.addProperty("resource1", r1.name());
+        myObjOne.addProperty("resource2", r2.name());
         System.out.println(myObjOne.toString());
         HttpURLResponse myResponse;
         try {
@@ -479,8 +482,8 @@ public class Proxy implements IProxy {
         String url = "/moves/Road_Building";
         myObjOne.addProperty("type", "Road_Building");
         myObjOne.addProperty("playerIndex", playerIndex);
-        myObjOne.add("spot1",  edgeLocationObject(e1));
-        myObjOne.add("spot2",  edgeLocationObject(e2));
+        myObjOne.add("spot1", edgeLocationObject(e1));
+        myObjOne.add("spot2", edgeLocationObject(e2));
         System.out.println(myObjOne.toString());
         HttpURLResponse myResponse;
         try {
@@ -514,7 +517,7 @@ public class Proxy implements IProxy {
         JsonObject myObjOne = new JsonObject();
         String url = "/moves/Monopoly";
         myObjOne.addProperty("type", "Monopoly");
-        myObjOne.addProperty("resource",  "" + r1.name());
+        myObjOne.addProperty("resource", "" + r1.name());
         myObjOne.addProperty("playerIndex", playerIndex);
         System.out.println(myObjOne.toString());
         HttpURLResponse myResponse;
@@ -638,7 +641,7 @@ public class Proxy implements IProxy {
     public void maritimeTrade(int playerId, int ratio, ResourceType in, ResourceType out) {
         JsonObject myObjOne = new JsonObject();
         String url = "/moves/maritimeTrade";
-        myObjOne.addProperty("type",  "maritimeTrade");
+        myObjOne.addProperty("type", "maritimeTrade");
         myObjOne.addProperty("playerIndex", "" + playerId);
         myObjOne.addProperty("ratio", "" + ratio);
         myObjOne.addProperty("inputResource", "" + in);
@@ -658,7 +661,7 @@ public class Proxy implements IProxy {
     public void discardCards(int playerId, ResourceList rl) throws InsufficientResourcesException {
         JsonObject myObjOne = new JsonObject();
         String url = "/moves/discardCards";
-        myObjOne.addProperty("type",  "discardCards");
+        myObjOne.addProperty("type", "discardCards");
         myObjOne.addProperty("playerIndex", "" + playerId);
         JsonObject RLO = RLO(rl);
         myObjOne.add("dicardedCards", RLO);
@@ -672,20 +675,19 @@ public class Proxy implements IProxy {
             e.printStackTrace();
         }
     }
+
     //resourcelistobject
-    public JsonObject RLO(ResourceList rl)
-    {
+    public JsonObject RLO(ResourceList rl) {
         JsonObject RLO = new JsonObject();
-        RLO.addProperty("brick", ""+ rl.getBrick());
-        RLO.addProperty("ore", ""+ rl.getOre());
+        RLO.addProperty("brick", "" + rl.getBrick());
+        RLO.addProperty("ore", "" + rl.getOre());
         RLO.addProperty("sheep", "" + rl.getSheep());
-        RLO.addProperty("wheat", "" +rl.getWheat());
-        RLO.addProperty("wood", "" +rl.getWood());
+        RLO.addProperty("wheat", "" + rl.getWheat());
+        RLO.addProperty("wood", "" + rl.getWood());
         return RLO;
     }
 
-    public JsonObject edgeLocationObject(EdgeLocation el)
-    {
+    public JsonObject edgeLocationObject(EdgeLocation el) {
         JsonObject LO = new JsonObject();
         LO.addProperty("x", "" + el.getHexLoc().getX());
         LO.addProperty("y", "" + el.getHexLoc().getY());
@@ -694,16 +696,15 @@ public class Proxy implements IProxy {
     }
 
     //locationobject
-    public JsonObject vertexLocationObject(VertexLocation vl)
-    {
+    public JsonObject vertexLocationObject(VertexLocation vl) {
         JsonObject LO = new JsonObject();
         LO.addProperty("x", "" + vl.getHexLoc().getX());
         LO.addProperty("y", "" + vl.getHexLoc().getY());
         LO.addProperty("direction", vl.getDir().toString());
         return LO;
     }
-    public JsonObject locationObject(HexLocation hl)
-    {
+
+    public JsonObject locationObject(HexLocation hl) {
         JsonObject LO = new JsonObject();
         LO.addProperty("x", "" + hl.getX());
         LO.addProperty("y", "" + hl.getY());
