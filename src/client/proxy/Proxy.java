@@ -1,5 +1,6 @@
 package client.proxy;
 
+import client.MVC.data.GameInfo;
 import client.model.GameModel;
 import client.model.bank.ResourceList;
 import client.model.history.MessageList;
@@ -12,6 +13,7 @@ import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
 import shared.serialization.Deserializer;
+import shared.serialization.GameListDeserialize;
 import shared.serialization.HttpURLResponse;
 
 import java.io.*;
@@ -268,8 +270,18 @@ public class Proxy implements IProxy {
     }
 
     @Override
-    public List<String> gamesList() {
-        List<String> games = new ArrayList<>();
+    public List<GameInfo> gamesList() {
+        String url = "/games/list";
+        List<GameInfo> games = new ArrayList<>();
+        HttpURLResponse myResponse;
+        try {
+            myResponse = doGet(url);
+            GameListDeserialize listDeserialize = new GameListDeserialize(myResponse.getResponseBody());
+            games = listDeserialize.deserialize();
+            //This is when i am going to create the deSerialization later
+        } catch (ClientException e) {
+            e.printStackTrace();
+        }
 
 
         return games;

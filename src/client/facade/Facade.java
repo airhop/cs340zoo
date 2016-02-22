@@ -5,6 +5,7 @@
 package client.facade;
 
 import client.MVC.base.Controller;
+import client.MVC.data.GameInfo;
 import shared.definitions.*;
 import shared.exceptions.*;
 import client.model.*;
@@ -106,7 +107,7 @@ public class Facade {
         return true;
     }
 
-    public List<String> gamesList() {
+    public List<GameInfo> gamesList() {
 
         return proxy.gamesList();
     }

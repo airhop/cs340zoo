@@ -1,6 +1,7 @@
 package client.proxy;
 
 
+import client.MVC.data.GameInfo;
 import client.model.GameModel;
 import client.model.bank.ResourceList;
 import client.model.history.MessageList;
@@ -35,7 +36,7 @@ public interface IProxy {
      * Calls this method to get a list of the games to join
      * @return The names of all the gamse
      */
-    List<String> gamesList();
+    List<GameInfo> gamesList();
 
     /**
      * You are making a game

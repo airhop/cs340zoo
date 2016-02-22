@@ -1,6 +1,7 @@
 package client.proxy;
 
 
+import client.MVC.data.GameInfo;
 import client.model.GameModel;
 import client.model.bank.ResourceList;
 import client.model.history.MessageList;
@@ -49,8 +50,8 @@ public class MockProxy implements IProxy {
     }
 
     @Override
-    public List<String> gamesList() {
-        List<String> games = new ArrayList<>();
+    public List<GameInfo> gamesList() {
+        List<GameInfo> games = new ArrayList<>();
         System.out.println("MockProxy.java: gamesList() is called");
         return games;
     }
