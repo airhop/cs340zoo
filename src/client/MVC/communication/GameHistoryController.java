@@ -5,6 +5,7 @@ import shared.definitions.CatanColor;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
 
 
 /**
@@ -44,5 +45,9 @@ public class GameHistoryController extends Controller implements IGameHistoryCon
         //</temp>
     }
 
+    @Override
+    public void update(Observable o, Object arg) {
+
+    }
 }
 

@@ -3,6 +3,8 @@ package client.MVC.maritime;
 import client.MVC.base.*;
 import shared.definitions.ResourceType;
 
+import java.util.Observable;
+
 
 /**
  * Implementation for the maritime trade controller
@@ -69,5 +71,9 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 
     }
 
+    @Override
+    public void update(Observable o, Object arg) {
+
+    }
 }
 

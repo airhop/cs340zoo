@@ -4,6 +4,8 @@ import client.MVC.base.*;
 import client.MVC.misc.*;
 import shared.definitions.ResourceType;
 
+import java.util.Observable;
+
 
 /**
  * Domestic trade controller implementation
@@ -116,5 +118,9 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
         getAcceptOverlay().closeModal();
     }
 
+    @Override
+    public void update(Observable o, Object arg) {
+
+    }
 }
 

@@ -1,5 +1,6 @@
 package client.MVC.login;
 
+import java.util.Observable;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -137,5 +138,9 @@ public class LoginController extends Controller implements ILoginController {
         
     }
 
+	@Override
+	public void update(Observable o, Object arg) {
+
+	}
 }
 

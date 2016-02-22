@@ -2,6 +2,8 @@ package client.MVC.points;
 
 import client.MVC.base.*;
 
+import java.util.Observable;
+
 
 /**
  * Implementation for the points controller
@@ -44,5 +46,9 @@ public class PointsController extends Controller implements IPointsController {
         //</temp>
     }
 
+    @Override
+    public void update(Observable o, Object arg) {
+
+    }
 }
 

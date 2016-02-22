@@ -3,6 +3,8 @@ package client.MVC.turntracker;
 import client.MVC.base.*;
 import shared.definitions.CatanColor;
 
+import java.util.Observable;
+
 
 /**
  * Implementation for the turn tracker controller
@@ -33,5 +35,9 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
         //</temp>
     }
 
+    @Override
+    public void update(Observable o, Object arg) {
+
+    }
 }
 

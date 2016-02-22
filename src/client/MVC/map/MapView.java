@@ -14,6 +14,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Observable;
 
 /**
  * Implementation for the map view
@@ -92,6 +93,11 @@ public class MapView extends PanelView implements IMapView {
     }
 
     private IMapController overlayController = new IMapController() {
+
+        @Override
+        public void update(Observable o, Object arg) {
+
+        }
 
         @Override
         public IView getView() {

@@ -13,7 +13,7 @@ import shared.locations.*;
 
 import java.util.*;
 
-public class GameModel {
+public class GameModel extends Observable{
     private Map map;
     private Bank bank;
     private ArrayList<Player> players;
@@ -51,6 +51,8 @@ public class GameModel {
         this.dice = givenModel.getDice();
         this.chat = givenModel.getChat();
         this.log = givenModel.getLog();
+        this.setChanged();
+        this.notifyObservers();
     }
 
     public GameModel(Map m, Bank b, ArrayList<Player> ps, TurnTracker tt, TradeOffer tro, Chat c, Log l)

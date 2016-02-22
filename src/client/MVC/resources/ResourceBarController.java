@@ -4,6 +4,7 @@ import client.MVC.base.*;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Observable;
 
 
 /**
@@ -70,5 +71,9 @@ public class ResourceBarController extends Controller implements IResourceBarCon
         }
     }
 
+    @Override
+    public void update(Observable o, Object arg) {
+
+    }
 }
 

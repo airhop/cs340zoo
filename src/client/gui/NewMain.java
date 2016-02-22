@@ -30,11 +30,18 @@ public class NewMain {
             e.printStackTrace();
         }
         myProxy.getGameModel();
-        playerId = myProxy.getPlayerId();
-        playerIndex = myGameModel.getPlayerIndex(playerId);
-//        myProxy.rollNumber(0, playerIndex);
+        System.out.println(myGameModel.getPlayerIndex(0));
+        System.out.println(myGameModel.getPlayerIndex(1));
+        System.out.println(myGameModel.getPlayerIndex(2));
+        System.out.println(myGameModel.getPlayerIndex(3));
 
-        myProxy.sendChat("Help", playerIndex);
+
+//        playerId = myProxy.getPlayerId();
+//        playerIndex = myGameModel.getPlayerIndex(playerId);
+////        myProxy.rollNumber(0, playerIndex);
+//
+//        myProxy.sendChat("Help", playerIndex);
+
 
 
 //        myProxy.sendChat("plants", 0);

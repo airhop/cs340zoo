@@ -16,10 +16,9 @@ import shared.jsonobject.*;
 import shared.locations.*;
 
 import java.util.ArrayList;
-import java.util.Observable;
 import java.util.Observer;
 
-public class Facade extends Observable
+public class Facade
 {
     private GameModel game;
     private IProxy proxy;
@@ -47,13 +46,9 @@ public class Facade extends Observable
         if (gm != null)
         {
             game = gm;
-
-            for(int i = 0; i < observers.size(); i++) {
-                observers.get(i).update(facade, "");
-               // System.out.println(observers.get(i).getClass());
-            }
         }
     }
+
     public GameModel getGM() {return game;}
     public void Reinitialize(GameModel g) {
         game = g;

@@ -17,7 +17,7 @@ import java.util.Observer;
 /**
  * Implementation for the map controller
  */
-public class MapController extends Controller implements IMapController, Observer {
+public class MapController extends Controller implements IMapController {
 
     private IRobView robView;
     private StateAbstract state;

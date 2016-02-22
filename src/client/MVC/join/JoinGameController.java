@@ -6,6 +6,8 @@ import client.MVC.misc.*;
 import client.facade.Facade;
 import shared.definitions.CatanColor;
 
+import java.util.Observable;
+
 
 /**
  * Implementation for the join game controller
@@ -26,7 +28,6 @@ public class JoinGameController extends Controller implements IJoinGameControlle
      * @param messageView     Message view (used to display error messages that occur while the user is joining a game)
      */
     public JoinGameController(IJoinGameView view, INewGameView newGameView, ISelectColorView selectColorView, IMessageView messageView) {
-
         super(view);
 
         setNewGameView(newGameView);
@@ -142,8 +143,13 @@ public class JoinGameController extends Controller implements IJoinGameControlle
         Facade.getInstance().gamesJoin("purple", 3);
 
 
+
         joinAction.execute();
     }
 
+    @Override
+    public void update(Observable o, Object arg) {
+
+    }
 }
 

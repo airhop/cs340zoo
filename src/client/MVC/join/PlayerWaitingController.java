@@ -3,6 +3,8 @@ package client.MVC.join;
 import client.MVC.base.*;
 import client.facade.Facade;
 
+import java.util.Observable;
+
 
 /**
  * Implementation for the player waiting controller
@@ -34,5 +36,9 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
         Facade.getInstance().gamesCreate("New Game");
     }
 
+    @Override
+    public void update(Observable o, Object arg) {
+
+    }
 }
 
