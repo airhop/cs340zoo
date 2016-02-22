@@ -15,6 +15,15 @@ public class MessageList {
         messages.clear();
     }
 
+    public int size()
+    {
+        return messages.size();
+    }
+
+    public ArrayList<MessageLine> getMessages()
+    {
+        return messages;
+    }
     /**
      * Adds a message to the message list
      *

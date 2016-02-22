@@ -38,6 +38,7 @@ public class GameModel extends Observable{
         players.add(new Player("",1));
         players.add(new Player("",2));
         players.add(new Player("",3));
+        log = new Log();
 
     }
     public void updateGameModel(GameModel givenModel){
@@ -77,6 +78,8 @@ public class GameModel extends Observable{
         players.add(new Player(names[1],1));
         players.add(new Player(names[2],2));
         players.add(new Player(names[3],3));
+        log = new Log();
+        chat = new Chat();
     }
 
  /*   public void reinitialize(GameModel game) {

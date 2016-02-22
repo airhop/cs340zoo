@@ -3,6 +3,11 @@ package client.model.history;
 public class Log {
 
 	MessageList LogList;
+
+	public Log()
+	{
+		LogList = new MessageList();
+	}
 	/**
 	 * for printing or returning the list, however the history will need it.
 	*/
@@ -17,7 +22,9 @@ public class Log {
 			sb.append("\n");
 		}
 	}
-	
+
+
+	public MessageList getLogList() { return LogList; }
 	/**
 	 * to add a message to the messagelist
 	*/
