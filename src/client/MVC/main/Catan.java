@@ -55,8 +55,8 @@ public class Catan extends JFrame {
                 new Catan();
 
                 Facade facade = Facade.getInstance();
-                GameModel GM = new GameModel();
-                Proxy myProxy = new Proxy(GM);
+                GameModel gameModel = new GameModel();
+                Proxy myProxy = new Proxy(gameModel);
                 facade.setProxy(myProxy);
                 Poller poller = new Poller(myProxy);
 

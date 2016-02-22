@@ -5,17 +5,20 @@
 package client.facade;
 
 import client.MVC.base.Controller;
+import client.MVC.data.GameInfo;
+import client.model.player.CurrentPlayer;
 import shared.definitions.*;
 import shared.exceptions.*;
 import client.model.*;
 import client.model.map.*;
 import client.model.bank.ResourceList;
-import client.model.misc.*;
 import client.proxy.*;
 import shared.jsonobject.*;
 import shared.locations.*;
+import shared.serialization.CreateGamePassObject;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Observer;
 
 public class Facade {
@@ -50,12 +53,16 @@ public class Facade {
         }
     }
 
-    public int getPlayerID()
-    {
-        return proxy.getPlayerId();
+    public CurrentPlayer getCurrentPlayer(){
+        return game.getCurrentPlayer();
     }
 
-    public GameModel getGM() {
+    public int getPlayerID()
+    {
+        return game.getCurrentPlayer().getPlayerId();
+    }
+
+    public GameModel getGameModel() {
         return game;
     }
 
@@ -83,16 +90,22 @@ public class Facade {
 
     //login and register may need to print
     //register - user already exists, GUI in charge of checking lengths and that passwords match
-    public boolean Login(String username, String password) {
+    public boolean playerLogin(String username, String password) {
         User u = new User(username, password);
+        boolean login = false;
         try {
-            proxy.userLogin(u);
+            login = proxy.userLogin(u);
+            if(login){
+                game.getCurrentPlayer().setUsername(username);
+                game.getCurrentPlayer().setPassword(password);
+                game.getCurrentPlayer().setPlayerId(proxy.getPlayerId());
+            }
         } catch (InvalidUserException e) {
             System.out.println("oops");
-            return false;
+            return login;
         }
-        loggedIn = true;
-        return true;
+        loggedIn = login;
+        return login;
     }
 
     public boolean register(String username, String password) {
@@ -105,14 +118,14 @@ public class Facade {
         return true;
     }
 
-    public String[] gamesList() {
+    public List<GameInfo> gamesList() {
 
         return proxy.gamesList();
     }
 
-    public void gamesCreate(String s) {
+    public void gamesCreate(CreateGamePassObject gameNew) {
         try {
-            proxy.gamesCreate(s);
+            proxy.gamesCreate(gameNew);
             Created = true;
         } catch (FailedCreateGameException e) {
             //exceptionair!!
@@ -153,7 +166,7 @@ public class Facade {
     /**
      * Places a Road at a given location on the map
      *
-     * @return boolean whether or not the player built the road (perhaps placeholder return values for all of the do methods)
+     * boolean whether or not the player built the road (perhaps placeholder return values for all of the do methods)
      */
     public void placeRoad(int pid, EdgeLocation el, boolean free) {
         if (game != null) {

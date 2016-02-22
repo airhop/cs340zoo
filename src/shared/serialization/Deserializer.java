@@ -11,7 +11,6 @@ import client.model.map.Road;
 import client.model.map.Settlement;
 import client.model.misc.TurnTracker;
 import client.model.player.Player;
-import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -33,7 +32,7 @@ public class Deserializer {
         int jellybean = 0;
         Bank myBank = new Bank();
         Map myMap = new Map();
-        ResourceList myResource = null;
+        ResourceList myResource;
         DevCardList myDevCards = myBank.getDevCards();
         String resourceType = "";
         int xValue;
@@ -43,7 +42,7 @@ public class Deserializer {
         String myDir = "";
         int ratio;
         ArrayList<Player> players = myModel.getPlayers();
-        Player currentPlayer = null;
+        Player currentPlayer;
         MessageList myMessages = new MessageList();
         String source = "";
         String message = "";
@@ -71,7 +70,7 @@ public class Deserializer {
                         break;
                     case "NAME":
                         myCurrent = myTree.nextName();
-                        switch (myCurrent){
+                        switch (myCurrent) {
                             case "deck":
                                 myTree.beginObject();
                                 myTree.nextName();
@@ -88,10 +87,10 @@ public class Deserializer {
                             case "hexes":
 //                                System.out.println(myCurrent);
                                 myTree.beginArray();
-                                while(!myTree.peek().name().equals("END_ARRAY")){
+                                while (!myTree.peek().name().equals("END_ARRAY")) {
                                     myTree.beginObject();
                                     action = myTree.nextName();
-                                    switch (action){
+                                    switch (action) {
                                         case "resource":
                                             resourceType = myTree.nextString();//for the resource Type
                                             myTree.nextName();
@@ -102,12 +101,12 @@ public class Deserializer {
                                             myTree.nextName();
                                             yValue = myTree.nextInt();//y
                                             myTree.endObject();
-                                            if(myTree.peek().name().equals("NAME")){
+                                            if (myTree.peek().name().equals("NAME")) {
                                                 myTree.nextName();
                                                 chitValue = myTree.nextInt();
                                                 myMap.addHex(xValue, yValue, resourceType, chitValue);
                                                 myTree.endObject();
-                                            }else{
+                                            } else {
                                                 myMap.addHexDesert(xValue, yValue);
                                                 myTree.endObject();
                                             }
@@ -118,7 +117,7 @@ public class Deserializer {
                                 break;
                             case "roads":
                                 myTree.beginArray();
-                                while(!myTree.peek().name().equals("END_ARRAY")){
+                                while (!myTree.peek().name().equals("END_ARRAY")) {
                                     myTree.beginObject();
                                     myTree.nextName();
                                     owner = myTree.nextInt();
@@ -143,7 +142,7 @@ public class Deserializer {
                                 break;
                             case "settlements":
                                 myTree.beginArray();
-                                while(!myTree.peek().name().equals("END_ARRAY")){
+                                while (!myTree.peek().name().equals("END_ARRAY")) {
                                     myTree.beginObject();
                                     myTree.nextName();
                                     owner = myTree.nextInt();
@@ -164,11 +163,11 @@ public class Deserializer {
                             case "ports":
                                 myTree.beginArray();
 
-                                while(!myTree.peek().name().equals("END_ARRAY")){
+                                while (!myTree.peek().name().equals("END_ARRAY")) {
                                     myTree.beginObject();
                                     myTree.nextName();
                                     ratio = myTree.nextInt();
-                                    if(myTree.nextName().equals("resource")){
+                                    if (myTree.nextName().equals("resource")) {
                                         resourceType = myTree.nextString();
                                         myTree.nextName();//Dir
                                         myDir = myTree.nextString();
@@ -178,8 +177,8 @@ public class Deserializer {
                                         xValue = myTree.nextInt();
                                         myTree.nextName();//y
                                         yValue = myTree.nextInt();
-                                        myMap.addPort(xValue, yValue, resourceType, EdgeDirection.valueOf(myDir),ratio);
-                                    }else{
+                                        myMap.addPort(xValue, yValue, resourceType, EdgeDirection.valueOf(myDir), ratio);
+                                    } else {
                                         myDir = myTree.nextString();
                                         myTree.nextName();
                                         myTree.beginObject();//location
@@ -187,7 +186,7 @@ public class Deserializer {
                                         xValue = myTree.nextInt();
                                         myTree.nextName();//y
                                         yValue = myTree.nextInt();
-                                        myMap.addPort(xValue, yValue, "THREE", EdgeDirection.valueOf(myDir),ratio);
+                                        myMap.addPort(xValue, yValue, "THREE", EdgeDirection.valueOf(myDir), ratio);
                                     }
                                     myTree.endObject();
                                     myTree.endObject();
@@ -207,81 +206,86 @@ public class Deserializer {
                                 break;
                             case "players":
                                 myTree.beginArray();
-                                for(int i = 0; i < 4; i++){
+                                for (int i = 0; i < 4; i++) {
                                     currentPlayer = players.get(i);
                                     myResource = currentPlayer.getResources();
                                     myDevCards = currentPlayer.getOldDevCards();
-                                    myTree.beginObject();
-                                    myTree.nextName();
-                                    myTree.beginObject();
-                                    myTree.nextName();
-                                    myResource.setBrick(myTree.nextInt());
-                                    myTree.nextName();
-                                    myResource.setWood(myTree.nextInt());
-                                    myTree.nextName();
-                                    myResource.setSheep(myTree.nextInt());
-                                    myTree.nextName();
-                                    myResource.setWheat(myTree.nextInt());
-                                    myTree.nextName();
-                                    myResource.setOre(myTree.nextInt());
-                                    myTree.endObject();
+                                    if (myTree.peek().name().equals("BEGIN_OBJECT")) {
+                                        myTree.beginObject();
+                                        myTree.nextName();
+                                        myTree.beginObject();
+                                        myTree.nextName();
+                                        myResource.setBrick(myTree.nextInt());
+                                        myTree.nextName();
+                                        myResource.setWood(myTree.nextInt());
+                                        myTree.nextName();
+                                        myResource.setSheep(myTree.nextInt());
+                                        myTree.nextName();
+                                        myResource.setWheat(myTree.nextInt());
+                                        myTree.nextName();
+                                        myResource.setOre(myTree.nextInt());
+                                        myTree.endObject();
 
-                                    myTree.nextName();
-                                    myTree.beginObject();//oldDevCards
-                                    myTree.nextName();
-                                    myDevCards.setYearOfPlenty(myTree.nextInt());
-                                    myTree.nextName();
-                                    myDevCards.setMonopoly(myTree.nextInt());
-                                    myTree.nextName();
-                                    myDevCards.setSoldier(myTree.nextInt());
-                                    myTree.nextName();
-                                    myDevCards.setRoadBuilding(myTree.nextInt());
-                                    myTree.nextName();
-                                    myDevCards.setMonument(myTree.nextInt());
-                                    myTree.endObject();
+                                        myTree.nextName();
+                                        myTree.beginObject();//oldDevCards
+                                        myTree.nextName();
+                                        myDevCards.setYearOfPlenty(myTree.nextInt());
+                                        myTree.nextName();
+                                        myDevCards.setMonopoly(myTree.nextInt());
+                                        myTree.nextName();
+                                        myDevCards.setSoldier(myTree.nextInt());
+                                        myTree.nextName();
+                                        myDevCards.setRoadBuilding(myTree.nextInt());
+                                        myTree.nextName();
+                                        myDevCards.setMonument(myTree.nextInt());
+                                        myTree.endObject();
 
-                                    myDevCards = players.get(i).getNewDevCards();
-                                    myTree.nextName();
-                                    myTree.beginObject();//newDevCards
-                                    myTree.nextName();
-                                    myDevCards.setYearOfPlenty(myTree.nextInt());
-                                    myTree.nextName();
-                                    myDevCards.setMonopoly(myTree.nextInt());
-                                    myTree.nextName();
-                                    myDevCards.setSoldier(myTree.nextInt());
-                                    myTree.nextName();
-                                    myDevCards.setRoadBuilding(myTree.nextInt());
-                                    myTree.nextName();
-                                    myDevCards.setMonument(myTree.nextInt());
-                                    myTree.endObject();
+                                        myDevCards = players.get(i).getNewDevCards();
+                                        myTree.nextName();
+                                        myTree.beginObject();//newDevCards
+                                        myTree.nextName();
+                                        myDevCards.setYearOfPlenty(myTree.nextInt());
+                                        myTree.nextName();
+                                        myDevCards.setMonopoly(myTree.nextInt());
+                                        myTree.nextName();
+                                        myDevCards.setSoldier(myTree.nextInt());
+                                        myTree.nextName();
+                                        myDevCards.setRoadBuilding(myTree.nextInt());
+                                        myTree.nextName();
+                                        myDevCards.setMonument(myTree.nextInt());
+                                        myTree.endObject();
 
-                                    myTree.nextName();
-                                    currentPlayer.setRoads(myTree.nextInt());
-                                    myTree.nextName();
-                                    currentPlayer.setCities(myTree.nextInt());
-                                    myTree.nextName();
-                                    currentPlayer.setSettlements(myTree.nextInt());
-                                    myTree.nextName();
-                                    currentPlayer.setSoldiers(myTree.nextInt());
-                                    myTree.nextName();
-                                    currentPlayer.setVictoryPoints(myTree.nextInt());
-                                    myTree.nextName();
-                                    currentPlayer.setMonuments(myTree.nextInt());
-                                    myTree.nextName();
-                                    currentPlayer.setPlayedDevCard(myTree.nextBoolean());
-                                    myTree.nextName();
-                                    currentPlayer.setDiscarded(myTree.nextBoolean());
-                                    myTree.nextName();
-                                    currentPlayer.setPlayerID(myTree.nextInt());
-                                    myTree.nextName();
-                                    currentPlayer.setPlayerIndex(myTree.nextInt());
+                                        myTree.nextName();
+                                        currentPlayer.setRoads(myTree.nextInt());
+                                        myTree.nextName();
+                                        currentPlayer.setCities(myTree.nextInt());
+                                        myTree.nextName();
+                                        currentPlayer.setSettlements(myTree.nextInt());
+                                        myTree.nextName();
+                                        currentPlayer.setSoldiers(myTree.nextInt());
+                                        myTree.nextName();
+                                        currentPlayer.setVictoryPoints(myTree.nextInt());
+                                        myTree.nextName();
+                                        currentPlayer.setMonuments(myTree.nextInt());
+                                        myTree.nextName();
+                                        currentPlayer.setPlayedDevCard(myTree.nextBoolean());
+                                        myTree.nextName();
+                                        currentPlayer.setDiscarded(myTree.nextBoolean());
+                                        myTree.nextName();
+                                        currentPlayer.setPlayerID(myTree.nextInt());
+                                        myTree.nextName();
+                                        currentPlayer.setPlayerIndex(myTree.nextInt());
 
-                                    myTree.nextName();
-                                    currentPlayer.setName(myTree.nextString());
-                                    myTree.nextName();
-                                    currentPlayer.setColor(myTree.nextString());
+                                        myTree.nextName();
+                                        currentPlayer.setUsername(myTree.nextString());
+                                        myTree.nextName();
+                                        currentPlayer.setColor(myTree.nextString());
 
-                                    myTree.endObject();
+                                        myTree.endObject();
+                                    } else {
+                                        myTree.beginObject();
+                                        System.out.println(myTree.peek().name());
+                                    }
 //                                    System.out.println(myTree.peek().name());
 
                                 }
@@ -290,7 +294,7 @@ public class Deserializer {
                                 myTree.beginObject();
                                 myTree.nextName();
                                 myTree.beginArray();
-                                while(!myTree.peek().name().equals("END_ARRAY")){
+                                while (!myTree.peek().name().equals("END_ARRAY")) {
                                     myTree.beginObject();
                                     myTree.nextName();
                                     source = myTree.nextString();
@@ -306,7 +310,7 @@ public class Deserializer {
                                 myTree.beginObject();
                                 myTree.nextName();
                                 myTree.beginArray();
-                                while(!myTree.peek().name().equals("END_ARRAY")){
+                                while (!myTree.peek().name().equals("END_ARRAY")) {
                                     myTree.beginObject();
                                     myTree.nextName();
                                     source = myTree.nextString();

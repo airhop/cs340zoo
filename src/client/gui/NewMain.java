@@ -1,5 +1,6 @@
 package client.gui;
 
+import client.MVC.data.GameInfo;
 import client.facade.Facade;
 import client.model.GameModel;
 import client.poller.Poller;
@@ -11,10 +12,14 @@ import shared.exceptions.FailedCreateGameException;
 import shared.exceptions.InvalidUserException;
 import shared.jsonobject.User;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class NewMain {
     public static void main(String[] args){
         GameModel myGameModel = new GameModel();
         IProxy myProxy = new Proxy(myGameModel);
+        List<GameInfo> myList = new ArrayList<>();
         int playerIndex;
         int playerId;
 //        Poller myPoller = new Poller(myProxy);
@@ -34,6 +39,11 @@ public class NewMain {
         System.out.println(myGameModel.getPlayerIndex(1));
         System.out.println(myGameModel.getPlayerIndex(2));
         System.out.println(myGameModel.getPlayerIndex(3));
+        myList = myProxy.gamesList();
+        System.out.println(myList.get(0).getPlayers().get(0).getName());
+        System.out.println(myList.get(0).getPlayers().get(1).getName());
+        System.out.println(myList.get(0).getPlayers().get(2).getName());
+        System.out.println(myList.get(0).getPlayers().get(3).getName());
 
 
 //        playerId = myProxy.getPlayerId();
