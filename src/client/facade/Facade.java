@@ -163,7 +163,7 @@ public class Facade {
     /**
      * Places a Road at a given location on the map
      *
-     * @return boolean whether or not the player built the road (perhaps placeholder return values for all of the do methods)
+     * boolean whether or not the player built the road (perhaps placeholder return values for all of the do methods)
      */
     public void placeRoad(int pid, EdgeLocation el, boolean free) {
         if (game != null) {
