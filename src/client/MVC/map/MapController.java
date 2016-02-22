@@ -45,40 +45,33 @@ public class MapController extends Controller implements IMapController {
         this.robView = robView;
     }
 
-    public boolean finishedSetup()
-    {
-        StateSetup s =  new StateSetup(getView(), robView);
-        if(s.getClass() != state.getClass())
+    public boolean finishedSetup() {
+        StateSetup s = new StateSetup(getView(), robView);
+        if (s.getClass() != state.getClass())
             return false;
-        return ((StateSetup)state).finishedSetup();
+        return ((StateSetup) state).finishedSetup();
     }
 
-    private void changeState()
-    {
+    private void changeState() {
 
         String s = facade.getGameModel().getTurnTracker().getStatus();
         int pid = facade.getPlayerID();
         System.out.println(s + " " + pid);
 
-        if(s.equalsIgnoreCase("FirstTurn") || s.equalsIgnoreCase("SecondTurn"))
-        {
+        if (s.equalsIgnoreCase("FirstTurn") || s.equalsIgnoreCase("SecondTurn")) {
             state = new StateSetup(getView(), robView);
-            if(((StateSetup)state).finishedSetup())
-            {
+            if (((StateSetup) state).finishedSetup()) {
                 state = new StateDefault(getView(), robView);
                 facade.FinishTurn(pid);
             }
         }
-        if(s.equalsIgnoreCase("Rolling"))
-        {
+        if (s.equalsIgnoreCase("Rolling")) {
             state = new StatePlayersTurn(getView(), robView);
             Facade.getInstance().roll(pid);
         }
-        if(s.equalsIgnoreCase("Playing") || s.equalsIgnoreCase("Robbing"))
-        {
+        if (s.equalsIgnoreCase("Playing") || s.equalsIgnoreCase("Robbing")) {
             playing++;
-            if(playing == 3)
-            {
+            if (playing == 3) {
                 playing = 0;
                 state = new StateDefault(getView(), robView);
                 facade.FinishTurn(pid);
@@ -91,54 +84,48 @@ public class MapController extends Controller implements IMapController {
         //find a way to switch out of stateRoadBuilding when it has finished.
     }
 
-    private void changeState(String s)
-    {
-        if(s.equalsIgnoreCase("Setup"))
+    private void changeState(String s) {
+        if (s.equalsIgnoreCase("Setup"))
             state = new StateSetup(getView(), robView);
-        else if(s.equalsIgnoreCase("RoadBuilding"))
+        else if (s.equalsIgnoreCase("RoadBuilding"))
             state = new StateSetup(getView(), robView);
-        else if(s.equalsIgnoreCase("Robbing"))
+        else if (s.equalsIgnoreCase("Robbing"))
             state = new StateRobbing(getView(), robView);
-        else if(s.equalsIgnoreCase("playersturn"))
+        else if (s.equalsIgnoreCase("playersturn"))
             state = new StatePlayersTurn(getView(), robView);
         else
             state = new StateDefault(getView(), robView);
     }
-    public void update(Observable observable, Object args)
-    {
+
+    public void update(Observable observable, Object args) {
         initFromModel();
     }
 
-    protected void initFromModel()
-    {
+    protected void initFromModel() {
         facade = Facade.getInstance();
         changeState();
         Map map = facade.getMap();
         ArrayList<Hex> hexes = map.getHexMap();
         System.out.println(hexes.size());
-        for(int i = 0; i < hexes.size(); i++)
-        {
+        for (int i = 0; i < hexes.size(); i++) {
             getView().addHex(hexes.get(i).getLocation(), HexType.convert(hexes.get(i).getResource()));
             getView().addNumber(hexes.get(i).getLocation(), hexes.get(i).getNumber());
         }
 
         ArrayList<Port> ports = map.getPorts();
-        for(int i = 0; i < ports.size(); i++)
-        {
+        for (int i = 0; i < ports.size(); i++) {
             EdgeLocation el = new EdgeLocation(ports.get(i).getLocation(), ports.get(i).getDirection());
             getView().addPort(el, PortType.convert(ports.get(i).getResource()));
         }
 
         ArrayList<Road> roads = map.getRoads();
-        for(int i = 0; i < roads.size(); i++)
-        {
+        for (int i = 0; i < roads.size(); i++) {
             getView().placeRoad(roads.get(i).getLocation(), facade.getPlayerColor(roads.get(i).getOwner()));
         }
 
         ArrayList<VertexObject> buildings = map.getBuildings();
-        for(int i = 0; i < buildings.size(); i++)
-        {
-            if((buildings.get(i)) instanceof Settlement)
+        for (int i = 0; i < buildings.size(); i++) {
+            if ((buildings.get(i)) instanceof Settlement)
                 getView().placeSettlement(buildings.get(i).getLocation(), facade.getPlayerColor(buildings.get(i).getOwner()));
             else
                 getView().placeCity(buildings.get(i).getLocation(), facade.getPlayerColor(buildings.get(i).getOwner()));
@@ -148,8 +135,7 @@ public class MapController extends Controller implements IMapController {
     }
 
 
-    public boolean canPlaceRoad(EdgeLocation edgeLoc)
-    {
+    public boolean canPlaceRoad(EdgeLocation edgeLoc) {
         return state.canPlaceRoad(edgeLoc);
     }
 
@@ -165,8 +151,7 @@ public class MapController extends Controller implements IMapController {
         return state.canPlaceRobber(hexLoc);
     }
 
-    public void placeRoad(EdgeLocation edgeLoc)
-    {
+    public void placeRoad(EdgeLocation edgeLoc) {
         state.placeRoad(edgeLoc);
 //        getView().placeRoad(edgeLoc, CatanColor.ORANGE);
     }
@@ -192,13 +177,21 @@ public class MapController extends Controller implements IMapController {
 //        getView().startDrop(pieceType, CatanColor.ORANGE, true);
     }
 
-    public void cancelMove() { state.cancelMove();     }
+    public void cancelMove() {
+        state.cancelMove();
+    }
 
-    public void playSoldierCard() { state.playSoldierCard();    }
+    public void playSoldierCard() {
+        state.playSoldierCard();
+    }
 
-    public void playRoadBuildingCard() { state.playRoadBuildingCard();   }
+    public void playRoadBuildingCard() {
+        state.playRoadBuildingCard();
+    }
 
-    public void robPlayer(RobPlayerInfo victim) { state.robPlayer(victim);    }
+    public void robPlayer(RobPlayerInfo victim) {
+        state.robPlayer(victim);
+    }
 
 }
 
