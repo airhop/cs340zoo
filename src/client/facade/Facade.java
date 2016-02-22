@@ -15,6 +15,7 @@ import client.model.misc.*;
 import client.proxy.*;
 import shared.jsonobject.*;
 import shared.locations.*;
+import shared.serialization.CreateGame;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,7 +58,7 @@ public class Facade {
         return proxy.getPlayerId();
     }
 
-    public GameModel getGM() {
+    public GameModel getGameModel() {
         return game;
     }
 
@@ -85,7 +86,7 @@ public class Facade {
 
     //login and register may need to print
     //register - user already exists, GUI in charge of checking lengths and that passwords match
-    public boolean Login(String username, String password) {
+    public boolean playerLogin(String username, String password) {
         User u = new User(username, password);
         try {
             proxy.userLogin(u);
@@ -112,9 +113,9 @@ public class Facade {
         return proxy.gamesList();
     }
 
-    public void gamesCreate(String s) {
+    public void gamesCreate(CreateGame gameNew) {
         try {
-            proxy.gamesCreate(s);
+            proxy.gamesCreate(gameNew);
             Created = true;
         } catch (FailedCreateGameException e) {
             //exceptionair!!

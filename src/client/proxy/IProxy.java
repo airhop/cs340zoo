@@ -11,6 +11,7 @@ import shared.jsonobject.User;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
+import shared.serialization.CreateGame;
 
 import java.util.List;
 
@@ -42,7 +43,7 @@ public interface IProxy {
      * You are making a game
      * @param gameName - The name of the game
      */
-    void gamesCreate(String gameName) throws FailedCreateGameException;
+    void gamesCreate(CreateGame gameName) throws FailedCreateGameException;
 
     /**
      * The player wants to join a game so they use this method

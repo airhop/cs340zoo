@@ -65,7 +65,6 @@ public class GameListDeserialize {
 //                System.out.println("Here i am " + myTree.peek().name());
 //                System.out.println("Here i am " + myTree.nextName());
             }
-
         } catch (IOException e) {
             e.printStackTrace();
         }

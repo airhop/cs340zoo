@@ -12,6 +12,7 @@ import shared.jsonobject.User;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
+import shared.serialization.CreateGame;
 import shared.serialization.Deserializer;
 import shared.serialization.GameListDeserialize;
 import shared.serialization.HttpURLResponse;
@@ -299,13 +300,13 @@ public class Proxy implements IProxy {
      * @throws FailedCreateGameException
      */
     @Override
-    public void gamesCreate(String gameName) throws FailedCreateGameException {
+    public void gamesCreate(CreateGame gameName) throws FailedCreateGameException {
         JsonObject myObjOne = new JsonObject();
         String url = "/games/create";
-        myObjOne.addProperty("randomTiles", "true");
-        myObjOne.addProperty("randomNumbers", "true");
-        myObjOne.addProperty("randomPorts", "true");
-        myObjOne.addProperty("name", gameName);
+        myObjOne.addProperty("randomTiles", gameName.isRandomTiles());
+        myObjOne.addProperty("randomNumbers", gameName.isRandomNumbers());
+        myObjOne.addProperty("randomPorts", gameName.isRandomPorts());
+        myObjOne.addProperty("name", gameName.getGameName());
         System.out.println(myObjOne.toString());
         HttpURLResponse myResponse;
         try {

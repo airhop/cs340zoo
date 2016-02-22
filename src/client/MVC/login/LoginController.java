@@ -1,8 +1,6 @@
 package client.MVC.login;
 
 import java.util.Observable;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 //import com.google.common.base.CharMatcher;
 
@@ -92,7 +90,7 @@ public class LoginController extends Controller implements ILoginController {
         if (username.matches(usernameRegex) && password.matches(passwordRegex)) {//going to need some work
             System.out.println("User Login!! Username = " + username + "Password = " + password);
             getLoginView().closeModal();
-            Facade.getInstance().Login(username, password);
+            Facade.getInstance().playerLogin(username, password);
             loginAction.execute();
         } else {
             System.out.println("User NOT Login!! Username = " + username + "Password = " + password);

@@ -11,7 +11,6 @@ import client.model.map.*;
 
 import java.util.ArrayList;
 import java.util.Observable;
-import java.util.Observer;
 
 
 /**
@@ -57,7 +56,7 @@ public class MapController extends Controller implements IMapController {
     private void changeState()
     {
 
-        String s = facade.getGM().getTurnTracker().getStatus();
+        String s = facade.getGameModel().getTurnTracker().getStatus();
         int pid = facade.getPlayerID();
         System.out.println(s + " " + pid);
 

@@ -12,6 +12,7 @@ import shared.jsonobject.User;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
+import shared.serialization.CreateGame;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,7 +58,7 @@ public class MockProxy implements IProxy {
     }
 
     @Override
-    public void gamesCreate(String s) throws FailedCreateGameException {
+    public void gamesCreate(CreateGame s) throws FailedCreateGameException {
         System.out.println("MockProxy.java: gamesCreate(String s) is called");
     }
 

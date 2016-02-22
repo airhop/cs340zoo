@@ -33,7 +33,7 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 
         // TEMPORARY
         getView().closeModal();
-        Facade.getInstance().gamesCreate("New Game");
+//        Facade.getInstance().gamesCreate("New Game");
     }
 
     @Override

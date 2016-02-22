@@ -5,7 +5,9 @@ import client.MVC.data.*;
 import client.MVC.misc.*;
 import client.facade.Facade;
 import shared.definitions.CatanColor;
+import shared.serialization.CreateGame;
 
+import java.util.List;
 import java.util.Observable;
 
 
@@ -92,8 +94,12 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 
     @Override
     public void start() {
-//        getJoinGameView()
-
+        List<GameInfo> games = Facade.getInstance().gamesList();
+        GameInfo[] myType = new GameInfo[games.size()];
+        for(int i = 0; i < games.size(); i++){
+            myType[i] = games.get(i);
+        }
+        getJoinGameView().setGames(myType, new PlayerInfo());
         getJoinGameView().showModal();
     }
 
@@ -111,7 +117,12 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 
     @Override
     public void createNewGame() {
-
+        CreateGame gameNew = new CreateGame();
+        gameNew.setGameName(getNewGameView().getTitle());
+        gameNew.setRandomNumbers(getNewGameView().getRandomlyPlaceNumbers());
+        gameNew.setRandomPorts(getNewGameView().getUseRandomPorts());
+        gameNew.setRandomTiles(getNewGameView().getRandomlyPlaceHexes());
+        Facade.getInstance().gamesCreate(gameNew);
         getNewGameView().closeModal();
     }
 
@@ -138,11 +149,11 @@ public class JoinGameController extends Controller implements IJoinGameControlle
         Facade.getInstance().gamesJoin(CatanColor.toString(color), 0);
 
     //to Add 3 extra players so that the game will actually play for testing
-        Facade.getInstance().Login("Pete", "pete");
+        Facade.getInstance().playerLogin("Pete", "pete");
         Facade.getInstance().gamesJoin("red", 1);
-        Facade.getInstance().Login("Mark", "mark");
+        Facade.getInstance().playerLogin("Mark", "mark");
         Facade.getInstance().gamesJoin("brown", 2);
-        Facade.getInstance().Login("Brooke", "brooke");
+        Facade.getInstance().playerLogin("Brooke", "brooke");
         Facade.getInstance().gamesJoin("purple", 3);
 
 
