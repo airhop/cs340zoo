@@ -234,7 +234,7 @@ public class Proxy implements IProxy {
 
 
     @Override
-    public void userLogin(User u) throws InvalidUserException {
+    public boolean userLogin(User u) throws InvalidUserException {
         JsonObject myObjOne = new JsonObject();
         String url = "/user/login";
         myObjOne.addProperty("username", u.getUsername());
@@ -243,11 +243,17 @@ public class Proxy implements IProxy {
         HttpURLResponse myResponse;
         try {
             myResponse = doPost(url, myObjOne);
-            userCookie.setFullCookie(myResponse.getCookie());
-            userCookie.getPlayerId();
-            userCookie.getDecode();
+            if(myResponse.getResponseCode() == 200){
+                userCookie.setFullCookie(myResponse.getCookie());
+                userCookie.getPlayerId();
+                userCookie.getDecode();
+                return true;
+            }else{
+                return false;
+            }
         } catch (ClientException e) {
             e.printStackTrace();
+            return false;
         }
     }
 

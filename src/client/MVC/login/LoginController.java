@@ -89,12 +89,14 @@ public class LoginController extends Controller implements ILoginController {
         // If log in succeeded
         if (username.matches(usernameRegex) && password.matches(passwordRegex)) {//going to need some work
             System.out.println("User Login!! Username = " + username + "Password = " + password);
-            getLoginView().closeModal();
-            Facade.getInstance().playerLogin(username, password);
-            loginAction.execute();
+            if(Facade.getInstance().playerLogin(username, password)){
+                getLoginView().closeModal();
+                loginAction.execute();
+            }else{
+                System.out.println("Not logging in");
+            }
         } else {
             System.out.println("User NOT Login!! Username = " + username + "Password = " + password);
-
         }
 
     }

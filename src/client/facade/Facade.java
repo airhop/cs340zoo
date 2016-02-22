@@ -92,17 +92,20 @@ public class Facade {
     //register - user already exists, GUI in charge of checking lengths and that passwords match
     public boolean playerLogin(String username, String password) {
         User u = new User(username, password);
+        boolean login = false;
         try {
-            proxy.userLogin(u);
-            game.getCurrentPlayer().setUsername(username);
-            game.getCurrentPlayer().setPassword(password);
-            game.getCurrentPlayer().setPlayerId(proxy.getPlayerId());
+            login = proxy.userLogin(u);
+            if(login){
+                game.getCurrentPlayer().setUsername(username);
+                game.getCurrentPlayer().setPassword(password);
+                game.getCurrentPlayer().setPlayerId(proxy.getPlayerId());
+            }
         } catch (InvalidUserException e) {
             System.out.println("oops");
-            return false;
+            return login;
         }
-        loggedIn = true;
-        return true;
+        loggedIn = login;
+        return login;
     }
 
     public boolean register(String username, String password) {

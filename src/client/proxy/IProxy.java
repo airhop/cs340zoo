@@ -24,7 +24,7 @@ public interface IProxy {
      * This is used to log a player in that has already registered
      * @param u - This is the Login or identification for the user
      */
-    void userLogin(User u) throws InvalidUserException;
+    boolean userLogin(User u) throws InvalidUserException;
 
     /**
      * This is used to register a new player

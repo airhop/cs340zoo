@@ -39,8 +39,9 @@ public class MockProxy implements IProxy {
     }
 
     @Override
-    public void userLogin(User u) throws InvalidUserException {
+    public boolean userLogin(User u) throws InvalidUserException {
         System.out.println("MockProxy.java: userLogin(User u) is called");
+        return true;
     }
 
     @Override
