@@ -6,6 +6,7 @@ package client.facade;
 
 import client.MVC.base.Controller;
 import client.MVC.data.GameInfo;
+import client.model.player.CurrentPlayer;
 import shared.definitions.*;
 import shared.exceptions.*;
 import client.model.*;
@@ -52,9 +53,13 @@ public class Facade {
         }
     }
 
+    public CurrentPlayer getCurrentPlayer(){
+        return game.getCurrentPlayer();
+    }
+
     public int getPlayerID()
     {
-        return proxy.getPlayerId();
+        return game.getCurrentPlayer().getPlayerId();
     }
 
     public GameModel getGameModel() {
@@ -91,6 +96,7 @@ public class Facade {
             proxy.userLogin(u);
             game.getCurrentPlayer().setUsername(username);
             game.getCurrentPlayer().setPassword(password);
+            game.getCurrentPlayer().setPlayerId(proxy.getPlayerId());
         } catch (InvalidUserException e) {
             System.out.println("oops");
             return false;

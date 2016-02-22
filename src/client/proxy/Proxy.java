@@ -317,10 +317,10 @@ public class Proxy implements IProxy {
     }
 
     @Override
-    public void gamesJoin(String color, int playerId) throws InvalidUserException {
+    public void gamesJoin(String color, int gameId) throws InvalidUserException {
         JsonObject myObjOne = new JsonObject();
         String url = "/games/join";
-        myObjOne.addProperty("id", "" + userCookie.getPlayerId());
+        myObjOne.addProperty("id", "" + gameId);
         myObjOne.addProperty("color", color.toLowerCase());
         System.out.println(myObjOne.toString());
         HttpURLResponse myResponse;

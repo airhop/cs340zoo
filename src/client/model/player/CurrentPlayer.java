@@ -11,7 +11,15 @@ public class CurrentPlayer {
     private CatanColor color;
     private int playerId;
     private int playerIndex;
+    private int gameId;
 
+    public int getGameId() {
+        return gameId;
+    }
+
+    public void setGameId(int gameId) {
+        this.gameId = gameId;
+    }
 
     public CurrentPlayer(){
 

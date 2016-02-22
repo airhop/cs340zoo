@@ -330,6 +330,12 @@ public class SelectColorView extends OverlayView implements ISelectColorView {
 
         return getColorByNumber(selButton);
     }
+    @Override
+    public void resetColors(){
+        for(int i = 1; i < 9; i++){
+            resetButton(i);
+        }
+    }
 
     private JButton getButtonForColor(CatanColor color) {
 
