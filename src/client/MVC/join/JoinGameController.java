@@ -143,20 +143,20 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 
         System.out.println("Game Joining");
 
-        // If join succeeded
-        getSelectColorView().closeModal();
-        getJoinGameView().closeModal();
-        Facade.getInstance().gamesJoin(CatanColor.toString(color), 0);
-
-    //to Add 3 extra players so that the game will actually play for testing
-        Facade.getInstance().playerLogin("Pete", "pete");
-        Facade.getInstance().gamesJoin("red", 1);
-        Facade.getInstance().playerLogin("Mark", "mark");
-        Facade.getInstance().gamesJoin("brown", 2);
-        Facade.getInstance().playerLogin("Brooke", "brooke");
-        Facade.getInstance().gamesJoin("purple", 3);
-
-
+//        // If join succeeded
+//        getSelectColorView().closeModal();
+//        getJoinGameView().closeModal();
+//        Facade.getInstance().gamesJoin(CatanColor.toString(color), 0);
+//
+//    //to Add 3 extra players so that the game will actually play for testing
+//        Facade.getInstance().playerLogin("Pete", "pete");
+//        Facade.getInstance().gamesJoin("red", 1);
+//        Facade.getInstance().playerLogin("Mark", "mark");
+//        Facade.getInstance().gamesJoin("brown", 2);
+//        Facade.getInstance().playerLogin("Brooke", "brooke");
+//        Facade.getInstance().gamesJoin("purple", 3);
+//
+//
 
         joinAction.execute();
     }

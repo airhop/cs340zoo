@@ -50,13 +50,15 @@ public class GameListDeserialize {
                     player.setPlayerIndex(i);
                     i++;
                     myTree.beginObject();
-                    myTree.nextName();
-                    player.setColor(CatanColor.convert(myTree.nextString()));
-                    myTree.nextName();
-                    player.setName(myTree.nextString());
-                    myTree.nextName();
-                    player.setId(myTree.nextInt());
-                    game.addPlayer(player);
+                    if(myTree.peek().name().equals("NAME")){
+                        myTree.nextName();
+                        player.setColor(CatanColor.convert(myTree.nextString()));
+                        myTree.nextName();
+                        player.setName(myTree.nextString());
+                        myTree.nextName();
+                        player.setId(myTree.nextInt());
+                        game.addPlayer(player);
+                    }
                     myTree.endObject();
                 }
                 myTree.endArray();
