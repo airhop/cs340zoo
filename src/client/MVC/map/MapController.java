@@ -3,7 +3,6 @@ package client.MVC.map;
 import client.MVC.base.*;
 import client.MVC.data.*;
 import client.facade.Facade;
-import shared.definitions.CatanColor;
 import shared.definitions.HexType;
 import shared.definitions.PieceType;
 import shared.definitions.PortType;
@@ -13,7 +12,6 @@ import client.model.map.*;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
-import java.util.Random;
 
 
 /**
@@ -57,9 +55,9 @@ public class MapController extends Controller implements IMapController, Observe
 
     private void changeState()
     {
-        String s = facade.getGM().getTt().getStatus();
+        String s = facade.getGM().getTurnTracker().getStatus();
 
-        System.out.println(s + " " + facade.getGM().getTt().getCurrentPlayer());
+        System.out.println(s + " " + facade.getGM().getTurnTracker().getCurrentPlayer());
         //switch here between the states and set it up
 
         //find a way to switch out of stateRoadBuilding when it has finished.

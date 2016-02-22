@@ -6,7 +6,6 @@ import client.model.map.*;
 import client.model.map.Map;
 import client.model.misc.*;
 import client.model.player.Player;
-import org.omg.CORBA.DynAnyPackage.Invalid;
 import client.model.history.*;
 import shared.exceptions.*;
 import shared.definitions.*;
@@ -19,7 +18,7 @@ public class GameModel {
     private Bank bank;
     private ArrayList<Player> players;
     private TurnTracker turnTracker;
-    private TradeOffer to;
+    private TradeOffer tradeOffer;
     private int version = 0;
     private int winner = -1;
     private Dice dice;
@@ -31,7 +30,7 @@ public class GameModel {
         map = new Map();
         bank = new Bank();
         turnTracker = new TurnTracker();
-        to = new TradeOffer();
+        tradeOffer = new TradeOffer();
         dice = new Dice();
         chat = new Chat();
         players = new ArrayList<>();
@@ -45,8 +44,13 @@ public class GameModel {
         this.map = givenModel.getMap();
         this.bank = givenModel.getBank();
         this.players = givenModel.getPlayers();
-        this.turnTracker = givenModel.getTt();
-
+        this.turnTracker = givenModel.getTurnTracker();
+        this.tradeOffer = givenModel.getTradeOffer();
+        this.version = givenModel.getVersion();
+        this.winner = givenModel.getWinner();
+        this.dice = givenModel.getDice();
+        this.chat = givenModel.getChat();
+        this.log = givenModel.getLog();
     }
 
     public GameModel(Map m, Bank b, ArrayList<Player> ps, TurnTracker tt, TradeOffer tro, Chat c, Log l)
@@ -55,7 +59,7 @@ public class GameModel {
         bank = b;
         players = ps;
         turnTracker = tt;
-        to = tro;
+        tradeOffer = tro;
         chat = c;
         dice = new Dice();
         log = l;
@@ -65,7 +69,7 @@ public class GameModel {
         map = new Map();
         bank = new Bank();
         turnTracker = new TurnTracker();
-        to = new TradeOffer();
+        tradeOffer = new TradeOffer();
         dice = new Dice();
         players.add(new Player(names[0],0));
         players.add(new Player(names[1],1));
@@ -118,7 +122,7 @@ public class GameModel {
         this.players = players;
     }
 
-    public TurnTracker getTt() {
+    public TurnTracker getTurnTracker() {
         return turnTracker;
     }
 
@@ -126,12 +130,12 @@ public class GameModel {
         this.turnTracker = tt;
     }
 
-    public TradeOffer getTo() {
-        return to;
+    public TradeOffer getTradeOffer() {
+        return tradeOffer;
     }
 
-    public void setTo(TradeOffer to) {
-        this.to = to;
+    public void setTradeOffer(TradeOffer tradeOffer) {
+        this.tradeOffer = tradeOffer;
     }
 
     public int getVersion() {
@@ -176,7 +180,7 @@ public class GameModel {
 
     public CatanColor getCurrentColor()
     {
-        return CatanColor.convert(players.get(getTt().getCurrentPlayer()).getColor());
+        return CatanColor.convert(players.get(getTurnTracker().getCurrentPlayer()).getColor());
     }
     public CatanColor getPlayerColor (int player)
     {   return CatanColor.convert(players.get(player).getColor());}
@@ -359,7 +363,7 @@ public class GameModel {
         if (pid == rid)
             throw new IllegalMoveException("No trading yourself!");
 
-        to = new TradeOffer(pid, rid, rl);
+        tradeOffer = new TradeOffer(pid, rid, rl);
         return players.get(pid).canOfferTrade(rl);
 
 
@@ -396,7 +400,7 @@ public class GameModel {
      * @return boolean whether or not the player can accept a trade offer from another player
      */
     public boolean canAcceptTrade(int pid) {
-        return players.get(pid).canAcceptTrade(to.getSentList());
+        return players.get(pid).canAcceptTrade(tradeOffer.getSentList());
     }
 
     /**
