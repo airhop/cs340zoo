@@ -22,6 +22,7 @@ public class MapController extends Controller implements IMapController {
     private IRobView robView;
     private StateAbstract state;
     private Facade facade = Facade.getInstance();
+    private int playing; //needed for debugging when playing by yourself
 
     public MapController(IMapView view, IRobView robView) {
 
@@ -55,9 +56,37 @@ public class MapController extends Controller implements IMapController {
 
     private void changeState()
     {
-        String s = facade.getGM().getTurnTracker().getStatus();
 
-        System.out.println(s + " " + facade.getGM().getTurnTracker().getCurrentPlayer());
+        String s = facade.getGM().getTurnTracker().getStatus();
+        int pid = facade.getPlayerID();
+        System.out.println(s + " " + pid);
+
+        if(s.equalsIgnoreCase("FirstTurn") || s.equalsIgnoreCase("SecondTurn"))
+        {
+            state = new StateSetup(getView(), robView);
+            if(((StateSetup)state).finishedSetup())
+            {
+                state = new StateDefault(getView(), robView);
+                facade.FinishTurn(pid);
+            }
+        }
+        if(s.equalsIgnoreCase("Rolling"))
+        {
+            state = new StatePlayersTurn(getView(), robView);
+            Facade.getInstance().roll(pid);
+        }
+        if(s.equalsIgnoreCase("Playing") || s.equalsIgnoreCase("Robbing"))
+        {
+            playing++;
+            if(playing == 3)
+            {
+                playing = 0;
+                state = new StateDefault(getView(), robView);
+                facade.FinishTurn(pid);
+            }
+        }
+
+
         //switch here between the states and set it up
 
         //find a way to switch out of stateRoadBuilding when it has finished.

@@ -11,8 +11,9 @@ public class Dice {
   public int rollDice()
   {
     Random r = new Random();
-    int n = r.nextInt(2 - 12) + 3;
-    return n;
+    int x = r.nextInt(6);
+    int y = r.nextInt(6);
+    return x+y+2;
   }
   public boolean canRoll(int playerID)
   { 

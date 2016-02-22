@@ -1,6 +1,7 @@
 package client.MVC.communication;
 
 import client.MVC.base.*;
+import client.facade.Facade;
 
 import java.util.Observable;
 
@@ -21,7 +22,10 @@ public class ChatController extends Controller implements IChatController {
     }
 
     @Override
-    public void sendMessage(String message) {
+    public void sendMessage(String message)
+    {
+        Facade f = Facade.getInstance();
+        f.canSendChat(message, f.getPlayerID());
 
     }
 

@@ -44,7 +44,15 @@ public class Facade {
         GameModel gm = proxy.getGameModel();
         if (gm != null) {
             game = gm;
+//observation is not happening without this for loop, so I am leaving it for now
+            for(int i =0 ; i < observers.size(); i++)
+                ((Controller)observers.get(i)).update(game, "");
         }
+    }
+
+    public int getPlayerID()
+    {
+        return proxy.getPlayerId();
     }
 
     public GameModel getGM() {
@@ -392,7 +400,7 @@ public class Facade {
             if (canRoll(pid)) {
                 int number = game.roll(pid);
                 if (number != -1)
-                    proxy.rollNumber(number, 7);
+                    proxy.rollNumber(number, pid);
                 else
                     System.out.println("not a rolling phase");
             }
