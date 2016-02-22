@@ -18,52 +18,61 @@ import shared.locations.*;
 import java.util.ArrayList;
 import java.util.Observer;
 
-public class Facade
-{
+public class Facade {
     private GameModel game;
     private IProxy proxy;
     private ArrayList<Observer> observers = new ArrayList<Observer>();
     private boolean loggedIn = false, Joined = false, Created = false;
 
     private static Facade facade = new Facade();
-    private Facade(){game = new GameModel();}
 
-    public static Facade getInstance()
-    {
+    private Facade() {
+        game = new GameModel();
+    }
+
+    public static Facade getInstance() {
         return facade;
     }
 
-    public void setProxy(IProxy proxy)
-    {
+    public void setProxy(IProxy proxy) {
         this.proxy = proxy;
     }
 
-    public void retrieveGameModel()
-    {
-        if(!loggedIn || !Joined || !Created)
+    public void retrieveGameModel() {
+        if (!loggedIn || !Joined || !Created)
             return;
         GameModel gm = proxy.getGameModel();
-        if (gm != null)
-        {
+        if (gm != null) {
             game = gm;
         }
     }
 
-    public GameModel getGM() {return game;}
+    public GameModel getGM() {
+        return game;
+    }
+
     public void Reinitialize(GameModel g) {
         game = g;
     }
 
     //observer methods
-    public void addObserver(Observer x)
-    {
+    public void addObserver(Observer x) {
         observers.add(x);
     }
 
 
-    public CatanColor getCatanColor()    {        return game.getCurrentColor();    }
-    public Map getMap()    {        return game.getMap();    }
-    public CatanColor getPlayerColor(int player) {return game.getPlayerColor(player); }
+    public CatanColor getCatanColor() {
+        return game.getCurrentColor();
+    }
+
+    public Map getMap() {
+        return game.getMap();
+    }
+
+    public CatanColor getPlayerColor(int player) {
+        return game.getPlayerColor(player);
+    }
+
     //login and register may need to print
     //register - user already exists, GUI in charge of checking lengths and that passwords match
     public boolean Login(String username, String password) {
