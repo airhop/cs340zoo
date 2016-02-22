@@ -42,6 +42,10 @@ public class GameModel {
 
     }
     public void updateGameModel(GameModel givenModel){
+        this.map = givenModel.getMap();
+        this.bank = givenModel.getBank();
+        this.players = givenModel.getPlayers();
+        this.turnTracker = givenModel.getTt();
 
     }
 
