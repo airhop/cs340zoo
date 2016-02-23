@@ -42,4 +42,6 @@ public class StateRobbing extends StateAbstract
         robView.closeModal();
     }
 
+    public String getName()   {        return "Robbing";    }
+
 }

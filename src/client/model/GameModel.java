@@ -15,6 +15,7 @@ import shared.locations.*;
 import java.util.*;
 
 public class GameModel extends Observable{
+    private int GameID;
     private Map map;
     private Bank bank;
     private ArrayList<Player> players;
@@ -189,6 +190,9 @@ public class GameModel extends Observable{
     {
         return currentPlayer;
     }
+
+    public void setID(int id) {GameID = id; }
+    public int getID() { return GameID; }
 
     public void setCurrentPlayer(CurrentPlayer cp)
     {

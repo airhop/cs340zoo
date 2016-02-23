@@ -24,6 +24,7 @@ public class StateSetup extends StateAbstract
         robView = rv;
         facade = Facade.getInstance();
         color = facade.getCatanColor();
+        startMove(PieceType.SETTLEMENT, true, true);
     }
 
     public boolean canPlaceRoad(EdgeLocation edgeLoc)
@@ -50,6 +51,8 @@ public class StateSetup extends StateAbstract
     {
         view.placeSettlement(vertLoc, color);
         setSettlement = true;
+        Facade.getInstance().placeSettlement(Facade.getInstance().getPlayerID(), vertLoc, true);
+        startMove(PieceType.ROAD, true, true);
     }
 
     public void startMove(PieceType pieceType, boolean isFree, boolean allowDisconnected)
@@ -66,4 +69,5 @@ public class StateSetup extends StateAbstract
 //        view.cancelDrop();
 //    }
 
+    public String getName() {return "Setup"; }
 }

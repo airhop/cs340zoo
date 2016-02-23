@@ -13,6 +13,7 @@ public class StatePlayersTurn extends StateAbstract
         view = v;
     }
 
+    public String getName() { return "Playing"; }
     public boolean canPlaceRoad(EdgeLocation edgeLoc) {return false;}
     public boolean canPlaceSettlement(VertexLocation vertLoc){return false;}
     public void placeRoad(EdgeLocation edgeLoc){}

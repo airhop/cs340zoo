@@ -132,10 +132,17 @@ public class Facade {
         }
     }
 
-    public void gamesJoin(String s, int playerId) {
+    public void gameAddAI()
+    {
+            proxy.gameAddAI();
+    }
+
+    //joining the game will require the gameId, not the playerId
+    public void gamesJoin(String s, int gameId) {
         try {
-            proxy.gamesJoin(s, playerId);
+            proxy.gamesJoin(s, gameId);
             Joined = true;
+            game.setID(gameId);
         } catch (InvalidUserException e) {
             //exceptionair!!
         }
