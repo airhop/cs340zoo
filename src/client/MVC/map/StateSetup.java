@@ -45,6 +45,8 @@ public class StateSetup extends StateAbstract
     {
         view.placeRoad(edgeLoc, color);
         setRoad = true;
+        Facade.getInstance().placeRoad(Facade.getInstance().getPlayerID(), edgeLoc, true);
+    //    Facade.getInstance().FinishTurn(Facade.getInstance().getPlayerID());
     }
 
     public void placeSettlement(VertexLocation vertLoc)

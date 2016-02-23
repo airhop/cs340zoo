@@ -135,6 +135,12 @@ public class MapController extends Controller implements IMapController {
        //without input it will change the phase automatically for playing with
         //changeState();
 
+        if(state.getName().equalsIgnoreCase("Setup"))
+        {
+            if (((StateSetup) state).finishedSetup())
+                Facade.getInstance().FinishTurn(Facade.getInstance().getPlayerID());
+            return;
+        }
         //with input, it will change based on the updating to work with everyone else
         System.out.println("Current State: " + state.getName());
         if(!changeState(gm.getTurnTracker().getStatus()))
