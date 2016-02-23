@@ -42,7 +42,7 @@ public class Facade {
     }
 
     public void retrieveGameModel() {
-        if (!loggedIn || !Joined || !Created)
+        if (!loggedIn || !Joined)
             return;
         GameModel gm = proxy.getGameModel();
         if (gm != null) {
