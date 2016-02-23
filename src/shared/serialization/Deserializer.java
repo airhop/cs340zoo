@@ -283,7 +283,7 @@ public class Deserializer {
 
                                         myTree.endObject();
                                     } else {
-                                        myTree.beginObject();
+                                        myTree.nextNull();
                                         System.out.println(myTree.peek().name());
                                     }
 //                                    System.out.println(myTree.peek().name());
