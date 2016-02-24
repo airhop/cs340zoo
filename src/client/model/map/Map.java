@@ -39,6 +39,7 @@ public class Map
 		buildings = new ArrayList<VertexObject>();
 		resources = new ArrayList<ResourceList>();
 		deserializer = new Deserializer();
+		addOcean();
 	}
 
 	public void clearHexes()
@@ -48,6 +49,25 @@ public class Map
 	public void clearBuildings()
 	{
 		buildings.clear();
+	}
+
+	private void addOcean()
+	{
+		for(int i = 0; i < 4; i++)
+		{
+			hexes.put(new HexLocation(-3, i), new Hex(-3, i, "WATER", 0));
+			hexes.put(new HexLocation(3, (-1*i)), new Hex(3, (-1*i), "WATER", 0));
+		}
+		hexes.put(new HexLocation(-2,-1), new Hex(-2, -1, "WATER", 0));
+		hexes.put(new HexLocation(-2,3), new Hex(-2, 3, "WATER", 0));
+		hexes.put(new HexLocation(-1,-2), new Hex(-1, -2, "WATER", 0));
+		hexes.put(new HexLocation(-1,3), new Hex(-1, 3, "WATER", 0));
+		hexes.put(new HexLocation(0,3), new Hex(0, 3, "WATER", 0));
+		hexes.put(new HexLocation(0,-3), new Hex(0, -3, "WATER", 0));
+		hexes.put(new HexLocation(1,-3), new Hex(1, -3, "WATER", 0));
+		hexes.put(new HexLocation(1,2), new Hex(1, 2, "WATER", 0));
+		hexes.put(new HexLocation(2,-3), new Hex(2, -3, "WATER", 0));
+		hexes.put(new HexLocation(2,1), new Hex(2, 1, "WATER", 0));
 	}
 
 	public ArrayList<Hex> getHexMap()
@@ -63,21 +83,21 @@ public class Map
 				System.out.println("oops");
         }
 
-		for(int i = 0; i < 4; i++)
-		{
-			returnHexes.add(new Hex(-3, i, "WATER", 0));
-			returnHexes.add(new Hex(3, (-1*i), "WATER", 0));
-		}
-		returnHexes.add(new Hex(-2, -1, "WATER", 0));
-		returnHexes.add(new Hex(-2, 3, "WATER", 0));
-		returnHexes.add(new Hex(-1, -2, "WATER", 0));
-		returnHexes.add(new Hex(-1, 3, "WATER", 0));
-		returnHexes.add(new Hex(0, -3, "WATER", 0));
-		returnHexes.add(new Hex(0, 3, "WATER", 0));
-		returnHexes.add(new Hex(1, -3, "WATER", 0));
-		returnHexes.add(new Hex(1, 2, "WATER", 0));
-		returnHexes.add(new Hex(2, -3, "WATER", 0));
-		returnHexes.add(new Hex(2, 1, "WATER", 0));
+//		for(int i = 0; i < 4; i++)
+//		{
+//			returnHexes.add(new Hex(-3, i, "WATER", 0));
+//			returnHexes.add(new Hex(3, (-1*i), "WATER", 0));
+//		}
+//		returnHexes.add(new Hex(-2, -1, "WATER", 0));
+//		returnHexes.add(new Hex(-2, 3, "WATER", 0));
+//		returnHexes.add(new Hex(-1, -2, "WATER", 0));
+//		returnHexes.add(new Hex(-1, 3, "WATER", 0));
+//		returnHexes.add(new Hex(0, -3, "WATER", 0));
+//		returnHexes.add(new Hex(0, 3, "WATER", 0));
+//		returnHexes.add(new Hex(1, -3, "WATER", 0));
+//		returnHexes.add(new Hex(1, 2, "WATER", 0));
+//		returnHexes.add(new Hex(2, -3, "WATER", 0));
+//		returnHexes.add(new Hex(2, 1, "WATER", 0));
 		return returnHexes;
 	}
 
@@ -229,9 +249,14 @@ public class Map
 		}
 		Hex h = hexes.get(settlementLocation.getHexLoc());
 		if(h == null)
+		{
+			System.out.println("oops " + settlementLocation.toString());
 			return false;
+		}
 		if(HexType.convert(h.getResource()) == HexType.WATER)
-			return false;
+		{
+			return oceanPlacable(settlementLocation);
+		}
 
 		System.out.println(settlementLocation.toString());
 		//need to check adjacency?
@@ -425,10 +450,21 @@ public class Map
 		this.robber = robber;
 	}
 
-	public boolean isOcean(HexLocation hl)
+	public boolean oceanPlacable(VertexLocation vl)
 	{
-		Hex hex = hexes.get(hl);
-		if(hex == null) return true;
-		return false;
+		int x = vl.getHexLoc().getX();
+		int y = vl.getHexLoc().getY();
+
+		System.out.println(x + " " + y + " " + vl.getDir());
+
+
+		if(y < 0 && x != 3)
+			return false;
+		else if(x == -3 && vl.getDir() == VertexDirection.NW)
+			return false;
+		else if(x == 3 && vl.getDir() == VertexDirection.NE)
+			return false;
+		return true;
+
 	}
 }
