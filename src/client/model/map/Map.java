@@ -65,19 +65,19 @@ public class Map
 
 		for(int i = 0; i < 4; i++)
 		{
-			returnHexes.add(new Hex(-3, i, "OCEAN", 0));
-			returnHexes.add(new Hex(3, (-1*i), "OCEAN", 0));
+			returnHexes.add(new Hex(-3, i, "WATER", 0));
+			returnHexes.add(new Hex(3, (-1*i), "WATER", 0));
 		}
-		returnHexes.add(new Hex(-2, -1, "OCEAN", 0));
-		returnHexes.add(new Hex(-2, 3, "OCEAN", 0));
-		returnHexes.add(new Hex(-1, -2, "OCEAN", 0));
-		returnHexes.add(new Hex(-1, 3, "OCEAN", 0));
-		returnHexes.add(new Hex(0, -3, "OCEAN", 0));
-		returnHexes.add(new Hex(0, 3, "OCEAN", 0));
-		returnHexes.add(new Hex(1, -3, "OCEAN", 0));
-		returnHexes.add(new Hex(1, 2, "OCEAN", 0));
-		returnHexes.add(new Hex(2, -3, "OCEAN", 0));
-		returnHexes.add(new Hex(2, 1, "OCEAN", 0));
+		returnHexes.add(new Hex(-2, -1, "WATER", 0));
+		returnHexes.add(new Hex(-2, 3, "WATER", 0));
+		returnHexes.add(new Hex(-1, -2, "WATER", 0));
+		returnHexes.add(new Hex(-1, 3, "WATER", 0));
+		returnHexes.add(new Hex(0, -3, "WATER", 0));
+		returnHexes.add(new Hex(0, 3, "WATER", 0));
+		returnHexes.add(new Hex(1, -3, "WATER", 0));
+		returnHexes.add(new Hex(1, 2, "WATER", 0));
+		returnHexes.add(new Hex(2, -3, "WATER", 0));
+		returnHexes.add(new Hex(2, 1, "WATER", 0));
 		return returnHexes;
 	}
 
@@ -171,7 +171,7 @@ public class Map
 	 * checks to see if road can be added
 	 */
 	//public boolean canAddRoad(Road road)
-	public boolean canAddRoad(EdgeLocation edgeLocation)
+	public boolean canPlaceRoad(EdgeLocation edgeLocation)
 	{
 		if (edgeLocation == null)
 		{
@@ -181,6 +181,13 @@ public class Map
 		{
 			return false;
 		}
+		Hex h = hexes.get(edgeLocation.getHexLoc());
+		if( h == null)
+			return false;
+		if(HexType.convert(h.getResource())== HexType.WATER)
+			return false;
+
+		System.out.println(h.toString());
 		return true;
 	}
 
@@ -207,7 +214,7 @@ public class Map
 	 * checks to see if settlement can be added
 	 */
 	//public boolean canAddSettlement(Settlement settlement,VertexObject settlement)
-	public boolean canAddSettlement(VertexLocation settlementLocation)
+	public boolean canPlaceSettlement(VertexLocation settlementLocation)
 	{
 		if (settlementLocation == null)
 		{
@@ -220,6 +227,14 @@ public class Map
 				return false;
 			}
 		}
+		Hex h = hexes.get(settlementLocation.getHexLoc());
+		if(h == null)
+			return false;
+		if(HexType.convert(h.getResource()) == HexType.WATER)
+			return false;
+
+		System.out.println(settlementLocation.toString());
+		//need to check adjacency?
 		return true;
 	}
 
@@ -245,7 +260,7 @@ public class Map
 	 * checks to see if City can be added
 	 */
 	//public boolean canAddCity(City city)
-	public boolean canAddCity(VertexLocation vertexLocation)
+	public boolean canPlaceCity(VertexLocation vertexLocation)
 	{
 		if (vertexLocation == null)
 		{
@@ -286,10 +301,11 @@ public class Map
 	public boolean canRelocateRobber(HexLocation targetHex)
 	{
 		//HexLocation targetHex = new HexLocation(x,y);
-		if (hexes.get(targetHex).resource == "Ocean" || hexes.get(targetHex).resource == "Sea")
-		{
+		if(targetHex == robber.getHl())
 			return false;
-		}
+		if (HexType.convert(hexes.get(targetHex).resource) == HexType.WATER)
+			return false;
+
 		return true;
 	}
 	public ArrayList<Port> checkForPorts(ArrayList<VertexObject> builds)
@@ -407,5 +423,12 @@ public class Map
 
 	public void setRobber(Robber robber) {
 		this.robber = robber;
+	}
+
+	public boolean isOcean(HexLocation hl)
+	{
+		Hex hex = hexes.get(hl);
+		if(hex == null) return true;
+		return false;
 	}
 }

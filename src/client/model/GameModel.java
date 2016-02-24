@@ -241,7 +241,7 @@ public class GameModel extends Observable{
      * @return boolean whether or not the player can place a road
      */
     public boolean canPlaceRoad(EdgeLocation el) {
-        return map.canAddRoad(el);
+        return map.canPlaceRoad(el);
     }
 
     /**
@@ -261,7 +261,7 @@ public class GameModel extends Observable{
      * @return boolean whether or not the player can place a settlement
      */
     public boolean canPlaceSettlement(VertexLocation vl) {
-        return map.canAddSettlement(vl);
+        return map.canPlaceSettlement(vl);
     }
 
 
@@ -282,7 +282,7 @@ public class GameModel extends Observable{
      * @return boolean whether or not the player can place a city
      */
     public boolean canPlaceCity(VertexLocation vl) {
-        return map.canAddCity(vl);
+        return map.canPlaceCity(vl);
     }
 
     /**
