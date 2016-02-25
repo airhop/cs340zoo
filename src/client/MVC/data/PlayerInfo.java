@@ -20,6 +20,8 @@ public class PlayerInfo {
     private String name;
     private CatanColor color;
 
+
+
     public PlayerInfo() {
         setId(-1);
         setPlayerIndex(-1);

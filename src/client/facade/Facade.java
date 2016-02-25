@@ -6,7 +6,9 @@ package client.facade;
 
 import client.MVC.base.Controller;
 import client.MVC.data.GameInfo;
+import client.MVC.data.PlayerInfo;
 import client.model.player.CurrentPlayer;
+import client.model.player.Player;
 import shared.definitions.*;
 import shared.exceptions.*;
 import client.model.*;
@@ -35,6 +37,14 @@ public class Facade {
 
     public static Facade getInstance() {
         return facade;
+    }
+    public PlayerInfo getCurrentPlayerInfo(){
+        PlayerInfo curPlayer = new PlayerInfo();
+        curPlayer.setId(getCurrentPlayer().getPlayerId());
+        curPlayer.setPlayerIndex(getCurrentPlayer().getPlayerIndex());
+        curPlayer.setName(getCurrentPlayer().getUsername());
+        curPlayer.setColor(getCurrentPlayer().getColor());
+        return curPlayer;
     }
 
     public void setProxy(IProxy proxy) {

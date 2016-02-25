@@ -99,7 +99,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
         for (int i = 0; i < games.size(); i++) {
             myType[i] = games.get(i);
         }
-        getJoinGameView().setGames(myType, new PlayerInfo());
+        getJoinGameView().setGames(myType, Facade.getInstance().getCurrentPlayerInfo());
         getJoinGameView().showModal();
     }
 
@@ -144,18 +144,14 @@ public class JoinGameController extends Controller implements IJoinGameControlle
                 getSelectColorView().setColorEnabled(players.get(i).getColor(), false);
             }
             Facade.getInstance().getCurrentPlayer().setGameId(game.getId());
-            Facade.getInstance().gameAddAI();
-            Facade.getInstance().gameAddAI();
-            Facade.getInstance().gameAddAI();
             getSelectColorView().showModal();
-        }
-        else {
+        } else {
             Facade.getInstance().gamesCreate(new CreateGamePassObject("Awesome", true, true, true));
             Facade.getInstance().playerLogin("Sam", "sam");
             Facade.getInstance().gamesJoin("blue", gameToJoin);
-            Facade.getInstance().gameAddAI();
-            Facade.getInstance().gameAddAI();
-            Facade.getInstance().gameAddAI();
+//            Facade.getInstance().gameAddAI();
+//            Facade.getInstance().gameAddAI();
+//            Facade.getInstance().gameAddAI();
             getSelectColorView().closeModal();
             getJoinGameView().closeModal();
         }
