@@ -197,17 +197,20 @@ public class Map
 		{
 			return false;
 		}
-		if (roads.contains(edgeLocation))
+		for(int i = 0; i < roads.size(); i++)
 		{
-			return false;
+			if(roads.get(i).getLocation().compareTo(edgeLocation) == 0)
+				return false;
 		}
+
 		Hex h = hexes.get(edgeLocation.getHexLoc());
 		if( h == null)
 			return false;
 		if(HexType.convert(h.getResource())== HexType.WATER)
-			return false;
+		{
+			return roadOceanPlayable(edgeLocation);
+		}
 
-		System.out.println(h.toString());
 		return true;
 	}
 
@@ -455,9 +458,6 @@ public class Map
 		int x = vl.getHexLoc().getX();
 		int y = vl.getHexLoc().getY();
 
-		System.out.println(x + " " + y + " " + vl.getDir());
-
-
 		if(y < 0 && x != 3)
 			return false;
 		else if(x == -3 && vl.getDir() == VertexDirection.NW)
@@ -466,5 +466,45 @@ public class Map
 			return false;
 		return true;
 
+	}
+
+	public boolean roadOceanPlayable(EdgeLocation el)
+	{
+		int x = el.getHexLoc().getX();
+		int y = el.getHexLoc().getY();
+
+		if(y <= 0)
+		{
+			if(el.getDir() == EdgeDirection.NW && x == 3)
+				return true;
+			return false;
+		}
+		if(x == -3 && el.getDir() == EdgeDirection.NE)
+			return true;
+		if(y == 3 && x != 0)
+		{
+			if(el.getDir() == EdgeDirection.NE || el.getDir() == EdgeDirection.N)
+				return true;
+			return false;
+		}
+		if(x == 0 && y == 3)
+		{
+			if(el.getDir() == EdgeDirection.N)
+				return true;
+			return false;
+		}
+		if(x == 1 && y == 2)
+		{
+			if(el.getDir() == EdgeDirection.N || el.getDir() == EdgeDirection.NW)
+				return true;
+			return false;
+		}
+		if(x == 2 && y == 1)
+		{
+			if(el.getDir() == EdgeDirection.N || el.getDir() == EdgeDirection.NW)
+				return true;
+			return false;
+		}
+		return false;
 	}
 }
