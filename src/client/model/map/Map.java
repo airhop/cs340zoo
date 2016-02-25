@@ -253,7 +253,7 @@ public class Map
 		Hex h = hexes.get(settlementLocation.getHexLoc());
 		if(h == null)
 		{
-			System.out.println("oops " + settlementLocation.toString());
+			//System.out.println("oops " + settlementLocation.toString());
 			return false;
 		}
 		if(HexType.convert(h.getResource()) == HexType.WATER)
@@ -261,7 +261,7 @@ public class Map
 			return oceanPlacable(settlementLocation);
 		}
 
-		System.out.println(settlementLocation.toString());
+		//System.out.println(settlementLocation.toString());
 		//need to check adjacency?
 		return true;
 	}
@@ -473,24 +473,28 @@ public class Map
 		int x = el.getHexLoc().getX();
 		int y = el.getHexLoc().getY();
 
+		System.out.println(el.getDir() + " " + x + " " + y);
 		if(y <= 0)
 		{
-			if(el.getDir() == EdgeDirection.NW && x == 3)
-				return true;
+			if(x == 3 && el.getDir() == EdgeDirection.NW)
+			{
+				if( y != -3)
+					return true;
+				return false;
+			}
 			return false;
 		}
 		if(x == -3 && el.getDir() == EdgeDirection.NE)
 			return true;
-		if(y == 3 && x != 0)
+		if(y == 3)
 		{
-			if(el.getDir() == EdgeDirection.NE || el.getDir() == EdgeDirection.N)
+			if(el.getDir() == EdgeDirection.NE && x != 0)
 				return true;
-			return false;
-		}
-		if(x == 0 && y == 3)
-		{
-			if(el.getDir() == EdgeDirection.N)
+			if((el.getDir() == EdgeDirection.N) && x != -3)
 				return true;
+			if(x == 0 && el.getDir() == EdgeDirection.N)
+				return true;
+
 			return false;
 		}
 		if(x == 1 && y == 2)
