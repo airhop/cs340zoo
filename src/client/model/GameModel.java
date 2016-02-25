@@ -490,4 +490,17 @@ public class GameModel extends Observable{
         String s = map.getHexMap().size() + " " + map.getBuildings().size() + " ";
         return s;
     }
+
+    public int getPoints(int playerId)
+    {
+        int points = 0;
+        if(turnTracker.getLargestArmy() == playerId)
+            points+=2;
+        if(turnTracker.getLongestRoad() == playerId)
+            points+=2;
+        Player curr = players.get(playerId);
+        points += 4 - curr.getCities();
+        points += 5 - curr.getSettlements();
+        return points;
+    }
 }

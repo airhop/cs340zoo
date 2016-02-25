@@ -1,6 +1,8 @@
 package client.MVC.points;
 
 import client.MVC.base.*;
+import client.facade.Facade;
+import client.model.GameModel;
 
 import java.util.Observable;
 
@@ -23,8 +25,8 @@ public class PointsController extends Controller implements IPointsController {
         super(view);
 
         setFinishedView(finishedView);
-
-        initFromModel();
+        Facade.getInstance().addObserver(this);
+        getPointsView().setPoints(0);
     }
 
     public IPointsView getPointsView() {
@@ -40,15 +42,12 @@ public class PointsController extends Controller implements IPointsController {
         this.finishedView = finishedView;
     }
 
-    private void initFromModel() {
-        //<temp>
-        getPointsView().setPoints(0);
-        //</temp>
-    }
-
     @Override
-    public void update(Observable o, Object arg) {
-
+    public void update(Observable o, Object arg)
+    {
+        int pid = Facade.getInstance().getPlayerID();
+        GameModel gm = (GameModel) o;
+        getPointsView().setPoints(gm.getPoints(pid));
     }
 }
 
