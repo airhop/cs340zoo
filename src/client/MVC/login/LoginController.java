@@ -154,6 +154,7 @@ public class LoginController extends Controller implements ILoginController {
             }
             else
             {
+                System.out.println("success?");
                 getLoginView().closeModal();
                 loginAction.execute();
             }
