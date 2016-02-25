@@ -6,7 +6,9 @@ package client.facade;
 
 import client.MVC.base.Controller;
 import client.MVC.data.GameInfo;
+import client.MVC.data.PlayerInfo;
 import client.model.player.CurrentPlayer;
+import client.model.player.Player;
 import shared.definitions.*;
 import shared.exceptions.*;
 import client.model.*;
@@ -36,6 +38,14 @@ public class Facade {
     public static Facade getInstance() {
         return facade;
     }
+    public PlayerInfo getCurrentPlayerInfo(){
+        PlayerInfo curPlayer = new PlayerInfo();
+        curPlayer.setId(getCurrentPlayer().getPlayerId());
+        curPlayer.setPlayerIndex(getCurrentPlayer().getPlayerIndex());
+        curPlayer.setName(getCurrentPlayer().getUsername());
+        curPlayer.setColor(getCurrentPlayer().getColor());
+        return curPlayer;
+    }
 
     public void setProxy(IProxy proxy) {
         this.proxy = proxy;
@@ -60,7 +70,12 @@ public class Facade {
 
     public int getPlayerID()
     {
-        return game.getCurrentPlayer().getPlayerId();
+        return proxy.getPlayerId();
+    }
+
+    public int getPlayerIndex()
+    {
+        return game.getCurrentPlayer().getPlayerIndex();
     }
 
     public GameModel getGameModel() {
@@ -86,7 +101,12 @@ public class Facade {
         return game.getMap();
     }
 
-    public CatanColor getPlayerColor(int player) {
+    public CatanColor getPlayerColor(int player)
+    {
+        if(game == null)
+            return null;
+        if(game.getPlayers().get(player) == null)
+            return null;
         return game.getPlayerColor(player);
     }
 
@@ -424,16 +444,17 @@ public class Facade {
      *
      * @return boolean whether or not the player rolled the dice
      */
-    public void roll(int pid) {
+    public void roll(int pid, int number) {
+        System.out.println("rolling");
         if (game != null) {
             if (canRoll(pid)) {
-                int number = game.roll(pid);
                 if (number != -1)
                     proxy.rollNumber(number, pid);
                 else
                     System.out.println("not a rolling phase");
             }
         }
+        System.out.println("success?");
     }
 
     public boolean canFinishTurn(int pid) {

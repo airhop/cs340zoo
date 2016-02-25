@@ -69,7 +69,7 @@ public class MapController extends Controller implements IMapController {
         }
         if (s.equalsIgnoreCase("Rolling")) {
             state = new StatePlayersTurn(getView(), robView);
-            Facade.getInstance().roll(pid);
+            Facade.getInstance().roll(7, pid); //random number
         }
         if (s.equalsIgnoreCase("Playing") || s.equalsIgnoreCase("Robbing")) {
             playing++;
@@ -102,7 +102,7 @@ public class MapController extends Controller implements IMapController {
                 state = new StateRoadBuilding(getView(), robView);
             else if (s.equalsIgnoreCase("Robbing"))
                 state = new StateRobbing(getView(), robView);
-            else if (s.equalsIgnoreCase("playersturn"))
+            else if (s.equalsIgnoreCase("playing"))
                 state = new StatePlayersTurn(getView(), robView);
             else
                 state = new StateDefault(getView(), robView);

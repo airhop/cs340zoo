@@ -20,11 +20,21 @@ public class PlayerInfo {
     private String name;
     private CatanColor color;
 
+
+
     public PlayerInfo() {
         setId(-1);
         setPlayerIndex(-1);
         setName("");
         setColor(CatanColor.WHITE);
+    }
+
+    public PlayerInfo(int ID, int pid, String n, CatanColor c)
+    {
+        id = ID;
+        playerIndex = pid;
+        name = n;
+        color = c;
     }
 
     public int getId() {

@@ -38,4 +38,4 @@ Proxy - gamesCreate - should we extra the game ID from the response code and set
 Chat doesn't work during setup.  Has the gameModel been created at this point?
 Setup - what should the cancel button do?!
 
-canPlaceSettlement error NW 1,2 and NE -2,3 . . .
+Proxy Login/Register, initiate currentPlayer in GameModel so that that is ready for Join Game

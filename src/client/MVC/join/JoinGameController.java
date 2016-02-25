@@ -36,6 +36,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
         setNewGameView(newGameView);
         setSelectColorView(selectColorView);
         setMessageView(messageView);
+        Facade.getInstance().addObserver(this);
     }
 
     public IJoinGameView getJoinGameView() {
@@ -99,7 +100,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
         for (int i = 0; i < games.size(); i++) {
             myType[i] = games.get(i);
         }
-        getJoinGameView().setGames(myType, new PlayerInfo());
+        getJoinGameView().setGames(myType, Facade.getInstance().getCurrentPlayerInfo());
         getJoinGameView().showModal();
     }
 
@@ -145,14 +146,13 @@ public class JoinGameController extends Controller implements IJoinGameControlle
             }
             Facade.getInstance().getCurrentPlayer().setGameId(game.getId());
             getSelectColorView().showModal();
-        }
-        else {
+        } else {
             Facade.getInstance().gamesCreate(new CreateGamePassObject("Awesome", true, true, true));
             Facade.getInstance().playerLogin("Sam", "sam");
             Facade.getInstance().gamesJoin("blue", gameToJoin);
-            Facade.getInstance().gameAddAI();
-            Facade.getInstance().gameAddAI();
-            Facade.getInstance().gameAddAI();
+//            Facade.getInstance().gameAddAI();
+//            Facade.getInstance().gameAddAI();
+//            Facade.getInstance().gameAddAI();
             getSelectColorView().closeModal();
             getJoinGameView().closeModal();
         }
@@ -188,7 +188,9 @@ public class JoinGameController extends Controller implements IJoinGameControlle
     }
 
     @Override
-    public void update(Observable o, Object arg) {
+    public void update(Observable o, Object arg)
+    {
+        //update the game list with the polller?  allow to retrieve newly created games?
 
     }
 }

@@ -271,6 +271,7 @@ public class Proxy implements IProxy {
             userCookie.getDecode();
         } catch (ClientException e) {
             e.printStackTrace();
+            throw new InvalidUserException("Server hates you :)");
         }
     }
 
@@ -461,7 +462,7 @@ public class Proxy implements IProxy {
         JsonObject myObjOne = new JsonObject();
         String url = "/moves/finishTurn";
         myObjOne.addProperty("type", "finishTurn");
-        myObjOne.addProperty("playerIndex", "" + playerIndex);
+        myObjOne.addProperty("playerIndex", playerIndex);
         System.out.println(myObjOne.toString());
         HttpURLResponse myResponse;
         try {
@@ -580,7 +581,7 @@ public class Proxy implements IProxy {
         JsonObject myObjOne = new JsonObject();
         String url = "/moves/buildRoad";
         myObjOne.addProperty("type", "buildRoad");
-        myObjOne.addProperty("playerIndex", "" + playerId);
+        myObjOne.addProperty("playerIndex", playerId);
         myObjOne.add("roadLocation", edgeLocationObject(el));
         myObjOne.addProperty("free", "" + free);
      //   System.out.println(myObjOne.toString());
@@ -595,14 +596,14 @@ public class Proxy implements IProxy {
     }
 
     @Override
-    public void buildSettlement(int playerId, VertexLocation vl, boolean free) throws IllegalBuildException {
+    public void buildSettlement(int playerIndex, VertexLocation vl, boolean free) throws IllegalBuildException {
         JsonObject myObjOne = new JsonObject();
         String url = "/moves/buildSettlement";
         myObjOne.addProperty("type", "buildSettlement");
-        myObjOne.addProperty("playerIndex", "" + playerId);
+        myObjOne.addProperty("playerIndex", playerIndex);
         myObjOne.add("vertexLocation", vertexLocationObject(vl));
-        myObjOne.addProperty("free", "" + free);
-     //   System.out.println(myObjOne.toString());
+        myObjOne.addProperty("free", free);
+        System.out.println(myObjOne.toString());
         HttpURLResponse myResponse;
         try {
             myResponse = doPost(url, myObjOne);

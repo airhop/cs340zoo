@@ -366,8 +366,11 @@ public class GameModel extends Observable{
     }
 
 
-    public boolean canFinishTurn(int pid) {
-        return (turnTracker.getStatus().equals("SecondRound") && turnTracker.getCurrentPlayer() == pid);
+    public boolean canFinishTurn(int pid)
+    {
+        if(!turnTracker.getStatus().equalsIgnoreCase("rolling"))
+           return (turnTracker.getCurrentPlayer() == pid);
+        return false;
     }
 
     public boolean canDiscardCards(int pid, ResourceList rl) {
@@ -486,5 +489,18 @@ public class GameModel extends Observable{
 //        }
         String s = map.getHexMap().size() + " " + map.getBuildings().size() + " ";
         return s;
+    }
+
+    public int getPoints(int playerId)
+    {
+        int points = 0;
+        if(turnTracker.getLargestArmy() == playerId)
+            points+=2;
+        if(turnTracker.getLongestRoad() == playerId)
+            points+=2;
+        Player curr = players.get(playerId);
+        points += 4 - curr.getCities();
+        points += 5 - curr.getSettlements();
+        return points;
     }
 }

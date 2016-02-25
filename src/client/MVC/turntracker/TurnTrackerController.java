@@ -2,9 +2,11 @@ package client.MVC.turntracker;
 
 import client.MVC.base.*;
 import client.facade.Facade;
+import client.model.GameModel;
 import shared.definitions.CatanColor;
 
 import java.util.Observable;
+import java.util.Random;
 
 
 /**
@@ -15,8 +17,7 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
     public TurnTrackerController(ITurnTrackerView view) {
 
         super(view);
-
-        initFromModel();
+        Facade.getInstance().addObserver(this);
     }
 
     @Override
@@ -28,23 +29,39 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
     @Override
     public void endTurn()
     {
-        int pid = Facade.getInstance().getPlayerID();
-        if(Facade.getInstance().canFinishTurn(pid))
-            getView().updateGameState("Are you sure?!", true);
-        else
-            getView().updateGameState("Hurry Up!!!", false);
-
+        Facade.getInstance().FinishTurn(Facade.getInstance().getPlayerID());
+        getView().updateGameState("Finally . . .", false);
     }
 
     private void initFromModel() {
         //<temp>
-        getView().setLocalPlayerColor(CatanColor.RED);
+        CatanColor c = Facade.getInstance().getPlayerColor(Facade.getInstance().getPlayerID());
+        if(c == null)
+            c = CatanColor.RED;
+
+        getView().setLocalPlayerColor(c);
         //</temp>
     }
 
     @Override
-    public void update(Observable o, Object arg) {
-
+    public void update(Observable o, Object arg)
+    {
+        Random rand = new Random();
+        int x = rand.nextInt();
+        int pid = Facade.getInstance().getPlayerID();
+        String state = ((GameModel)o).getTurnTracker().getStatus();
+        if(state.equalsIgnoreCase("FirstRound") && state.equalsIgnoreCase("SecondRound"))
+            getView().updateGameState("Zzzzzzz", false);
+        else if(Facade.getInstance().canFinishTurn(pid))
+            getView().updateGameState("Are you sure?!", true);
+        else
+        {
+            if(x % 5 == 0)
+                getView().updateGameState("Sheila Parker is taking forever . . . .", false);
+            else
+                getView().updateGameState("Hurry Up!!!", false);
+        }
+        initFromModel();
     }
 }
 

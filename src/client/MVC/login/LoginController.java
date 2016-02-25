@@ -8,6 +8,8 @@ import client.MVC.base.*;
 import client.MVC.misc.*;
 import client.facade.Facade;
 
+import javax.swing.*;
+
 
 /**
  * Implementation for the login controller
@@ -74,29 +76,33 @@ public class LoginController extends Controller implements ILoginController {
 
         // TODO: log in user
         //CharMatcher unicodeChecker;
-        System.out.println("In the sign in");
         String username;
         String password;
         username = getLoginView().getLoginUsername();
         password = getLoginView().getLoginPassword();
-        if (!username.matches(usernameRegex)) {
-            System.out.println("LoginController.java: invalid character(s) in username");
-        }
-        if (!password.matches(passwordRegex)) {
-            System.out.println("LoginController.java: password should only contain ASCII characters");
-        }
+//        if (!username.matches(usernameRegex)) {
+//            System.out.println("LoginController.java: invalid character(s) in username");
+//        }
+//        if (!password.matches(passwordRegex)) {
+//            System.out.println("LoginController.java: password should only contain ASCII characters");
+//        }
 
         // If log in succeeded
-        if (username.matches(usernameRegex) && password.matches(passwordRegex)) {//going to need some work
-            System.out.println("User Login!! Username = " + username + "Password = " + password);
+        if (verifyCharacters(username) && verifyCharacters(password))
+        {//going to need some work
             if(Facade.getInstance().playerLogin(username, password)){
                 getLoginView().closeModal();
                 loginAction.execute();
-            }else{
-                System.out.println("Not logging in");
             }
-        } else {
-            System.out.println("User NOT Login!! Username = " + username + "Password = " + password);
+            else{
+                JOptionPane.showMessageDialog(new JFrame(), "Server Error", "Inane error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(new JFrame(), "Illegal Characters", "Inane error", JOptionPane.ERROR_MESSAGE);
+            return;
         }
 
     }
@@ -110,33 +116,70 @@ public class LoginController extends Controller implements ILoginController {
         String confirmPassword;
 
         username = getLoginView().getRegisterUsername();
-        password = getLoginView().getRegisterPasswordRepeat();
+        password = getLoginView().getRegisterPassword();
         confirmPassword = getLoginView().getRegisterPasswordRepeat();
 
         // If register succeeded
-        if (!username.matches(usernameRegex)) {
-            System.out.println("LoginController.java: username should only include alphbate");
+//        if (!username.matches(usernameRegex)) {
+//            System.out.println("LoginController.java: username should only include alphbate");
+//        }
+//        if (!password.matches(passwordRegex)) {
+//            System.out.println("LoginController.java: password include invalid charaters, such as unicode?");
+//        }
+//        if (!confirmPassword.matches(passwordRegex)) {
+//            System.out.println("LoginController.java: password include invalid charaters, such as unicode?");
+//        }
+        System.out.println(confirmPassword + " "+  password);
+        if (!confirmPassword.equals(password))
+        {
+            JOptionPane.showMessageDialog(new JFrame(), "Passwords do not match", "Inane error", JOptionPane.ERROR_MESSAGE);
+            return;
         }
-        if (!password.matches(passwordRegex)) {
-            System.out.println("LoginController.java: password include invalid charaters, such as unicode?");
+        if(password.length() < 5)
+        {
+            JOptionPane.showMessageDialog(new JFrame(), "Passwords not long enough", "Inane error", JOptionPane.ERROR_MESSAGE);
+            return;
         }
-        if (!confirmPassword.matches(passwordRegex)) {
-            System.out.println("LoginController.java: password include invalid charaters, such as unicode?");
+        if(username.length() < 3 || username.length() > 7)
+        {
+            JOptionPane.showMessageDialog(new JFrame(), "Username must be between 3 and 7 characters long", "Inane error", JOptionPane.ERROR_MESSAGE);
+            return;
         }
-        if (!confirmPassword.equals(password)) {
-            System.out.println("LoginController.java: Password does not match");
+        if(verifyCharacters(username) && verifyCharacters(password) && verifyCharacters(confirmPassword))
+        {
+            if(!Facade.getInstance().register(username, password))
+            {
+                JOptionPane.showMessageDialog(new JFrame(), "Server hated something.  Please try again", "Inane error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            else
+            {
+                getLoginView().closeModal();
+                loginAction.execute();
+            }
         }
-        if (username.matches(usernameRegex) && password.matches(passwordRegex) && confirmPassword.matches(passwordRegex) && confirmPassword.equals(password)) {
-            getLoginView().closeModal();
-            Facade.getInstance().register(username, password);
-            loginAction.execute();
+        else
+        {
+            JOptionPane.showMessageDialog(new JFrame(), "Illegal Characters", "Inane error", JOptionPane.ERROR_MESSAGE);
+            return;
         }
+    }
 
+    public boolean verifyCharacters(String word)
+    {
+        for(int i = 0; i < word.length(); i++)
+        {
+            char curr = word.charAt(i);
+            if(!Character.isAlphabetic(curr) && !Character.isDigit(curr))
+            {
+                if(curr != '-' && curr != '_')
+                    return false;
+            }
+        }
+        return true;
     }
 
     @Override
-    public void update(Observable o, Object arg) {
-
-    }
+    public void update(Observable o, Object arg) {}
 }
 
