@@ -607,7 +607,6 @@ public class Proxy implements IProxy {
         try {
             myResponse = doPost(url, myObjOne);
      //       System.out.println(myResponse.getResponseBody());
-     //       System.out.println(myResponse.getCookie());
         } catch (ClientException e) {
             e.printStackTrace();
         }
