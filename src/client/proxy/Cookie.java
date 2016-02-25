@@ -69,9 +69,16 @@ public class Cookie {
                 myTree.nextName();
                 myTree.nextString();
                 myTree.nextName();
-                myTree.nextString();
-                myTree.nextName();
-                myId = myTree.nextString();
+                System.out.println(myTree.peek().name());
+                if(!myTree.peek().name().equals("STRING")){
+                    myId = myTree.nextString();
+                }else{
+                    myTree.nextString();
+                    myTree.nextName();
+                    myId = myTree.nextString();
+                }
+
+
                 System.out.println(myId);
             }
             return myId;
