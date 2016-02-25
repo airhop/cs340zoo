@@ -584,6 +584,7 @@ public class Proxy implements IProxy {
         myObjOne.add("roadLocation", edgeLocationObject(el));
         myObjOne.addProperty("free", "" + free);
      //   System.out.println(myObjOne.toString());
+        //
         HttpURLResponse myResponse;
         try {
             myResponse = doPost(url, myObjOne);
