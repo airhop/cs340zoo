@@ -2,6 +2,7 @@ package client.MVC.turntracker;
 
 import client.MVC.base.*;
 import client.facade.Facade;
+import client.model.GameModel;
 import shared.definitions.CatanColor;
 
 import java.util.Observable;
@@ -48,7 +49,10 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
         Random rand = new Random();
         int x = rand.nextInt();
         int pid = Facade.getInstance().getPlayerID();
-        if(Facade.getInstance().canFinishTurn(pid))
+        String state = ((GameModel)o).getTurnTracker().getStatus();
+        if(state.equalsIgnoreCase("FirstRound") && state.equalsIgnoreCase("SecondRound"))
+            getView().updateGameState("Zzzzzzz", false);
+        else if(Facade.getInstance().canFinishTurn(pid))
             getView().updateGameState("Are you sure?!", true);
         else
         {

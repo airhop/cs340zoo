@@ -239,15 +239,14 @@ public class Map
 	//public boolean canAddSettlement(Settlement settlement,VertexObject settlement)
 	public boolean canPlaceSettlement(VertexLocation settlementLocation)
 	{
-		System.out.println(buildings.size());
-		System.out.println("settlement - " + settlementLocation.toString());
+		//System.out.println(buildings.size());
+		//System.out.println("settlement - " + settlementLocation.toString());
 		if (settlementLocation == null)
 		{
 			return false;
 		}
 		for (VertexObject VObjIter: buildings)
 		{
-			System.out.println(VObjIter.getLocation().toString());
 			if (VObjIter.getLocation().compareTo(settlementLocation) == 0)
 			{
 				return false;
@@ -476,7 +475,7 @@ public class Map
 		int x = el.getHexLoc().getX();
 		int y = el.getHexLoc().getY();
 
-		System.out.println(el.getDir() + " " + x + " " + y);
+		//System.out.println(el.getDir() + " " + x + " " + y);
 		if(y <= 0)
 		{
 			if(x == 3 && el.getDir() == EdgeDirection.NW)
