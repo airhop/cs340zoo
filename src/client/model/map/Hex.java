@@ -64,4 +64,8 @@ public class Hex {
 
   public HexLocation getLocation()  {return hl; }
   public void setLocation(HexLocation HL)  {hl = HL; }
+  public String toString()
+  {
+    return hl.getX() + " " + hl.getY() + " " + resource + " " + chit;
+  }
 }

@@ -42,5 +42,6 @@ public class StateRoadBuilding extends StateAbstract
         view.startDrop(pieceType, color, true);
     }
 
+    public String getName() { return "RoadBuilding"; }
 //    public void cancelMove() {}
 }

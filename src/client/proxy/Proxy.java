@@ -72,7 +72,7 @@ public class Proxy implements IProxy {
                 cookiesList = userCookie.getCookieName() + "=" + userCookie.getCookieValue();
                 if (gameCookie.isActive()) {
                     cookiesList = cookiesList + "; " + gameCookie.getCookieName() + "=" + gameCookie.getCookieValue();
-                    System.out.println(cookiesList);
+                //    System.out.println(cookiesList);
                     connection.setRequestProperty("Cookie", cookiesList);
                 } else {
                     connection.setRequestProperty("Cookie", cookiesList);
@@ -80,7 +80,7 @@ public class Proxy implements IProxy {
 
             }
 
-            System.out.println(url.toString());
+           // System.out.println(url.toString());
             connection.connect();
             OutputStreamWriter myOut = new OutputStreamWriter(connection.getOutputStream());
             myOut.flush();
@@ -96,7 +96,7 @@ public class Proxy implements IProxy {
                     connection.disconnect();
                 }
             } else {
-                System.out.println(connection.getResponseMessage());
+            //    System.out.println(connection.getResponseMessage());
                 int code = connection.getResponseCode();
                 connection.disconnect();
                 throw new ClientException(String.format("doGet failed: %s (http code %d)", urlPath, code));
@@ -121,7 +121,7 @@ public class Proxy implements IProxy {
                 cookiesList = userCookie.getCookieName() + "=" + userCookie.getCookieValue();
                 if (gameCookie.isActive()) {
                     cookiesList = cookiesList + "; " + gameCookie.getCookieName() + "=" + gameCookie.getCookieValue();
-                    System.out.println(cookiesList);
+                //    System.out.println(cookiesList);
                     connection.setRequestProperty("Cookie", cookiesList);
                 } else {
                     connection.setRequestProperty("Cookie", cookiesList);
@@ -129,7 +129,7 @@ public class Proxy implements IProxy {
 
             }
 
-            System.out.println(url.toString());
+            //System.out.println(url.toString());
             connection.connect();
             OutputStreamWriter myOut = new OutputStreamWriter(connection.getOutputStream());
             myOut.write(myObj.toString());
@@ -146,7 +146,7 @@ public class Proxy implements IProxy {
                     connection.disconnect();
                 }
             } else {
-                System.out.println(connection.getResponseMessage());
+              //  System.out.println(connection.getResponseMessage());
                 int code = connection.getResponseCode();
                 connection.disconnect();
                 throw new ClientException(String.format("doPost failed: %s (http code %d)", urlPath, code));
@@ -239,7 +239,7 @@ public class Proxy implements IProxy {
         String url = "/user/login";
         myObjOne.addProperty("username", u.getUsername());
         myObjOne.addProperty("password", u.getPassword());
-        System.out.println(myObjOne.toString());
+    //    System.out.println(myObjOne.toString());
         HttpURLResponse myResponse;
         try {
             myResponse = doPost(url, myObjOne);
@@ -311,11 +311,11 @@ public class Proxy implements IProxy {
         myObjOne.addProperty("randomNumbers", gameName.isRandomNumbers());
         myObjOne.addProperty("randomPorts", gameName.isRandomPorts());
         myObjOne.addProperty("name", gameName.getGameName());
-        System.out.println(myObjOne.toString());
+    //    System.out.println(myObjOne.toString());
         HttpURLResponse myResponse;
         try {
             myResponse = doPost(url, myObjOne);
-            System.out.println(myResponse.getResponseBody());
+    //        System.out.println(myResponse.getResponseBody());
             //This is when i am going to create the deSerialization later
         } catch (ClientException e) {
             e.printStackTrace();
@@ -328,7 +328,7 @@ public class Proxy implements IProxy {
         String url = "/games/join";
         myObjOne.addProperty("id", "" + gameId);
         myObjOne.addProperty("color", color.toLowerCase());
-        System.out.println(myObjOne.toString());
+    //    System.out.println(myObjOne.toString());
         HttpURLResponse myResponse;
         try {
             myResponse = doPost(url, myObjOne);
@@ -381,8 +381,21 @@ public class Proxy implements IProxy {
     }
 
     @Override
-    public boolean gameAddAI() {
-        return false;
+    public boolean gameAddAI()
+    {
+        JsonObject myObjOne = new JsonObject();
+        String url = "/game/addAI";
+        myObjOne.addProperty("AIType", "LARGEST_ARMY");
+    //    System.out.println(myObjOne.toString());
+        HttpURLResponse myResponse;
+        try {
+            myResponse = doPost(url, myObjOne);
+    //        System.out.println(myResponse.getResponseBody());
+        } catch (ClientException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
     }
 
     @Override
@@ -397,11 +410,11 @@ public class Proxy implements IProxy {
         myObjOne.addProperty("type", "sendChat");
         myObjOne.addProperty("playerIndex", playerIndex);
         myObjOne.addProperty("content", "" + content);
-        System.out.println(myObjOne.toString());
+ //       System.out.println(myObjOne.toString());
         HttpURLResponse myResponse;
         try {
             myResponse = doPost(url, myObjOne);
-            System.out.println(myResponse.getResponseBody());
+ //           System.out.println(myResponse.getResponseBody());
         } catch (ClientException e) {
             e.printStackTrace();
         }
@@ -414,11 +427,11 @@ public class Proxy implements IProxy {
         myObjOne.addProperty("type", "rollNumber");
         myObjOne.addProperty("playerIndex", playerIndex);
         myObjOne.addProperty("number", "" + numRoled);
-        System.out.println(myObjOne.toString());
+   //     System.out.println(myObjOne.toString());
         HttpURLResponse myResponse;
         try {
             myResponse = doPost(url, myObjOne);
-            System.out.println(myResponse.getResponseBody());
+    //        System.out.println(myResponse.getResponseBody());
         } catch (ClientException e) {
             e.printStackTrace();
         }
@@ -433,11 +446,11 @@ public class Proxy implements IProxy {
         myObjOne.addProperty("playerIndex", playerIdOne);
         myObjOne.addProperty("victimIndex", playerIdTwo);
         myObjOne.add("location", locationObject(hl));
-        System.out.println(myObjOne.toString());
+     //   System.out.println(myObjOne.toString());
         HttpURLResponse myResponse;
         try {
             myResponse = doPost(url, myObjOne);
-            System.out.println(myResponse.getResponseBody());
+    //        System.out.println(myResponse.getResponseBody());
         } catch (ClientException e) {
             e.printStackTrace();
         }
@@ -448,12 +461,12 @@ public class Proxy implements IProxy {
         JsonObject myObjOne = new JsonObject();
         String url = "/moves/finishTurn";
         myObjOne.addProperty("type", "finishTurn");
-        myObjOne.addProperty("playerIndex", playerIndex);
+        myObjOne.addProperty("playerIndex", "" + playerIndex);
         System.out.println(myObjOne.toString());
         HttpURLResponse myResponse;
         try {
             myResponse = doPost(url, myObjOne);
-            System.out.println(myResponse.getResponseBody());
+    //        System.out.println(myResponse.getResponseBody());
         } catch (ClientException e) {
             e.printStackTrace();
         }
@@ -465,11 +478,11 @@ public class Proxy implements IProxy {
         String url = "/moves/buyDevCard";
         myObjOne.addProperty("type", "buyDevCard");
         myObjOne.addProperty("playerIndex", playerIndex);
-        System.out.println(myObjOne.toString());
+     //   System.out.println(myObjOne.toString());
         HttpURLResponse myResponse;
         try {
             myResponse = doPost(url, myObjOne);
-            System.out.println(myResponse.getResponseBody());
+     //       System.out.println(myResponse.getResponseBody());
         } catch (ClientException e) {
             e.printStackTrace();
         }
@@ -483,11 +496,11 @@ public class Proxy implements IProxy {
         myObjOne.addProperty("playerIndex", playerIndex);
         myObjOne.addProperty("resource1", r1.name());
         myObjOne.addProperty("resource2", r2.name());
-        System.out.println(myObjOne.toString());
+    //    System.out.println(myObjOne.toString());
         HttpURLResponse myResponse;
         try {
             myResponse = doPost(url, myObjOne);
-            System.out.println(myResponse.getResponseBody());
+    //        System.out.println(myResponse.getResponseBody());
         } catch (ClientException e) {
             e.printStackTrace();
         }
@@ -501,11 +514,11 @@ public class Proxy implements IProxy {
         myObjOne.addProperty("playerIndex", playerIndex);
         myObjOne.add("spot1", edgeLocationObject(e1));
         myObjOne.add("spot2", edgeLocationObject(e2));
-        System.out.println(myObjOne.toString());
+    //    System.out.println(myObjOne.toString());
         HttpURLResponse myResponse;
         try {
             myResponse = doPost(url, myObjOne);
-            System.out.println(myResponse.getResponseBody());
+    //        System.out.println(myResponse.getResponseBody());
         } catch (ClientException e) {
             e.printStackTrace();
         }
@@ -519,11 +532,11 @@ public class Proxy implements IProxy {
         myObjOne.addProperty("playerIndex", playerId);
         myObjOne.addProperty("victimIndex", victimId);
         myObjOne.add("location", locationObject(hl));
-        System.out.println(myObjOne.toString());
+     //   System.out.println(myObjOne.toString());
         HttpURLResponse myResponse;
         try {
             myResponse = doPost(url, myObjOne);
-            System.out.println(myResponse.getResponseBody());
+     //       System.out.println(myResponse.getResponseBody());
         } catch (ClientException e) {
             e.printStackTrace();
         }
@@ -536,11 +549,11 @@ public class Proxy implements IProxy {
         myObjOne.addProperty("type", "Monopoly");
         myObjOne.addProperty("resource", "" + r1.name());
         myObjOne.addProperty("playerIndex", playerIndex);
-        System.out.println(myObjOne.toString());
+     //   System.out.println(myObjOne.toString());
         HttpURLResponse myResponse;
         try {
             myResponse = doPost(url, myObjOne);
-            System.out.println(myResponse.getResponseBody());
+    //        System.out.println(myResponse.getResponseBody());
         } catch (ClientException e) {
             e.printStackTrace();
         }
@@ -552,11 +565,11 @@ public class Proxy implements IProxy {
         String url = "/moves/Monument";
         myObjOne.addProperty("type", "Monument");
         myObjOne.addProperty("playerIndex", playerIndex);
-        System.out.println(myObjOne.toString());
+     //   System.out.println(myObjOne.toString());
         HttpURLResponse myResponse;
         try {
             myResponse = doPost(url, myObjOne);
-            System.out.println(myResponse.getResponseBody());
+     //       System.out.println(myResponse.getResponseBody());
         } catch (ClientException e) {
             e.printStackTrace();
         }
@@ -566,15 +579,16 @@ public class Proxy implements IProxy {
     public void buildRoad(int playerId, EdgeLocation el, boolean free) {
         JsonObject myObjOne = new JsonObject();
         String url = "/moves/buildRoad";
-        myObjOne.addProperty("type", "rollNumber");
+        myObjOne.addProperty("type", "buildRoad");
         myObjOne.addProperty("playerIndex", "" + playerId);
         myObjOne.add("roadLocation", edgeLocationObject(el));
         myObjOne.addProperty("free", "" + free);
-        System.out.println(myObjOne.toString());
+     //   System.out.println(myObjOne.toString());
+        //
         HttpURLResponse myResponse;
         try {
             myResponse = doPost(url, myObjOne);
-            System.out.println(myResponse.getResponseBody());
+     //       System.out.println(myResponse.getResponseBody());
         } catch (ClientException e) {
             e.printStackTrace();
         }
@@ -588,12 +602,11 @@ public class Proxy implements IProxy {
         myObjOne.addProperty("playerIndex", "" + playerId);
         myObjOne.add("vertexLocation", vertexLocationObject(vl));
         myObjOne.addProperty("free", "" + free);
-        System.out.println(myObjOne.toString());
+     //   System.out.println(myObjOne.toString());
         HttpURLResponse myResponse;
         try {
             myResponse = doPost(url, myObjOne);
-            System.out.println(myResponse.getResponseBody());
-            System.out.println(myResponse.getCookie());
+     //       System.out.println(myResponse.getResponseBody());
         } catch (ClientException e) {
             e.printStackTrace();
         }
@@ -606,12 +619,12 @@ public class Proxy implements IProxy {
         myObjOne.addProperty("type", "buildCity");
         myObjOne.addProperty("playerIndex", "" + playerId);
         myObjOne.add("vertexLocation", vertexLocationObject(vl));
-        System.out.println(myObjOne.toString());
+     //   System.out.println(myObjOne.toString());
         HttpURLResponse myResponse;
         try {
             myResponse = doPost(url, myObjOne);
-            System.out.println(myResponse.getResponseBody());
-            System.out.println(myResponse.getCookie());
+      //      System.out.println(myResponse.getResponseBody());
+      //      System.out.println(myResponse.getCookie());
         } catch (ClientException e) {
             e.printStackTrace();
         }
@@ -625,12 +638,12 @@ public class Proxy implements IProxy {
         myObjOne.addProperty("playerIndex", "" + playerIdOne);
         myObjOne.add("offer", RLO(rl));
         myObjOne.addProperty("reciever", "" + playerIdTwo);
-        System.out.println(myObjOne.toString());
+    //    System.out.println(myObjOne.toString());
         HttpURLResponse myResponse;
         try {
             myResponse = doPost(url, myObjOne);
-            System.out.println(myResponse.getResponseBody());
-            System.out.println(myResponse.getCookie());
+//            System.out.println(myResponse.getResponseBody());
+//            System.out.println(myResponse.getCookie());
         } catch (ClientException e) {
             e.printStackTrace();
         }
@@ -643,12 +656,12 @@ public class Proxy implements IProxy {
         myObjOne.addProperty("type", "acceptTrade");
         myObjOne.addProperty("playerIndex", "" + playerIdOne);
         myObjOne.addProperty("willAccept", "" + accept);
-        System.out.println(myObjOne.toString());
+   //     System.out.println(myObjOne.toString());
         HttpURLResponse myResponse;
         try {
             myResponse = doPost(url, myObjOne);
-            System.out.println(myResponse.getResponseBody());
-            System.out.println(myResponse.getCookie());
+    //        System.out.println(myResponse.getResponseBody());
+    //        System.out.println(myResponse.getCookie());
         } catch (ClientException e) {
             e.printStackTrace();
         }
@@ -663,12 +676,12 @@ public class Proxy implements IProxy {
         myObjOne.addProperty("ratio", "" + ratio);
         myObjOne.addProperty("inputResource", "" + in);
         myObjOne.addProperty("outputResource", "" + out);
-        System.out.println(myObjOne.toString());
+    //    System.out.println(myObjOne.toString());
         HttpURLResponse myResponse;
         try {
             myResponse = doPost(url, myObjOne);
-            System.out.println(myResponse.getResponseBody());
-            System.out.println(myResponse.getCookie());
+    //        System.out.println(myResponse.getResponseBody());
+    //        System.out.println(myResponse.getCookie());
         } catch (ClientException e) {
             e.printStackTrace();
         }
@@ -682,12 +695,12 @@ public class Proxy implements IProxy {
         myObjOne.addProperty("playerIndex", "" + playerId);
         JsonObject RLO = RLO(rl);
         myObjOne.add("dicardedCards", RLO);
-        System.out.println(myObjOne.toString());
+     //   System.out.println(myObjOne.toString());
         HttpURLResponse myResponse;
         try {
             myResponse = doPost(url, myObjOne);
-            System.out.println(myResponse.getResponseBody());
-            System.out.println(myResponse.getCookie());
+     //       System.out.println(myResponse.getResponseBody());
+     //       System.out.println(myResponse.getCookie());
         } catch (ClientException e) {
             e.printStackTrace();
         }

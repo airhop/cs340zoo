@@ -23,6 +23,7 @@ public abstract class StateAbstract
     public void robPlayer(RobPlayerInfo victim) {}
     public void playSoldierCard() {}
     public void playRoadBuildingCard() {}
+    public String getName() { return ""; }
 
 
 }

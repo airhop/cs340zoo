@@ -23,6 +23,7 @@ public class MapController extends Controller implements IMapController {
     private StateAbstract state;
     private Facade facade = Facade.getInstance();
     private int playing; //needed for debugging when playing by yourself
+    private int secondRound = 0;
 
     public MapController(IMapView view, IRobView robView) {
 
@@ -75,6 +76,7 @@ public class MapController extends Controller implements IMapController {
             if (playing == 3) {
                 playing = 0;
                 state = new StateDefault(getView(), robView);
+
                 facade.FinishTurn(pid);
             }
         }
@@ -85,32 +87,66 @@ public class MapController extends Controller implements IMapController {
         //find a way to switch out of stateRoadBuilding when it has finished.
     }
 
-    private void changeState(String s)
+    private boolean changeState(String s)
     {
-        //don't create new state if it is the same
-        if (s.equalsIgnoreCase("Setup"))
-            state = new StateSetup(getView(), robView);
-        else if (s.equalsIgnoreCase("RoadBuilding"))
-        {
-            state = new StateRoadBuilding(getView(), robView);
+        System.out.println("Desired State: " + s);
 
+        StateAbstract TempState;
+
+//if it is in default stage go ahead and change it
+        if(state.getName().equalsIgnoreCase("default"))
+        {
+            if(s.equalsIgnoreCase("FirstRound") || s.equalsIgnoreCase("SecondRound"))
+                state = new StateSetup(getView(), robView);
+            else if (s.equalsIgnoreCase("RoadBuilding"))
+                state = new StateRoadBuilding(getView(), robView);
+            else if (s.equalsIgnoreCase("Robbing"))
+                state = new StateRobbing(getView(), robView);
+            else if (s.equalsIgnoreCase("playersturn"))
+                state = new StatePlayersTurn(getView(), robView);
+            else
+                state = new StateDefault(getView(), robView);
+                //still need to reset the map
+
+            return true;
         }
+
+     //if the state is going to be the same don't worry about updating it
+        if (((s.equalsIgnoreCase("FirstRound") || s.equalsIgnoreCase("SecondRound") && state.getName().equalsIgnoreCase("Setup"))
+                || s.equalsIgnoreCase(state.getName())))
+            return false;
+
+
+        //otherwise the state is changing
+        if (s.equalsIgnoreCase("RoadBuilding"))
+            state = new StateRoadBuilding(getView(), robView);
         else if (s.equalsIgnoreCase("Robbing"))
             state = new StateRobbing(getView(), robView);
-        else if (s.equalsIgnoreCase("playersturn"))
+        else if (s.equalsIgnoreCase("playing"))
             state = new StatePlayersTurn(getView(), robView);
         else
             state = new StateDefault(getView(), robView);
+        return true;
     }
 
     public void update(Observable observable, Object args) {
 
         GameModel gm = (GameModel)observable;
        //without input it will change the phase automatically for playing with
-        changeState();
+        //changeState();
 
+        if(state.getName().equalsIgnoreCase("Setup"))
+        {
+            if (((StateSetup) state).finishedSetup())
+                state = new StateDefault(getView(), robView);
+                //Facade.getInstance().FinishTurn(Facade.getInstance().getPlayerID());
+            return;
+        }
         //with input, it will change based on the updating to work with everyone else
-        //changeState(gm.getTurnTracker().getStatus());
+        System.out.println("Current State: " + state.getName());
+        if(!changeState(gm.getTurnTracker().getStatus()))
+            return;
+
         Map map = gm.getMap();
         ArrayList<Hex> hexes = map.getHexMap();
         System.out.println(hexes.size());
@@ -138,6 +174,7 @@ public class MapController extends Controller implements IMapController {
                 getView().placeCity(buildings.get(i).getLocation(), facade.getPlayerColor(buildings.get(i).getOwner()));
         }
 
+        System.out.println("\nbuildings = " + buildings.size());
         getView().placeRobber(map.getRobber().getHl());
     }
 

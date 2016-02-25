@@ -1,6 +1,7 @@
 package client.MVC.turntracker;
 
 import client.MVC.base.*;
+import client.facade.Facade;
 import shared.definitions.CatanColor;
 
 import java.util.Observable;
@@ -25,7 +26,13 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
     }
 
     @Override
-    public void endTurn() {
+    public void endTurn()
+    {
+        int pid = Facade.getInstance().getPlayerID();
+        if(Facade.getInstance().canFinishTurn(pid))
+            getView().updateGameState("Are you sure?!", true);
+        else
+            getView().updateGameState("Hurry Up!!!", false);
 
     }
 

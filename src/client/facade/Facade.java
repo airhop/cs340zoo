@@ -25,7 +25,7 @@ public class Facade {
     private GameModel game;
     private IProxy proxy;
     private ArrayList<Observer> observers = new ArrayList<Observer>();
-    private boolean loggedIn = false, Joined = false, Created = false;
+    private boolean loggedIn = false, Joined = false, Created = false, ready = false;
 
     private static Facade facade = new Facade();
 
@@ -42,10 +42,11 @@ public class Facade {
     }
 
     public void retrieveGameModel() {
-        if (!loggedIn || !Joined || !Created)
+        if (!loggedIn || !Joined || !ready)
             return;
         GameModel gm = proxy.getGameModel();
         if (gm != null) {
+            System.out.println(gm.getTurnTracker().getStatus());
             game = gm;
 //observation is not happening without this for loop, so I am leaving it for now
             for(int i =0 ; i < observers.size(); i++)
@@ -75,6 +76,7 @@ public class Facade {
         observers.add(x);
     }
 
+    public void setReady() {ready = true;}
 
     public CatanColor getCatanColor() {
         return game.getCurrentColor();
@@ -132,10 +134,17 @@ public class Facade {
         }
     }
 
-    public void gamesJoin(String s, int playerId) {
+    public void gameAddAI()
+    {
+            proxy.gameAddAI();
+    }
+
+    //joining the game will require the gameId, not the playerId
+    public void gamesJoin(String s, int gameId) {
         try {
-            proxy.gamesJoin(s, playerId);
+            proxy.gamesJoin(s, gameId);
             Joined = true;
+            game.setID(gameId);
         } catch (InvalidUserException e) {
             //exceptionair!!
         }
@@ -170,8 +179,12 @@ public class Facade {
      */
     public void placeRoad(int pid, EdgeLocation el, boolean free) {
         if (game != null) {
-            if (game.canBuildRoad(pid) && game.canPlaceRoad(el))
-                proxy.buildRoad(pid, el, free);
+
+            if (game.canBuildRoad(pid) || free)
+            {
+                if (game.canPlaceRoad(el))
+                    proxy.buildRoad(pid, el, free);
+            }
         }
     }
 
@@ -203,13 +216,16 @@ public class Facade {
      * @return boolean whether or not the player placed a settlement
      */
     public void placeSettlement(int pid, VertexLocation vl, boolean free) {
-        if (game != null) {
-            if (canPlaceSettlement(vl) && canBuildSettlement(pid))
-                try {
-                    proxy.buildSettlement(pid, vl, free);
-                } catch (IllegalBuildException e) {
-                    e.printStackTrace();
-                }
+        if (game != null)
+        {
+            if(canBuildSettlement(pid) || free) {
+                if (canPlaceSettlement(vl))
+                    try {
+                        proxy.buildSettlement(pid, vl, free);
+                    } catch (IllegalBuildException e) {
+                        e.printStackTrace();
+                    }
+            }
         }
     }
 
@@ -426,7 +442,8 @@ public class Facade {
         return game.canFinishTurn(pid);
     }
 
-    public void FinishTurn(int pid) {
+    public void FinishTurn(int pid)
+    {
         proxy.finishTurn(pid);
     }
 

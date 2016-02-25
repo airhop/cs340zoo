@@ -54,7 +54,7 @@ public class Deserializer {
         JsonParser myParse = new JsonParser();
         JsonElement myEle = myParse.parse(jsonString);
         JsonTreeReader myTree = new JsonTreeReader(myEle);
-        System.out.println(jsonString);
+       System.out.println(jsonString);
         JsonObject myObj = new JsonObject();
         String action = "";
         String myCurrent = "";
@@ -283,8 +283,8 @@ public class Deserializer {
 
                                         myTree.endObject();
                                     } else {
-                                        myTree.beginObject();
-                                        System.out.println(myTree.peek().name());
+                                        myTree.nextNull();
+                                        //System.out.println(myTree.peek().name());
                                     }
 //                                    System.out.println(myTree.peek().name());
 

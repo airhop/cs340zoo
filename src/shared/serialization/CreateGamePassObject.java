@@ -13,6 +13,14 @@ public class CreateGamePassObject {
 
     }
 
+    public CreateGamePassObject(String name, boolean rt, boolean rn, boolean rp)
+    {
+        gameName = name;
+        randomTiles = rt;
+        randomNumbers = rn;
+        randomPorts = rp;
+    }
+
     public boolean isRandomTiles() {
         return randomTiles;
     }

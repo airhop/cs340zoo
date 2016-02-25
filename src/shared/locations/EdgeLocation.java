@@ -86,9 +86,7 @@ public class EdgeLocation
 	 * @return Normalized hex location
 	 */
 	public EdgeLocation getNormalizedLocation()
-	{
-		
-		// Return an EdgeLocation that has direction NW, N, or NE
+	{// Return an EdgeLocation that has direction NW, N, or NE
 		
 		switch (dir)
 		{
@@ -105,6 +103,14 @@ public class EdgeLocation
 				assert false;
 				return null;
 		}
+	}
+
+	public int compareTo(EdgeLocation edgeLocation)
+	{
+		if(edgeLocation.getHexLoc().compareTo(getHexLoc()) == 0)
+			if(getDir() == edgeLocation.getDir())
+				return 0;
+		return -1;
 	}
 }
 

@@ -24,32 +24,38 @@ public class StateSetup extends StateAbstract
         robView = rv;
         facade = Facade.getInstance();
         color = facade.getCatanColor();
+        startMove(PieceType.SETTLEMENT, true, true);
     }
 
     public boolean canPlaceRoad(EdgeLocation edgeLoc)
     {
         if(setRoad)
             return false;
-        return facade.canPlaceRoad(edgeLoc);
+        return Facade.getInstance().canPlaceRoad(edgeLoc);
     }
 
     public boolean canPlaceSettlement(VertexLocation vertLoc)
     {
         if(setSettlement)
             return false;
-      return facade.canPlaceSettlement(vertLoc);
+      return Facade.getInstance().canPlaceSettlement(vertLoc);
     }
 
     public void placeRoad(EdgeLocation edgeLoc)
     {
         view.placeRoad(edgeLoc, color);
         setRoad = true;
+        Facade.getInstance().placeRoad(Facade.getInstance().getPlayerID(), edgeLoc.getNormalizedLocation(), true);
+        int pid = Facade.getInstance().getPlayerID();
+        Facade.getInstance().FinishTurn(pid);
     }
 
     public void placeSettlement(VertexLocation vertLoc)
     {
         view.placeSettlement(vertLoc, color);
         setSettlement = true;
+        Facade.getInstance().placeSettlement(Facade.getInstance().getPlayerID(), vertLoc.getNormalizedLocation(), true);
+        startMove(PieceType.ROAD, true, true);
     }
 
     public void startMove(PieceType pieceType, boolean isFree, boolean allowDisconnected)
@@ -66,4 +72,5 @@ public class StateSetup extends StateAbstract
 //        view.cancelDrop();
 //    }
 
+    public String getName() {return "Setup"; }
 }

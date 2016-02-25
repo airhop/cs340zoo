@@ -39,6 +39,7 @@ public class Map
 		buildings = new ArrayList<VertexObject>();
 		resources = new ArrayList<ResourceList>();
 		deserializer = new Deserializer();
+		addOcean();
 	}
 
 	public void clearHexes()
@@ -48,6 +49,25 @@ public class Map
 	public void clearBuildings()
 	{
 		buildings.clear();
+	}
+
+	private void addOcean()
+	{
+		for(int i = 0; i < 4; i++)
+		{
+			hexes.put(new HexLocation(-3, i), new Hex(-3, i, "WATER", 0));
+			hexes.put(new HexLocation(3, (-1*i)), new Hex(3, (-1*i), "WATER", 0));
+		}
+		hexes.put(new HexLocation(-2,-1), new Hex(-2, -1, "WATER", 0));
+		hexes.put(new HexLocation(-2,3), new Hex(-2, 3, "WATER", 0));
+		hexes.put(new HexLocation(-1,-2), new Hex(-1, -2, "WATER", 0));
+		hexes.put(new HexLocation(-1,3), new Hex(-1, 3, "WATER", 0));
+		hexes.put(new HexLocation(0,3), new Hex(0, 3, "WATER", 0));
+		hexes.put(new HexLocation(0,-3), new Hex(0, -3, "WATER", 0));
+		hexes.put(new HexLocation(1,-3), new Hex(1, -3, "WATER", 0));
+		hexes.put(new HexLocation(1,2), new Hex(1, 2, "WATER", 0));
+		hexes.put(new HexLocation(2,-3), new Hex(2, -3, "WATER", 0));
+		hexes.put(new HexLocation(2,1), new Hex(2, 1, "WATER", 0));
 	}
 
 	public ArrayList<Hex> getHexMap()
@@ -63,21 +83,21 @@ public class Map
 				System.out.println("oops");
         }
 
-		for(int i = 0; i < 4; i++)
-		{
-			returnHexes.add(new Hex(-3, i, "OCEAN", 0));
-			returnHexes.add(new Hex(3, (-1*i), "OCEAN", 0));
-		}
-		returnHexes.add(new Hex(-2, -1, "OCEAN", 0));
-		returnHexes.add(new Hex(-2, 3, "OCEAN", 0));
-		returnHexes.add(new Hex(-1, -2, "OCEAN", 0));
-		returnHexes.add(new Hex(-1, 3, "OCEAN", 0));
-		returnHexes.add(new Hex(0, -3, "OCEAN", 0));
-		returnHexes.add(new Hex(0, 3, "OCEAN", 0));
-		returnHexes.add(new Hex(1, -3, "OCEAN", 0));
-		returnHexes.add(new Hex(1, 2, "OCEAN", 0));
-		returnHexes.add(new Hex(2, -3, "OCEAN", 0));
-		returnHexes.add(new Hex(2, 1, "OCEAN", 0));
+//		for(int i = 0; i < 4; i++)
+//		{
+//			returnHexes.add(new Hex(-3, i, "WATER", 0));
+//			returnHexes.add(new Hex(3, (-1*i), "WATER", 0));
+//		}
+//		returnHexes.add(new Hex(-2, -1, "WATER", 0));
+//		returnHexes.add(new Hex(-2, 3, "WATER", 0));
+//		returnHexes.add(new Hex(-1, -2, "WATER", 0));
+//		returnHexes.add(new Hex(-1, 3, "WATER", 0));
+//		returnHexes.add(new Hex(0, -3, "WATER", 0));
+//		returnHexes.add(new Hex(0, 3, "WATER", 0));
+//		returnHexes.add(new Hex(1, -3, "WATER", 0));
+//		returnHexes.add(new Hex(1, 2, "WATER", 0));
+//		returnHexes.add(new Hex(2, -3, "WATER", 0));
+//		returnHexes.add(new Hex(2, 1, "WATER", 0));
 		return returnHexes;
 	}
 
@@ -171,16 +191,26 @@ public class Map
 	 * checks to see if road can be added
 	 */
 	//public boolean canAddRoad(Road road)
-	public boolean canAddRoad(EdgeLocation edgeLocation)
+	public boolean canPlaceRoad(EdgeLocation edgeLocation)
 	{
 		if (edgeLocation == null)
 		{
 			return false;
 		}
-		if (roads.contains(edgeLocation))
+		for(int i = 0; i < roads.size(); i++)
 		{
-			return false;
+			if(roads.get(i).getLocation().compareTo(edgeLocation) == 0)
+				return false;
 		}
+
+		Hex h = hexes.get(edgeLocation.getHexLoc());
+		if( h == null)
+			return false;
+		if(HexType.convert(h.getResource())== HexType.WATER)
+		{
+			return roadOceanPlayable(edgeLocation);
+		}
+
 		return true;
 	}
 
@@ -207,19 +237,35 @@ public class Map
 	 * checks to see if settlement can be added
 	 */
 	//public boolean canAddSettlement(Settlement settlement,VertexObject settlement)
-	public boolean canAddSettlement(VertexLocation settlementLocation)
+	public boolean canPlaceSettlement(VertexLocation settlementLocation)
 	{
+		System.out.println(buildings.size());
+		System.out.println("settlement - " + settlementLocation.toString());
 		if (settlementLocation == null)
 		{
 			return false;
 		}
 		for (VertexObject VObjIter: buildings)
 		{
-			if (VObjIter.getLocation() == settlementLocation)
+			System.out.println(VObjIter.getLocation().toString());
+			if (VObjIter.getLocation().compareTo(settlementLocation) == 0)
 			{
 				return false;
 			}
 		}
+		Hex h = hexes.get(settlementLocation.getHexLoc());
+		if(h == null)
+		{
+			//System.out.println("oops " + settlementLocation.toString());
+			return false;
+		}
+		if(HexType.convert(h.getResource()) == HexType.WATER)
+		{
+			return oceanPlacable(settlementLocation);
+		}
+
+		//System.out.println(settlementLocation.toString());
+		//need to check adjacency?
 		return true;
 	}
 
@@ -245,7 +291,7 @@ public class Map
 	 * checks to see if City can be added
 	 */
 	//public boolean canAddCity(City city)
-	public boolean canAddCity(VertexLocation vertexLocation)
+	public boolean canPlaceCity(VertexLocation vertexLocation)
 	{
 		if (vertexLocation == null)
 		{
@@ -253,7 +299,7 @@ public class Map
 		}
 		for (VertexObject VObjIter: buildings)
 		{
-			if (VObjIter.getLocation() == vertexLocation && !(VObjIter instanceof Settlement))
+			if (VObjIter.getLocation().compareTo(vertexLocation) == 0 && !(VObjIter instanceof Settlement))
 			{
 				return false;
 			}
@@ -286,10 +332,11 @@ public class Map
 	public boolean canRelocateRobber(HexLocation targetHex)
 	{
 		//HexLocation targetHex = new HexLocation(x,y);
-		if (hexes.get(targetHex).resource == "Ocean" || hexes.get(targetHex).resource == "Sea")
-		{
+		if(targetHex == robber.getHl())
 			return false;
-		}
+		if (HexType.convert(hexes.get(targetHex).resource) == HexType.WATER)
+			return false;
+
 		return true;
 	}
 	public ArrayList<Port> checkForPorts(ArrayList<VertexObject> builds)
@@ -407,5 +454,64 @@ public class Map
 
 	public void setRobber(Robber robber) {
 		this.robber = robber;
+	}
+
+	public boolean oceanPlacable(VertexLocation vl)
+	{
+		int x = vl.getHexLoc().getX();
+		int y = vl.getHexLoc().getY();
+
+		if(y < 0 && x != 3)
+			return false;
+		else if(x == -3 && vl.getDir() == VertexDirection.NW)
+			return false;
+		else if(x == 3 && vl.getDir() == VertexDirection.NE)
+			return false;
+		return true;
+
+	}
+
+	public boolean roadOceanPlayable(EdgeLocation el)
+	{
+		int x = el.getHexLoc().getX();
+		int y = el.getHexLoc().getY();
+
+		System.out.println(el.getDir() + " " + x + " " + y);
+		if(y <= 0)
+		{
+			if(x == 3 && el.getDir() == EdgeDirection.NW)
+			{
+				if( y != -3)
+					return true;
+				return false;
+			}
+			return false;
+		}
+		if(x == -3 && el.getDir() == EdgeDirection.NE)
+			return true;
+		if(y == 3)
+		{
+			if(el.getDir() == EdgeDirection.NE && x != 0)
+				return true;
+			if((el.getDir() == EdgeDirection.N) && x != -3)
+				return true;
+			if(x == 0 && el.getDir() == EdgeDirection.N)
+				return true;
+
+			return false;
+		}
+		if(x == 1 && y == 2)
+		{
+			if(el.getDir() == EdgeDirection.N || el.getDir() == EdgeDirection.NW)
+				return true;
+			return false;
+		}
+		if(x == 2 && y == 1)
+		{
+			if(el.getDir() == EdgeDirection.N || el.getDir() == EdgeDirection.NW)
+				return true;
+			return false;
+		}
+		return false;
 	}
 }
