@@ -56,19 +56,19 @@ public class Cookie {
     public String getPlayerId() {
         String temp;
                 if (myId.equals("")) {
- -            if (decodedValue.equals("")) {
- -                getDecode();
- -            }
- -            JsonParser myParse = new JsonParser();
- -            JsonElement myEle = myParse.parse(decodedValue);
- -            JsonTreeReader myTree = new JsonTreeReader(myEle);
- -            try {
- -                if (myTree.hasNext()) 
+             if (decodedValue.equals("")) {
+                 getDecode();
+             }
+             JsonParser myParse = new JsonParser();
+             JsonElement myEle = myParse.parse(decodedValue);
+             JsonTreeReader myTree = new JsonTreeReader(myEle);
+             try {
+                 if (myTree.hasNext()) 
                     {
- -                  myTree.beginObject();
- -                  myTree.nextName();
- -                  myTree.nextString();
- -                  myTree.nextName();
+                   myTree.beginObject();
+                   myTree.nextName();
+                   myTree.nextString();
+                   myTree.nextName();
                     myTree.nextString();
                     myTree.nextName();
                     myId = myTree.nextString();
