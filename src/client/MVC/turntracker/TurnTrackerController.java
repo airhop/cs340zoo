@@ -3,8 +3,10 @@ package client.MVC.turntracker;
 import client.MVC.base.*;
 import client.facade.Facade;
 import client.model.GameModel;
+import client.model.player.Player;
 import shared.definitions.CatanColor;
 
+import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Random;
 
@@ -12,7 +14,9 @@ import java.util.Random;
 /**
  * Implementation for the turn tracker controller
  */
-public class TurnTrackerController extends Controller implements ITurnTrackerController {
+public class TurnTrackerController extends Controller implements ITurnTrackerController
+{
+    private boolean setup = false;
 
     public TurnTrackerController(ITurnTrackerView view) {
 
@@ -40,6 +44,8 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
             c = CatanColor.RED;
 
         getView().setLocalPlayerColor(c);
+
+
         //</temp>
     }
 
@@ -62,6 +68,22 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
                 getView().updateGameState("Hurry Up!!!", false);
         }
         initFromModel();
+
+        GameModel gm = (GameModel)o;
+        ArrayList<Player> players = gm.getPlayers();
+        if(players.get(3) == null)
+            return;
+
+        int playerId = gm.getCurrentPlayer().getPlayerId();
+        for(int i = 0; i < players.size(); i++)
+        {
+            boolean la = gm.getTurnTracker().getLargestArmy() == playerId;
+            boolean lr = gm.getTurnTracker().getLongestRoad() == playerId;
+            getView().initializePlayer(i, players.get(i).getUsername(),
+                    CatanColor.convert(players.get(i).getColor()));
+            getView().updatePlayer(i, gm.getPoints(i), true, la, lr);
+        }
     }
+
 }
 
