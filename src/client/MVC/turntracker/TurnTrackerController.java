@@ -3,8 +3,10 @@ package client.MVC.turntracker;
 import client.MVC.base.*;
 import client.facade.Facade;
 import client.model.GameModel;
+import client.model.player.Player;
 import shared.definitions.CatanColor;
 
+import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Random;
 
