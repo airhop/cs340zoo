@@ -9,15 +9,20 @@ import java.util.Observable;
 /**
  * Implementation for the player waiting controller
  */
-public class PlayerWaitingController extends Controller implements IPlayerWaitingController {
+public class PlayerWaitingController extends Controller implements IPlayerWaitingController
+{
 
-    public PlayerWaitingController(IPlayerWaitingView view) {
-
+    public PlayerWaitingController(IPlayerWaitingView view)
+    {
         super(view);
+        Facade.getInstance().addObserver(this);
     }
     private int getNumPlayers()
     {
-        return Facade.getInstance().gamesList().get(Facade.getInstance().getGameModel().getID()).getPlayers().size();
+        int numPlayers =  Facade.getInstance().gamesList().get(Facade.getInstance().getGameModel().getID()).getPlayers().size();
+        if(numPlayers == 4)
+            Facade.getInstance().setReady();
+        return numPlayers;
     }
     @Override
     public IPlayerWaitingView getView() {
