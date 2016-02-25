@@ -25,7 +25,7 @@ public class Facade {
     private GameModel game;
     private IProxy proxy;
     private ArrayList<Observer> observers = new ArrayList<Observer>();
-    private boolean loggedIn = false, Joined = false, Created = false;
+    private boolean loggedIn = false, Joined = false, Created = false, ready = false;
 
     private static Facade facade = new Facade();
 
@@ -42,7 +42,7 @@ public class Facade {
     }
 
     public void retrieveGameModel() {
-        if (!loggedIn || !Joined)
+        if (!loggedIn || !Joined || !ready)
             return;
         GameModel gm = proxy.getGameModel();
         if (gm != null) {
@@ -76,6 +76,7 @@ public class Facade {
         observers.add(x);
     }
 
+    public void setReady() {ready = true;}
 
     public CatanColor getCatanColor() {
         return game.getCurrentColor();
