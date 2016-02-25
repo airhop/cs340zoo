@@ -43,11 +43,11 @@ public class TradeOffer {
     int sheep = offer.getSheep();
     int wheat = offer.getWheat();
     int wood = offer.getWood();
-    if(brick >= 0){recievedList.setBrick(brick);} else sentList.setBrick(brick);
-    if(ore >= 0){recievedList.setOre(ore);} else sentList.setOre(ore);
-    if(sheep >= 0){recievedList.setSheep(sheep);} else sentList.setSheep(sheep);
-    if(wheat >= 0){recievedList.setWheat(wheat);} else sentList.setWheat(wheat);
-    if(wood >= 0){recievedList.setWood(wood);} else sentList.setWood(wood);
+    if(brick > 0){recievedList.setBrick(brick); sentList.setBrick(0);} else if(brick < 0){sentList.setBrick(brick); recievedList.setBrick(0);} else {sentList.setBrick(0); recievedList.setBrick(0);}
+    if(ore > 0){recievedList.setOre(ore); sentList.setOre(0);} else if(ore < 0){sentList.setOre(ore); recievedList.setOre(0);} else {sentList.setOre(0); recievedList.setOre(0);}
+    if(sheep > 0){recievedList.setSheep(sheep); sentList.setSheep(0);} else if(sheep < 0){sentList.setSheep(sheep); recievedList.setSheep(0);} else {sentList.setSheep(0); recievedList.setSheep(0);}
+    if(wheat > 0){recievedList.setWheat(wheat); sentList.setWheat(0);} else if(wheat < 0){sentList.setWheat(wheat); recievedList.setWheat(0);} else {sentList.setWheat(0); recievedList.setWheat(0);}
+    if(wood > 0){recievedList.setWood(wood); sentList.setWood(0);} else if(wood < 0){sentList.setWood(wood); recievedList.setWood(0);} else {sentList.setWood(0); recievedList.setWood(0);}
   }
   
   public int getSender()
