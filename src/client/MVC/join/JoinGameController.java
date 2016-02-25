@@ -36,6 +36,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
         setNewGameView(newGameView);
         setSelectColorView(selectColorView);
         setMessageView(messageView);
+        Facade.getInstance().addObserver(this);
     }
 
     public IJoinGameView getJoinGameView() {
@@ -187,7 +188,9 @@ public class JoinGameController extends Controller implements IJoinGameControlle
     }
 
     @Override
-    public void update(Observable o, Object arg) {
+    public void update(Observable o, Object arg)
+    {
+        //update the game list with the polller?  allow to retrieve newly created games?
 
     }
 }

@@ -37,3 +37,5 @@ Rebecca Notes :)
 Proxy - gamesCreate - should we extra the game ID from the response code and set the ID in the game?
 Chat doesn't work during setup.  Has the gameModel been created at this point?
 Setup - what should the cancel button do?!
+
+Proxy Login/Register, initiate currentPlayer in GameModel so that that is ready for Join Game

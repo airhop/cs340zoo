@@ -271,6 +271,7 @@ public class Proxy implements IProxy {
             userCookie.getDecode();
         } catch (ClientException e) {
             e.printStackTrace();
+            throw new InvalidUserException("Server hates you :)");
         }
     }
 
