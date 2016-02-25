@@ -239,13 +239,16 @@ public class Map
 	//public boolean canAddSettlement(Settlement settlement,VertexObject settlement)
 	public boolean canPlaceSettlement(VertexLocation settlementLocation)
 	{
+		System.out.println(buildings.size());
+		System.out.println("settlement - " + settlementLocation.toString());
 		if (settlementLocation == null)
 		{
 			return false;
 		}
 		for (VertexObject VObjIter: buildings)
 		{
-			if (VObjIter.getLocation() == settlementLocation)
+			System.out.println(VObjIter.getLocation().toString());
+			if (VObjIter.getLocation().compareTo(settlementLocation) == 0)
 			{
 				return false;
 			}
@@ -296,7 +299,7 @@ public class Map
 		}
 		for (VertexObject VObjIter: buildings)
 		{
-			if (VObjIter.getLocation() == vertexLocation && !(VObjIter instanceof Settlement))
+			if (VObjIter.getLocation().compareTo(vertexLocation) == 0 && !(VObjIter instanceof Settlement))
 			{
 				return false;
 			}

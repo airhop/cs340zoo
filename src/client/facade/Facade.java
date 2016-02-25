@@ -433,7 +433,8 @@ public class Facade {
         return game.canFinishTurn(pid);
     }
 
-    public void FinishTurn(int pid) {
+    public void FinishTurn(int pid)
+    {
         proxy.finishTurn(pid);
     }
 

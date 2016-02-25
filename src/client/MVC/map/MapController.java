@@ -138,7 +138,8 @@ public class MapController extends Controller implements IMapController {
         if(state.getName().equalsIgnoreCase("Setup"))
         {
             if (((StateSetup) state).finishedSetup())
-                Facade.getInstance().FinishTurn(Facade.getInstance().getPlayerID());
+                state = new StateDefault(getView(), robView);
+                //Facade.getInstance().FinishTurn(Facade.getInstance().getPlayerID());
             return;
         }
         //with input, it will change based on the updating to work with everyone else

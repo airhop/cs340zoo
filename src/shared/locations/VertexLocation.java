@@ -225,5 +225,14 @@ public class VertexLocation
 			}
 		}
 
+	public int compareTo(VertexLocation vl)
+	{
+		if(vl.getDir() == getDir())
+		{
+			if(vl.getHexLoc().compareTo(getHexLoc()) == 0)
+				return 0;
+		}
+		return -1;
+	}
 }
 
