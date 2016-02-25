@@ -17,7 +17,7 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
     }
     private int getNumPlayers()
     {
-        return Facade.getInstance().gamesList().get(Facade.getInstance().getGameModel().getID()).getPlayers().size() + 1;
+        return Facade.getInstance().gamesList().get(Facade.getInstance().getGameModel().getID()).getPlayers().size();
     }
     @Override
     public IPlayerWaitingView getView() {

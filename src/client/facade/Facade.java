@@ -46,6 +46,7 @@ public class Facade {
             return;
         GameModel gm = proxy.getGameModel();
         if (gm != null) {
+            System.out.println(gm.getTurnTracker().getStatus());
             game = gm;
 //observation is not happening without this for loop, so I am leaving it for now
             for(int i =0 ; i < observers.size(); i++)
@@ -177,8 +178,12 @@ public class Facade {
      */
     public void placeRoad(int pid, EdgeLocation el, boolean free) {
         if (game != null) {
-            if (game.canBuildRoad(pid) && game.canPlaceRoad(el))
-                proxy.buildRoad(pid, el, free);
+
+            if (game.canBuildRoad(pid) || free)
+            {
+                if (game.canPlaceRoad(el))
+                    proxy.buildRoad(pid, el, free);
+            }
         }
     }
 
@@ -210,13 +215,16 @@ public class Facade {
      * @return boolean whether or not the player placed a settlement
      */
     public void placeSettlement(int pid, VertexLocation vl, boolean free) {
-        if (game != null) {
-            if (canPlaceSettlement(vl) && canBuildSettlement(pid))
-                try {
-                    proxy.buildSettlement(pid, vl, free);
-                } catch (IllegalBuildException e) {
-                    e.printStackTrace();
-                }
+        if (game != null)
+        {
+            if(canBuildSettlement(pid) || free) {
+                if (canPlaceSettlement(vl))
+                    try {
+                        proxy.buildSettlement(pid, vl, free);
+                    } catch (IllegalBuildException e) {
+                        e.printStackTrace();
+                    }
+            }
         }
     }
 

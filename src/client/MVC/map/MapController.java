@@ -174,6 +174,7 @@ public class MapController extends Controller implements IMapController {
                 getView().placeCity(buildings.get(i).getLocation(), facade.getPlayerColor(buildings.get(i).getOwner()));
         }
 
+        System.out.println("\nbuildings = " + buildings.size());
         getView().placeRobber(map.getRobber().getHl());
     }
 

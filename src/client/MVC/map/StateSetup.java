@@ -31,21 +31,21 @@ public class StateSetup extends StateAbstract
     {
         if(setRoad)
             return false;
-        return facade.canPlaceRoad(edgeLoc);
+        return Facade.getInstance().canPlaceRoad(edgeLoc);
     }
 
     public boolean canPlaceSettlement(VertexLocation vertLoc)
     {
         if(setSettlement)
             return false;
-      return facade.canPlaceSettlement(vertLoc);
+      return Facade.getInstance().canPlaceSettlement(vertLoc);
     }
 
     public void placeRoad(EdgeLocation edgeLoc)
     {
         view.placeRoad(edgeLoc, color);
         setRoad = true;
-        Facade.getInstance().placeRoad(Facade.getInstance().getPlayerID(), edgeLoc, true);
+        Facade.getInstance().placeRoad(Facade.getInstance().getPlayerID(), edgeLoc.getNormalizedLocation(), true);
         int pid = Facade.getInstance().getPlayerID();
         Facade.getInstance().FinishTurn(pid);
     }
@@ -54,7 +54,7 @@ public class StateSetup extends StateAbstract
     {
         view.placeSettlement(vertLoc, color);
         setSettlement = true;
-        Facade.getInstance().placeSettlement(Facade.getInstance().getPlayerID(), vertLoc, true);
+        Facade.getInstance().placeSettlement(Facade.getInstance().getPlayerID(), vertLoc.getNormalizedLocation(), true);
         startMove(PieceType.ROAD, true, true);
     }
 
