@@ -579,11 +579,12 @@ public class Proxy implements IProxy {
     public void buildRoad(int playerId, EdgeLocation el, boolean free) {
         JsonObject myObjOne = new JsonObject();
         String url = "/moves/buildRoad";
-        myObjOne.addProperty("type", "rollNumber");
+        myObjOne.addProperty("type", "buildRoad");
         myObjOne.addProperty("playerIndex", "" + playerId);
         myObjOne.add("roadLocation", edgeLocationObject(el));
         myObjOne.addProperty("free", "" + free);
      //   System.out.println(myObjOne.toString());
+        //
         HttpURLResponse myResponse;
         try {
             myResponse = doPost(url, myObjOne);
