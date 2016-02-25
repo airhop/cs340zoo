@@ -29,6 +29,14 @@ public class PlayerInfo {
         setColor(CatanColor.WHITE);
     }
 
+    public PlayerInfo(int ID, int pid, String n, CatanColor c)
+    {
+        id = ID;
+        playerIndex = pid;
+        name = n;
+        color = c;
+    }
+
     public int getId() {
         return id;
     }

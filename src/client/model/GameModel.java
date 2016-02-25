@@ -366,8 +366,11 @@ public class GameModel extends Observable{
     }
 
 
-    public boolean canFinishTurn(int pid) {
-        return (turnTracker.getStatus().equals("SecondRound") && turnTracker.getCurrentPlayer() == pid);
+    public boolean canFinishTurn(int pid)
+    {
+        if(!turnTracker.getStatus().equalsIgnoreCase("rolling"))
+           return (turnTracker.getCurrentPlayer() == pid);
+        return false;
     }
 
     public boolean canDiscardCards(int pid, ResourceList rl) {

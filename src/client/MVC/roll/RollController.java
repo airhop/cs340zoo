@@ -1,8 +1,11 @@
 package client.MVC.roll;
 
 import client.MVC.base.*;
+import client.facade.Facade;
+import client.model.GameModel;
 
 import java.util.Observable;
+import java.util.Random;
 
 
 /**
@@ -11,6 +14,7 @@ import java.util.Observable;
 public class RollController extends Controller implements IRollController {
 
     private IRollResultView resultView;
+    private boolean waiting = false;
 
     /**
      * RollController constructor
@@ -21,7 +25,7 @@ public class RollController extends Controller implements IRollController {
     public RollController(IRollView view, IRollResultView resultView) {
 
         super(view);
-
+        Facade.getInstance().addObserver(this);
         setResultView(resultView);
     }
 
@@ -34,17 +38,33 @@ public class RollController extends Controller implements IRollController {
     }
 
     public IRollView getRollView() {
-        return (IRollView) getView();
+        return (IRollView) super.getView();
     }
 
     @Override
-    public void rollDice() {
+    public void rollDice()
+    {
 
+        Random r = new Random();
+        int x = r.nextInt(6);  //0 - 5
+        int y = r.nextInt(6); // 0 - 5
+        int roll = x + y + 2;
+
+        Facade.getInstance().roll(Facade.getInstance().getPlayerID(), roll);
         getResultView().showModal();
+        getResultView().setRollValue(roll);
     }
 
+    public void setWaiting() {waiting = false;}
+
     @Override
-    public void update(Observable o, Object arg) {
+    public void update(Observable o, Object arg)
+    {
+        if(((GameModel)o).getTurnTracker().getStatus().equalsIgnoreCase("Rolling") && !waiting)
+        {
+            getRollView().showModal();
+            waiting = true;
+        }
 
     }
 }

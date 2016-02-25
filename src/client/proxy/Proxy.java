@@ -461,7 +461,7 @@ public class Proxy implements IProxy {
         JsonObject myObjOne = new JsonObject();
         String url = "/moves/finishTurn";
         myObjOne.addProperty("type", "finishTurn");
-        myObjOne.addProperty("playerIndex", "" + playerIndex);
+        myObjOne.addProperty("playerIndex", playerIndex);
         System.out.println(myObjOne.toString());
         HttpURLResponse myResponse;
         try {

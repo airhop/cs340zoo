@@ -70,7 +70,7 @@ public class Facade {
 
     public int getPlayerID()
     {
-        return game.getCurrentPlayer().getPlayerId();
+        return proxy.getPlayerId();
     }
 
     public int getPlayerIndex()
@@ -101,7 +101,12 @@ public class Facade {
         return game.getMap();
     }
 
-    public CatanColor getPlayerColor(int player) {
+    public CatanColor getPlayerColor(int player)
+    {
+        if(game == null)
+            return null;
+        if(game.getPlayers().get(player) == null)
+            return null;
         return game.getPlayerColor(player);
     }
 
@@ -439,16 +444,17 @@ public class Facade {
      *
      * @return boolean whether or not the player rolled the dice
      */
-    public void roll(int pid) {
+    public void roll(int pid, int number) {
+        System.out.println("rolling");
         if (game != null) {
             if (canRoll(pid)) {
-                int number = game.roll(pid);
                 if (number != -1)
                     proxy.rollNumber(number, pid);
                 else
                     System.out.println("not a rolling phase");
             }
         }
+        System.out.println("success?");
     }
 
     public boolean canFinishTurn(int pid) {
