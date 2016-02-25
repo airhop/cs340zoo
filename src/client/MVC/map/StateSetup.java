@@ -23,7 +23,7 @@ public class StateSetup extends StateAbstract
         view = v;
         robView = rv;
         facade = Facade.getInstance();
-        color = facade.getCurrentPlayer().getColor();
+        color = facade.getCatanColor();
         startMove(PieceType.SETTLEMENT, true, true);
     }
 
