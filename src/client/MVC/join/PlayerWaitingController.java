@@ -9,21 +9,20 @@ import java.util.Observable;
 /**
  * Implementation for the player waiting controller
  */
-public class PlayerWaitingController extends Controller implements IPlayerWaitingController
-{
+public class PlayerWaitingController extends Controller implements IPlayerWaitingController {
 
-    public PlayerWaitingController(IPlayerWaitingView view)
-    {
+    public PlayerWaitingController(IPlayerWaitingView view) {
         super(view);
         Facade.getInstance().addObserver(this);
     }
-    private int getNumPlayers()
-    {
-        int numPlayers =  Facade.getInstance().gamesList().get(Facade.getInstance().getGameModel().getID()).getPlayers().size();
-        if(numPlayers == 4)
+
+    private int getNumPlayers() {
+        int numPlayers = Facade.getInstance().gamesList().get(Facade.getInstance().getGameModel().getID()).getPlayers().size();
+        if (numPlayers == 4)
             Facade.getInstance().setReady();
         return numPlayers;
     }
+
     @Override
     public IPlayerWaitingView getView() {
 
@@ -35,14 +34,11 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
         System.out.println("the number of current players: ");
         System.out.println(getNumPlayers());
 
-        if(getNumPlayers() <  4)
-        {
+        if (getNumPlayers() < 4) {
             getView().showModal();
-        }
-       else
-       {
+        } else {
             getView().closeModal();
-       }
+        }
     }
 
     @Override
@@ -50,12 +46,9 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 
         // TEMPORARY
         Facade.getInstance().gameAddAI();
-        if(getNumPlayers() <  4)
-        {
+        if (getNumPlayers() < 4) {
             getView().showModal();
-        }
-        else
-        {
+        } else {
             getView().closeModal();
         }
         //Facade.getInstance().gamesCreate("New Game");
