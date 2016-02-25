@@ -63,6 +63,11 @@ public class Facade {
         return game.getCurrentPlayer().getPlayerId();
     }
 
+    public int getPlayerIndex()
+    {
+        return game.getCurrentPlayer().getPlayerIndex();
+    }
+
     public GameModel getGameModel() {
         return game;
     }
