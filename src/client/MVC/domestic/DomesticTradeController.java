@@ -87,12 +87,10 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
         PlayerInfo[] players = new PlayerInfo[3];
         int i=0;
         int j=0;
-        System.out.print(Facade.getInstance().getCurrentPlayer().getPlayerIndex());
         for(Player player : Facade.getInstance().getGameModel().getPlayers())
         {
             if(Facade.getInstance().getCurrentPlayerInfo().getId() != j) {
-                System.out.println("HEHEHEHEHEHEHEEHHEEH");
-                players[i] = new PlayerInfo(player.getPlayerID(), player.getPlayerIndex(), player.getUsername(), CatanColor.BLUE);
+                players[i] = new PlayerInfo(player.getPlayerID(), player.getPlayerIndex(), player.getUsername(), /*CatanColor.convert(player.getColor())*/CatanColor.BLUE);
                 i++;
             }
             j++;
@@ -154,6 +152,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
     public void increaseResourceAmount(ResourceType resource) {
         if(resource == ResourceType.BRICK)
         {
+            if(Facade.getInstance().getGameModel().getPlayers().get(Facade.getInstance().getCurrentPlayer().getPlayerIndex()).getResources().getBrick() == 0)
                 brick++;
         }
         if(resource == ResourceType.ORE)

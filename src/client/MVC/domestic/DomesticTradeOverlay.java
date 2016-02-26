@@ -176,7 +176,7 @@ public class DomesticTradeOverlay extends OverlayView implements IDomesticTradeO
 
             JPanel upDownButtonsPanel = this.setupUpDownButtonsPanel(resourceType);
             this.upDownPanelByResourceType.put(resourceType, upDownButtonsPanel);
-//			upDownButtonsPanel.setVisible(false);
+			upDownButtonsPanel.setVisible(false);
 
             ButtonGroup toggleButtonGroup = new ButtonGroup();
 
@@ -367,25 +367,26 @@ public class DomesticTradeOverlay extends OverlayView implements IDomesticTradeO
 
     @Override
     public void setPlayers(PlayerInfo[] value) {
-System.out.print("THISSSSSSSSSSSSSSSSSSSSSSS IS GETING CALLED");
-        for (int i = 0; i < value.length; i++) {
+        if(this.playerButtons.size() != 3) {
+            for (int i = 0; i < value.length; i++) {
 
-            JToggleButton toggle = new JToggleButton(value[i].getName());
-            toggle.addActionListener(playerSelectActionListener);
-            toggle.setActionCommand(value[i].getName());
-            toggle.putClientProperty("JButton.buttonType", "segmented");
-            if (i == value.length - 1)
-                toggle.putClientProperty("JButton.segmentPosition", "last");
-            else
-                toggle.putClientProperty("JButton.segmentPosition", "middle");
-            toggle.setForeground(value[i].getColor().getJavaColor());
-            toggleButtonGroup.add(toggle);
-            this.playerSelectionPanel.add(toggle);
-            this.playerButtons.add(toggle);
-        }
-        this.players = value;
-        for (JPanel panel : this.upDownPanels) {
-            panel.setVisible(true);
+                JToggleButton toggle = new JToggleButton(value[i].getName());
+                toggle.addActionListener(playerSelectActionListener);
+                toggle.setActionCommand(value[i].getName());
+                toggle.putClientProperty("JButton.buttonType", "segmented");
+                if (i == value.length - 1)
+                    toggle.putClientProperty("JButton.segmentPosition", "last");
+                else
+                    toggle.putClientProperty("JButton.segmentPosition", "middle");
+                toggle.setForeground(value[i].getColor().getJavaColor());
+                toggleButtonGroup.add(toggle);
+                this.playerSelectionPanel.add(toggle);
+                this.playerButtons.add(toggle);
+            }
+            this.players = value;
+            for (JPanel panel : this.upDownPanels) {
+                panel.setVisible(false);
+            }
         }
     }
 
@@ -439,7 +440,13 @@ System.out.print("THISSSSSSSSSSSSSSSSSSSSSSS IS GETING CALLED");
     public void setCancelEnabled(boolean enabled) {
         this.cancelButton.setEnabled(enabled);
     }
+    public ArrayList<JPanel> getResourceSelectionPanels() {
+        return resourceSelectionPanels;
+    }
 
+    public void setResourceSelectionPanels(ArrayList<JPanel> resourceSelectionPanels) {
+        this.resourceSelectionPanels = resourceSelectionPanels;
+    }
 }
 
 

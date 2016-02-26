@@ -204,7 +204,7 @@ public class GameModel extends Observable{
         return CatanColor.convert(players.get(getTurnTracker().getCurrentPlayer()).getColor());
     }
     public CatanColor getPlayerColor (int player)
-    {   return CatanColor.convert(players.get(player).getColor());}
+    { return CatanColor.convert(players.get(player).getColor());}
 
     /**
      * updates version of the game model
