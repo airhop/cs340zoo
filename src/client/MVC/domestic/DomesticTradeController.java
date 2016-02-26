@@ -1,9 +1,12 @@
 package client.MVC.domestic;
 
 import client.MVC.base.*;
+import client.MVC.data.PlayerInfo;
 import client.MVC.misc.*;
 import client.facade.Facade;
 import client.model.bank.ResourceList;
+import client.model.player.Player;
+import shared.definitions.CatanColor;
 import shared.definitions.ResourceType;
 
 import java.util.Observable;
@@ -81,7 +84,20 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 
     @Override
     public void startTrade() {
-
+        PlayerInfo[] players = new PlayerInfo[3];
+        int i=0;
+        int j=0;
+        System.out.print(Facade.getInstance().getCurrentPlayer().getPlayerIndex());
+        for(Player player : Facade.getInstance().getGameModel().getPlayers())
+        {
+            if(Facade.getInstance().getCurrentPlayerInfo().getId() != j) {
+                System.out.println("HEHEHEHEHEHEHEEHHEEH");
+                players[i] = new PlayerInfo(player.getPlayerID(), player.getPlayerIndex(), player.getUsername(), CatanColor.BLUE);
+                i++;
+            }
+            j++;
+        }
+        getTradeOverlay().setPlayers(players);
         getTradeOverlay().showModal();
         brick = 0;
         ore = 0;
@@ -171,6 +187,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
         if(Facade.getInstance().canTradePlayer(Facade.getInstance().getPlayerID(), tradeAccepterId, tradeList))
         {
             Facade.getInstance().tradePlayer(Facade.getInstance().getPlayerID(), tradeAccepterId, tradeList);
+            System.out.print("TESTIIING");
         }
         else System.out.println("CANNOT SEND THAT TRADE OFFER");
         getTradeOverlay().closeModal();
@@ -231,20 +248,27 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
         if(resource == ResourceType.BRICK)
         {
             brickStatus = 0;
+            brick = 0;
         }
         if(resource == ResourceType.ORE)
         {
             oreStatus = 0;
+            ore = 0;
         }
         if(resource == ResourceType.SHEEP)
         {
-            sheepStatus = 0;        }
+            sheepStatus = 0;
+            sheep = 0;
+        }
         if(resource == ResourceType.WHEAT)
         {
-            wheatStatus = 0;        }
+            wheatStatus = 0;
+            wheat = 0;
+        }
         if(resource == ResourceType.WOOD)
         {
             woodStatus = 0;
+            wood = 0;
         }
     }
 

@@ -3,6 +3,7 @@ package client.MVC.domestic;
 import client.MVC.base.*;
 import client.MVC.data.*;
 import client.MVC.utils.FontUtils;
+import client.facade.Facade;
 import shared.definitions.ResourceType;
 
 import javax.imageio.ImageIO;
@@ -131,25 +132,28 @@ public class DomesticTradeOverlay extends OverlayView implements IDomesticTradeO
     private JPanel setupUsersList() {
         this.playerButtons = new ArrayList<JToggleButton>();
         this.toggleButtonGroup = new ButtonGroup();
-
+        ArrayList<JToggleButton> butts = new ArrayList<JToggleButton>();
         JToggleButton noneToggle = new JToggleButton("None");
-        noneToggle.setSelected(true);
-        noneToggle.addActionListener(new ActionListener() {
+                noneToggle.setSelected(true);
+                noneToggle.addActionListener(new ActionListener() {
 
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                getController().setPlayerToTradeWith(-1);
-            }
-        });
-        noneToggle.setActionCommand("None");
-        noneToggle.putClientProperty("JButton.buttonType", "segmented");
-        noneToggle.putClientProperty("JButton.segmentPosition", "first");
-        toggleButtonGroup.add(noneToggle);
-
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        getController().setPlayerToTradeWith(-1);
+                    }
+                });
+                noneToggle.setActionCommand("None");
+                noneToggle.putClientProperty("JButton.buttonType", "segmented");
+                noneToggle.putClientProperty("JButton.segmentPosition", "first");
+                toggleButtonGroup.add(noneToggle);
+                butts.add(noneToggle);
         this.playerSelectionPanel = new JPanel();
         this.playerSelectionPanel.setLayout(new BoxLayout(this.playerSelectionPanel, BoxLayout.X_AXIS));
         this.playerSelectionPanel.setAlignmentX(CENTER_ALIGNMENT);
-        this.playerSelectionPanel.add(noneToggle);
+        for(JToggleButton b : butts)
+        {
+            this.playerSelectionPanel.add(b);
+        }
 
         return this.playerSelectionPanel;
     }
@@ -312,7 +316,7 @@ public class DomesticTradeOverlay extends OverlayView implements IDomesticTradeO
     /**
      * Resizes an image using a Graphics2D object backed by a BufferedImage.
      *
-     * @param srcImg - source image to scale
+     * @param src - source image to scale
      * @param w      - desired width
      * @param h      - desired height
      * @return - the new resized image
@@ -363,7 +367,7 @@ public class DomesticTradeOverlay extends OverlayView implements IDomesticTradeO
 
     @Override
     public void setPlayers(PlayerInfo[] value) {
-
+System.out.print("THISSSSSSSSSSSSSSSSSSSSSSS IS GETING CALLED");
         for (int i = 0; i < value.length; i++) {
 
             JToggleButton toggle = new JToggleButton(value[i].getName());
@@ -381,7 +385,7 @@ public class DomesticTradeOverlay extends OverlayView implements IDomesticTradeO
         }
         this.players = value;
         for (JPanel panel : this.upDownPanels) {
-            panel.setVisible(false);
+            panel.setVisible(true);
         }
     }
 

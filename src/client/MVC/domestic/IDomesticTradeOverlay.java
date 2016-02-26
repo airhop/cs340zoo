@@ -80,6 +80,5 @@ public interface IDomesticTradeOverlay extends IOverlayView {
      * @param enabled Whether or not the user may cancel the trade operation
      */
     void setCancelEnabled(boolean enabled);
-
 }
 
