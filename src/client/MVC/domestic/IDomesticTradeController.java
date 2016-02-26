@@ -81,5 +81,8 @@ public interface IDomesticTradeController extends IController {
      * @param willAccept Whether or not the user accepted the trade
      */
     void acceptTrade(boolean willAccept);
+
+    boolean checkResourceAdd(ResourceType resourceType, Integer currentAmount);
+    boolean checkResourceSubtract(ResourceType resourceType, Integer currentAmount);
 }
 

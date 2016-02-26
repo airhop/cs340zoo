@@ -97,4 +97,15 @@ public class ResourceList {
         ResourceList result = new ResourceList(newbrick, newore, newsheep, newwheat, newwood);
         return result;
     }
+    public String toString()
+    {
+        StringBuilder sb = new StringBuilder();
+        sb.append("BRICK AMOUNT: "+getBrick()+"\n");
+        sb.append("ORE AMOUNT: "+getOre()+"\n");
+        sb.append("SHEEP AMOUNT: "+getSheep()+"\n");
+        sb.append("WHEAT AMOUNT: "+getWheat()+"\n");
+        sb.append("WOOD AMOUNT: "+getWood()+"\n");
+        return sb.toString();
+    }
+
 }
