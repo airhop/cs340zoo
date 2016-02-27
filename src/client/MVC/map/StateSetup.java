@@ -79,10 +79,10 @@ public class StateSetup extends StateAbstract
         return (setRoad && setSettlement);
     }
 
-    public void cancelMove()
-    {
-        //view.cancelDrop();
-    }
+//    public void cancelMove()
+//    {
+//        getView().cancelDrop();
+//    }
 
     public String getName() {return "Setup"; }
 }
