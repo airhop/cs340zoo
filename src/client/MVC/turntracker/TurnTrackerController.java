@@ -52,6 +52,8 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
     @Override
     public void update(Observable o, Object arg)
     {
+        if(!Facade.getInstance().isReady())
+            return;
         Random rand = new Random();
         int x = rand.nextInt();
         int pid = Facade.getInstance().getPlayerID();

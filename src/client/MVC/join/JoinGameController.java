@@ -191,12 +191,15 @@ public class JoinGameController extends Controller implements IJoinGameControlle
     @Override
     public void update(Observable o, Object arg)
     {
-        List<GameInfo> games = Facade.getInstance().gamesList();
-        GameInfo[] myType = new GameInfo[games.size()];
-        for (int i = 0; i < games.size(); i++) {
-            myType[i] = games.get(i);
+        if(!Facade.getInstance().isReady()){
+            List<GameInfo> games = Facade.getInstance().gamesList();
+            GameInfo[] myType = new GameInfo[games.size()];
+            for (int i = 0; i < games.size(); i++) {
+                myType[i] = games.get(i);
+            }
+            getJoinGameView().setGames(myType, Facade.getInstance().getCurrentPlayerInfo());
+            getJoinGameView().showModal();
         }
-        getJoinGameView().setGames(myType, Facade.getInstance().getCurrentPlayerInfo());
         //update the game list with the polller?  allow to retrieve newly created games?Sam
     }
 }

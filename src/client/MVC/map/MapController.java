@@ -129,6 +129,8 @@ public class MapController extends Controller implements IMapController {
     }
 
     public void update(Observable observable, Object args) {
+        if(!Facade.getInstance().isReady())
+            return;
 
         GameModel gm = (GameModel)observable;
        //without input it will change the phase automatically for playing with

@@ -66,9 +66,12 @@ public class Facade {
     }
 
     public void retrieveGameModel() {
-        if (!loggedIn || !Joined || !ready)
+        GameModel gm = new GameModel();
+        if (!loggedIn)
             return;
-        GameModel gm = proxy.getGameModel();
+        if(Joined && ready){
+            gm = proxy.getGameModel();
+        }
         if (gm != null) {
             System.out.println(gm.getTurnTracker().getStatus());
             game = gm;
