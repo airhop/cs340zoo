@@ -42,7 +42,7 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
         CatanColor c = Facade.getInstance().getPlayerColor(Facade.getInstance().getPlayerIndex());
         if(c == null)
             c = CatanColor.RED;
-
+        //this
         getView().setLocalPlayerColor(c);
 
 
