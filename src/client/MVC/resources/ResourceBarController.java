@@ -68,7 +68,6 @@ public class ResourceBarController extends Controller implements IResourceBarCon
     private void executeElementAction(ResourceBarElement element) {
 
         if (elementActions.containsKey(element)) {
-
             IAction action = elementActions.get(element);
             action.execute();
         }

@@ -474,8 +474,8 @@ public class Facade {
         return game.canFinishTurn(pid);
     }
 
-    public void FinishTurn(int pid) {
-        proxy.finishTurn(pid);
+    public void FinishTurn(int pIndex) {
+        proxy.finishTurn(pIndex);
     }
 
     public boolean canDiscardCards(int pid, ResourceList rl) {

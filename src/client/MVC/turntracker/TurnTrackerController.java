@@ -39,7 +39,7 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 
     private void initFromModel() {
         //<temp>
-        CatanColor c = Facade.getInstance().getPlayerColor(Facade.getInstance().getPlayerID());
+        CatanColor c = Facade.getInstance().getPlayerColor(Facade.getInstance().getPlayerIndex());
         if(c == null)
             c = CatanColor.RED;
 
