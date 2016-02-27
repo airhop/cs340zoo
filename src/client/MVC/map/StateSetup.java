@@ -64,13 +64,12 @@ public class StateSetup extends StateAbstract
         view.placeSettlement(vertLoc, color);
         setSettlement = true;
         Facade.getInstance().placeSettlement(Facade.getInstance().getPlayerID(), vertLoc.getNormalizedLocation(), true);
-        int playerIndex = Facade.getInstance().getPlayerIndex();
-        Facade.getInstance().FinishTurn(playerIndex);
+        Facade.getInstance().FinishTurn(Facade.getInstance().getPlayerIndex());
     }
 
     public void startMove(PieceType pieceType, boolean isFree, boolean allowDisconnected)
     {
-        color = Facade.getInstance().getPlayerColor(Facade.getInstance().getPlayerID());
+        color = Facade.getInstance().getPlayerColor(Facade.getInstance().getPlayerIndex());
         view.startDrop(pieceType, color, true);
     }
 
