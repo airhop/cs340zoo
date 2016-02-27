@@ -306,7 +306,10 @@ public class Map
 			int edgecompare = roads.get(i).getLocation().getNormalizedLocation().compareTo(el.getNormalizedLocation());
 			if(edgecompare == 0)
 				return false;
-			if(el.getNormalizedLocation().neighbor(roads.get(i).getLocation().getNormalizedLocation()))
+		}
+		for(int i = 0; i < buildings.size(); i++)
+		{
+			if(el.neighbor(buildings.get(i).getLocation()))
 				return false;
 		}
 
