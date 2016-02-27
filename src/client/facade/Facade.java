@@ -199,10 +199,10 @@ public class Facade {
      *
      * @return boolean whether or not the player can place a road
      */
-    public boolean canPlaceRoad(EdgeLocation el) {
+    public boolean canPlaceRoad(EdgeLocation el, boolean isDisconnected) {
         if (game == null)
             return false;
-        return game.canPlaceRoad(el);
+        return game.canPlaceRoad(el, isDisconnected);
     }
 
     /**
@@ -210,11 +210,11 @@ public class Facade {
      * <p>
      * boolean whether or not the player built the road (perhaps placeholder return values for all of the do methods)
      */
-    public void placeRoad(int pid, EdgeLocation el, boolean free) {
+    public void placeRoad(int pid, EdgeLocation el, boolean free, boolean isDisconnected) {
         if (game != null) {
 
             if (game.canBuildRoad(pid) || free) {
-                if (game.canPlaceRoad(el))
+                if (game.canPlaceRoad(el, isDisconnected))
                     proxy.buildRoad(pid, el, free);
             }
         }
@@ -316,7 +316,7 @@ public class Facade {
      */
     public void playRoadBuilding(int pid, EdgeLocation el1, EdgeLocation el2) {
         if (game != null) {
-            if (game.canRoadBuilding(pid) && game.canPlaceRoad(el1) && game.canPlaceRoad(el2))
+            if (game.canRoadBuilding(pid) && game.canPlaceRoad(el1, false) && game.canPlaceRoad(el2, false))
                 proxy.playRoadBuilding(pid, el1, el2);
         }
     }
