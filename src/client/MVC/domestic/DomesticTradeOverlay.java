@@ -283,10 +283,10 @@ public class DomesticTradeOverlay extends OverlayView implements IDomesticTradeO
                         currentAmount++;
                         getController().increaseResourceAmount(resourceType);
                     }
-                    else
-                    {
-                        setResourceAmountChangeEnabled(resourceType,false,true);
-                    }
+//                    else
+//                    {
+//                        setResourceAmountChangeEnabled(resourceType,false,true);
+//                    }
                     resourceCounts.get(resourceType).setText("" + currentAmount);
                 }
             });

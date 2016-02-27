@@ -33,6 +33,9 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
     private int wood;
     private int woodStatus;
 
+    private boolean hasASend;
+    private boolean hasARecieve;
+
     private int tradeSenderId;
     private int tradeAccepterId;
     /**
@@ -85,7 +88,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
     @Override
     public void startTrade() {
         System.out.println(Facade.getInstance().getGameModel().getPlayers().get(Facade.getInstance().getCurrentPlayer().getPlayerIndex()).getResources().toString());
-
+        tradeSenderId = Facade.getInstance().getCurrentPlayer().getPlayerId();
         PlayerInfo[] players = new PlayerInfo[3];
         int i=0;
         int j=0;
@@ -163,7 +166,9 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
                 }
             }
         }
+
         printPlayerResourceStatus();
+//        updateTradeStatus();
     }
 
     @Override
@@ -171,40 +176,41 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
         if(resource == ResourceType.BRICK)
         {
 
-            if(brick+1 == Facade.getInstance().getGameModel().getPlayers().get(Facade.getInstance().getCurrentPlayer().getPlayerIndex()).getResources().getBrick()) {
-                tradeOverlay.setResourceAmountChangeEnabled(resource,false,true);
-            }
+//            if(brick+1 == Facade.getInstance().getGameModel().getPlayers().get(Facade.getInstance().getCurrentPlayer().getPlayerIndex()).getResources().getBrick()) {
+//                tradeOverlay.setResourceAmountChangeEnabled(resource,false,true);
+//            }
             brick++;
         }
         if(resource == ResourceType.ORE)
         {
-            if(ore+1 == Facade.getInstance().getGameModel().getPlayers().get(Facade.getInstance().getCurrentPlayer().getPlayerIndex()).getResources().getOre()) {
-                tradeOverlay.setResourceAmountChangeEnabled(resource,false,true);
-            }
+//            if(ore+1 == Facade.getInstance().getGameModel().getPlayers().get(Facade.getInstance().getCurrentPlayer().getPlayerIndex()).getResources().getOre()) {
+//                tradeOverlay.setResourceAmountChangeEnabled(resource,false,true);
+//            }
             ore++;
         }
         if(resource == ResourceType.SHEEP)
         {
-            if(sheep+1 == Facade.getInstance().getGameModel().getPlayers().get(Facade.getInstance().getCurrentPlayer().getPlayerIndex()).getResources().getSheep()) {
-                tradeOverlay.setResourceAmountChangeEnabled(resource,false,true);
-            }
+//            if(sheep+1 == Facade.getInstance().getGameModel().getPlayers().get(Facade.getInstance().getCurrentPlayer().getPlayerIndex()).getResources().getSheep()) {
+//                tradeOverlay.setResourceAmountChangeEnabled(resource,false,true);
+//            }
             sheep++;
         }
         if(resource == ResourceType.WHEAT)
         {
-            if(wheat+1 == Facade.getInstance().getGameModel().getPlayers().get(Facade.getInstance().getCurrentPlayer().getPlayerIndex()).getResources().getWheat()) {
-                tradeOverlay.setResourceAmountChangeEnabled(resource,false,true);
-            }
+//            if(wheat+1 == Facade.getInstance().getGameModel().getPlayers().get(Facade.getInstance().getCurrentPlayer().getPlayerIndex()).getResources().getWheat()) {
+//                tradeOverlay.setResourceAmountChangeEnabled(resource,false,true);
+//            }
             wheat++;
         }
         if(resource == ResourceType.WOOD)
         {
-            if(wood+1 == Facade.getInstance().getGameModel().getPlayers().get(Facade.getInstance().getCurrentPlayer().getPlayerIndex()).getResources().getWood()) {
-                tradeOverlay.setResourceAmountChangeEnabled(resource,false,true);
-            }
+//            if(wood+1 == Facade.getInstance().getGameModel().getPlayers().get(Facade.getInstance().getCurrentPlayer().getPlayerIndex()).getResources().getWood()) {
+//                tradeOverlay.setResourceAmountChangeEnabled(resource,false,true);
+//            }
             wood++;
         }
         printPlayerResourceStatus();
+//        updateTradeStatus();
     }
 
     @Override
@@ -220,9 +226,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
         if(Facade.getInstance().canTradePlayer(Facade.getInstance().getPlayerID(), tradeAccepterId, tradeList))
         {
             Facade.getInstance().tradePlayer(Facade.getInstance().getPlayerID(), tradeAccepterId, tradeList);
-            System.out.print("TESTIIING");
         }
-        else System.out.println("CANNOT SEND THAT TRADE OFFER");
         getTradeOverlay().closeModal();
         getWaitOverlay().showModal();
     }
@@ -253,6 +257,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
             woodStatus = 1;
         }
         printPlayerResourceStatus();
+//        updateTradeStatus();
     }
 
     @Override
@@ -276,11 +281,12 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
             woodStatus = -1;
         }
         printPlayerResourceStatus();
+//        updateTradeStatus();
     }
 
     @Override
     public void unsetResource(ResourceType resource) {
-        getTradeOverlay().setResourceAmountChangeEnabled(resource,true,false);
+//        getTradeOverlay().setResourceAmountChangeEnabled(resource,true,false);
         if(resource == ResourceType.BRICK)
         {
             brickStatus = 0;
@@ -307,6 +313,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
             wood = 0;
         }
         printPlayerResourceStatus();
+//        updateTradeStatus();
     }
 
     @Override
@@ -380,6 +387,54 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
         System.out.println("WOOD: "+wood);
 
     }
+//    public void updateTradeStatus()
+//    {
+//        if(brick > 0 && brickStatus == 1)
+//        {
+//            hasASend = true;
+//        }
+//        if(brick > 0 && brickStatus == -1)
+//        {
+//            hasARecieve = true;
+//        }
+//        if(ore > 0 && oreStatus == 1)
+//        {
+//            hasASend = true;
+//        }
+//        if(ore > 0 && oreStatus == -1)
+//        {
+//            hasARecieve = true;
+//        }
+//        if(sheep > 0 && sheepStatus == 1)
+//        {
+//            hasASend = true;
+//        }
+//        if(sheep > 0 && sheepStatus == -1)
+//        {
+//            hasARecieve = true;
+//        }
+//        if(wheat > 0 && wheatStatus == 1)
+//        {
+//            hasASend = true;
+//        }
+//        if(wheat > 0 && wheatStatus == -1)
+//        {
+//            hasARecieve = true;
+//        }
+//        if(wood > 0 && woodStatus == 1)
+//        {
+//            hasASend = true;
+//        }
+//        if(wood > 0 && woodStatus == -1)
+//        {
+//            hasARecieve = true;
+//        }
+//        if(hasARecieve && hasASend)
+//        {
+//            System.out.println("HELLLLLLLLLLLLLLLLLLLLLOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
+//        }
+//    }
+
 
 }
 
