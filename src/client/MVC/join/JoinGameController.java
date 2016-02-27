@@ -136,6 +136,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 
     @Override
     public void startJoinGame(GameInfo game) {//selects game
+        Facade.getInstance().setSettingColor(true);
         int gameToJoin = 0;
         if (game != null) {
             getSelectColorView().resetColors();
@@ -161,6 +162,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 
     @Override
     public void cancelJoinGame() {
+        Facade.getInstance().setSettingColor(false);
         getJoinGameView().closeModal();
     }
 
@@ -191,7 +193,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
     @Override
     public void update(Observable o, Object arg)
     {
-        if(!Facade.getInstance().isJoined()){
+        if(!Facade.getInstance().isSettingColor()){
             List<GameInfo> games = Facade.getInstance().gamesList();
             GameInfo[] myType = new GameInfo[games.size()];
             for (int i = 0; i < games.size(); i++) {

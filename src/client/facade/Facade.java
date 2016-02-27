@@ -29,6 +29,17 @@ public class Facade {
     private IProxy proxy;
     private ArrayList<Observer> observers = new ArrayList<Observer>();
     private boolean loggedIn = false;
+    private boolean Joined = false;
+    private boolean Created = false;
+    private boolean settingColor;
+
+    public boolean isSettingColor() {
+        return settingColor;
+    }
+
+    public void setSettingColor(boolean settingColor) {
+        this.settingColor = settingColor;
+    }
 
     public boolean isJoined() {
         return Joined;
@@ -37,9 +48,6 @@ public class Facade {
     public void setJoined(boolean joined) {
         Joined = joined;
     }
-
-    private boolean Joined = false;
-    private boolean Created = false;
 
     public boolean isReady() {
         return ready;
