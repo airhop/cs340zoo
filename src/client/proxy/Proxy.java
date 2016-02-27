@@ -632,13 +632,13 @@ public class Proxy implements IProxy {
     }
 
     @Override
-    public void offerTrade(int playerIdOne, int playerIdTwo, ResourceList rl) {
+    public void offerTrade(int playerIndexOne, int playerIndexTwo, ResourceList rl) {
         JsonObject myObjOne = new JsonObject();
         String url = "/moves/offerTrade";
         myObjOne.addProperty("type", "offerTrade");
-        myObjOne.addProperty("playerIndex", "" + playerIdOne);
+        myObjOne.addProperty("playerIndex",playerIndexOne);
         myObjOne.add("offer", RLO(rl));
-        myObjOne.addProperty("reciever", "" + playerIdTwo);
+        myObjOne.addProperty("reciever",playerIndexTwo);
     //    System.out.println(myObjOne.toString());
         HttpURLResponse myResponse;
         try {

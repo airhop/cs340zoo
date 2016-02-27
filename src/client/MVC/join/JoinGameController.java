@@ -139,13 +139,14 @@ public class JoinGameController extends Controller implements IJoinGameControlle
         int gameToJoin = 0;
         if (game != null) {
             getSelectColorView().resetColors();
+            getSelectColorView().showModal();
         //    System.out.println("startJoinGame");
             List<PlayerInfo> players = game.getPlayers();
             for (int i = 0; i < players.size(); i++) {
-                getSelectColorView().setColorEnabled(players.get(i).getColor(), false);
+                getSelectColorView().setColorEnabled(players.get(i).getColor(), true);
             }
             Facade.getInstance().getCurrentPlayer().setGameId(game.getId());
-            getSelectColorView().showModal();
+
         } else {
             Facade.getInstance().gamesCreate(new CreateGamePassObject("Awesome", true, true, true));
             Facade.getInstance().playerLogin("Sam", "sam");

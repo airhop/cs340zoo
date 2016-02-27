@@ -575,11 +575,11 @@ public class Facade {
      *
      * @return boolean whether or not the player traded with another player
      */
-    public void tradePlayer(int pid, int rid, ResourceList rl) {
+    public void tradePlayer(int playerIndex, int rid, ResourceList rl) {
         try {
             if (game != null) {
-                if (game.canTradePlayer(pid, rid, rl))
-                    proxy.offerTrade(pid, rid, rl);
+                if (game.canTradePlayer(playerIndex, rid, rl))
+                    proxy.offerTrade(playerIndex, rid, rl);
             }
         } catch (InsufficientResourcesException e) {
             System.out.println("Not enough resources " + e.getMessage());
