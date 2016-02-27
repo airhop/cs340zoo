@@ -26,7 +26,7 @@ public class StateSetup extends StateAbstract
         color = facade.getCurrentPlayer().getColor();
         startMove(PieceType.ROAD, true, true);
     }
-//sdf
+
     public boolean canPlaceRoad(EdgeLocation edgeLoc)
     {
         if(setRoad)
