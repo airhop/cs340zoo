@@ -191,6 +191,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
     @Override
     public void update(Observable o, Object arg)
     {
+
         List<GameInfo> games = Facade.getInstance().gamesList();
         GameInfo[] myType = new GameInfo[games.size()];
         for (int i = 0; i < games.size(); i++) {
