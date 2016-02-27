@@ -21,7 +21,6 @@ public class MapController extends Controller implements IMapController {
 
     private IRobView robView;
     private StateAbstract state;
-    private Facade facade = Facade.getInstance();
     private int playing; //needed for debugging when playing by yourself
     private int secondRound = 0;
 
@@ -30,8 +29,7 @@ public class MapController extends Controller implements IMapController {
         super(view);
         setRobView(robView);
         state = new StateDefault(view, robView);
-        facade.addObserver(this);
-        System.out.println("hey!");
+        Facade.getInstance().addObserver(this);
     }
 
     public IMapView getView() {
@@ -56,9 +54,10 @@ public class MapController extends Controller implements IMapController {
 
     private void changeState() {
 
+        Facade facade = Facade.getInstance();
         String s = facade.getGameModel().getTurnTracker().getStatus();
         int pid = facade.getPlayerID();
-        System.out.println(s + " " + pid);
+       // System.out.println(s + " " + pid);
 
         if (s.equalsIgnoreCase("FirstTurn") || s.equalsIgnoreCase("SecondTurn")) {
             state = new StateSetup(getView(), robView);
@@ -89,7 +88,7 @@ public class MapController extends Controller implements IMapController {
 
     private boolean changeState(String s)
     {
-        System.out.println("Desired State: " + s);
+       // System.out.println("Desired State: " + s);
 
         StateAbstract TempState;
 
@@ -143,13 +142,15 @@ public class MapController extends Controller implements IMapController {
             return;
         }
         //with input, it will change based on the updating to work with everyone else
-        System.out.println("Current State: " + state.getName());
+       // System.out.println("Current State: " + state.getName());
         if(!changeState(gm.getTurnTracker().getStatus()))
             return;
 
+
+        Facade facade = Facade.getInstance();
         Map map = gm.getMap();
         ArrayList<Hex> hexes = map.getHexMap();
-        System.out.println(hexes.size());
+       // System.out.println(hexes.size());
         for (int i = 0; i < hexes.size(); i++) {
             getView().addHex(hexes.get(i).getLocation(), HexType.convert(hexes.get(i).getResource()));
             getView().addNumber(hexes.get(i).getLocation(), hexes.get(i).getNumber());
@@ -174,7 +175,7 @@ public class MapController extends Controller implements IMapController {
                 getView().placeCity(buildings.get(i).getLocation(), facade.getPlayerColor(buildings.get(i).getOwner()));
         }
 
-        System.out.println("\nbuildings = " + buildings.size());
+     //   System.out.println("\nbuildings = " + buildings.size());
         getView().placeRobber(map.getRobber().getHl());
     }
 

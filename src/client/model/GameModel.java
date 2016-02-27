@@ -240,8 +240,8 @@ public class GameModel extends Observable{
      *
      * @return boolean whether or not the player can place a road
      */
-    public boolean canPlaceRoad(EdgeLocation el) {
-        return map.canPlaceRoad(el);
+    public boolean canPlaceRoad(EdgeLocation el, boolean isDisconnected) {
+        return map.canPlaceRoad(el, isDisconnected);
     }
 
     /**
