@@ -24,7 +24,17 @@ public class StateSetup extends StateAbstract
         robView = rv;
         facade = Facade.getInstance();
         color = facade.getCurrentPlayer().getColor();
-        startMove(PieceType.ROAD, true, true);
+
+        //players start with 15 roads and 5 settlements
+        int pid = facade.getPlayerIndex();
+        int roads = facade.getGameModel().getPlayers().get(pid).getRoads();
+        int settlements = facade.getGameModel().getPlayers().get(pid).getSettlements();
+        if(roads == 15 && settlements == 5)
+            startMove(PieceType.ROAD, true, true);
+        else if(roads == 14 && settlements == 4)
+            startMove(PieceType.ROAD, true, true);
+        else
+            startMove(PieceType.SETTLEMENT, true, false);
     }
 
     public boolean canPlaceRoad(EdgeLocation edgeLoc)
@@ -68,10 +78,11 @@ public class StateSetup extends StateAbstract
     {
         return (setRoad && setSettlement);
     }
-//    public void cancelMove()
-//    {
-//        view.cancelDrop();
-//    }
+
+    public void cancelMove()
+    {
+        //view.cancelDrop();
+    }
 
     public String getName() {return "Setup"; }
 }
