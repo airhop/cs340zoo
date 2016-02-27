@@ -638,8 +638,8 @@ public class Proxy implements IProxy {
         myObjOne.addProperty("type", "offerTrade");
         myObjOne.addProperty("playerIndex",playerIndexOne);
         myObjOne.add("offer", RLO(rl));
-        myObjOne.addProperty("reciever",playerIndexTwo);
-    //    System.out.println(myObjOne.toString());
+        myObjOne.addProperty("receiver",playerIndexTwo);
+//        System.out.println(myObjOne.toString());
         HttpURLResponse myResponse;
         try {
             myResponse = doPost(url, myObjOne);
