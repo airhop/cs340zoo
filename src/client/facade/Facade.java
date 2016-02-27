@@ -28,7 +28,15 @@ public class Facade {
     private GameModel game;
     private IProxy proxy;
     private ArrayList<Observer> observers = new ArrayList<Observer>();
-    private boolean loggedIn = false, Joined = false, Created = false, ready = false;
+    private boolean loggedIn = false;
+    private boolean Joined = false;
+    private boolean Created = false;
+
+    public boolean isReady() {
+        return ready;
+    }
+
+    private boolean ready = false;
 
     private static Facade facade = new Facade();
 
