@@ -344,10 +344,10 @@ public class Map
 			//System.out.println("oops " + settlementLocation.toString());
 			return false;
 		}
-		if(HexType.convert(h.getResource()) == HexType.WATER)
-		{
-			return oceanPlacable(settlementLocation);
-		}
+//		if(HexType.convert(h.getResource()) == HexType.WATER)
+//		{
+//			return oceanPlacable(settlementLocation);
+//		}
 
 		int pid = Facade.getInstance().getPlayerID();
 		for(int i = 0; i < roads.size(); i++)
