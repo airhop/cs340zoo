@@ -49,6 +49,10 @@ public class Facade {
         return curPlayer;
     }
 
+    public int getGameIndex(){
+        return game.getID();
+    }
+
     public void setProxy(IProxy proxy) {
         this.proxy = proxy;
     }
