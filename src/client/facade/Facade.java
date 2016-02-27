@@ -162,6 +162,9 @@ public class Facade {
 
         return proxy.gamesList();
     }
+    public int getPoints(int playerIndex){
+        return game.getPoints(playerIndex);
+    }
 
     public void gamesCreate(CreateGamePassObject gameNew) {
         try {
