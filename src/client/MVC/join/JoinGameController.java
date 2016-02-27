@@ -197,6 +197,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
             myType[i] = games.get(i);
         }
         getJoinGameView().setGames(myType, Facade.getInstance().getCurrentPlayerInfo());
+        getJoinGameView().showModal();
         //update the game list with the polller?  allow to retrieve newly created games?Sam
     }
 }

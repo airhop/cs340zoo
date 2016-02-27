@@ -37,7 +37,7 @@ public class Proxy implements IProxy {
     private HttpURLResponse lastResponse;
 
     public Proxy(GameModel givenGameModel) {
-        SERVER_HOST = "localhost";
+        SERVER_HOST = "192.168.1.214";
         SERVER_PORT = 8081;
         URL_PREFIX = "http://" + SERVER_HOST + ":" + SERVER_PORT;
         userCookie = new Cookie();
