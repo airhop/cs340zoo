@@ -70,18 +70,13 @@ public class StateSetup extends StateAbstract
     public void startMove(PieceType pieceType, boolean isFree, boolean allowDisconnected)
     {
         color = Facade.getInstance().getPlayerColor(Facade.getInstance().getPlayerIndex());
-        view.startDrop(pieceType, color, true);
+        view.startDrop(pieceType, color, false);
     }
 
     public boolean finishedSetup()
     {
         return (setRoad && setSettlement);
     }
-
-//    public void cancelMove()
-//    {
-//        getView().cancelDrop();
-//    }
 
     public String getName() {return "Setup"; }
 }
