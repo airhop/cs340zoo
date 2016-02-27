@@ -29,6 +29,15 @@ public class Facade {
     private IProxy proxy;
     private ArrayList<Observer> observers = new ArrayList<Observer>();
     private boolean loggedIn = false;
+
+    public boolean isJoined() {
+        return Joined;
+    }
+
+    public void setJoined(boolean joined) {
+        Joined = joined;
+    }
+
     private boolean Joined = false;
     private boolean Created = false;
 
