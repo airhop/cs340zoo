@@ -39,7 +39,8 @@ public class Facade {
     public static Facade getInstance() {
         return facade;
     }
-    public PlayerInfo getCurrentPlayerInfo(){
+
+    public PlayerInfo getCurrentPlayerInfo() {
         PlayerInfo curPlayer = new PlayerInfo();
         curPlayer.setId(getCurrentPlayer().getPlayerId());
         curPlayer.setPlayerIndex(getCurrentPlayer().getPlayerIndex());
@@ -60,33 +61,33 @@ public class Facade {
             System.out.println(gm.getTurnTracker().getStatus());
             game = gm;
 //observation is not happening without this for loop, so I am leaving it for now
-            for(int i =0 ; i < observers.size(); i++)
-                ((Controller)observers.get(i)).update(game, "");
+            for (int i = 0; i < observers.size(); i++)
+                ((Controller) observers.get(i)).update(game, "");
         }
     }
 
-    public CurrentPlayer getCurrentPlayer(){
+    public CurrentPlayer getCurrentPlayer() {
         return game.getCurrentPlayer();
     }
 
-    public CurrentResources getCurrentResources(){
+    public CurrentResources getCurrentResources() {
         List<Player> players = game.getPlayers();
         int index = game.getCurrentPlayer().getPlayerIndex();
         Player curPlayer = players.get(index);
         CurrentResources resources = new CurrentResources();
         ResourceList playerResources = curPlayer.getResources();
         resources.setWood(playerResources.getWood());
-
+        resources.setBrick(playerResources.getBrick());
+        resources.setSheep(playerResources.getSheep());
+        resources.setOre(playerResources.getOre());
         return resources;
     }
 
-    public int getPlayerID()
-    {
+    public int getPlayerID() {
         return proxy.getPlayerId();
     }
 
-    public int getPlayerIndex()
-    {
+    public int getPlayerIndex() {
         return game.getCurrentPlayer().getPlayerIndex();
     }
 
@@ -103,7 +104,9 @@ public class Facade {
         observers.add(x);
     }
 
-    public void setReady() {ready = true;}
+    public void setReady() {
+        ready = true;
+    }
 
     public CatanColor getCatanColor() {
         return game.getCurrentColor();
@@ -113,11 +116,10 @@ public class Facade {
         return game.getMap();
     }
 
-    public CatanColor getPlayerColor(int player)
-    {
-        if(game == null)
+    public CatanColor getPlayerColor(int player) {
+        if (game == null)
             return null;
-        if(game.getPlayers().get(player) == null)
+        if (game.getPlayers().get(player) == null)
             return null;
         return game.getPlayerColor(player);
     }
@@ -129,7 +131,7 @@ public class Facade {
         boolean login = false;
         try {
             login = proxy.userLogin(u);
-            if(login){
+            if (login) {
                 game.getCurrentPlayer().setUsername(username);
                 game.getCurrentPlayer().setPassword(password);
                 game.getCurrentPlayer().setPlayerId(proxy.getPlayerId());
@@ -166,9 +168,8 @@ public class Facade {
         }
     }
 
-    public void gameAddAI()
-    {
-            proxy.gameAddAI();
+    public void gameAddAI() {
+        proxy.gameAddAI();
     }
 
     //joining the game will require the gameId, not the playerId
@@ -206,14 +207,13 @@ public class Facade {
 
     /**
      * Places a Road at a given location on the map
-     *
+     * <p>
      * boolean whether or not the player built the road (perhaps placeholder return values for all of the do methods)
      */
     public void placeRoad(int pid, EdgeLocation el, boolean free) {
         if (game != null) {
 
-            if (game.canBuildRoad(pid) || free)
-            {
+            if (game.canBuildRoad(pid) || free) {
                 if (game.canPlaceRoad(el))
                     proxy.buildRoad(pid, el, free);
             }
@@ -248,9 +248,8 @@ public class Facade {
      * @return boolean whether or not the player placed a settlement
      */
     public void placeSettlement(int pid, VertexLocation vl, boolean free) {
-        if (game != null)
-        {
-            if(canBuildSettlement(pid) || free) {
+        if (game != null) {
+            if (canBuildSettlement(pid) || free) {
                 if (canPlaceSettlement(vl))
                     try {
                         proxy.buildSettlement(pid, vl, free);
@@ -475,8 +474,7 @@ public class Facade {
         return game.canFinishTurn(pid);
     }
 
-    public void FinishTurn(int pid)
-    {
+    public void FinishTurn(int pid) {
         proxy.finishTurn(pid);
     }
 
