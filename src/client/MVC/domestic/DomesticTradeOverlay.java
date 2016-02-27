@@ -278,15 +278,19 @@ public class DomesticTradeOverlay extends OverlayView implements IDomesticTradeO
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     Integer currentAmount = Integer.parseInt(resourceCounts.get(resourceType).getText());
+                    if(getController().checkResourceSubtract(resourceType) == 1)
+                    {
+                        currentAmount++;
+                        getController().increaseResourceAmount(resourceType);
+                    }
+                    else
+                    {
                     boolean addAmount = getController().checkResourceAdd(resourceType, currentAmount);
                     if(addAmount) {
                         currentAmount++;
                         getController().increaseResourceAmount(resourceType);
                     }
-//                    else
-//                    {
-//                        setResourceAmountChangeEnabled(resourceType,false,true);
-//                    }
+                  }
                     resourceCounts.get(resourceType).setText("" + currentAmount);
                 }
             });
