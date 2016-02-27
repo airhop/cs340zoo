@@ -37,7 +37,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
     private boolean hasARecieve;
 
     private int tradeSenderId;
-    private int tradeAccepterId;
+    private int tradeAccepterId = -1;
     /**
      * DomesticTradeController constructor
      *
@@ -223,9 +223,9 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 
         tradeList = new ResourceList(brick,ore,sheep,wheat,wood);
 
-        if(Facade.getInstance().canTradePlayer(Facade.getInstance().getPlayerID(), tradeAccepterId, tradeList))
+        if(Facade.getInstance().canTradePlayer(Facade.getInstance().getPlayerIndex(), tradeAccepterId, tradeList))
         {
-            Facade.getInstance().tradePlayer(Facade.getInstance().getPlayerID(), tradeAccepterId, tradeList);
+            Facade.getInstance().tradePlayer(Facade.getInstance().getPlayerIndex(), tradeAccepterId, tradeList);
         }
         getTradeOverlay().closeModal();
         getWaitOverlay().showModal();
@@ -234,6 +234,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
     @Override
     public void setPlayerToTradeWith(int playerIndex) {
         tradeAccepterId = playerIndex;
+        updateTradeStatus();
     }
 
     @Override
@@ -510,9 +511,22 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
         }
         if(hasARecieve && hasASend)
         {
-            tradeOverlay.setTradeEnabled(true);
+            if(tradeAccepterId == -1)
+            {
+                tradeOverlay.setTradeEnabled(false);
+                tradeOverlay.setStateMessage("Please select a player to trade with");
+            }
+            else {
+                tradeOverlay.setTradeEnabled(true);
+                tradeOverlay.setStateMessage("Trade!");
+            }
         }
-        else tradeOverlay.setTradeEnabled(false);
+        else
+        {
+            tradeOverlay.setTradeEnabled(false);
+            tradeOverlay.setStateMessage("Please select resources");
+        }
+
     }
 
 
