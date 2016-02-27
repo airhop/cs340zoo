@@ -68,6 +68,10 @@ public class Facade {
         return game.getCurrentPlayer();
     }
 
+    public  getCurrentResources(){
+
+    }
+
     public int getPlayerID()
     {
         return proxy.getPlayerId();

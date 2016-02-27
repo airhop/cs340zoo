@@ -1,6 +1,8 @@
 package client.MVC.resources;
 
 import client.MVC.base.*;
+import client.facade.Facade;
+import client.model.GameModel;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -73,7 +75,9 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 
     @Override
     public void update(Observable o, Object arg) {
+        int currentPlayer = Facade.getInstance().getPlayerIndex();
 
+        getView().setElementAmount();
     }
 }
 
