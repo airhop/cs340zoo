@@ -15,6 +15,7 @@ import client.model.*;
 import client.model.map.*;
 import client.model.bank.ResourceList;
 import client.proxy.*;
+import shared.infoobjects.CurrentResources;
 import shared.jsonobject.*;
 import shared.locations.*;
 import shared.serialization.CreateGamePassObject;
@@ -68,8 +69,15 @@ public class Facade {
         return game.getCurrentPlayer();
     }
 
-    public  getCurrentResources(){
+    public CurrentResources getCurrentResources(){
+        List<Player> players = game.getPlayers();
+        int index = game.getCurrentPlayer().getPlayerIndex();
+        Player curPlayer = players.get(index);
+        CurrentResources resources = new CurrentResources();
+        ResourceList playerResources = curPlayer.getResources();
+        resources.setWood(playerResources.getWood());
 
+        return resources;
     }
 
     public int getPlayerID()
