@@ -58,7 +58,7 @@ public class Facade {
     }
 
     public void retrieveGameModel() {
-        if (!loggedIn || !Joined || !ready)
+        if (!loggedIn)
             return;
         GameModel gm = proxy.getGameModel();
         if (gm != null) {
@@ -66,7 +66,7 @@ public class Facade {
             game = gm;
 //observation is not happening without this for loop, so I am leaving it for now
             for (int i = 0; i < observers.size(); i++)
-                ((Controller) observers.get(i)).update(game, "");
+                (observers.get(i)).update(game, "");
         }
     }
 
