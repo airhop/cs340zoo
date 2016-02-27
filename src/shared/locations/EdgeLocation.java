@@ -112,5 +112,21 @@ public class EdgeLocation
 				return 0;
 		return -1;
 	}
+
+	public boolean neighbor(EdgeLocation el)
+	{
+		switch(el.getDir())
+		{
+			case NW:
+			case NE: if(getDir() == EdgeDirection.N)
+							return true;
+					 return false;
+			default: //should only be N
+				if(getDir() == EdgeDirection.NE || getDir() == EdgeDirection.NW)
+					return true;
+				return false;
+
+		}
+	}
 }
 

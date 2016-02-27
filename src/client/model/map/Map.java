@@ -294,6 +294,33 @@ public class Map
 		return true;
 	}
 
+	public boolean canPlaceRoadSetup(EdgeLocation el)
+	{
+
+		if (el == null)
+		{
+			return false;
+		}
+		for(int i = 0; i < roads.size(); i++)
+		{
+			int edgecompare = roads.get(i).getLocation().getNormalizedLocation().compareTo(el.getNormalizedLocation());
+			if(edgecompare == 0)
+				return false;
+			if(el.getNormalizedLocation().neighbor(roads.get(i).getLocation().getNormalizedLocation()))
+				return false;
+		}
+
+		Hex h = hexes.get(el.getHexLoc());
+		if( h == null)
+			return false;
+		if(HexType.convert(h.getResource())== HexType.WATER)
+		{
+			return roadOceanPlayable(el);
+		}
+
+		return true;
+	}
+
 	/**
 	 * adds a road to the maps list of roads
 	 *

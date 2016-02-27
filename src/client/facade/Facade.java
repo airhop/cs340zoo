@@ -212,6 +212,18 @@ public class Facade {
         return game.canPlaceRoad(el, isDisconnected);
     }
 
+    public boolean canPlaceRoadSetup(EdgeLocation el)
+    {
+        if(game == null)
+            return false;
+        return game.canPlaceRoadSetup(el);
+    }
+
+    public void PlaceRoadSetup(EdgeLocation el)
+    {
+        if(game != null && game.canPlaceRoadSetup(el))
+            proxy.buildRoad(getPlayerID(), el, true);
+    }
     /**
      * Places a Road at a given location on the map
      * <p>

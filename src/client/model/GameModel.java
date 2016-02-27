@@ -244,6 +244,10 @@ public class GameModel extends Observable{
         return map.canPlaceRoad(el, isDisconnected);
     }
 
+    public boolean canPlaceRoadSetup(EdgeLocation el)
+    {
+        return map.canPlaceRoadSetup(el);
+    }
     /**
      * Checks to see if building a settlement is a legal move for the player
      *

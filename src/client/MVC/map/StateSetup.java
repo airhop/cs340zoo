@@ -41,7 +41,7 @@ public class StateSetup extends StateAbstract
     {
         if(setRoad)
             return false;
-        return Facade.getInstance().canPlaceRoad(edgeLoc.getNormalizedLocation(), true);
+        return Facade.getInstance().canPlaceRoadSetup(edgeLoc.getNormalizedLocation());
     }
 
     public boolean canPlaceSettlement(VertexLocation vertLoc)
