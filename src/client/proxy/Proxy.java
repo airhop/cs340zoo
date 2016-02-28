@@ -439,13 +439,12 @@ public class Proxy implements IProxy {
     }
 
     @Override
-    public void robPlayer(int playerIdOne, int playerIdTwo, HexLocation hl) {
+    public void robPlayer(int playerIndexOne, int playerIndexTwo, HexLocation hl) {
         JsonObject myObjOne = new JsonObject();
-        JsonObject myObjTwo = new JsonObject();
         String url = "/moves/robPlayer";
         myObjOne.addProperty("type", "robPlayer");
-        myObjOne.addProperty("playerIndex", playerIdOne);
-        myObjOne.addProperty("victimIndex", playerIdTwo);
+        myObjOne.addProperty("playerIndex", playerIndexOne);
+        myObjOne.addProperty("victimIndex", playerIndexTwo);
         myObjOne.add("location", locationObject(hl));
      //   System.out.println(myObjOne.toString());
         HttpURLResponse myResponse;
@@ -526,12 +525,12 @@ public class Proxy implements IProxy {
     }
 
     @Override
-    public void playSoldier(int playerId, int victimId, HexLocation hl) {
+    public void playSoldier(int playerIndex, int victimIndex, HexLocation hl) {
         JsonObject myObjOne = new JsonObject();
         String url = "/moves/Soldier";
         myObjOne.addProperty("type", "Soldier");
-        myObjOne.addProperty("playerIndex", playerId);
-        myObjOne.addProperty("victimIndex", victimId);
+        myObjOne.addProperty("playerIndex", playerIndex);
+        myObjOne.addProperty("victimIndex", victimIndex);
         myObjOne.add("location", locationObject(hl));
      //   System.out.println(myObjOne.toString());
         HttpURLResponse myResponse;
@@ -577,11 +576,11 @@ public class Proxy implements IProxy {
     }
 
     @Override
-    public void buildRoad(int playerId, EdgeLocation el, boolean free) {
+    public void buildRoad(int playerIndex, EdgeLocation el, boolean free) {
         JsonObject myObjOne = new JsonObject();
         String url = "/moves/buildRoad";
         myObjOne.addProperty("type", "buildRoad");
-        myObjOne.addProperty("playerIndex", playerId);
+        myObjOne.addProperty("playerIndex", playerIndex);
         myObjOne.add("roadLocation", edgeLocationObject(el));
         myObjOne.addProperty("free", "" + free);
      //   System.out.println(myObjOne.toString());
@@ -614,11 +613,11 @@ public class Proxy implements IProxy {
     }
 
     @Override
-    public void buildCity(int playerId, VertexLocation vl) throws IllegalBuildException {
+    public void buildCity(int playerIndex, VertexLocation vl) throws IllegalBuildException {
         JsonObject myObjOne = new JsonObject();
         String url = "/moves/buildCity";
         myObjOne.addProperty("type", "buildCity");
-        myObjOne.addProperty("playerIndex", "" + playerId);
+        myObjOne.addProperty("playerIndex", "" + playerIndex);
         myObjOne.add("vertexLocation", vertexLocationObject(vl));
      //   System.out.println(myObjOne.toString());
         HttpURLResponse myResponse;
@@ -651,12 +650,12 @@ public class Proxy implements IProxy {
     }
 
     @Override
-    public void acceptTrade(int playerIdOne, boolean accept) {
+    public void acceptTrade(int playerIndex, boolean accept) {
         JsonObject myObjOne = new JsonObject();
         String url = "/moves/acceptTrade";
         myObjOne.addProperty("type", "acceptTrade");
-        myObjOne.addProperty("playerIndex", "" + playerIdOne);
-        myObjOne.addProperty("willAccept", "" + accept);
+        myObjOne.addProperty("playerIndex", playerIndex);
+        myObjOne.addProperty("willAccept", accept);
    //     System.out.println(myObjOne.toString());
         HttpURLResponse myResponse;
         try {
@@ -669,14 +668,14 @@ public class Proxy implements IProxy {
     }
 
     @Override
-    public void maritimeTrade(int playerId, int ratio, ResourceType in, ResourceType out) {
+    public void maritimeTrade(int playerIndex, int ratio, ResourceType in, ResourceType out) {
         JsonObject myObjOne = new JsonObject();
         String url = "/moves/maritimeTrade";
         myObjOne.addProperty("type", "maritimeTrade");
-        myObjOne.addProperty("playerIndex", "" + playerId);
-        myObjOne.addProperty("ratio", "" + ratio);
-        myObjOne.addProperty("inputResource", "" + in);
-        myObjOne.addProperty("outputResource", "" + out);
+        myObjOne.addProperty("playerIndex", playerIndex);
+        myObjOne.addProperty("ratio", ratio);
+        myObjOne.addProperty("inputResource", in.name());
+        myObjOne.addProperty("outputResource", out.name());
     //    System.out.println(myObjOne.toString());
         HttpURLResponse myResponse;
         try {
@@ -689,11 +688,11 @@ public class Proxy implements IProxy {
     }
 
     @Override
-    public void discardCards(int playerId, ResourceList rl) throws InsufficientResourcesException {
+    public void discardCards(int playerIndex, ResourceList rl) throws InsufficientResourcesException {
         JsonObject myObjOne = new JsonObject();
         String url = "/moves/discardCards";
         myObjOne.addProperty("type", "discardCards");
-        myObjOne.addProperty("playerIndex", "" + playerId);
+        myObjOne.addProperty("playerIndex", "" + playerIndex);
         JsonObject RLO = RLO(rl);
         myObjOne.add("dicardedCards", RLO);
      //   System.out.println(myObjOne.toString());
