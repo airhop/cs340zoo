@@ -68,6 +68,7 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 
         // TEMPORARY
         Facade.getInstance().gameAddAI();
+        Facade.getInstance().retrieveGameModel();
         if (getNumPlayers() < 4) {
 
             getView().showModal();

@@ -55,9 +55,7 @@ public class Port {
         return ratio;
     }
 
-    public void setRatio(int ratio) {
-        this.ratio = ratio;
-    }
+    public void setRatio(int ratio) {this.ratio = ratio;}
 
     public int getOwner() {
         return this.owner;
