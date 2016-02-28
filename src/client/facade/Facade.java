@@ -98,7 +98,6 @@ public class Facade {
             updateGamesList();
         if (Joined && ready) {
             gm = proxy.getGameModel();
-            CurrentPlayer myPlayer = game.getCurrentPlayer();
         }
         if (Facade.getInstance().isSettingColor()) {
             if (gm != null) {
