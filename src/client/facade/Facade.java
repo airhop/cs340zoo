@@ -67,10 +67,11 @@ public class Facade {
 
     public PlayerInfo getCurrentPlayerInfo() {
         PlayerInfo curPlayer = new PlayerInfo();
-        curPlayer.setId(getCurrentPlayer().getPlayerId());
-        curPlayer.setPlayerIndex(getCurrentPlayer().getPlayerIndex());
-        curPlayer.setName(getCurrentPlayer().getUsername());
-        curPlayer.setColor(getCurrentPlayer().getColor());
+        CurrentPlayer myPlayer = getCurrentPlayer();
+        curPlayer.setId(myPlayer.getPlayerId());
+        curPlayer.setPlayerIndex(myPlayer.getPlayerIndex());
+        curPlayer.setName(myPlayer.getUsername());
+        curPlayer.setColor(myPlayer.getColor());
         return curPlayer;
     }
 
@@ -83,14 +84,16 @@ public class Facade {
     }
 
     public void retrieveGameModel() {
-        GameModel gm = new GameModel();
+        GameModel gm = null;
         if (!loggedIn)
             return;
         if(Joined && ready){
             gm = proxy.getGameModel();
+            CurrentPlayer myPlayer = game.getCurrentPlayer();
         }
         if (gm != null) {
             System.out.println(gm.getTurnTracker().getStatus());
+            getCurrentPlayer().setPlayerIndex(game.getPlayerIndex(getCurrentPlayer().getPlayerId()));
             game = gm;
 //observation is not happening without this for loop, so I am leaving it for now
             for (int i = 0; i < observers.size(); i++)
@@ -167,6 +170,8 @@ public class Facade {
                 game.getCurrentPlayer().setUsername(username);
                 game.getCurrentPlayer().setPassword(password);
                 game.getCurrentPlayer().setPlayerId(proxy.getPlayerId());
+                CurrentPlayer myPlayer = game.getCurrentPlayer();
+                myPlayer.getPlayerIndex();
             }
         } catch (InvalidUserException e) {
             System.out.println("oops");
