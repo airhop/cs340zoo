@@ -81,9 +81,10 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
         {
             boolean la = gm.getTurnTracker().getLargestArmy() == playerId;
             boolean lr = gm.getTurnTracker().getLongestRoad() == playerId;
+            boolean highlight = playerId == players.get(i).getPlayerID();
             getView().initializePlayer(i, players.get(i).getUsername(),
                     CatanColor.convert(players.get(i).getColor()));
-            getView().updatePlayer(i, gm.getPoints(i), true, la, lr);
+            getView().updatePlayer(i, gm.getPoints(i), highlight, la, lr);
         }
     }
 
