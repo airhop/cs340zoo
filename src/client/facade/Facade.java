@@ -97,7 +97,6 @@ public class Facade {
             CurrentPlayer myPlayer = game.getCurrentPlayer();
         }
         if (Facade.getInstance().isSettingColor()) {
-            getCurrentPlayer().setPlayerIndex(game.getPlayerIndex(getCurrentPlayer().getPlayerId()));
             game = gm;
 //observation is not happening without this for loop, so I am leaving it for now
             for (int i = 0; i < observers.size(); i++)
