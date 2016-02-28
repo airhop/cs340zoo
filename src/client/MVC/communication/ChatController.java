@@ -39,6 +39,8 @@ public class ChatController extends Controller implements IChatController {
     @Override
     public void update(Observable o, Object arg)
     {
+        if(!Facade.getInstance().isReady())
+            return;
         GameModel gm = (GameModel)o;
         ArrayList<MessageLine> ml = gm.getChat().getChatList().getMessages();
         ArrayList<Player> players = gm.getPlayers();
