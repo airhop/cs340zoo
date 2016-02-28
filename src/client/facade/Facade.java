@@ -42,6 +42,10 @@ public class Facade {
         this.settingColor = settingColor;
     }
 
+    public void setCurPlayerIndex(){
+        getCurrentPlayer().setPlayerIndex(game.getPlayerIndex(getCurrentPlayer().getPlayerId()));
+    }
+
     public CurrentPlayer getCurretPlayer(){
         return game.getCurrentPlayer();
     }

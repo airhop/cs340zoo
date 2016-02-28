@@ -47,6 +47,7 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
     @Override
     public void start() {
         Facade.getInstance().setPlayerWaiting(true);
+        Facade.getInstance().setCurPlayerIndex();
         System.out.println("the number of current players: ");
         System.out.println(getNumPlayers());
         getView().setPlayers(playersInfo());
