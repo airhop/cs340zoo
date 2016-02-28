@@ -60,7 +60,7 @@ public class RollController extends Controller implements IRollController {
     @Override
     public void update(Observable o, Object arg)
     {
-        if(Facade.getInstance().isReady())
+        if(!Facade.getInstance().isReady())
             return;
         if(((GameModel)o).getTurnTracker().getStatus().equalsIgnoreCase("Rolling") && !waiting)
         {
