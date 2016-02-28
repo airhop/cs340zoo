@@ -106,6 +106,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 
     @Override
     public void startCreateNewGame() {
+        Facade.getInstance().setSettingColor(true);
     //    System.out.println("startCreateNewGame");
         getNewGameView().showModal();
     }
@@ -113,12 +114,14 @@ public class JoinGameController extends Controller implements IJoinGameControlle
     @Override
     public void cancelCreateNewGame() {
     //    System.out.println("cancelNewGame");
+        Facade.getInstance().setSettingColor(false);
         getNewGameView().closeModal();
     }
 
     @Override
     public void createNewGame() {
     //    System.out.println("createNewGame");
+
         CreateGamePassObject gameNew = new CreateGamePassObject();
         gameNew.setGameName(getNewGameView().getTitle());
         gameNew.setRandomNumbers(getNewGameView().getRandomlyPlaceNumbers());
@@ -172,21 +175,6 @@ public class JoinGameController extends Controller implements IJoinGameControlle
         Facade.getInstance().gamesJoin(color.name(), Facade.getInstance().getCurrentPlayer().getGameId());
         getSelectColorView().closeModal();
         getJoinGameView().closeModal();
-
-//        Facade.getInstance().playerLogin();
-
-//        Facade.getInstance().gamesJoin(CatanColor.toString(color), 0);
-//
-//    //to Add 3 extra players so that the game will actually play for testing
-//        Facade.getInstance().playerLogin("Pete", "pete");
-//        Facade.getInstance().gamesJoin("red", 1);
-//        Facade.getInstance().playerLogin("Mark", "mark");
-//        Facade.getInstance().gamesJoin("brown", 2);
-//        Facade.getInstance().playerLogin("Brooke", "brooke");
-//        Facade.getInstance().gamesJoin("purple", 3);
-//
-//
-
         joinAction.execute();
     }
 
