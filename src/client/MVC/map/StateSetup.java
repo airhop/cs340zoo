@@ -29,12 +29,12 @@ public class StateSetup extends StateAbstract
         int pid = facade.getPlayerIndex();
         int roads = facade.getGameModel().getPlayers().get(pid).getRoads();
         int settlements = facade.getGameModel().getPlayers().get(pid).getSettlements();
-        if(roads == 15 && settlements == 5)
+//        if(roads == 15 && settlements == 5)
             startMove(PieceType.ROAD, true, true);
-        else if(roads == 14 && settlements == 4)
-            startMove(PieceType.ROAD, true, true);
-        else
-            startMove(PieceType.SETTLEMENT, true, false);
+//        else if(roads == 14 && settlements == 4)
+//            startMove(PieceType.ROAD, true, true);
+//        else
+//            startMove(PieceType.SETTLEMENT, true, false);
     }
 
     public boolean canPlaceRoad(EdgeLocation edgeLoc)
@@ -55,7 +55,7 @@ public class StateSetup extends StateAbstract
     {
         view.placeRoad(edgeLoc, color);
         setRoad = true;
-        Facade.getInstance().placeRoad(Facade.getInstance().getPlayerID(), edgeLoc.getNormalizedLocation(), true, true);
+        Facade.getInstance().placeRoad(Facade.getInstance().getCurrentPlayer().getPlayerId(), edgeLoc.getNormalizedLocation(), true, true);
         Facade.getInstance().retrieveGameModel();
         startMove(PieceType.SETTLEMENT, true, false);
     }
@@ -64,14 +64,14 @@ public class StateSetup extends StateAbstract
     {
         view.placeSettlement(vertLoc, color);
         setSettlement = true;
-        Facade.getInstance().placeSettlement(Facade.getInstance().getPlayerID(), vertLoc.getNormalizedLocation(), true);
+        Facade.getInstance().placeSettlement(Facade.getInstance().getCurrentPlayer().getPlayerId(), vertLoc.getNormalizedLocation(), true);
         Facade.getInstance().FinishTurn(Facade.getInstance().getPlayerIndex());
         Facade.getInstance().retrieveGameModel();
     }
 
     public void startMove(PieceType pieceType, boolean isFree, boolean allowDisconnected)
     {
-        color = Facade.getInstance().getPlayerColor(Facade.getInstance().getPlayerIndex());
+        color = Facade.getInstance().getPlayerColor(Facade.getInstance().getCurrentPlayer().getPlayerId());
         view.startDrop(pieceType, color, false);
     }
 

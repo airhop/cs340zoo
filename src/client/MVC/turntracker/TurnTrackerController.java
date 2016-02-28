@@ -69,7 +69,8 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
             else
                 getView().updateGameState("Hurry Up!!!", false);
         }
-        initFromModel();
+        if(!setup)
+            initFromModel();
 
         GameModel gm = (GameModel)o;
         ArrayList<Player> players = gm.getPlayers();
@@ -82,10 +83,12 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
             boolean la = gm.getTurnTracker().getLargestArmy() == playerId;
             boolean lr = gm.getTurnTracker().getLongestRoad() == playerId;
             boolean highlight = playerId == players.get(i).getPlayerID();
-            getView().initializePlayer(i, players.get(i).getUsername(),
-                    CatanColor.convert(players.get(i).getColor()));
+            if(!setup)
+                getView().initializePlayer(i, players.get(i).getUsername(),
+                     CatanColor.convert(players.get(i).getColor()));
             getView().updatePlayer(i, gm.getPoints(i), highlight, la, lr);
         }
+        setup = true;
     }
 
 }
