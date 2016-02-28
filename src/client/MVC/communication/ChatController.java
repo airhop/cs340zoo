@@ -32,7 +32,7 @@ public class ChatController extends Controller implements IChatController {
     public void sendMessage(String message)
     {
         Facade f = Facade.getInstance();
-        f.canSendChat(message, f.getPlayerID());
+        f.canSendChat(message, f.getPlayerIndex());
 
     }
 
