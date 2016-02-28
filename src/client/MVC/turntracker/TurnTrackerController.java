@@ -33,7 +33,7 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
     @Override
     public void endTurn()
     {
-        Facade.getInstance().FinishTurn(Facade.getInstance().getPlayerID());
+        Facade.getInstance().FinishTurn(Facade.getInstance().getPlayerIndex());
         getView().updateGameState("Finally . . .", false);
     }
 
@@ -56,7 +56,7 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
             return;
         Random rand = new Random();
         int x = rand.nextInt();
-        int pid = Facade.getInstance().getPlayerID();
+        int pid = Facade.getInstance().getPlayerIndex();
         String state = ((GameModel)o).getTurnTracker().getStatus();
         if(state.equalsIgnoreCase("FirstRound") && state.equalsIgnoreCase("SecondRound"))
             getView().updateGameState("Zzzzzzz", false);
@@ -77,12 +77,12 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
         if(players.get(3) == null)
             return;
 
-        int playerId = gm.getCurrentPlayer().getPlayerId();
+        int playerId = gm.getCurrentPlayer().getPlayerIndex();
         for(int i = 0; i < players.size(); i++)
         {
             boolean la = gm.getTurnTracker().getLargestArmy() == playerId;
             boolean lr = gm.getTurnTracker().getLongestRoad() == playerId;
-            boolean highlight = playerId == players.get(i).getPlayerID();
+            boolean highlight = playerId == players.get(i).getPlayerIndex();
             if(!setup)
                 getView().initializePlayer(i, players.get(i).getUsername(),
                      CatanColor.convert(players.get(i).getColor()));

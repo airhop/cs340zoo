@@ -112,6 +112,8 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
         sheepStatus = 0;
         wheatStatus = 0;
         woodStatus = 0;
+        setPlayerToTradeWith(-1);
+        updateTradeStatus();
     }
 
     @Override
@@ -337,7 +339,6 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 
     @Override
     public void cancelTrade() {
-
         getTradeOverlay().closeModal();
     }
 
