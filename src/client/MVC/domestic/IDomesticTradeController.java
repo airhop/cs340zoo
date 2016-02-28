@@ -83,6 +83,6 @@ public interface IDomesticTradeController extends IController {
     void acceptTrade(boolean willAccept);
 
     boolean checkResourceAdd(ResourceType resourceType, Integer currentAmount);
-    boolean checkResourceSubtract(ResourceType resourceType, Integer currentAmount);
+    int checkResourceSubtract(ResourceType resourceType);
 }
 

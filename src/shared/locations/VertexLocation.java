@@ -1,6 +1,6 @@
 package shared.locations;
 
-import com.sun.javafx.geom.Edge;
+//import com.sun.javafx.geom.Edge;
 
 /**
  * Represents the location of a vertex on a hex map
@@ -36,7 +36,7 @@ public class VertexLocation
 		return dir;
 	}
 
-	private void setDir(VertexDirection direction)
+	public void setDir(VertexDirection direction)
 	{
 		this.dir = direction;
 	}
@@ -234,5 +234,7 @@ public class VertexLocation
 		}
 		return -1;
 	}
+
+
 }
 

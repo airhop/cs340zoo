@@ -3,7 +3,8 @@ package client.model.map;
 import shared.locations.EdgeLocation;
 import shared.locations.VertexLocation;
 
-public abstract class VertexObject{
+public class VertexObject
+{
   int owner;
   //EdgeLocation edgelocation;
   VertexLocation vertexLocation;

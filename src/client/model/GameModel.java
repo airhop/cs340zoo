@@ -240,10 +240,14 @@ public class GameModel extends Observable{
      *
      * @return boolean whether or not the player can place a road
      */
-    public boolean canPlaceRoad(EdgeLocation el) {
-        return map.canPlaceRoad(el);
+    public boolean canPlaceRoad(EdgeLocation el, boolean isDisconnected) {
+        return map.canPlaceRoad(el, isDisconnected);
     }
 
+    public boolean canPlaceRoadSetup(EdgeLocation el)
+    {
+        return map.canPlaceRoadSetup(el);
+    }
     /**
      * Checks to see if building a settlement is a legal move for the player
      *
@@ -491,14 +495,14 @@ public class GameModel extends Observable{
         return s;
     }
 
-    public int getPoints(int playerId)
+    public int getPoints(int playerIndex)
     {
         int points = 0;
-        if(turnTracker.getLargestArmy() == playerId)
+        if(turnTracker.getLargestArmy() == playerIndex)
             points+=2;
-        if(turnTracker.getLongestRoad() == playerId)
+        if(turnTracker.getLongestRoad() == playerIndex)
             points+=2;
-        Player curr = players.get(playerId);
+        Player curr = players.get(playerIndex);
         points += 4 - curr.getCities();
         points += 5 - curr.getSettlements();
         return points;

@@ -45,9 +45,10 @@ public class PointsController extends Controller implements IPointsController {
     @Override
     public void update(Observable o, Object arg)
     {
-        int pid = Facade.getInstance().getPlayerID();
-        GameModel gm = (GameModel) o;
-        getPointsView().setPoints(gm.getPoints(pid));
+        if(Facade.getInstance().isReady()){
+            int playerIndex = Facade.getInstance().getPlayerIndex();
+            getPointsView().setPoints(Facade.getInstance().getPoints(playerIndex));
+        }
     }
 }
 

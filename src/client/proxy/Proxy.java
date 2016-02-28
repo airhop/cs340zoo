@@ -37,7 +37,7 @@ public class Proxy implements IProxy {
     private HttpURLResponse lastResponse;
 
     public Proxy(GameModel givenGameModel) {
-        SERVER_HOST = "localhost";
+        SERVER_HOST = "192.168.1.214";
         SERVER_PORT = 8081;
         URL_PREFIX = "http://" + SERVER_HOST + ":" + SERVER_PORT;
         userCookie = new Cookie();
@@ -632,14 +632,14 @@ public class Proxy implements IProxy {
     }
 
     @Override
-    public void offerTrade(int playerIdOne, int playerIdTwo, ResourceList rl) {
+    public void offerTrade(int playerIndexOne, int playerIndexTwo, ResourceList rl) {
         JsonObject myObjOne = new JsonObject();
         String url = "/moves/offerTrade";
         myObjOne.addProperty("type", "offerTrade");
-        myObjOne.addProperty("playerIndex", "" + playerIdOne);
+        myObjOne.addProperty("playerIndex",playerIndexOne);
         myObjOne.add("offer", RLO(rl));
-        myObjOne.addProperty("reciever", "" + playerIdTwo);
-    //    System.out.println(myObjOne.toString());
+        myObjOne.addProperty("receiver",playerIndexTwo);
+//        System.out.println(myObjOne.toString());
         HttpURLResponse myResponse;
         try {
             myResponse = doPost(url, myObjOne);

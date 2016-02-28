@@ -15,6 +15,7 @@ import client.model.*;
 import client.model.map.*;
 import client.model.bank.ResourceList;
 import client.proxy.*;
+import shared.infoobjects.CurrentResources;
 import shared.jsonobject.*;
 import shared.locations.*;
 import shared.serialization.CreateGamePassObject;
@@ -27,7 +28,32 @@ public class Facade {
     private GameModel game;
     private IProxy proxy;
     private ArrayList<Observer> observers = new ArrayList<Observer>();
-    private boolean loggedIn = false, Joined = false, Created = false, ready = false;
+    private boolean loggedIn = false;
+    private boolean Joined = false;
+    private boolean Created = false;
+    private boolean settingColor;
+
+    public boolean isSettingColor() {
+        return settingColor;
+    }
+
+    public void setSettingColor(boolean settingColor) {
+        this.settingColor = settingColor;
+    }
+
+    public boolean isJoined() {
+        return Joined;
+    }
+
+    public void setJoined(boolean joined) {
+        Joined = joined;
+    }
+
+    public boolean isReady() {
+        return ready;
+    }
+
+    private boolean ready = false;
 
     private static Facade facade = new Facade();
 
@@ -38,7 +64,8 @@ public class Facade {
     public static Facade getInstance() {
         return facade;
     }
-    public PlayerInfo getCurrentPlayerInfo(){
+
+    public PlayerInfo getCurrentPlayerInfo() {
         PlayerInfo curPlayer = new PlayerInfo();
         curPlayer.setId(getCurrentPlayer().getPlayerId());
         curPlayer.setPlayerIndex(getCurrentPlayer().getPlayerIndex());
@@ -47,34 +74,52 @@ public class Facade {
         return curPlayer;
     }
 
+    public int getGameIndex(){
+        return game.getID();
+    }
+
     public void setProxy(IProxy proxy) {
         this.proxy = proxy;
     }
 
     public void retrieveGameModel() {
-        if (!loggedIn || !Joined || !ready)
+        GameModel gm = new GameModel();
+        if (!loggedIn)
             return;
-        GameModel gm = proxy.getGameModel();
+        if(Joined && ready){
+            gm = proxy.getGameModel();
+        }
         if (gm != null) {
             System.out.println(gm.getTurnTracker().getStatus());
             game = gm;
 //observation is not happening without this for loop, so I am leaving it for now
-            for(int i =0 ; i < observers.size(); i++)
-                ((Controller)observers.get(i)).update(game, "");
+            for (int i = 0; i < observers.size(); i++)
+                (observers.get(i)).update(game, "");
         }
     }
 
-    public CurrentPlayer getCurrentPlayer(){
+    public CurrentPlayer getCurrentPlayer() {
         return game.getCurrentPlayer();
     }
 
-    public int getPlayerID()
-    {
+    public CurrentResources getCurrentResources() {
+        List<Player> players = game.getPlayers();
+        int index = game.getCurrentPlayer().getPlayerIndex();
+        Player curPlayer = players.get(index);
+        CurrentResources resources = new CurrentResources();
+        ResourceList playerResources = curPlayer.getResources();
+        resources.setWood(playerResources.getWood());
+        resources.setBrick(playerResources.getBrick());
+        resources.setSheep(playerResources.getSheep());
+        resources.setOre(playerResources.getOre());
+        return resources;
+    }
+
+    public int getPlayerID() {
         return proxy.getPlayerId();
     }
 
-    public int getPlayerIndex()
-    {
+    public int getPlayerIndex() {
         return game.getCurrentPlayer().getPlayerIndex();
     }
 
@@ -91,7 +136,9 @@ public class Facade {
         observers.add(x);
     }
 
-    public void setReady() {ready = true;}
+    public void setReady() {
+        ready = true;
+    }
 
     public CatanColor getCatanColor() {
         return game.getCurrentColor();
@@ -101,11 +148,10 @@ public class Facade {
         return game.getMap();
     }
 
-    public CatanColor getPlayerColor(int player)
-    {
-        if(game == null)
+    public CatanColor getPlayerColor(int player) {
+        if (game == null)
             return null;
-        if(game.getPlayers().get(player) == null)
+        if (game.getPlayers().get(player) == null)
             return null;
         return game.getPlayerColor(player);
     }
@@ -117,7 +163,7 @@ public class Facade {
         boolean login = false;
         try {
             login = proxy.userLogin(u);
-            if(login){
+            if (login) {
                 game.getCurrentPlayer().setUsername(username);
                 game.getCurrentPlayer().setPassword(password);
                 game.getCurrentPlayer().setPlayerId(proxy.getPlayerId());
@@ -144,6 +190,9 @@ public class Facade {
 
         return proxy.gamesList();
     }
+    public int getPoints(int playerIndex){
+        return game.getPoints(playerIndex);
+    }
 
     public void gamesCreate(CreateGamePassObject gameNew) {
         try {
@@ -154,9 +203,8 @@ public class Facade {
         }
     }
 
-    public void gameAddAI()
-    {
-            proxy.gameAddAI();
+    public void gameAddAI() {
+        proxy.gameAddAI();
     }
 
     //joining the game will require the gameId, not the playerId
@@ -186,23 +234,34 @@ public class Facade {
      *
      * @return boolean whether or not the player can place a road
      */
-    public boolean canPlaceRoad(EdgeLocation el) {
+    public boolean canPlaceRoad(EdgeLocation el, boolean isDisconnected) {
         if (game == null)
             return false;
-        return game.canPlaceRoad(el);
+        return game.canPlaceRoad(el, isDisconnected);
     }
 
+    public boolean canPlaceRoadSetup(EdgeLocation el)
+    {
+        if(game == null)
+            return false;
+        return game.canPlaceRoadSetup(el);
+    }
+
+    public void PlaceRoadSetup(EdgeLocation el)
+    {
+        if(game != null && game.canPlaceRoadSetup(el))
+            proxy.buildRoad(getPlayerID(), el, true);
+    }
     /**
      * Places a Road at a given location on the map
-     *
+     * <p>
      * boolean whether or not the player built the road (perhaps placeholder return values for all of the do methods)
      */
-    public void placeRoad(int pid, EdgeLocation el, boolean free) {
+    public void placeRoad(int pid, EdgeLocation el, boolean free, boolean isDisconnected) {
         if (game != null) {
 
-            if (game.canBuildRoad(pid) || free)
-            {
-                if (game.canPlaceRoad(el))
+            if (game.canBuildRoad(pid) || free) {
+                if (game.canPlaceRoad(el, isDisconnected))
                     proxy.buildRoad(pid, el, free);
             }
         }
@@ -236,9 +295,8 @@ public class Facade {
      * @return boolean whether or not the player placed a settlement
      */
     public void placeSettlement(int pid, VertexLocation vl, boolean free) {
-        if (game != null)
-        {
-            if(canBuildSettlement(pid) || free) {
+        if (game != null) {
+            if (canBuildSettlement(pid) || free) {
                 if (canPlaceSettlement(vl))
                     try {
                         proxy.buildSettlement(pid, vl, free);
@@ -305,7 +363,7 @@ public class Facade {
      */
     public void playRoadBuilding(int pid, EdgeLocation el1, EdgeLocation el2) {
         if (game != null) {
-            if (game.canRoadBuilding(pid) && game.canPlaceRoad(el1) && game.canPlaceRoad(el2))
+            if (game.canRoadBuilding(pid) && game.canPlaceRoad(el1, false) && game.canPlaceRoad(el2, false))
                 proxy.playRoadBuilding(pid, el1, el2);
         }
     }
@@ -463,9 +521,8 @@ public class Facade {
         return game.canFinishTurn(pid);
     }
 
-    public void FinishTurn(int pid)
-    {
-        proxy.finishTurn(pid);
+    public void FinishTurn(int pIndex) {
+        proxy.finishTurn(pIndex);
     }
 
     public boolean canDiscardCards(int pid, ResourceList rl) {
@@ -558,11 +615,11 @@ public class Facade {
      *
      * @return boolean whether or not the player traded with another player
      */
-    public void tradePlayer(int pid, int rid, ResourceList rl) {
+    public void tradePlayer(int playerIndex, int rid, ResourceList rl) {
         try {
             if (game != null) {
-                if (game.canTradePlayer(pid, rid, rl))
-                    proxy.offerTrade(pid, rid, rl);
+                if (game.canTradePlayer(playerIndex, rid, rl))
+                    proxy.offerTrade(playerIndex, rid, rl);
             }
         } catch (InsufficientResourcesException e) {
             System.out.println("Not enough resources " + e.getMessage());

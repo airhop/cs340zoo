@@ -1,6 +1,9 @@
 package client.MVC.resources;
 
 import client.MVC.base.*;
+import client.facade.Facade;
+import client.model.GameModel;
+import shared.infoobjects.CurrentResources;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -65,7 +68,6 @@ public class ResourceBarController extends Controller implements IResourceBarCon
     private void executeElementAction(ResourceBarElement element) {
 
         if (elementActions.containsKey(element)) {
-
             IAction action = elementActions.get(element);
             action.execute();
         }
@@ -73,7 +75,20 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 
     @Override
     public void update(Observable o, Object arg) {
-
+        if(Facade.getInstance().isReady()){
+            CurrentResources currentResources = Facade.getInstance().getCurrentResources();
+            getView().setElementAmount(ResourceBarElement.WOOD,currentResources.getWood());
+            getView().setElementAmount(ResourceBarElement.BRICK,currentResources.getBrick());
+            getView().setElementAmount(ResourceBarElement.SHEEP,currentResources.getSheep());
+            getView().setElementAmount(ResourceBarElement.WHEAT,currentResources.getWheat());
+            getView().setElementAmount(ResourceBarElement.ORE,currentResources.getOre());
+            getView().setElementAmount(ResourceBarElement.ROAD,currentResources.getRoad());
+            getView().setElementAmount(ResourceBarElement.SETTLEMENT,currentResources.getSettlement());
+            getView().setElementAmount(ResourceBarElement.CITY,currentResources.getCity());
+            getView().setElementAmount(ResourceBarElement.BUY_CARD,currentResources.getBuyCard());
+            getView().setElementAmount(ResourceBarElement.PLAY_CARD,currentResources.getPlayCard());
+            getView().setElementAmount(ResourceBarElement.SOLDIERS,currentResources.getSoldiers());
+        }
     }
 }
 
