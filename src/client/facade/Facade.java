@@ -84,11 +84,12 @@ public class Facade {
     }
 
     public void retrieveGameModel() {
-        GameModel gm = new GameModel();
+        GameModel gm = null;
         if (!loggedIn)
             return;
         if(Joined && ready){
             gm = proxy.getGameModel();
+            CurrentPlayer myPlayer = game.getCurrentPlayer();
         }
         if (gm != null) {
             System.out.println(gm.getTurnTracker().getStatus());
