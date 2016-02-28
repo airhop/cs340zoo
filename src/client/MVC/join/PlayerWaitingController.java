@@ -39,7 +39,6 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 
     @Override
     public IPlayerWaitingView getView() {
-
         return (IPlayerWaitingView) super.getView();
     }
 
@@ -77,13 +76,14 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
         if(!Facade.getInstance().isPlayerWaiting())
             return;
         GameModel game = Facade.getInstance().getGameModel();
-        if (Facade.getInstance().gamesList().get(game.getID()).getPlayers().size() >= 4 && game.getTurnTracker().getStatus() == "Waiting") {
+        if (Facade.getInstance().gamesList().get(game.getID()).getPlayers().size() >= 4) {
             getView().setPlayers(playersInfo());
             Facade.getInstance().setPlayerWaiting(false);
             getView().closeModal();
+        }else{
+            getView().setPlayers(playersInfo());
+            getView().showModal();
         }
-
-
     }
 }
 
