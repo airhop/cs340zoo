@@ -5,6 +5,7 @@ import client.MVC.data.GameInfo;
 import client.MVC.data.PlayerInfo;
 import client.facade.Facade;
 import client.model.GameModel;
+import client.model.player.CurrentPlayer;
 import client.model.player.Player;
 import shared.definitions.CatanColor;
 
@@ -82,8 +83,8 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
     public void update(Observable o, Object arg) {
         if(!Facade.getInstance().isPlayerWaiting())
             return;
-        GameModel game = Facade.getInstance().getGameModel();
-        if (Facade.getInstance().gamesList().get(game.getID()).getPlayers().size() >= 4) {
+        CurrentPlayer myPlayer = Facade.getInstance().getCurrentPlayer();
+        if (Facade.getInstance().gamesList().get(myPlayer.getGameId()).getPlayers().size() >= 4) {
             getView().setPlayers(playersInfo());
             Facade.getInstance().setPlayerWaiting(false);
             getView().closeModal();

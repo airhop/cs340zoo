@@ -97,13 +97,11 @@ public class Facade {
         if (!ready)
             updateGamesList();
         if (Joined && ready) {
-            gm = proxy.getGameModel();
+            proxy.getGameModel();
             CurrentPlayer myPlayer = game.getCurrentPlayer();
         }
         if (Facade.getInstance().isSettingColor()) {
-            if (gm != null) {
-                game = gm;
-            }
+
             int test = observers.size();
 //observation is not happening without this for loop, so I am leaving it for now
             StopWatch myStop = new StopWatch();
@@ -207,7 +205,7 @@ public class Facade {
         return true;
     }
 
-    //PLEASE DON'T CALL THIS THANKS
+    //PLEASE DON'T CALL THIS THANKS, BAD THINGS WILL HAPPEN
     public void updateGamesList() {
         game.setGameList(proxy.gamesList());
     }
