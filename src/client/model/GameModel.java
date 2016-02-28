@@ -1,5 +1,7 @@
 package client.model;
 
+import client.MVC.data.GameInfo;
+import client.facade.Facade;
 import client.model.bank.Bank;
 import client.model.bank.ResourceList;
 import client.model.map.*;
@@ -27,6 +29,8 @@ public class GameModel extends Observable{
     private Chat chat;
     private Log log;
     private CurrentPlayer currentPlayer;
+    private List<GameInfo> gameList;
+
 
     public GameModel() {
         map = new Map();
@@ -42,6 +46,7 @@ public class GameModel extends Observable{
         players.add(new Player("",2));
         players.add(new Player("",3));
         currentPlayer = new CurrentPlayer();
+        gameList = new ArrayList<>();
     }
     public void updateGameModel(GameModel givenModel){
         this.map = givenModel.getMap();
@@ -506,5 +511,13 @@ public class GameModel extends Observable{
         points += 4 - curr.getCities();
         points += 5 - curr.getSettlements();
         return points;
+    }
+
+    public List<GameInfo> getGameList() {
+        return gameList;
+    }
+
+    public void setGameList(List<GameInfo> gameList) {
+        this.gameList = gameList;
     }
 }

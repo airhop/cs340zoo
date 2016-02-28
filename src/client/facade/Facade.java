@@ -94,6 +94,7 @@ public class Facade {
         GameModel gm = null;
         if (!loggedIn)
             return;
+        updateGamesList();
         if(Joined && ready){
             gm = proxy.getGameModel();
             CurrentPlayer myPlayer = game.getCurrentPlayer();
@@ -105,11 +106,13 @@ public class Facade {
             int test = observers.size();
 //observation is not happening without this for loop, so I am leaving it for now
             StopWatch myStop = new StopWatch();
-            myStop.start();
-            for (int i = 0; i < observers.size(); i++)
+
+            for (int i = 0; i < observers.size(); i++){
+                myStop.start();
                 (observers.get(i)).update(game, "");
-            myStop.stop();
-            System.out.println("Update Time = " + myStop.getElapsedTime());
+                myStop.stop();
+                System.out.println("Update Time" + i + " = " + myStop.getElapsedTime());
+            }
         }
     }
 
@@ -202,9 +205,18 @@ public class Facade {
         }
         return true;
     }
+    //PLEASE DON'T CALL THIS THANKS
+    public void updateGamesList(){
+        game.setGameList(proxy.gamesList());
+    }
 
     public List<GameInfo> gamesList() {
-        return proxy.gamesList();
+        StopWatch myWatch = new StopWatch();
+        myWatch.start();
+        List<GameInfo> games = game.getGameList();
+        myWatch.stop();
+        System.out.println("Took this long to get the gameInfo from the proxy = " + myWatch.getElapsedTime());
+        return games;
     }
     public int getPoints(int playerIndex){
         return game.getPoints(playerIndex);

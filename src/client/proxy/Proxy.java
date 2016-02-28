@@ -4,8 +4,10 @@ import client.MVC.data.GameInfo;
 import client.model.GameModel;
 import client.model.bank.ResourceList;
 import com.google.gson.*;
+import com.sun.prism.paint.Stop;
 import shared.definitions.ResourceType;
 import shared.exceptions.*;
+import shared.extra.StopWatch;
 import shared.jsonobject.User;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
@@ -61,6 +63,8 @@ public class Proxy implements IProxy {
 
 
     public HttpURLResponse doGet(String urlPath) throws ClientException {
+        StopWatch myWatch = new StopWatch();
+        myWatch.start();
         HttpURLResponse result = new HttpURLResponse();
         try {
             URL url = new URL(URL_PREFIX + urlPath);
@@ -77,16 +81,19 @@ public class Proxy implements IProxy {
                 } else {
                     connection.setRequestProperty("Cookie", cookiesList);
                 }
-
             }
+
 
            // System.out.println(url.toString());
             connection.connect();
             OutputStreamWriter myOut = new OutputStreamWriter(connection.getOutputStream());
             myOut.flush();
+
 //            System.out.println(connection.getResponseCode());
 
             if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
+                myWatch.stop();
+                System.out.println("I have made it this far in the code: TIME = " + myWatch.getElapsedTime());
                 if (connection.getContentLength() != 0) {
                     result.setResponseCode(connection.getResponseCode());
                     result.setResponseLength(connection.getContentLength());
@@ -277,11 +284,15 @@ public class Proxy implements IProxy {
 
     @Override
     public List<GameInfo> gamesList() {
+        StopWatch myWatch = new StopWatch();
         String url = "/games/list";
         List<GameInfo> games = new ArrayList<>();
         HttpURLResponse myResponse;
         try {
+            myWatch.start();
             myResponse = doGet(url);
+            myWatch.stop();
+            System.out.println("Took this long to do get = " + myWatch.getElapsedTime());
             GameListDeserialize listDeserialize = new GameListDeserialize(myResponse.getResponseBody());
             games = listDeserialize.deserialize();
             //This is when i am going to create the deSerialization later
@@ -351,11 +362,15 @@ public class Proxy implements IProxy {
 
     @Override
     public GameModel getGameModel() {
+        StopWatch myWatch = new StopWatch();
         String url = "/game/model";
         HttpURLResponse myResponse;
         GameModel gm = null;
         try {
+            myWatch.start();
             myResponse = doGet(url);
+            myWatch.stop();
+            System.out.println("Took this long to do MODEL get = " + myWatch.getElapsedTime());
             gm = myDeSer.deserialize(myResponse.getResponseBody(), myGameModel);
             // System.out.println("\n Heyo!!\n" + myGameModel.toString() + "\n");
         } catch (ClientException e) {
@@ -384,13 +399,17 @@ public class Proxy implements IProxy {
     @Override
     public boolean gameAddAI()
     {
+        StopWatch myWatch = new StopWatch();
         JsonObject myObjOne = new JsonObject();
         String url = "/game/addAI";
         myObjOne.addProperty("AIType", "LARGEST_ARMY");
     //    System.out.println(myObjOne.toString());
         HttpURLResponse myResponse;
         try {
+            myWatch.start();
             myResponse = doPost(url, myObjOne);
+            myWatch.stop();
+            System.out.println("Took this long to do POST = " + myWatch.getElapsedTime());
     //        System.out.println(myResponse.getResponseBody());
         } catch (ClientException e) {
             e.printStackTrace();

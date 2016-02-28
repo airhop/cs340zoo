@@ -35,15 +35,15 @@ public class NewMain {
             e.printStackTrace();
         }
         myProxy.getGameModel();
-        System.out.println(myGameModel.getPlayerIndex(0));
-        System.out.println(myGameModel.getPlayerIndex(1));
-        System.out.println(myGameModel.getPlayerIndex(2));
-        System.out.println(myGameModel.getPlayerIndex(3));
-        myList = myProxy.gamesList();
-        System.out.println(myList.get(0).getPlayers().get(0).getName());
-        System.out.println(myList.get(0).getPlayers().get(1).getName());
-        System.out.println(myList.get(0).getPlayers().get(2).getName());
-        System.out.println(myList.get(0).getPlayers().get(3).getName());
+//        System.out.println(myGameModel.getPlayerIndex(0));
+//        System.out.println(myGameModel.getPlayerIndex(1));
+//        System.out.println(myGameModel.getPlayerIndex(2));
+//        System.out.println(myGameModel.getPlayerIndex(3));
+//        myList = myProxy.gamesList();
+//        System.out.println(myList.get(0).getPlayers().get(0).getName());
+//        System.out.println(myList.get(0).getPlayers().get(1).getName());
+//        System.out.println(myList.get(0).getPlayers().get(2).getName());
+//        System.out.println(myList.get(0).getPlayers().get(3).getName());
 
 
 //        playerId = myProxy.getPlayerId();
