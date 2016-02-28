@@ -31,6 +31,7 @@ public class Facade {
     private boolean loggedIn = false;
     private boolean Joined = false;
     private boolean Created = false;
+    private boolean playerWaiting = false;
     private boolean settingColor;
 
     public boolean isSettingColor() {
@@ -680,5 +681,13 @@ public class Facade {
             return true;
         }
         return false;
+    }
+
+    public boolean isPlayerWaiting() {
+        return playerWaiting;
+    }
+
+    public void setPlayerWaiting(boolean playerWaiting) {
+        this.playerWaiting = playerWaiting;
     }
 }
