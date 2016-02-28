@@ -486,7 +486,7 @@ public class Facade {
      *
      * @return boolean whether or not the player traded with the bank
      */
-    public void meritimeTrade(int playerId, int ratio, ResourceType in, ResourceType out) {
+    public void maritimeTrade(int playerId, int ratio, ResourceType in, ResourceType out) {
         if (proxy != null)
             proxy.maritimeTrade(playerId, ratio, in, out);
     }
