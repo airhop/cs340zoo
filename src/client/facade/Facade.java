@@ -32,7 +32,7 @@ public class Facade {
     private boolean Joined = false;
     private boolean Created = false;
     private boolean playerWaiting = false;
-    private boolean settingColor;
+    private boolean settingColor = false;
 
     public boolean isSettingColor() {
         return settingColor;
@@ -97,7 +97,9 @@ public class Facade {
             CurrentPlayer myPlayer = game.getCurrentPlayer();
         }
         if (Facade.getInstance().isSettingColor()) {
-            game = gm;
+            if(gm != null){
+                game = gm;
+            }
 //observation is not happening without this for loop, so I am leaving it for now
             for (int i = 0; i < observers.size(); i++)
                 (observers.get(i)).update(game, "");
