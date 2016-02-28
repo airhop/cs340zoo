@@ -30,6 +30,8 @@ public class GameHistoryController extends Controller implements IGameHistoryCon
     @Override
     public void update(Observable o, Object arg)
     {
+        if(!Facade.getInstance().isReady())
+            return;
         GameModel gm = (GameModel) o;
         ArrayList<MessageLine> ml = gm.getLog().getLogList().getMessages();
         ArrayList<Player> players = gm.getPlayers();
