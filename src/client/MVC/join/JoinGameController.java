@@ -136,6 +136,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
         gameNew.setRandomPorts(getNewGameView().getUseRandomPorts());
         gameNew.setRandomTiles(getNewGameView().getRandomlyPlaceHexes());
         Facade.getInstance().gamesCreate(gameNew);
+        Facade.getInstance().updateGamesList();
         List<GameInfo> games = Facade.getInstance().gamesList();
         GameInfo[] myType = new GameInfo[games.size()];
         for (int i = 0; i < games.size(); i++) {

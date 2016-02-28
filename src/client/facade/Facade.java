@@ -44,7 +44,7 @@ public class Facade {
         this.settingColor = settingColor;
     }
 
-    public void setCurPlayerIndex(){
+    public void setCurPlayerIndex() {
         getCurrentPlayer().setPlayerIndex(game.getPlayerIndex(getCurrentPlayer().getPlayerId()));
     }
 
@@ -82,7 +82,7 @@ public class Facade {
         return curPlayer;
     }
 
-    public int getGameIndex(){
+    public int getGameIndex() {
         return game.getID();
     }
 
@@ -94,20 +94,21 @@ public class Facade {
         GameModel gm = null;
         if (!loggedIn)
             return;
-        updateGamesList();
-        if(Joined && ready){
+        if (!ready)
+            updateGamesList();
+        if (Joined && ready) {
             gm = proxy.getGameModel();
             CurrentPlayer myPlayer = game.getCurrentPlayer();
         }
         if (Facade.getInstance().isSettingColor()) {
-            if(gm != null){
+            if (gm != null) {
                 game = gm;
             }
             int test = observers.size();
 //observation is not happening without this for loop, so I am leaving it for now
             StopWatch myStop = new StopWatch();
 
-            for (int i = 0; i < observers.size(); i++){
+            for (int i = 0; i < observers.size(); i++) {
                 myStop.start();
                 (observers.get(i)).update(game, "");
                 myStop.stop();
@@ -205,20 +206,18 @@ public class Facade {
         }
         return true;
     }
+
     //PLEASE DON'T CALL THIS THANKS
-    public void updateGamesList(){
+    public void updateGamesList() {
         game.setGameList(proxy.gamesList());
     }
 
     public List<GameInfo> gamesList() {
-        StopWatch myWatch = new StopWatch();
-        myWatch.start();
         List<GameInfo> games = game.getGameList();
-        myWatch.stop();
-        System.out.println("Took this long to get the gameInfo from the proxy = " + myWatch.getElapsedTime());
         return games;
     }
-    public int getPoints(int playerIndex){
+
+    public int getPoints(int playerIndex) {
         return game.getPoints(playerIndex);
     }
 
@@ -268,18 +267,17 @@ public class Facade {
         return game.canPlaceRoad(el, isDisconnected);
     }
 
-    public boolean canPlaceRoadSetup(EdgeLocation el)
-    {
-        if(game == null)
+    public boolean canPlaceRoadSetup(EdgeLocation el) {
+        if (game == null)
             return false;
         return game.canPlaceRoadSetup(el);
     }
 
-    public void PlaceRoadSetup(EdgeLocation el)
-    {
-        if(game != null && game.canPlaceRoadSetup(el))
+    public void PlaceRoadSetup(EdgeLocation el) {
+        if (game != null && game.canPlaceRoadSetup(el))
             proxy.buildRoad(getPlayerID(), el, true);
     }
+
     /**
      * Places a Road at a given location on the map
      * <p>
