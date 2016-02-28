@@ -56,6 +56,7 @@ public class StateSetup extends StateAbstract
         view.placeRoad(edgeLoc, color);
         setRoad = true;
         Facade.getInstance().placeRoad(Facade.getInstance().getPlayerID(), edgeLoc.getNormalizedLocation(), true, true);
+        Facade.getInstance().retrieveGameModel();
         startMove(PieceType.SETTLEMENT, true, false);
     }
 
@@ -65,6 +66,7 @@ public class StateSetup extends StateAbstract
         setSettlement = true;
         Facade.getInstance().placeSettlement(Facade.getInstance().getPlayerID(), vertLoc.getNormalizedLocation(), true);
         Facade.getInstance().FinishTurn(Facade.getInstance().getPlayerIndex());
+        Facade.getInstance().retrieveGameModel();
     }
 
     public void startMove(PieceType pieceType, boolean isFree, boolean allowDisconnected)
