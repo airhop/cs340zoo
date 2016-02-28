@@ -46,10 +46,6 @@ public class Facade {
         getCurrentPlayer().setPlayerIndex(game.getPlayerIndex(getCurrentPlayer().getPlayerId()));
     }
 
-    public CurrentPlayer getCurretPlayer(){
-        return game.getCurrentPlayer();
-    }
-
     public boolean isJoined() {
         return Joined;
     }
