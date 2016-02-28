@@ -17,7 +17,11 @@ import java.util.Observable;
 public class MaritimeTradeController extends Controller implements IMaritimeTradeController {
 
     private IMaritimeTradeOverlay tradeOverlay;
-
+    int playerId = Facade.getInstance().getCurrentPlayer().getPlayerIndex();
+    int ratio = 4;
+    ResourceType in;
+    ResourceType out;
+    ResourceType[] canGiveToBank;
     public MaritimeTradeController(IMaritimeTradeView tradeView, IMaritimeTradeOverlay tradeOverlay) {
 
         super(tradeView);
@@ -40,10 +44,10 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 
     @Override
     public void startTrade() {
+        getTradeOverlay().reset();
         List<Port> currentPlayerPorts = Facade.getInstance().getGameModel().getMap().getPlayerPorts(Facade.getInstance().getCurrentPlayer().getPlayerIndex());
         ResourceList currResources = Facade.getInstance().getGameModel().getPlayers().get(Facade.getInstance().getCurrentPlayer().getPlayerIndex()).getResources();
-        int canGiveResourcesAmount = 0;
-        List<ResourceType> canGiveResources = new ArrayList<ResourceType>();
+        List<ResourceType> canGiveResources = new ArrayList<>();
         for(Port port : currentPlayerPorts)
         {
             if(port.getRatio() == 4)
@@ -73,27 +77,33 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
             {
                 if(currResources.getWheat() >= 3)
                 {
+                    this.ratio = 3;
                     canGiveResources.add(ResourceType.WHEAT);
                 }
                 if(currResources.getSheep() >= 3)
                 {
+                    this.ratio = 3;
                     canGiveResources.add(ResourceType.SHEEP);
                 }
                 if(currResources.getOre() >= 3)
                 {
+                    this.ratio = 3;
                     canGiveResources.add(ResourceType.ORE);
                 }
                 if(currResources.getWood() >= 3)
                 {
+                    this.ratio = 3;
                     canGiveResources.add(ResourceType.WOOD);
                 }
                 if(currResources.getBrick() >= 3)
                 {
+                    this.ratio = 3;
                     canGiveResources.add(ResourceType.BRICK);
                 }
             }
             else if(port.getResource() == "Wheat")
             {
+                this.ratio = 2;
                 if(currResources.getWheat() >= 2 && !canGiveResources.contains(ResourceType.WHEAT));
                 {
                     canGiveResources.add(ResourceType.WHEAT);
@@ -101,6 +111,7 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
             }
             else if(port.getResource() == "Sheep")
             {
+                this.ratio = 2;
                 if(currResources.getSheep() >= 2)
                 {
                     if(currResources.getSheep() >= 2 && !canGiveResources.contains(ResourceType.SHEEP));
@@ -111,6 +122,7 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
             }
             else if(port.getResource() == "Ore")
             {
+                this.ratio = 2;
                 if(currResources.getOre() >= 2)
                 {
                     if(currResources.getOre() >= 2 && !canGiveResources.contains(ResourceType.ORE));
@@ -121,6 +133,7 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
             }
             else if(port.getResource() == "Wood")
             {
+                this.ratio = 2;
                 if(currResources.getWood() >= 2)
                 {
                     if(currResources.getWood() >= 2 && !canGiveResources.contains(ResourceType.WOOD));
@@ -131,6 +144,7 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
             }
             else if(port.getResource() == "Brick")
             {
+                this.ratio = 2;
                 if(currResources.getBrick() >= 2)
                 {
                     if(currResources.getBrick() >= 2 && !canGiveResources.contains(ResourceType.BRICK));
@@ -140,20 +154,24 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
                 }
             }
         }
-        ResourceType[] canGet = new ResourceType[canGiveResources.size()];
+        ResourceType[] canGive = new ResourceType[canGiveResources.size()];
         for(int i = 0; i < canGiveResources.size() ;i++ )
         {
-            canGet[i] = canGiveResources.get(i);
-            System.out.println(canGet[i]);
+            canGive[i] = canGiveResources.get(i);
+
+            System.out.println(canGive[i]);
         }
-        getTradeOverlay().showGetOptions(canGet);
+            this.canGiveToBank = canGive;
+            getTradeOverlay().setTradeEnabled(false);
+            getTradeOverlay().showGiveOptions(canGive);
+
         getTradeOverlay().showModal();
 
     }
 
     @Override
     public void makeTrade() {
-
+        Facade.getInstance().maritimeTrade(playerId,ratio,in,out);
         getTradeOverlay().closeModal();
     }
 
@@ -165,22 +183,85 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 
     @Override
     public void setGetResource(ResourceType resource) {
-
+        getTradeOverlay().setTradeEnabled(true);
+        getTradeOverlay().hideGetOptions();
+        if(resource == ResourceType.BRICK)
+        {
+            this.in = ResourceType.BRICK;
+            getTradeOverlay().selectGetOption(resource,1);
+        }
+        if(resource == ResourceType.ORE)
+        {
+            this.in = ResourceType.ORE;
+            getTradeOverlay().selectGetOption(resource,1);
+        }
+        if(resource == ResourceType.WHEAT)
+        {
+            this.in = ResourceType.WHEAT;
+            getTradeOverlay().selectGetOption(resource,1);
+        }
+        if(resource == ResourceType.WOOD)
+        {
+            this.in = ResourceType.WOOD;
+            getTradeOverlay().selectGetOption(resource,1);
+        }
+        if(resource == ResourceType.SHEEP)
+        {
+            this.in = ResourceType.SHEEP;
+            getTradeOverlay().selectGetOption(resource,1);
+        }
     }
 
     @Override
     public void setGiveResource(ResourceType resource) {
 
+        ResourceType[] getResources = {ResourceType.BRICK,ResourceType.ORE,ResourceType.SHEEP,ResourceType.WHEAT,ResourceType.WOOD};
+        getTradeOverlay().hideGiveOptions();
+        getTradeOverlay().showGetOptions(getResources);
+        int currPlayerIndex = Facade.getInstance().getCurrentPlayer().getPlayerIndex();
+        int numBrick = Facade.getInstance().getGameModel().getPlayers().get(currPlayerIndex).getResources().getBrick();
+        int numOre = Facade.getInstance().getGameModel().getPlayers().get(currPlayerIndex).getResources().getOre();
+        int numWheat = Facade.getInstance().getGameModel().getPlayers().get(currPlayerIndex).getResources().getWheat();
+        int numSheep = Facade.getInstance().getGameModel().getPlayers().get(currPlayerIndex).getResources().getSheep();
+        int numWood = Facade.getInstance().getGameModel().getPlayers().get(currPlayerIndex).getResources().getWood();
+        if(resource == ResourceType.BRICK)
+        {
+            this.out = ResourceType.BRICK;
+            getTradeOverlay().selectGiveOption(resource,numBrick);
+        }
+        if(resource == ResourceType.ORE)
+        {
+            this.out = ResourceType.ORE;
+            getTradeOverlay().selectGiveOption(resource,numOre);
+        }
+        if(resource == ResourceType.WHEAT)
+        {
+            this.out = ResourceType.WHEAT;
+            getTradeOverlay().selectGiveOption(resource,numWheat);
+        }
+        if(resource == ResourceType.WOOD)
+        {
+            this.out = ResourceType.WOOD;
+            getTradeOverlay().selectGiveOption(resource,numWood);
+        }
+        if(resource == ResourceType.SHEEP)
+        {
+            this.out = ResourceType.SHEEP;
+            getTradeOverlay().selectGiveOption(resource,numSheep);
+        }
+
     }
 
     @Override
     public void unsetGetValue() {
-
+        ResourceType[] getResources = {ResourceType.BRICK,ResourceType.ORE,ResourceType.SHEEP,ResourceType.WHEAT,ResourceType.WOOD};
+        getTradeOverlay().showGetOptions(getResources);
     }
 
     @Override
     public void unsetGiveValue() {
-
+        getTradeOverlay().hideGetOptions();
+        getTradeOverlay().showGiveOptions(canGiveToBank);
     }
 
     @Override
