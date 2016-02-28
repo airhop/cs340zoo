@@ -59,8 +59,6 @@ public class GameModel extends Observable{
         this.dice = givenModel.getDice();
         this.chat = givenModel.getChat();
         this.log = givenModel.getLog();
-        this.setChanged();
-        this.notifyObservers();
         this.currentPlayer = givenModel.getCurrentPlayer();
     }
 

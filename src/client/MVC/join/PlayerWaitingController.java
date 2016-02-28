@@ -83,6 +83,7 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
     public void update(Observable o, Object arg) {
         if(!Facade.getInstance().isPlayerWaiting())
             return;
+        GameModel game = Facade.getInstance().getGameModel();
         CurrentPlayer myPlayer = Facade.getInstance().getCurrentPlayer();
         if (Facade.getInstance().gamesList().get(myPlayer.getGameId()).getPlayers().size() >= 4) {
             getView().setPlayers(playersInfo());

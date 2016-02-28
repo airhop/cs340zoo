@@ -102,7 +102,7 @@ public class Facade {
         }
         if (Facade.getInstance().isSettingColor()) {
             if (gm != null) {
-                game = gm;
+                game.updateGameModel(gm);
             }
             int test = observers.size();
 //observation is not happening without this for loop, so I am leaving it for now

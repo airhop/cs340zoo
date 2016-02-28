@@ -29,7 +29,7 @@ public class Deserializer {
      * @return object, you must cast this object to the thing you are deseralizing.
      */
     public GameModel deserialize(String jsonString, GameModel myModel) {
-        int jellybean = 0;
+        GameModel gameNew = new GameModel();
         Bank myBank = new Bank();
         Map myMap = new Map();
         ResourceList myResource;
@@ -392,7 +392,9 @@ public class Deserializer {
         myModel.setTt(turnTracker);
         myModel.setBank(myBank);
         myModel.setPlayers(players);
-        return myModel;
+
+        gameNew.updateGameModel(myModel);
+        return gameNew;
     }
 
 
