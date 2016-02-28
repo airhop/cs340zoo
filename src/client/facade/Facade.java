@@ -23,6 +23,7 @@ import shared.serialization.CreateGamePassObject;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observer;
+import java.util.Timer;
 
 public class Facade {
     private GameModel game;
@@ -100,9 +101,12 @@ public class Facade {
             if(gm != null){
                 game = gm;
             }
+            int test = observers.size();
 //observation is not happening without this for loop, so I am leaving it for now
+
             for (int i = 0; i < observers.size(); i++)
                 (observers.get(i)).update(game, "");
+            int test2 = observers.size();
         }
     }
 
@@ -197,7 +201,6 @@ public class Facade {
     }
 
     public List<GameInfo> gamesList() {
-
         return proxy.gamesList();
     }
     public int getPoints(int playerIndex){

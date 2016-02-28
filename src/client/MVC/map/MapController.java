@@ -148,7 +148,6 @@ public class MapController extends Controller implements IMapController {
         if(!changeState(gm.getTurnTracker().getStatus()))
             return;
 
-
         Facade facade = Facade.getInstance();
         Map map = gm.getMap();
         ArrayList<Hex> hexes = map.getHexMap();
