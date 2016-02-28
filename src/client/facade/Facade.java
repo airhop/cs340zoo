@@ -15,6 +15,7 @@ import client.model.*;
 import client.model.map.*;
 import client.model.bank.ResourceList;
 import client.proxy.*;
+import shared.extra.StopWatch;
 import shared.infoobjects.CurrentResources;
 import shared.jsonobject.*;
 import shared.locations.*;
@@ -103,10 +104,12 @@ public class Facade {
             }
             int test = observers.size();
 //observation is not happening without this for loop, so I am leaving it for now
-
+            StopWatch myStop = new StopWatch();
+            myStop.start();
             for (int i = 0; i < observers.size(); i++)
                 (observers.get(i)).update(game, "");
-            int test2 = observers.size();
+            myStop.stop();
+            System.out.println("Update Time = " + myStop.getElapsedTime());
         }
     }
 
