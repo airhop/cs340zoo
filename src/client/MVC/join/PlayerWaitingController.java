@@ -70,6 +70,7 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
         Facade.getInstance().gameAddAI();
         if (getNumPlayers() < 4) 
         {
+
             getView().showModal();
         } else 
         {
@@ -80,13 +81,14 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 
     @Override
     public void update(Observable o, Object arg) {
-        /*
+
         GameModel game = (GameModel)o;
         if(Facade.getInstance().gamesList().get(game.getID()).getPlayers().size() >= 4 && game.getTurnTracker().getStatus() == "Waiting")
         {
+            getView().setPlayers(playersInfo());
             getView().closeModal();
         }
-        */
+
 
     }
 }
