@@ -8,6 +8,7 @@ import client.model.player.Player;
 import shared.definitions.CatanColor;
 import shared.serialization.CreateGamePassObject;
 
+import javax.swing.*;
 import java.util.List;
 import java.util.Observable;
 
@@ -122,6 +123,12 @@ public class JoinGameController extends Controller implements IJoinGameControlle
     public void createNewGame() {
     //    System.out.println("createNewGame");
 
+        if(!getNewGameView().getRandomlyPlaceHexes() || !getNewGameView().getRandomlyPlaceNumbers() || !getNewGameView().getUseRandomPorts())
+        {
+            JOptionPane.showMessageDialog(new JFrame(), "Error please press all of the buttons!!!", "Inane error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
         CreateGamePassObject gameNew = new CreateGamePassObject();
         gameNew.setGameName(getNewGameView().getTitle());
         gameNew.setRandomNumbers(getNewGameView().getRandomlyPlaceNumbers());
@@ -139,7 +146,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 
     @Override
     public void startJoinGame(GameInfo game) {//selects game
-        Facade.getInstance().setSettingColor(true);
+       // Facade.getInstance().setSettingColor(true);
         int gameToJoin = 0;
         if (game != null) {
             getSelectColorView().resetColors();
@@ -165,7 +172,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 
     @Override
     public void cancelJoinGame() {
-        Facade.getInstance().setSettingColor(false);
+       // Facade.getInstance().setSettingColor(false);
         getJoinGameView().closeModal();
     }
 
