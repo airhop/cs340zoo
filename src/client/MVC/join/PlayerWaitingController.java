@@ -82,7 +82,7 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
     @Override
     public void update(Observable o, Object arg) {
 
-        GameModel game = (GameModel)o;
+        GameModel game = Facade.getInstance().getGameModel();
         if(Facade.getInstance().gamesList().get(game.getID()).getPlayers().size() >= 4 && game.getTurnTracker().getStatus() == "Waiting")
         {
             getView().setPlayers(playersInfo());

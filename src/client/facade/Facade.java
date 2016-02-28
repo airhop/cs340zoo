@@ -41,6 +41,10 @@ public class Facade {
         this.settingColor = settingColor;
     }
 
+    public CurrentPlayer getCurretPlayer(){
+        return game.getCurrentPlayer();
+    }
+
     public boolean isJoined() {
         return Joined;
     }
@@ -91,8 +95,7 @@ public class Facade {
             gm = proxy.getGameModel();
             CurrentPlayer myPlayer = game.getCurrentPlayer();
         }
-        if (gm != null) {
-            System.out.println(gm.getTurnTracker().getStatus());
+        if (Facade.getInstance().isSettingColor()) {
             getCurrentPlayer().setPlayerIndex(game.getPlayerIndex(getCurrentPlayer().getPlayerId()));
             game = gm;
 //observation is not happening without this for loop, so I am leaving it for now
