@@ -187,6 +187,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
             for (int i = 0; i < games.size(); i++) {
                 myType[i] = games.get(i);
             }
+
             getJoinGameView().setGames(myType, Facade.getInstance().getCurrentPlayerInfo());
             getJoinGameView().showModal();
         }
