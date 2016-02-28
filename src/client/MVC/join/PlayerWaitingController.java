@@ -1,6 +1,7 @@
 package client.MVC.join;
 
 import client.MVC.base.*;
+import client.MVC.data.GameInfo;
 import client.MVC.data.PlayerInfo;
 import client.facade.Facade;
 import client.model.GameModel;
@@ -8,6 +9,7 @@ import client.model.player.Player;
 import shared.definitions.CatanColor;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Observable;
 
 
@@ -29,10 +31,14 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
     }
 
     private PlayerInfo[] playersInfo() {
-        PlayerInfo[] players = new PlayerInfo[getNumPlayers()];
+        int numPlayers = getNumPlayers();
+        PlayerInfo[] players = new PlayerInfo[numPlayers];
 
-        for (int i = 0; i < getNumPlayers(); i++) {
-            players[i] = Facade.getInstance().gamesList().get(Facade.getInstance().getGameModel().getID()).getPlayers().get(i);
+        for (int i = 0; i < numPlayers; i++) {
+            int gameNum = Facade.getInstance().getGameModel().getID();
+            GameInfo myGame = Facade.getInstance().gamesList().get(gameNum);
+            List<PlayerInfo> myPlayers = myGame.getPlayers();
+            players[i] = myPlayers.get(i);
         }
         return players;
     }
