@@ -225,6 +225,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 
         if(Facade.getInstance().canTradePlayer(Facade.getInstance().getPlayerIndex(), tradeAccepterId, tradeList))
         {
+            System.out.println(tradeList.toString());
             Facade.getInstance().tradePlayer(Facade.getInstance().getPlayerIndex(), tradeAccepterId, tradeList);
         }
         getTradeOverlay().closeModal();

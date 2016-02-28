@@ -55,30 +55,36 @@ public class Cookie {
 
     public String getPlayerId() {
         String temp;
-                if (myId.equals("")) {
-             if (decodedValue.equals("")) {
-                 getDecode();
-             }
-             JsonParser myParse = new JsonParser();
-             JsonElement myEle = myParse.parse(decodedValue);
-             JsonTreeReader myTree = new JsonTreeReader(myEle);
-             try {
-                 if (myTree.hasNext()) 
-                    {
-                   myTree.beginObject();
-                   myTree.nextName();
-                   myTree.nextString();
-                   myTree.nextName();
+        if (decodedValue.equals("")) {
+            getDecode();
+        }
+        JsonParser myParse = new JsonParser();
+        JsonElement myEle = myParse.parse(decodedValue);
+        JsonTreeReader myTree = new JsonTreeReader(myEle);
+        try {
+            if (myTree.hasNext()) {
+                myTree.beginObject();
+                myTree.nextName();
+                myTree.nextString();
+                myTree.nextName();
+                myTree.nextString();
+                myTree.nextName();
+                System.out.println(myTree.peek().name());
+                if(!myTree.peek().name().equals("STRING")){
+                    myId = myTree.nextString();
+                }else{
                     myTree.nextString();
                     myTree.nextName();
                     myId = myTree.nextString();
-                    System.out.println(myId);
-                    }
-                return myId;
-                  } catch (IOException e) { e.printStackTrace();}
+                }
 
-            } else{
+
+                System.out.println(myId);
+            }
             return myId;
+
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
         return myId;
