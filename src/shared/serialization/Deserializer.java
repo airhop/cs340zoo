@@ -141,20 +141,23 @@ public class Deserializer {
                                 break;
                             case "cities":
                                 myTree.beginArray();
-                                myTree.beginObject();
-                                myTree.nextName();
-                                owner = myTree.nextInt();
-                                myTree.nextName();//location
-                                myTree.beginObject();
-                                myTree.nextName();
-                                myDir = myTree.nextString();
-                                myTree.nextName();//x
-                                xValue = myTree.nextInt();
-                                myTree.nextName();//y
-                                yValue = myTree.nextInt();
-                                myMap.getBuildings().add(new City(new VertexLocation(new HexLocation(xValue, yValue), VertexDirection.valueOf(myDir)), owner));
-                                myTree.endObject();
-                                myTree.endObject();
+                                while (!myTree.peek().name().equals("END_ARRAY")) {
+                                    myTree.beginObject();
+                                    myTree.nextName();
+                                    owner = myTree.nextInt();
+                                    myTree.nextName();//location
+                                    myTree.beginObject();
+                                    myTree.nextName();
+                                    myDir = myTree.nextString();
+                                    myTree.nextName();//x
+                                    xValue = myTree.nextInt();
+                                    myTree.nextName();//y
+                                    yValue = myTree.nextInt();
+                                    myMap.getBuildings().add(new City(new VertexLocation(new HexLocation(xValue, yValue), VertexDirection.valueOf(myDir)), owner));
+                                    myTree.endObject();
+                                    myTree.endObject();
+//                                    System.out.println(myTree.peek().name());
+                                }
                                 myTree.endArray();
 //                                System.out.println(myTree.peek().name());
                                 break;
