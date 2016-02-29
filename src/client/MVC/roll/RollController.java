@@ -32,14 +32,14 @@ public class RollController extends Controller implements IRollController {
         super(view);
         Facade.getInstance().addObserver(this);
         setResultView(resultView);
-        timer = new Timer(5000, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                rollDice();
-                timer.restart();
-            }
-        });
-        timer.start();
+        //timer = new Timer(5000, new ActionListener() {
+        //    @Override
+        //    public void actionPerformed(ActionEvent e) {
+        //        rollDice();
+        //        timer.restart();
+        //    }
+        //});
+        //timer.start();
     }
 
     public IRollResultView getResultView() {

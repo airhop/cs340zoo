@@ -375,7 +375,7 @@ public class GameModel extends Observable{
 
     public boolean canFinishTurn(int pid)
     {
-        if(turnTracker.getStatus().equalsIgnoreCase("playing"))
+        if(turnTracker.getStatus().equalsIgnoreCase("playing") || turnTracker.getStatus().equalsIgnoreCase("Robbing"))
            return (turnTracker.getCurrentPlayer() == pid);
         return false;
     }
