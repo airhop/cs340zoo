@@ -2,14 +2,19 @@ package client.model.history;
 
 public class Chat 
 {
-
-
 	private MessageList ChatList;
 
 	public Chat(){
 		ChatList = new MessageList();
 	}
 
+	public Chat(MessageList ml)
+	{
+		if(ml == null)
+			ChatList = new MessageList();
+		else
+			ChatList = ml;
+	}
 	/**
 	 * for printing or returning the list, however the history will need it.
 	*/

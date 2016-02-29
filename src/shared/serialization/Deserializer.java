@@ -4,6 +4,8 @@ import client.model.GameModel;
 import client.model.bank.Bank;
 import client.model.bank.DevCardList;
 import client.model.bank.ResourceList;
+import client.model.history.Chat;
+import client.model.history.Log;
 import client.model.history.MessageLine;
 import client.model.history.MessageList;
 import client.model.map.Map;
@@ -44,6 +46,7 @@ public class Deserializer {
         ArrayList<Player> players = myModel.getPlayers();
         Player currentPlayer;
         MessageList myMessages = new MessageList();
+        MessageList myLog = new MessageList();
         String source = "";
         String message = "";
         TurnTracker turnTracker = new TurnTracker();
@@ -54,7 +57,7 @@ public class Deserializer {
         JsonParser myParse = new JsonParser();
         JsonElement myEle = myParse.parse(jsonString);
         JsonTreeReader myTree = new JsonTreeReader(myEle);
-       System.out.println(jsonString);
+        System.out.println(jsonString);
         JsonObject myObj = new JsonObject();
         String action = "";
         String myCurrent = "";
@@ -300,7 +303,7 @@ public class Deserializer {
                                     source = myTree.nextString();
                                     myTree.nextName();
                                     message = myTree.nextString();
-                                    myMessages.addMessage(new MessageLine(source, message));
+                                    myLog.addMessage(new MessageLine(source, message));
                                     myTree.endObject();
 //                                    System.out.println(myTree.peek().name());
                                 }
@@ -392,6 +395,8 @@ public class Deserializer {
         myModel.setTt(turnTracker);
         myModel.setBank(myBank);
         myModel.setPlayers(players);
+        myModel.setChat(new Chat(myMessages));
+        myModel.setLog(new Log(myLog));
 
         gameNew.updateGameModel(myModel);
         return gameNew;

@@ -519,9 +519,11 @@ public class Map
 	 */
 	public List<Port> getPlayerPorts(int playerID)
 	{
+
 		List<Port> playerPorts = new ArrayList<Port>();
 		for(Port port: ports)
 		{
+			System.out.println(port.getOwner() + " " + playerID);
 			if(port.getOwner() == playerID)
 			{
 				playerPorts.add(port);
@@ -529,6 +531,7 @@ public class Map
 		}
 		return playerPorts;
 	}
+
 	public void setPorts(ArrayList<Port> ports) {
 		this.ports = ports;
 	}
