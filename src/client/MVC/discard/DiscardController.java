@@ -79,11 +79,11 @@ public class DiscardController extends Controller implements IDiscardController 
     @Override
     public void discard()
     {
-        int pid = Facade.getInstance().getPlayerID();
+        int playerIndex = Facade.getInstance().getPlayerIndex();
         ResourceList rl = new ResourceList(brick, ore, sheep, wheat, wood);
 
         //canDiscardCards is called by Discard cards so no need to call it twice
-        Facade.getInstance().DiscardCards(pid, rl);
+        Facade.getInstance().DiscardCards(playerIndex, rl);
         getDiscardView().closeModal();
     }
 
