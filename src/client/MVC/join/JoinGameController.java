@@ -124,12 +124,6 @@ public class JoinGameController extends Controller implements IJoinGameControlle
     public void createNewGame() {
     //    System.out.println("createNewGame");
 
-        if(!getNewGameView().getRandomlyPlaceHexes() || !getNewGameView().getRandomlyPlaceNumbers() || !getNewGameView().getUseRandomPorts())
-        {
-            JOptionPane.showMessageDialog(new JFrame(), "Error please press all of the buttons!!!", "Inane error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-
         CreateGamePassObject gameNew = new CreateGamePassObject();
         gameNew.setGameName(getNewGameView().getTitle());
         gameNew.setRandomNumbers(getNewGameView().getRandomlyPlaceNumbers());
@@ -191,7 +185,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
             }
 
             getJoinGameView().setGames(myType, Facade.getInstance().getCurrentPlayerInfo());
-            getJoinGameView().showModal();
+          //  getJoinGameView().showModal();
         }
         //update the game list with the polller?  allow to retrieve newly created games?Sam
     }
