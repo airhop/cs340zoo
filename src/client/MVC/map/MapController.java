@@ -4,6 +4,7 @@ import client.MVC.base.*;
 import client.MVC.data.*;
 import client.facade.Facade;
 import client.model.GameModel;
+import shared.definitions.CatanColor;
 import shared.definitions.HexType;
 import shared.definitions.PieceType;
 import shared.definitions.PortType;
@@ -141,10 +142,6 @@ public class MapController extends Controller implements IMapController {
             return;
         }
         String tester = gm.getTurnTracker().getStatus();
-        if(tester.equalsIgnoreCase("Rolling")){
-            Facade.getInstance().setCloseMap(true);
-//            getView().closeModal();
-        }
         //with input, it will change based on the updating to work with everyone else
         // System.out.println("Current State: " + state.getName());
 
@@ -155,9 +152,6 @@ public class MapController extends Controller implements IMapController {
             tester = "YUM";
         }
         if(tester.equalsIgnoreCase("Playing")){
-            if(!Facade.getInstance().isCloseMap()){
-//                getView().showModel();
-            }
             tester = "YUM";
         }
         if(tester.equalsIgnoreCase("Discarding")){
@@ -225,13 +219,7 @@ public class MapController extends Controller implements IMapController {
     }
 
     public void placeSettlement(VertexLocation vertLoc) {
-//        roundNum++;
-//        if(roundNum == 2){
-//            getView().closeModal();
-//        }
         state.placeSettlement(vertLoc);
-
-//        getView().placeSettlement(vertLoc, CatanColor.ORANGE);
     }
 
     public void placeCity(VertexLocation vertLoc) {
@@ -247,7 +235,7 @@ public class MapController extends Controller implements IMapController {
 
     public void startMove(PieceType pieceType, boolean isFree, boolean allowDisconnected) {
         state.startMove(pieceType, isFree, allowDisconnected);
-//        getView().startDrop(pieceType, CatanColor.ORANGE, true);
+        getView().startDrop(pieceType, CatanColor.ORANGE, true);
     }
 
     public void cancelMove() {
