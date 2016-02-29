@@ -258,10 +258,12 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
             if(portIsThree)
             {
                 numBrick = 3;
+                this.ratio = 3;
             }
             else if(portIsBrick)
             {
                 numBrick = 2;
+                this.ratio = 2;
             }
             getTradeOverlay().selectGiveOption(resource,numBrick);
         }
@@ -271,10 +273,12 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
             if(portIsThree)
             {
                 numOre = 3;
+                this.ratio = 3;
             }
             else if(portIsOre)
             {
                 numOre = 2;
+                this.ratio = 2;
             }
             getTradeOverlay().selectGiveOption(resource,numOre);
         }
@@ -284,10 +288,12 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
             if(portIsThree)
             {
                 numWheat = 3;
+                this.ratio = 3;
             }
             else if(portIsWheat)
             {
                 numWheat = 2;
+                this.ratio = 2;
             }
             getTradeOverlay().selectGiveOption(resource,numWheat);
         }
@@ -297,10 +303,12 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
             if(portIsThree)
             {
                 numWood = 3;
+                this.ratio = 3;
             }
             else if(portIsWood)
             {
                 numWood = 2;
+                this.ratio = 2;
             }
             getTradeOverlay().selectGiveOption(resource,numWood);
         }
@@ -310,10 +318,12 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
             if(portIsThree)
             {
                 numSheep = 3;
+                this.ratio = 3;
             }
             else if(portIsSheep)
             {
                 numSheep = 2;
+                this.ratio = 2;
             }
             getTradeOverlay().selectGiveOption(resource,numSheep);
         }
