@@ -715,7 +715,11 @@ public class Facade {
         }
         return false;
     }
+    public List<VertexObject> getVObjectsAroundHexlocation(HexLocation location)
+    {
+        return game.getVObjectsAroundHexlocation(location);
 
+    }
     public boolean isPlayerWaiting() {
         return playerWaiting;
     }

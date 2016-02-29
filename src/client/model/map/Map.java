@@ -203,6 +203,7 @@ public class Map
 	{
 		Hex hex = new Hex(x,y);
 		//hex.setResource(HexType.DESERT.toString());
+		relocateRober(hex.getLocation());
 		hexes.put(hex.getLocation(), hex);
 	}
 
@@ -459,10 +460,15 @@ public class Map
 	public boolean canRelocateRobber(HexLocation targetHex)
 	{
 		//HexLocation targetHex = new HexLocation(x,y);
-		if(targetHex == robber.getHl())
+		if(targetHex.getX() == robber.getHl().getX() && targetHex.getY() == robber.getHl().getY()) {
+			System.out.println("HES ALREADY HERE DUMMY");
 			return false;
-		if (HexType.convert(hexes.get(targetHex).resource) == HexType.WATER)
+		}
+		if (HexType.convert(hexes.get(targetHex).resource) == HexType.WATER) {
+			System.out.println("THIS IS WATER YOU IDIOT");
+
 			return false;
+		}
 
 		return true;
 	}
@@ -510,6 +516,25 @@ public class Map
 
 	public ArrayList<Port> getPorts() {
 		return ports;
+	}
+
+	public ArrayList<Port> checkPorts(int pid)
+	{
+		ArrayList<Port> passBack = new ArrayList<Port>();
+		for(VertexObject vo :buildings)
+		{
+			if(vo.getOwner() == pid)
+			{
+				for(Port port: ports)
+				{
+					EdgeLocation el = new EdgeLocation(port.getLocation(), port.getDirection());
+					if(placable(el, vo.getLocation()))
+						passBack.add(port);
+
+				}
+			}
+		}
+		return passBack;
 	}
 
 	/**
@@ -695,5 +720,43 @@ public class Map
 		System.out.println("Oops " + settlementDir);
 
 		return false;
+	}
+
+	public List<VertexObject> getVObjectsAroundHexlocation(HexLocation landing)
+	{
+		HexLocation landingSW = new HexLocation(landing.getX() - 1, landing.getY() + 1);
+		HexLocation landingS = new HexLocation(landing.getX(), landing.getY() + 1);
+		HexLocation landingSE = new HexLocation(landing.getX() + 1, landing.getY());
+		ArrayList<VertexObject> returningBuildings = new ArrayList<VertexObject>();
+
+		for(VertexObject vertex : buildings)
+		{
+			HexLocation hl = vertex.getLocation().getHexLoc();
+			if(hl == landing)
+			{
+				VertexDirection vd = vertex.getLocation().getDir();
+				if(vd == VertexDirection.E || vd == VertexDirection.NE || vd == VertexDirection.NW || vd == VertexDirection.W)
+					returningBuildings.add(vertex);
+			}
+			else if(hl == landingSW)
+			{
+				VertexDirection vd = vertex.getLocation().getDir();
+				if(vd == VertexDirection.E || vd == VertexDirection.NE)
+					returningBuildings.add(vertex);
+			}
+			else if(hl == landingS)
+			{
+				VertexDirection vd = vertex.getLocation().getDir();
+				if(vd == VertexDirection.NE || vd == VertexDirection.NW)
+					returningBuildings.add(vertex);
+			}
+			else if(hl == landingSE)
+			{
+				VertexDirection vd = vertex.getLocation().getDir();
+				if(vd == VertexDirection.NW || vd == VertexDirection.W)
+					returningBuildings.add(vertex);
+			}
+		}
+		return returningBuildings;
 	}
 }

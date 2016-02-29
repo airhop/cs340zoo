@@ -2,6 +2,8 @@ package client.MVC.map;
 
 import client.MVC.data.RobPlayerInfo;
 import client.facade.Facade;
+import client.model.player.Player;
+import shared.definitions.CatanColor;
 import shared.definitions.PieceType;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
@@ -20,6 +22,19 @@ public class StateRobbing extends StateAbstract
         view = v;
         robView = rv;
         robView.showModal();
+        v.startDrop(PieceType.ROBBER, CatanColor.BLUE, false);
+        RobPlayerInfo[] players = new RobPlayerInfo[3];
+        int i=0;
+        int j=0;
+        for(Player player : Facade.getInstance().getGameModel().getPlayers())
+        {
+            if(Facade.getInstance().getCurrentPlayerInfo().getId() != j) {
+                players[i] = new RobPlayerInfo(player.getPlayerID(), player.getPlayerIndex(), player.getUsername(), CatanColor.convert(player.getColor())/*CatanColor.BLUE*/, 2);
+                i++;
+            }
+            j++;
+        }
+        rv.setPlayers(players);
     }
 
     //if soldier is played can the cancelMove possibly be called, because during a roll 7 it can
@@ -28,6 +43,9 @@ public class StateRobbing extends StateAbstract
     public void robPlayer(RobPlayerInfo victim)
     {
         this.victim = victim.getId();
+        int pid = Facade.getInstance().getPlayerIndex();
+        Facade.getInstance().rob(pid, victim.getId(), Facade.getInstance().getGameModel().getMap().getRobber().getHl());
+        robView.closeModal();
     }
 
     @Override
@@ -79,6 +97,7 @@ public class StateRobbing extends StateAbstract
     @Override
     public void placeRobber(HexLocation hexLoc)
     {
+        Facade.getInstance().getGameModel().relocateRobber(hexLoc);
         int playerIndex = Facade.getInstance().getGameIndex();
         Facade.getInstance().rob(playerIndex, victim, hexLoc);
         robView.closeModal();

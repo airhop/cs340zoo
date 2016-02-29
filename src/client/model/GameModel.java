@@ -464,6 +464,10 @@ public class GameModel extends Observable{
             return false;
         return players.get(pid).canBuyDevcard();
     }
+    public void relocateRobber(HexLocation hl)
+    {
+        map.relocateRober(hl);
+    }
 
     /**
      * Robs a player of one resource card
@@ -517,5 +521,10 @@ public class GameModel extends Observable{
 
     public void setGameList(List<GameInfo> gameList) {
         this.gameList = gameList;
+    }
+    public List<VertexObject> getVObjectsAroundHexlocation(HexLocation location)
+    {
+
+        return map.getVObjectsAroundHexlocation(location);
     }
 }
