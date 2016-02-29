@@ -105,6 +105,10 @@ public class PlayerWaitingView extends OverlayView implements IPlayerWaitingView
             }
         }
     };
+    @Override
+    public String toString(){
+        return "PlayerWaitingView";
+    }
 
     @Override
     public IPlayerWaitingController getController() {

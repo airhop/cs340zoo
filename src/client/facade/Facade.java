@@ -573,7 +573,7 @@ public class Facade {
         return game.canDiscardCards(pid, rl);
     }
 
-    public void DiscardCards(int pid, ResourceList rl) {
+    public boolean DiscardCards(int pid, ResourceList rl) {
         if (game != null) {
             if (game.canDiscardCards(pid, rl))
                 try {
@@ -582,6 +582,7 @@ public class Facade {
                     e.printStackTrace();
                 }
         }
+        return false;
     }
 
     /**

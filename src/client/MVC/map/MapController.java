@@ -225,10 +225,10 @@ public class MapController extends Controller implements IMapController {
     }
 
     public void placeSettlement(VertexLocation vertLoc) {
-        roundNum++;
-        if(roundNum == 2){
-            getView().closeModal();
-        }
+//        roundNum++;
+//        if(roundNum == 2){
+//            getView().closeModal();
+//        }
         state.placeSettlement(vertLoc);
 
 //        getView().placeSettlement(vertLoc, CatanColor.ORANGE);
