@@ -159,6 +159,7 @@ public class MapController extends Controller implements IMapController {
             tester = "YUM";
         }
         String testState = state.getName();
+
         changeState(gm.getTurnTracker().getStatus());
 //        if (!changeState(gm.getTurnTracker().getStatus()))
 //            return;

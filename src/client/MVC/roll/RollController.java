@@ -44,6 +44,7 @@ public class RollController extends Controller implements IRollController {
     @Override
     public void rollDice()
     {
+
         Random r = new Random();
         int x = r.nextInt(6);  //0 - 5
         int y = r.nextInt(6); // 0 - 5
@@ -65,7 +66,6 @@ public class RollController extends Controller implements IRollController {
     @Override
     public void update(Observable o, Object arg)
     {
-        GameModel gm = (GameModel) o;
         if(!Facade.getInstance().isReady())
             return;
         if((gm.getTurnTracker().getStatus().equalsIgnoreCase("Rolling") && !waiting))

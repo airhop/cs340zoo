@@ -112,7 +112,7 @@ public class Facade {
                 myStop.start();
                 (observers.get(i)).update(game, "");
                 myStop.stop();
-               // System.out.println("Update Time" + i + " = " + myStop.getElapsedTime());
+                System.out.println("Update Time" + i + " = " + myStop.getElapsedTime());
             }
         }
     }
@@ -129,6 +129,7 @@ public class Facade {
         ResourceList playerResources = curPlayer.getResources();
         resources.setWood(playerResources.getWood());
         resources.setBrick(playerResources.getBrick());
+        resources.setWheat(playerResources.getWheat());
         resources.setSheep(playerResources.getSheep());
         resources.setOre(playerResources.getOre());
         resources.setSoldiers(curPlayer.getSoldiers());
