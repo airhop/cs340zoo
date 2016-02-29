@@ -151,6 +151,9 @@ public class MapController extends Controller implements IMapController {
         if(tester.equalsIgnoreCase("Playing")){
             tester = "YUM";
         }
+        if(tester.equalsIgnoreCase("Discarding")){
+            tester = "YUM";
+        }
         String testState = state.getName();
         changeState(gm.getTurnTracker().getStatus());
 //        if (!changeState(gm.getTurnTracker().getStatus()))
