@@ -102,8 +102,23 @@ public class ResourceBarController extends Controller implements IResourceBarCon
             getView().setElementAmount(ResourceBarElement.ROAD,currentResources.getRoad());
             getView().setElementAmount(ResourceBarElement.SETTLEMENT,currentResources.getSettlement());
             getView().setElementAmount(ResourceBarElement.CITY,currentResources.getCity());
+            if(currentResources.getSheep() > 0 && currentResources.getWheat() > 0 && currentResources.getOre() > 0){
+                getView().setElementEnabled(ResourceBarElement.BUY_CARD, true);
+            }else{
+                getView().setElementEnabled(ResourceBarElement.BUY_CARD, false);
+            }
             getView().setElementAmount(ResourceBarElement.BUY_CARD,currentResources.getBuyCard());
+            if(currentResources.getPlayCard() > 0){
+                getView().setElementEnabled(ResourceBarElement.PLAY_CARD, true);
+            }else{
+                getView().setElementEnabled(ResourceBarElement.PLAY_CARD, true);
+            }
             getView().setElementAmount(ResourceBarElement.PLAY_CARD,currentResources.getPlayCard());
+            if(currentResources.getSoldiers() > 0){
+                getView().setElementEnabled(ResourceBarElement.SOLDIERS, true);
+            }else{
+                getView().setElementEnabled(ResourceBarElement.SOLDIERS, false);
+            }
             getView().setElementAmount(ResourceBarElement.SOLDIERS,currentResources.getSoldiers());
 //            getView().setElementEnabled(ResourceBarElement.ROAD, true);
         }

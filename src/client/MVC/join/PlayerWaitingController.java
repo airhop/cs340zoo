@@ -71,8 +71,12 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
         Facade.getInstance().gameAddAI();
         Facade.getInstance().retrieveGameModel();
         if (getNumPlayers() < 4) {
-
-            getView().showModal();
+            if(!getView().isModalShowing()){
+                getView().showModal();
+            }else{
+                getView().closeModal();
+                getView().showModal();
+            }
         } else {
             getView().closeModal();
         }
@@ -97,6 +101,9 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
         }else{
             getView().setPlayers(playersInfo());
             if(!getView().isModalShowing()){
+                getView().showModal();
+            }else{
+                getView().closeModal();
                 getView().showModal();
             }
         }

@@ -155,6 +155,7 @@ public class Facade {
         resources.setCity(curPlayer.getCities());
         resources.setRoad(curPlayer.getRoads());
         resources.setSettlement(curPlayer.getSettlements());
+        resources.setPlayCard(0);
         return resources;
     }
 
