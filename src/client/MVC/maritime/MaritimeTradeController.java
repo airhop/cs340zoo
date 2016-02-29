@@ -35,6 +35,7 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
         super(tradeView);
 
         setTradeOverlay(tradeOverlay);
+        Facade.getInstance().addObserver(this);
     }
 
     public IMaritimeTradeView getTradeView() {
