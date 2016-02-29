@@ -7,6 +7,7 @@ import client.model.GameModel;
 import client.model.bank.ResourceList;
 import shared.definitions.ResourceType;
 
+import javax.swing.*;
 import java.util.Observable;
 
 
@@ -17,6 +18,8 @@ public class DiscardController extends Controller implements IDiscardController 
 
     private IWaitView waitView;
     int brick, ore, sheep, wheat, wood;
+    int discardamount;
+    ResourceList rl;
 
     /**
      * DiscardController constructor
@@ -29,11 +32,18 @@ public class DiscardController extends Controller implements IDiscardController 
         super(view);
 
         this.waitView = waitView;
+        refresh();
+    }
+
+    public void refresh()
+    {
         brick = 0;
         ore = 0;
         sheep = 0;
         wheat = 0;
         wood = 0;
+        discardamount = 0;
+        rl = new ResourceList(0,0,0,0,0);
     }
 
     public IDiscardView getDiscardView() {
@@ -74,6 +84,7 @@ public class DiscardController extends Controller implements IDiscardController 
             default:
                 System.out.println("oops!!!");
         }
+        verify();
     }
 
     @Override
@@ -83,8 +94,76 @@ public class DiscardController extends Controller implements IDiscardController 
         ResourceList rl = new ResourceList(brick, ore, sheep, wheat, wood);
 
         //canDiscardCards is called by Discard cards so no need to call it twice
-        Facade.getInstance().DiscardCards(playerIndex, rl);
-        getDiscardView().closeModal();
+        if(Facade.getInstance().DiscardCards(playerIndex, rl))
+        {
+            refresh();
+            getDiscardView().closeModal();
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(new JFrame(), "Server had some issues . . .", "Inane error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    public void verify()
+    {
+        int r = rl.getBrick();
+        boolean increase = false;
+        boolean decrease = false;
+        getDiscardView().setResourceDiscardAmount(ResourceType.BRICK, r);
+        if(brick >= 0 && brick < r)
+            increase = true;
+        if(brick <= r && brick > 0)
+            decrease = true;
+        getDiscardView().setResourceAmountChangeEnabled(ResourceType.BRICK, increase, decrease);
+
+        r = rl.getOre();
+        increase = false;
+        decrease = false;
+        getDiscardView().setResourceDiscardAmount(ResourceType.ORE, r);
+        if(ore >= 0 && ore < r)
+            increase = true;
+        if(ore <= r && ore > 0)
+            decrease = true;
+        getDiscardView().setResourceAmountChangeEnabled(ResourceType.ORE, increase, decrease);
+
+        r = rl.getSheep();
+        increase = false;
+        decrease = false;
+        getDiscardView().setResourceDiscardAmount(ResourceType.SHEEP, r);
+        if(sheep >= 0 && sheep < r)
+            increase = true;
+        if(sheep <= r && sheep > 0)
+            decrease = true;
+        getDiscardView().setResourceAmountChangeEnabled(ResourceType.SHEEP, increase, decrease);
+
+        r = rl.getWheat();
+        increase = false;
+        decrease = false;
+        getDiscardView().setResourceDiscardAmount(ResourceType.WHEAT, r);
+        if(wheat >= 0 && wheat < r)
+            increase = true;
+        if(wheat <= r && wheat > 0)
+            decrease = true;
+        getDiscardView().setResourceAmountChangeEnabled(ResourceType.WHEAT, increase, decrease);
+
+        r = rl.getWood();
+        increase = false;
+        decrease = false;
+        getDiscardView().setResourceDiscardAmount(ResourceType.WOOD, r);
+        if(wood >= 0 && wood < r)
+            increase = true;
+        if(wood <= r && wood > 0)
+            decrease = true;
+        getDiscardView().setResourceAmountChangeEnabled(ResourceType.WOOD, increase, decrease);
+
+        r = brick+ore+sheep+wheat+wood;
+        if(r == discardamount)
+            getDiscardView().setDiscardButtonEnabled(true);
+        else
+            getDiscardView().setDiscardButtonEnabled(false);
+
+
     }
 
     @Override
@@ -92,8 +171,14 @@ public class DiscardController extends Controller implements IDiscardController 
     {
         //nothing to update
         GameModel gm = (GameModel) o;
-        if(gm.getTurnTracker().getStatus().equalsIgnoreCase("Discard"))
+        ResourceList rl = gm.getPlayers().get(gm.getCurrentPlayer().getPlayerIndex()).getResources();
+
+        if(gm.getTurnTracker().getStatus().equalsIgnoreCase("Discard") && rl.size() > 7)
+        {
+            discardamount = rl.size()/2;
+            verify();
             getDiscardView().showModal();
+        }
       //  else
       //      getDiscardView().closeModal();
     }

@@ -315,10 +315,11 @@ public class Map
 			return false;
 		if(HexType.convert(h.getResource())== HexType.WATER)
 		{
-			return roadOceanPlayable(el);
+			if(roadOceanPlayable(el))
+				return true;
 		}
 
-		if(extraPlacable(el))
+		if(!extraPlacable(el.getNormalizedLocation()))
 			return true;
 
 		return false;
@@ -770,8 +771,8 @@ public class Map
 	public boolean extraPlacable(EdgeLocation el)
 	{
 		if(buildings.size() == 0)
-			return true;
-		el = el.getNormalizedLocation();
+			return false;
+		System.out.println(el.getDir());
 		VertexLocation vl, vl2;
 		switch(el.getDir())
 		{
@@ -794,7 +795,7 @@ public class Map
 				return false;
 			default:
 				vl = new VertexLocation(el.getHexLoc(), VertexDirection.NE);
-				if(canPlaceSettlement(vl))
+				if(canPlaceSettlement( vl))
 					return true;
 				vl2 = new VertexLocation(el.getHexLoc(), VertexDirection.NW);
 				if(canPlaceSettlement(vl2))

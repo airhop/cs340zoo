@@ -33,6 +33,7 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
     @Override
     public void endTurn()
     {
+        System.out.println("hey!!");
         Facade.getInstance().FinishTurn(Facade.getInstance().getPlayerIndex());
         getView().updateGameState("Finally . . .", false);
     }

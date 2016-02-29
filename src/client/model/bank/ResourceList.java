@@ -114,4 +114,9 @@ public class ResourceList {
     }
 
 
+    public int size()
+    {
+        return getBrick() + getOre() + getSheep() + getWheat() + getWood();
+    }
+
 }

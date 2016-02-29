@@ -122,7 +122,7 @@ public class Facade {
                 myStop.start();
                 (observers.get(i)).update(game, "");
                 myStop.stop();
-                System.out.println("Update Time" + i + " = " + myStop.getElapsedTime());
+               // System.out.println("Update Time" + i + " = " + myStop.getElapsedTime());
             }
         }
     }
@@ -573,15 +573,18 @@ public class Facade {
         return game.canDiscardCards(pid, rl);
     }
 
-    public void DiscardCards(int pid, ResourceList rl) {
+    public boolean DiscardCards(int pid, ResourceList rl) {
         if (game != null) {
             if (game.canDiscardCards(pid, rl))
                 try {
                     proxy.discardCards(pid, rl);
+                    return true;
                 } catch (InsufficientResourcesException e) {
                     e.printStackTrace();
+                    return false;
                 }
         }
+        return false;
     }
 
     /**
