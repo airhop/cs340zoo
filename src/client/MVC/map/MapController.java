@@ -142,7 +142,7 @@ public class MapController extends Controller implements IMapController {
         String tester = gm.getTurnTracker().getStatus();
         if(tester.equalsIgnoreCase("Rolling")){
             Facade.getInstance().setCloseMap(true);
-            getView().closeModal();
+//            getView().closeModal();
         }
         //with input, it will change based on the updating to work with everyone else
         // System.out.println("Current State: " + state.getName());
@@ -155,7 +155,7 @@ public class MapController extends Controller implements IMapController {
         }
         if(tester.equalsIgnoreCase("Playing")){
             if(!Facade.getInstance().isCloseMap()){
-                getView().showModel();
+//                getView().showModel();
             }
             tester = "YUM";
         }

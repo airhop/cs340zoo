@@ -87,8 +87,10 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
         CurrentPlayer myPlayer = Facade.getInstance().getCurrentPlayer();
         if (Facade.getInstance().gamesList().get(myPlayer.getGameId()).getPlayers().size() >= 4) {
             getView().setPlayers(playersInfo());
+            if(Facade.getInstance().isPlayerWaiting()){
+                getView().closeModal();
+            }
             Facade.getInstance().setPlayerWaiting(false);
-            getView().closeModal();
         }else{
             getView().setPlayers(playersInfo());
             getView().showModal();
