@@ -129,6 +129,7 @@ public class Facade {
         ResourceList playerResources = curPlayer.getResources();
         resources.setWood(playerResources.getWood());
         resources.setBrick(playerResources.getBrick());
+        resources.setWheat(playerResources.getWheat());
         resources.setSheep(playerResources.getSheep());
         resources.setOre(playerResources.getOre());
         resources.setSoldiers(curPlayer.getSoldiers());
