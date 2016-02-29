@@ -765,6 +765,8 @@ public class Map
 
 	public boolean extraPlacable(EdgeLocation el)
 	{
+		if(buildings.size() == 0)
+			return true;
 		el = el.getNormalizedLocation();
 		VertexLocation vl, vl2;
 		switch(el.getDir())
@@ -772,26 +774,26 @@ public class Map
 			//NW NE N
 			case NW:
 				vl = new VertexLocation(el.getHexLoc(), VertexDirection.W);
-				if(placable(el, vl))
+				if(canPlaceSettlement(vl))
 					return true;
 				vl2 = new VertexLocation(el.getHexLoc(), VertexDirection.NW);
-				if(placable(el, vl2))
+				if(canPlaceSettlement(vl2))
 					return true;
 				return false;
 			case NE:
 				vl = new VertexLocation(el.getHexLoc(), VertexDirection.E);
-				if(placable(el, vl))
+				if(canPlaceSettlement(vl))
 					return true;
 				vl2 = new VertexLocation(el.getHexLoc(), VertexDirection.NE);
-				if(placable(el, vl2))
+				if(canPlaceSettlement(vl2))
 					return true;
 				return false;
 			default:
 				vl = new VertexLocation(el.getHexLoc(), VertexDirection.NE);
-				if(placable(el, vl))
+				if(canPlaceSettlement(vl))
 					return true;
 				vl2 = new VertexLocation(el.getHexLoc(), VertexDirection.NW);
-				if(placable(el, vl2))
+				if(canPlaceSettlement(vl2))
 					return true;
 				return false;
 		}

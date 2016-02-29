@@ -85,6 +85,9 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
             return;
         GameModel game = Facade.getInstance().getGameModel();
         CurrentPlayer myPlayer = Facade.getInstance().getCurrentPlayer();
+        String[] AIs = new String[1];
+        AIs[0] = "LARGEST_ARMY";
+        getView().setAIChoices(AIs);
         if (Facade.getInstance().gamesList().get(myPlayer.getGameId()).getPlayers().size() >= 4) {
             getView().setPlayers(playersInfo());
             if(Facade.getInstance().isPlayerWaiting()){
