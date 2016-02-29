@@ -87,7 +87,11 @@ public class MapController extends Controller implements IMapController {
     }
 
     private boolean changeState(String s) {
-        // System.out.println("Desired State: " + s);
+        if (s.equalsIgnoreCase("RoadBuilding")){
+            String test = s;
+        }
+
+            // System.out.println("Desired State: " + s);
 //if it is in default stage go ahead and change it
         if (state.getName().equalsIgnoreCase("default")) {
             if (s.equalsIgnoreCase("FirstRound") || s.equalsIgnoreCase("SecondRound"))
@@ -101,7 +105,6 @@ public class MapController extends Controller implements IMapController {
             else
                 state = new StateDefault(getView(), robView);
             //still need to reset the map
-
             return true;
         }
 
@@ -140,6 +143,7 @@ public class MapController extends Controller implements IMapController {
         //with input, it will change based on the updating to work with everyone else
         // System.out.println("Current State: " + state.getName());
         String tester = gm.getTurnTracker().getStatus();
+        String testState = state.getName();
         changeState(gm.getTurnTracker().getStatus());
 //        if (!changeState(gm.getTurnTracker().getStatus()))
 //            return;

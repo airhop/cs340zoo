@@ -10,18 +10,18 @@ import shared.locations.VertexLocation;
 public abstract class StateAbstract
 {
 //don't implement . . .
-    public boolean canPlaceRoad(EdgeLocation edgeLoc) {return false;}
-    public boolean canPlaceSettlement(VertexLocation vertLoc){return false;}
-    public boolean canPlaceCity(VertexLocation vertLoc) {return false;}
-    public boolean canPlaceRobber(HexLocation hexLoc) {return false;}
-    public void placeRoad(EdgeLocation edgeLoc){}
-    public void placeSettlement(VertexLocation vertLoc){}
-    public void placeCity(VertexLocation vertLoc) {}
-    public void placeRobber(HexLocation hexLoc) {}
-    public void startMove(PieceType pieceType, boolean isFree, boolean allowDisconnected){}
-    public void cancelMove(){}
-    public void robPlayer(RobPlayerInfo victim) {}
-    public void playSoldierCard() {}
-    public void playRoadBuildingCard() {}
-    public String getName() { return ""; }
+    abstract public boolean canPlaceRoad(EdgeLocation edgeLoc);
+    abstract public boolean canPlaceSettlement(VertexLocation vertLoc);
+    abstract public boolean canPlaceCity(VertexLocation vertLoc);
+    abstract public boolean canPlaceRobber(HexLocation hexLoc);
+    abstract public void placeRoad(EdgeLocation edgeLoc);
+    abstract public void placeSettlement(VertexLocation vertLoc);
+    abstract public void placeCity(VertexLocation vertLoc);
+    abstract public void placeRobber(HexLocation hexLoc);
+    abstract public void startMove(PieceType pieceType, boolean isFree, boolean allowDisconnected);
+    abstract public void cancelMove();
+    abstract public void robPlayer(RobPlayerInfo victim);
+    abstract public void playSoldierCard();
+    abstract public void playRoadBuildingCard();
+    abstract public String getName();
 }

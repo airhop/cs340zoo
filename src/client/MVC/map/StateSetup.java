@@ -36,14 +36,14 @@ public class StateSetup extends StateAbstract
 //        else
 //            startMove(PieceType.SETTLEMENT, true, false);
     }
-
+    @Override
     public boolean canPlaceRoad(EdgeLocation edgeLoc)
     {
         if(setRoad)
             return false;
         return Facade.getInstance().canPlaceRoadSetup(edgeLoc.getNormalizedLocation());
     }
-
+    @Override
     public boolean canPlaceSettlement(VertexLocation vertLoc)
     {
         if(setSettlement)
@@ -51,6 +51,17 @@ public class StateSetup extends StateAbstract
       return Facade.getInstance().canPlaceSettlement(vertLoc.getNormalizedLocation());
     }
 
+    @Override
+    public boolean canPlaceCity(VertexLocation vertLoc) {
+        return false;
+    }
+
+    @Override
+    public boolean canPlaceRobber(HexLocation hexLoc) {
+        return false;
+    }
+
+    @Override
     public void placeRoad(EdgeLocation edgeLoc)
     {
         view.placeRoad(edgeLoc, color);
@@ -59,7 +70,7 @@ public class StateSetup extends StateAbstract
         Facade.getInstance().retrieveGameModel();
         startMove(PieceType.SETTLEMENT, true, false);
     }
-
+    @Override
     public void placeSettlement(VertexLocation vertLoc)
     {
         view.placeSettlement(vertLoc, color);
@@ -69,16 +80,47 @@ public class StateSetup extends StateAbstract
         Facade.getInstance().retrieveGameModel();
     }
 
+    @Override
+    public void placeCity(VertexLocation vertLoc) {
+
+    }
+
+    @Override
+    public void placeRobber(HexLocation hexLoc) {
+
+    }
+
+    @Override
     public void startMove(PieceType pieceType, boolean isFree, boolean allowDisconnected)
     {
         color = Facade.getInstance().getPlayerColor(Facade.getInstance().getCurrentPlayer().getPlayerId());
         view.startDrop(pieceType, color, false);
     }
 
+    @Override
+    public void cancelMove() {
+
+    }
+
+    @Override
+    public void robPlayer(RobPlayerInfo victim) {
+
+    }
+
+    @Override
+    public void playSoldierCard() {
+
+    }
+
+    @Override
+    public void playRoadBuildingCard() {
+
+    }
+
     public boolean finishedSetup()
     {
         return (setRoad && setSettlement);
     }
-
+    @Override
     public String getName() {return "Setup"; }
 }
