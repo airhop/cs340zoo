@@ -112,7 +112,7 @@ public class Facade {
                 myStop.start();
                 (observers.get(i)).update(game, "");
                 myStop.stop();
-               // System.out.println("Update Time" + i + " = " + myStop.getElapsedTime());
+                System.out.println("Update Time" + i + " = " + myStop.getElapsedTime());
             }
         }
     }
