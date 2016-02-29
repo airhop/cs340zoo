@@ -50,6 +50,10 @@ public class RollController extends Controller implements IRollController {
         int y = r.nextInt(6); // 0 - 5
         int roll = x + y + 2;
 
+//        if(0==1){
+//            Facade.getInstance().getPlayerID();
+//        }
+
         Facade.getInstance().roll(Facade.getInstance().getCurrentPlayer().getPlayerIndex(), roll);
         getRollView().closeModal();
 //        getResultView().showModal();

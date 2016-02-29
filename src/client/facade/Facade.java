@@ -280,7 +280,7 @@ public class Facade {
 
     public void PlaceRoadSetup(EdgeLocation el) {
         if (game != null && game.canPlaceRoadSetup(el))
-            proxy.buildRoad(getPlayerID(), el, true);
+            proxy.buildRoad(getPlayerIndex(), el, true);
     }
 
     /**
@@ -288,12 +288,12 @@ public class Facade {
      * <p>
      * boolean whether or not the player built the road (perhaps placeholder return values for all of the do methods)
      */
-    public void placeRoad(int pid, EdgeLocation el, boolean free, boolean isDisconnected) {
+    public void placeRoad(int playerIndex, EdgeLocation el, boolean free, boolean isDisconnected) {
         if (game != null) {
 
-            if (game.canBuildRoad(pid) || free) {
+            if (game.canBuildRoad(playerIndex) || free) {
                 if (game.canPlaceRoad(el, isDisconnected))
-                    proxy.buildRoad(pid, el, free);
+                    proxy.buildRoad(playerIndex, el, free);
             }
         }
     }

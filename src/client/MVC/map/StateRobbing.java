@@ -79,8 +79,8 @@ public class StateRobbing extends StateAbstract
     @Override
     public void placeRobber(HexLocation hexLoc)
     {
-        int pid = Facade.getInstance().getPlayerID();
-        Facade.getInstance().rob(pid, victim, hexLoc);
+        int playerIndex = Facade.getInstance().getGameIndex();
+        Facade.getInstance().rob(playerIndex, victim, hexLoc);
         robView.closeModal();
     }
 

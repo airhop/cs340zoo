@@ -699,7 +699,7 @@ public class Proxy implements IProxy {
         JsonObject myObjOne = new JsonObject();
         String url = "/moves/discardCards";
         myObjOne.addProperty("type", "discardCards");
-        myObjOne.addProperty("playerIndex", "" + playerIndex);
+        myObjOne.addProperty("playerIndex", playerIndex);
         JsonObject RLO = RLO(rl);
         myObjOne.add("dicardedCards", RLO);
      //   System.out.println(myObjOne.toString());
