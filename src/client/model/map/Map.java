@@ -734,27 +734,31 @@ public class Map
 
 		for(VertexObject vertex : buildings)
 		{
-			HexLocation hl = vertex.getLocation().getHexLoc();
-			if(hl == landing)
+			HexLocation hl = vertex.getLocation().getNormalizedLocation().getHexLoc();
+			if(hl.compareTo(landing) == 0)
 			{
+				System.out.println("THIS IS A BUILDINGGGGGGGGGGGGGGGGG");
 				VertexDirection vd = vertex.getLocation().getDir();
 				if(vd == VertexDirection.E || vd == VertexDirection.NE || vd == VertexDirection.NW || vd == VertexDirection.W)
 					returningBuildings.add(vertex);
 			}
-			else if(hl == landingSW)
+			else if(hl.compareTo(landingSW) == 0)
 			{
+				System.out.println("THIS IS A BUILDINGGGGGGGGGGGGGGGGG");
 				VertexDirection vd = vertex.getLocation().getDir();
 				if(vd == VertexDirection.E || vd == VertexDirection.NE)
 					returningBuildings.add(vertex);
 			}
-			else if(hl == landingS)
+			else if(hl.compareTo(landingS) == 0)
 			{
+				System.out.println("THIS IS A BUILDINGGGGGGGGGGGGGGGGG");
 				VertexDirection vd = vertex.getLocation().getDir();
 				if(vd == VertexDirection.NE || vd == VertexDirection.NW)
 					returningBuildings.add(vertex);
 			}
-			else if(hl == landingSE)
+			else if(hl.compareTo(landingSE) == 0)
 			{
+				System.out.println("THIS IS A BUILDINGGGGGGGGGGGGGGGGG");
 				VertexDirection vd = vertex.getLocation().getDir();
 				if(vd == VertexDirection.NW || vd == VertexDirection.W)
 					returningBuildings.add(vertex);

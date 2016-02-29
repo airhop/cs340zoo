@@ -197,6 +197,7 @@ public class MapController extends Controller implements IMapController {
         }
 
         //   System.out.println("\nbuildings = " + buildings.size());
+        System.out.println("AYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYSam"+map.getRobber().getHl().toString());
         getView().placeRobber(map.getRobber().getHl());
     }
 
