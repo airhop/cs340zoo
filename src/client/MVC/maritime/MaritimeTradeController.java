@@ -4,7 +4,9 @@ import client.MVC.base.*;
 import client.facade.Facade;
 import client.model.bank.ResourceList;
 import client.model.map.Port;
+import client.model.map.VertexObject;
 import shared.definitions.ResourceType;
+import sun.security.provider.certpath.Vertex;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,8 +46,20 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 
     @Override
     public void startTrade() {
+        System.out.println("Starting start trade");
+
         getTradeOverlay().reset();
-        List<Port> currentPlayerPorts = Facade.getInstance().getGameModel().getMap().getPlayerPorts(Facade.getInstance().getCurrentPlayer().getPlayerIndex());
+        //List<Port> currentPlayerPorts = Facade.getInstance().getGameModel().getMap().getPlayerPorts(Facade.getInstance().getCurrentPlayer().getPlayerIndex());
+        ArrayList<VertexObject> buildings = Facade.getInstance().getGameModel().getMap().getBuildings();
+        ArrayList<Port> allPlayerPorts = Facade.getInstance().getGameModel().getMap().checkForPorts(buildings);
+        ArrayList<Port> currentPlayerPorts = new ArrayList<>();
+        for(Port port : allPlayerPorts)
+        {
+            if(port.getOwner() == playerId)
+            {
+                currentPlayerPorts.add(port);
+            }
+        }
         ResourceList currResources = Facade.getInstance().getGameModel().getPlayers().get(Facade.getInstance().getCurrentPlayer().getPlayerIndex()).getResources();
         List<ResourceType> canGiveResources = new ArrayList<>();
         for(Port port : currentPlayerPorts)
@@ -101,7 +115,7 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
                     canGiveResources.add(ResourceType.BRICK);
                 }
             }
-            else if(port.getResource() == "Wheat")
+            else if(port.getResource() == "WHEAT")
             {
                 this.ratio = 2;
                 if(currResources.getWheat() >= 2 && !canGiveResources.contains(ResourceType.WHEAT));
@@ -109,7 +123,7 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
                     canGiveResources.add(ResourceType.WHEAT);
                 }
             }
-            else if(port.getResource() == "Sheep")
+            else if(port.getResource() == "SHEEP")
             {
                 this.ratio = 2;
                 if(currResources.getSheep() >= 2)
@@ -120,7 +134,7 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
                     }
                 }
             }
-            else if(port.getResource() == "Ore")
+            else if(port.getResource() == "ORE")
             {
                 this.ratio = 2;
                 if(currResources.getOre() >= 2)
@@ -131,7 +145,7 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
                     }
                 }
             }
-            else if(port.getResource() == "Wood")
+            else if(port.getResource() == "WOOD")
             {
                 this.ratio = 2;
                 if(currResources.getWood() >= 2)
@@ -142,7 +156,7 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
                     }
                 }
             }
-            else if(port.getResource() == "Brick")
+            else if(port.getResource() == "BRICK")
             {
                 this.ratio = 2;
                 if(currResources.getBrick() >= 2)
@@ -162,6 +176,10 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
             System.out.println(canGive[i]);
         }
             this.canGiveToBank = canGive;
+        for(ResourceType resource: canGive)
+        {
+            System.out.println(resource);
+        }
             getTradeOverlay().setTradeEnabled(false);
             getTradeOverlay().showGiveOptions(canGive);
 

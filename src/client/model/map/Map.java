@@ -474,6 +474,12 @@ public class Map
 
 		return true;
 	}
+
+	/**
+	 * pass in an array of player buildings to see if any of them are next to a port
+	 * @param builds
+	 * @return
+     */
 	public ArrayList<Port> checkForPorts(ArrayList<VertexObject> builds)
 	{	
 		ArrayList<Port> playerPorts = new ArrayList<Port>();
