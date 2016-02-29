@@ -36,6 +36,16 @@ public class Facade {
     private boolean playerWaiting = false;
     private boolean settingColor = false;
 
+    public boolean isCloseMap() {
+        return closeMap;
+    }
+
+    public void setCloseMap(boolean closeMap) {
+        this.closeMap = closeMap;
+    }
+
+    private boolean closeMap = false;
+
     public boolean isSettingColor() {
         return settingColor;
     }

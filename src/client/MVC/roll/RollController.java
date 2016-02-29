@@ -58,6 +58,7 @@ public class RollController extends Controller implements IRollController {
         getRollView().closeModal();
         getResultView().showModal();
         getResultView().setRollValue(roll);
+        Facade.getInstance().setCloseMap(false);
 
     }
 
@@ -76,11 +77,11 @@ public class RollController extends Controller implements IRollController {
             }
             waiting = true;
         }
-        else if(gm.getTurnTracker().getStatus().equalsIgnoreCase("Discard") || gm.getTurnTracker().getStatus().equalsIgnoreCase("Playing"))
-        {
-            waiting = false;
-            getResultView().closeModal();
-        }
+//        else if(gm.getTurnTracker().getStatus().equalsIgnoreCase("Discard") || gm.getTurnTracker().getStatus().equalsIgnoreCase("Playing"))
+//        {
+//            waiting = false;
+//            getResultView().closeModal();
+//        }
 
     }
 }
