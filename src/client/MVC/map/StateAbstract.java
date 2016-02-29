@@ -12,18 +12,16 @@ public abstract class StateAbstract
 //don't implement . . .
     public boolean canPlaceRoad(EdgeLocation edgeLoc) {return false;}
     public boolean canPlaceSettlement(VertexLocation vertLoc){return false;}
+    public boolean canPlaceCity(VertexLocation vertLoc) {return false;}
+    public boolean canPlaceRobber(HexLocation hexLoc) {return false;}
     public void placeRoad(EdgeLocation edgeLoc){}
     public void placeSettlement(VertexLocation vertLoc){}
+    public void placeCity(VertexLocation vertLoc) {}
+    public void placeRobber(HexLocation hexLoc) {}
     public void startMove(PieceType pieceType, boolean isFree, boolean allowDisconnected){}
     public void cancelMove(){}
-    public boolean canPlaceCity(VertexLocation vertLoc) {return false;}
-    public void placeCity(VertexLocation vertLoc) {}
-    public boolean canPlaceRobber(HexLocation hexLoc) {return false;}
-    public void placeRobber(HexLocation hexLoc) {}
     public void robPlayer(RobPlayerInfo victim) {}
     public void playSoldierCard() {}
     public void playRoadBuildingCard() {}
     public String getName() { return ""; }
-
-
 }

@@ -57,7 +57,7 @@ public class MapController extends Controller implements IMapController {
         Facade facade = Facade.getInstance();
         String s = facade.getGameModel().getTurnTracker().getStatus();
         int pid = facade.getPlayerID();
-       // System.out.println(s + " " + pid);
+        // System.out.println(s + " " + pid);
 
         if (s.equalsIgnoreCase("FirstTurn") || s.equalsIgnoreCase("SecondTurn")) {
             state = new StateSetup(getView(), robView);
@@ -86,16 +86,11 @@ public class MapController extends Controller implements IMapController {
         //find a way to switch out of stateRoadBuilding when it has finished.
     }
 
-    private boolean changeState(String s)
-    {
-       // System.out.println("Desired State: " + s);
-
-        StateAbstract TempState;
-
+    private boolean changeState(String s) {
+        // System.out.println("Desired State: " + s);
 //if it is in default stage go ahead and change it
-        if(state.getName().equalsIgnoreCase("default"))
-        {
-            if(s.equalsIgnoreCase("FirstRound") || s.equalsIgnoreCase("SecondRound"))
+        if (state.getName().equalsIgnoreCase("default")) {
+            if (s.equalsIgnoreCase("FirstRound") || s.equalsIgnoreCase("SecondRound"))
                 state = new StateSetup(getView(), robView);
             else if (s.equalsIgnoreCase("RoadBuilding"))
                 state = new StateRoadBuilding(getView(), robView);
@@ -105,12 +100,12 @@ public class MapController extends Controller implements IMapController {
                 state = new StatePlayersTurn(getView(), robView);
             else
                 state = new StateDefault(getView(), robView);
-                //still need to reset the map
+            //still need to reset the map
 
             return true;
         }
 
-     //if the state is going to be the same don't worry about updating it
+        //if the state is going to be the same don't worry about updating it
         if (((s.equalsIgnoreCase("FirstRound") || s.equalsIgnoreCase("SecondRound") && state.getName().equalsIgnoreCase("Setup"))
                 || s.equalsIgnoreCase(state.getName())))
             return false;
@@ -129,29 +124,30 @@ public class MapController extends Controller implements IMapController {
     }
 
     public void update(Observable observable, Object args) {
-        if(!Facade.getInstance().isReady())
+        if (!Facade.getInstance().isReady())
             return;
 
-        GameModel gm = (GameModel)observable;
-       //without input it will change the phase automatically for playing with
+        GameModel gm = (GameModel) observable;
+        //without input it will change the phase automatically for playing with
         //changeState();
 
-        if(state.getName().equalsIgnoreCase("Setup"))
-        {
+        if (state.getName().equalsIgnoreCase("Setup")) {
             if (((StateSetup) state).finishedSetup())
                 state = new StateDefault(getView(), robView);
-                //Facade.getInstance().FinishTurn(Facade.getInstance().getPlayerID());
+            //Facade.getInstance().FinishTurn(Facade.getInstance().getPlayerID());
             return;
         }
         //with input, it will change based on the updating to work with everyone else
-       // System.out.println("Current State: " + state.getName());
-        if(!changeState(gm.getTurnTracker().getStatus()))
-            return;
+        // System.out.println("Current State: " + state.getName());
+        String tester = gm.getTurnTracker().getStatus();
+        changeState(gm.getTurnTracker().getStatus());
+//        if (!changeState(gm.getTurnTracker().getStatus()))
+//            return;
 
         Facade facade = Facade.getInstance();
         Map map = gm.getMap();
         ArrayList<Hex> hexes = map.getHexMap();
-       // System.out.println(hexes.size());
+        // System.out.println(hexes.size());
         for (int i = 0; i < hexes.size(); i++) {
             getView().addHex(hexes.get(i).getLocation(), HexType.convert(hexes.get(i).getResource()));
             getView().addNumber(hexes.get(i).getLocation(), hexes.get(i).getNumber());
@@ -176,7 +172,7 @@ public class MapController extends Controller implements IMapController {
                 getView().placeCity(buildings.get(i).getLocation(), facade.getPlayerColor(buildings.get(i).getOwner()));
         }
 
-     //   System.out.println("\nbuildings = " + buildings.size());
+        //   System.out.println("\nbuildings = " + buildings.size());
         getView().placeRobber(map.getRobber().getHl());
     }
 
@@ -241,70 +237,70 @@ public class MapController extends Controller implements IMapController {
 
 }
 
-/* temporary initFromModel for debugging to see if it works . . .
-
-        //<temp>
-
-        Random rand = new Random();
-
-        for (int x = 0; x <= 3; ++x) {
-
-            int maxY = 3 - x;
-            for (int y = -3; y <= maxY; ++y) {
-                int r = rand.nextInt(HexType.values().length);
-                HexType hexType = HexType.values()[r];
-                HexLocation hexLoc = new HexLocation(x, y);
-                getView().addHex(hexLoc, hexType);
-                getView().placeRoad(new EdgeLocation(hexLoc, EdgeDirection.NorthWest),
-                        CatanColor.RED);
-                getView().placeRoad(new EdgeLocation(hexLoc, EdgeDirection.SouthWest),
-                        CatanColor.BLUE);
-                getView().placeRoad(new EdgeLocation(hexLoc, EdgeDirection.South),
-                        CatanColor.ORANGE);
-                getView().placeSettlement(new VertexLocation(hexLoc, VertexDirection.NorthWest), CatanColor.GREEN);
-                getView().placeCity(new VertexLocation(hexLoc, VertexDirection.NorthEast), CatanColor.PURPLE);
-            }
-
-            if (x != 0) {
-                int minY = x - 3;
-                for (int y = minY; y <= 3; ++y) {
-                    int r = rand.nextInt(HexType.values().length);
-                    HexType hexType = HexType.values()[r];
-                    HexLocation hexLoc = new HexLocation(-x, y);
-                    getView().addHex(hexLoc, hexType);
-                    getView().placeRoad(new EdgeLocation(hexLoc, EdgeDirection.NorthWest),
-                            CatanColor.RED);
-                    getView().placeRoad(new EdgeLocation(hexLoc, EdgeDirection.SouthWest),
-                            CatanColor.BLUE);
-                    getView().placeRoad(new EdgeLocation(hexLoc, EdgeDirection.South),
-                            CatanColor.ORANGE);
-                    getView().placeSettlement(new VertexLocation(hexLoc, VertexDirection.NorthWest), CatanColor.GREEN);
-                    getView().placeCity(new VertexLocation(hexLoc, VertexDirection.NorthEast), CatanColor.PURPLE);
-                }
-            }
-        }
-
-        PortType portType = PortType.BRICK;
-        getView().addPort(new EdgeLocation(new HexLocation(0, 3), EdgeDirection.North), portType);
-        getView().addPort(new EdgeLocation(new HexLocation(0, -3), EdgeDirection.South), portType);
-        getView().addPort(new EdgeLocation(new HexLocation(-3, 3), EdgeDirection.NorthEast), portType);
-        getView().addPort(new EdgeLocation(new HexLocation(-3, 0), EdgeDirection.SouthEast), portType);
-        getView().addPort(new EdgeLocation(new HexLocation(3, -3), EdgeDirection.SouthWest), portType);
-        getView().addPort(new EdgeLocation(new HexLocation(3, 0), EdgeDirection.NorthWest), portType);
-
-        getView().placeRobber(new HexLocation(0, 0));
-
-        getView().addNumber(new HexLocation(-2, 0), 2);
-        getView().addNumber(new HexLocation(-2, 1), 3);
-        getView().addNumber(new HexLocation(-2, 2), 4);
-        getView().addNumber(new HexLocation(-1, 0), 5);
-        getView().addNumber(new HexLocation(-1, 1), 6);
-        getView().addNumber(new HexLocation(1, -1), 8);
-        getView().addNumber(new HexLocation(1, 0), 9);
-        getView().addNumber(new HexLocation(2, -2), 10);
-        getView().addNumber(new HexLocation(2, -1), 11);
-        getView().addNumber(new HexLocation(2, 0), 12);
-
-        //</temp>
-
- */
+///** temporary initFromModel for debugging to see if it works . . .
+//
+//        //<temp>
+//
+//        Random rand = new Random();
+//
+//        for (int x = 0; x <= 3; ++x) {
+//
+//            int maxY = 3 - x;
+//            for (int y = -3; y <= maxY; ++y) {
+//                int r = rand.nextInt(HexType.values().length);
+//                HexType hexType = HexType.values()[r];
+//                HexLocation hexLoc = new HexLocation(x, y);
+//                getView().addHex(hexLoc, hexType);
+//                getView().placeRoad(new EdgeLocation(hexLoc, EdgeDirection.NorthWest),
+//                        CatanColor.RED);
+//                getView().placeRoad(new EdgeLocation(hexLoc, EdgeDirection.SouthWest),
+//                        CatanColor.BLUE);
+//                getView().placeRoad(new EdgeLocation(hexLoc, EdgeDirection.South),
+//                        CatanColor.ORANGE);
+//                getView().placeSettlement(new VertexLocation(hexLoc, VertexDirection.NorthWest), CatanColor.GREEN);
+//                getView().placeCity(new VertexLocation(hexLoc, VertexDirection.NorthEast), CatanColor.PURPLE);
+//            }
+//
+//            if (x != 0) {
+//                int minY = x - 3;
+//                for (int y = minY; y <= 3; ++y) {
+//                    int r = rand.nextInt(HexType.values().length);
+//                    HexType hexType = HexType.values()[r];
+//                    HexLocation hexLoc = new HexLocation(-x, y);
+//                    getView().addHex(hexLoc, hexType);
+//                    getView().placeRoad(new EdgeLocation(hexLoc, EdgeDirection.NorthWest),
+//                            CatanColor.RED);
+//                    getView().placeRoad(new EdgeLocation(hexLoc, EdgeDirection.SouthWest),
+//                            CatanColor.BLUE);
+//                    getView().placeRoad(new EdgeLocation(hexLoc, EdgeDirection.South),
+//                            CatanColor.ORANGE);
+//                    getView().placeSettlement(new VertexLocation(hexLoc, VertexDirection.NorthWest), CatanColor.GREEN);
+//                    getView().placeCity(new VertexLocation(hexLoc, VertexDirection.NorthEast), CatanColor.PURPLE);
+//                }
+//            }
+//        }
+//
+//        PortType portType = PortType.BRICK;
+//        getView().addPort(new EdgeLocation(new HexLocation(0, 3), EdgeDirection.North), portType);
+//        getView().addPort(new EdgeLocation(new HexLocation(0, -3), EdgeDirection.South), portType);
+//        getView().addPort(new EdgeLocation(new HexLocation(-3, 3), EdgeDirection.NorthEast), portType);
+//        getView().addPort(new EdgeLocation(new HexLocation(-3, 0), EdgeDirection.SouthEast), portType);
+//        getView().addPort(new EdgeLocation(new HexLocation(3, -3), EdgeDirection.SouthWest), portType);
+//        getView().addPort(new EdgeLocation(new HexLocation(3, 0), EdgeDirection.NorthWest), portType);
+//
+//        getView().placeRobber(new HexLocation(0, 0));
+//
+//        getView().addNumber(new HexLocation(-2, 0), 2);
+//        getView().addNumber(new HexLocation(-2, 1), 3);
+//        getView().addNumber(new HexLocation(-2, 2), 4);
+//        getView().addNumber(new HexLocation(-1, 0), 5);
+//        getView().addNumber(new HexLocation(-1, 1), 6);
+//        getView().addNumber(new HexLocation(1, -1), 8);
+//        getView().addNumber(new HexLocation(1, 0), 9);
+//        getView().addNumber(new HexLocation(2, -2), 10);
+//        getView().addNumber(new HexLocation(2, -1), 11);
+//        getView().addNumber(new HexLocation(2, 0), 12);
+//
+//        //</temp>
+//
+// */
