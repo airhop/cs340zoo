@@ -34,7 +34,7 @@ public class StatePlayersTurn extends StateAbstract
     @Override
     public boolean canPlaceRoad(EdgeLocation edgeLoc)
     {
-        return Facade.getInstance().canPlaceRoadSetup(edgeLoc.getNormalizedLocation());
+        return Facade.getInstance().canPlaceRoad(edgeLoc.getNormalizedLocation(), true);
     }
 
     @Override
@@ -62,6 +62,7 @@ public class StatePlayersTurn extends StateAbstract
         view.placeRoad(edgeLoc, color);
         Facade.getInstance().placeRoad(Facade.getInstance().getCurrentPlayer().getPlayerId(), edgeLoc.getNormalizedLocation(), false, true);
         Facade.getInstance().retrieveGameModel();
+        view.closeModal();
     }
 
     @Override
@@ -70,6 +71,7 @@ public class StatePlayersTurn extends StateAbstract
         view.placeSettlement(vertLoc, color);
         Facade.getInstance().placeSettlement(Facade.getInstance().getCurrentPlayer().getPlayerId(), vertLoc.getNormalizedLocation(), false);
         Facade.getInstance().retrieveGameModel();
+        view.closeModal();
     }
 
     @Override
@@ -77,6 +79,7 @@ public class StatePlayersTurn extends StateAbstract
     {
         view.placeCity(vertLoc, color);
         Facade.getInstance().placeCity(Facade.getInstance().getCurrentPlayer().getPlayerIndex(), vertLoc.getNormalizedLocation());
+        view.closeModal();
     }
 
     @Override
@@ -127,12 +130,13 @@ public class StatePlayersTurn extends StateAbstract
     @Override
     public void startMove(PieceType pieceType, boolean isFree, boolean allowDisconnected)
     {
-        view.startDrop(pieceType, color, isFree);
+        view.startDrop(pieceType, Facade.getInstance().getCurrentPlayer().getColor(), isFree);
     }
 
     @Override
-    public void cancelMove() {
-
+    public void cancelMove()
+    {
+        view.closeModal();
     }
 
     @Override
