@@ -92,6 +92,15 @@ public class MapView extends PanelView implements IMapView {
         overlay.showModal();
     }
 
+    @Override
+    public void closeModal(){
+        overlay.closeModal();
+    }
+    @Override
+    public void showModel(){
+        overlay.showModal();
+    }
+
     private IMapController overlayController = new IMapController() {
 
         @Override
