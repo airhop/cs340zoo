@@ -432,12 +432,12 @@ public class Map
 		for (VertexObject VObjIter: buildings)
 		{
 			int vl = VObjIter.getLocation().getNormalizedLocation().compareTo(vertexLocation.getNormalizedLocation());
-			if (vl == 0 && !(VObjIter instanceof Settlement))
+			if (vl == 0 && (VObjIter instanceof Settlement))
 			{
-				return false;
+				return true;
 			}
 		}
-		return true;
+		return false;
 	}
 
 	/**
@@ -782,7 +782,7 @@ public class Map
 				if(canPlaceSettlement(vl3))
 					return true;
 				vl4 = new VertexLocation(new HexLocation(el.getHexLoc().getX()  - 1, el.getHexLoc().getY() + 1), VertexDirection.NE);
-				if(canPlaceCity(vl4))
+				if(canPlaceSettlement(vl4))
 					return true;
 				return false;
 			case NE:
@@ -810,7 +810,7 @@ public class Map
 				if(canPlaceSettlement(vl3))
 					return true;
 				vl4 = new VertexLocation(new HexLocation(el.getHexLoc().getX() + 1, el.getHexLoc().getY() - 1), VertexDirection.W);
-				if(canPlaceCity(vl4))
+				if(canPlaceSettlement(vl4))
 					return true;
 				return false;
 		}

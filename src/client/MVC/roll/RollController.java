@@ -3,7 +3,11 @@ package client.MVC.roll;
 import client.MVC.base.*;
 import client.facade.Facade;
 import client.model.GameModel;
+import shared.extra.StopWatch;
 
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Observable;
 import java.util.Random;
 
@@ -15,6 +19,7 @@ public class RollController extends Controller implements IRollController {
 
     private IRollResultView resultView;
     private boolean waiting = false;
+    private Timer timer;
 
     /**
      * RollController constructor
@@ -27,6 +32,14 @@ public class RollController extends Controller implements IRollController {
         super(view);
         Facade.getInstance().addObserver(this);
         setResultView(resultView);
+        timer = new Timer(5000, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                rollDice();
+                timer.restart();
+            }
+        });
+        timer.start();
     }
 
     public IRollResultView getResultView() {
@@ -44,7 +57,8 @@ public class RollController extends Controller implements IRollController {
     @Override
     public void rollDice()
     {
-
+        if(!Facade.getInstance().getGameModel().getTurnTracker().getStatus().equalsIgnoreCase("Rolling"))
+            return;
         Random r = new Random();
         int x = r.nextInt(6);  //0 - 5
         int y = r.nextInt(6); // 0 - 5
