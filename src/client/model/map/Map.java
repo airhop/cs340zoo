@@ -696,4 +696,42 @@ public class Map
 
 		return false;
 	}
+
+	public List<VertexObject> toBeRobbed(HexLocation landing)
+	{
+		HexLocation landingSW = new HexLocation(landing.getX() - 1, landing.getY() + 1);
+		HexLocation landingS = new HexLocation(landing.getX(), landing.getY() + 1);
+		HexLocation landingSE = new HexLocation(landing.getX() + 1, landing.getY());
+		ArrayList<VertexObject> returningBuildings = new ArrayList<VertexObject>();
+
+		for(VertexObject vertex : buildings)
+		{
+			HexLocation hl = vertex.getLocation().getHexLoc();
+			if(hl == landing)
+			{
+				VertexDirection vd = vertex.getLocation().getDir();
+				if(vd == VertexDirection.E || vd == VertexDirection.NE || vd == VertexDirection.NW || vd == VertexDirection.W)
+					returningBuildings.add(vertex);
+			}
+			else if(hl == landingSW)
+			{
+				VertexDirection vd = vertex.getLocation().getDir();
+				if(vd == VertexDirection.E || vd == VertexDirection.NE)
+					returningBuildings.add(vertex);
+			}
+			else if(hl == landingS)
+			{
+				VertexDirection vd = vertex.getLocation().getDir();
+				if(vd == VertexDirection.NE || vd == VertexDirection.NW)
+					returningBuildings.add(vertex);
+			}
+			else if(hl == landingSE)
+			{
+				VertexDirection vd = vertex.getLocation().getDir();
+				if(vd == VertexDirection.NW || vd == VertexDirection.W)
+					returningBuildings.add(vertex);
+			}
+		}
+		return returningBuildings;
+	}
 }
