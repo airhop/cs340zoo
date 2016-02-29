@@ -681,8 +681,8 @@ public class Proxy implements IProxy {
         myObjOne.addProperty("type", "maritimeTrade");
         myObjOne.addProperty("playerIndex", playerIndex);
         myObjOne.addProperty("ratio", ratio);
-        myObjOne.addProperty("inputResource", in.name());
-        myObjOne.addProperty("outputResource", out.name());
+        myObjOne.addProperty("inputResource", in.name().toLowerCase());
+        myObjOne.addProperty("outputResource", out.name().toLowerCase());
     //    System.out.println(myObjOne.toString());
         HttpURLResponse myResponse;
         try {
