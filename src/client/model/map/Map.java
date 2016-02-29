@@ -512,6 +512,25 @@ public class Map
 		return ports;
 	}
 
+	public ArrayList<Port> checkPorts(int pid)
+	{
+		ArrayList<Port> passBack = new ArrayList<Port>();
+		for(VertexObject vo :buildings)
+		{
+			if(vo.getOwner() == pid)
+			{
+				for(Port port: ports)
+				{
+					EdgeLocation el = new EdgeLocation(port.getLocation(), port.getDirection());
+					if(placable(el, vo.getLocation()))
+						passBack.add(port);
+
+				}
+			}
+		}
+		return passBack;
+	}
+
 	/**
 	 * Returns all of the ports that belong to a player
 	 * @param playerID
