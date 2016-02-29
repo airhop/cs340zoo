@@ -1,5 +1,6 @@
 package client.MVC.map;
 
+import client.MVC.base.OverlayView;
 import client.MVC.data.RobPlayerInfo;
 import client.facade.Facade;
 import client.model.map.VertexObject;
@@ -60,7 +61,7 @@ public class StatePlayersTurn extends StateAbstract
     public void placeRoad(EdgeLocation edgeLoc)
     {
         view.placeRoad(edgeLoc, color);
-        Facade.getInstance().placeRoad(Facade.getInstance().getCurrentPlayer().getPlayerId(), edgeLoc.getNormalizedLocation(), false, true);
+        Facade.getInstance().placeRoad(Facade.getInstance().getCurrentPlayer().getPlayerIndex(), edgeLoc.getNormalizedLocation(), false, true);
         Facade.getInstance().retrieveGameModel();
         view.closeModal();
     }
@@ -69,7 +70,7 @@ public class StatePlayersTurn extends StateAbstract
     public void placeSettlement(VertexLocation vertLoc)
     {
         view.placeSettlement(vertLoc, color);
-        Facade.getInstance().placeSettlement(Facade.getInstance().getCurrentPlayer().getPlayerId(), vertLoc.getNormalizedLocation(), false);
+        Facade.getInstance().placeSettlement(Facade.getInstance().getCurrentPlayer().getPlayerIndex(), vertLoc.getNormalizedLocation(), false);
         Facade.getInstance().retrieveGameModel();
         view.closeModal();
     }
