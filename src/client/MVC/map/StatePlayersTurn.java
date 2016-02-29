@@ -131,7 +131,7 @@ public class StatePlayersTurn extends StateAbstract
     @Override
     public void startMove(PieceType pieceType, boolean isFree, boolean allowDisconnected)
     {
-        view.startDrop(pieceType, Facade.getInstance().getCurrentPlayer().getColor(), isFree);
+        view.startDrop(pieceType, Facade.getInstance().getCurrentPlayer().getColor(), true);
     }
 
     @Override
