@@ -113,33 +113,44 @@ public class EdgeLocation
 		return -1;
 	}
 
-	public boolean neighbor(VertexLocation vl)
+	public boolean neighbor(EdgeLocation el)
 	{
+		el = el.getNormalizedLocation();
 
-		vl = vl.getNormalizedLocation();
-		switch(vl.getDir())
+		switch(getNormalizedLocation().getDir())
 		{
-			case NW: if(vl.getHexLoc() == getHexLoc() && (getDir() == EdgeDirection.N || getDir() == EdgeDirection.NW))
-						return true;
-					if(getHexLoc() == new HexLocation(vl.getHexLoc().getX() - 1, vl.getHexLoc().getY()) && getDir() == EdgeDirection.NE)
-						return true;
-			case NE: if(getHexLoc() == vl.getHexLoc() && (getDir() == EdgeDirection.N || getDir() == EdgeDirection.NE))
-						return true;
-				     if(getHexLoc() == new HexLocation(vl.getHexLoc().getX()+1, vl.getHexLoc().getY() - 1) && getDir() == EdgeDirection.NW)
-						 return true;
-			case E: if(vl.getHexLoc() == getHexLoc() && getDir() == EdgeDirection.NE)
-						return true;
-					HexLocation hl = new HexLocation(vl.getHexLoc().getX() + 1, vl.getHexLoc().getY());
-					if(hl == getHexLoc() && (getDir() == EdgeDirection.NW || getDir() == EdgeDirection.N))
-						return true;
-			default: if(vl.getHexLoc() == getHexLoc() && getDir() == EdgeDirection.NW)
-						return true;
-				     HexLocation hl2 = new HexLocation(vl.getHexLoc().getX() - 1, vl.getHexLoc().getY() - 1);
-					 if(hl2 == getHexLoc() && (getDir() == EdgeDirection.NE || getDir() == EdgeDirection.N))
-						return true;
-
+			case NW:
+				if(el.getHexLoc().compareTo(getHexLoc()) == 0 && el.getDir() == EdgeDirection.N)
+					return true;
+				if(el.getHexLoc().compareTo(new HexLocation(getHexLoc().getX() + 1, getHexLoc().getY())) == 0 &&
+						(el.getDir() == EdgeDirection.NW || el.getDir() == EdgeDirection.N))
+					return true;
+				if(el.getHexLoc().compareTo(new HexLocation(getHexLoc().getX() + 1, getHexLoc().getY() - 1)) == 0 &&
+						el.getDir() == EdgeDirection.NW)
+					return true;
+				return false;
+			case NE:
+				if(el.getHexLoc().compareTo((getHexLoc())) == 0 && el.getDir() == EdgeDirection.N)
+					return true;
+				if(el.getHexLoc().compareTo(new HexLocation(getHexLoc().getX() + 1, getHexLoc().getY())) == 0&&
+						(el.getDir() == EdgeDirection.N || el.getDir() == EdgeDirection.NW))
+					return true;
+				if(el.getHexLoc().compareTo(new HexLocation(getHexLoc().getX() +1, getHexLoc().getY() - 1)) == 0 &&
+						el.getDir() == EdgeDirection.NW)
+					return true;
+				return false;
+			default:
+				if(el.getHexLoc().compareTo(getHexLoc()) == 0 &&
+						(el.getDir() == EdgeDirection.NW || el.getDir() == EdgeDirection.NE))
+					return true;
+				if(el.getHexLoc().compareTo(new HexLocation(getHexLoc().getX() - 1, getHexLoc().getY())) == 0 && el.getDir() == EdgeDirection.NE)
+					return true;
+				if(el.getHexLoc().compareTo(new HexLocation(getHexLoc().getX() + 1, getHexLoc().getY() - 1)) == 0 && el.getDir() == EdgeDirection.NW)
+					return true;
+				return false;
 		}
-		return false;
 	}
+
+
 }
 

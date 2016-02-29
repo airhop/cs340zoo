@@ -273,20 +273,24 @@ public class Map
 		{
 			return false;
 		}
-		for(int i = 0; i < roads.size(); i++)
-		{
-			int el = roads.get(i).getLocation().getNormalizedLocation().compareTo(edgeLocation.getNormalizedLocation());
-			if(el == 0)
-				return false;
-		}
-
 		Hex h = hexes.get(edgeLocation.getHexLoc());
 		if( h == null)
 			return false;
 		if(HexType.convert(h.getResource())== HexType.WATER)
 		{
-			return roadOceanPlayable(edgeLocation);
+			if(!roadOceanPlayable(edgeLocation))
+				return false;
 		}
+		for(int i = 0; i < roads.size(); i++)
+		{
+			int el = roads.get(i).getLocation().getNormalizedLocation().compareTo(edgeLocation.getNormalizedLocation());
+			if(el == 0)
+				return false;
+			if(!isDisconnected)
+				if(roads.get(i).getLocation().neighbor(edgeLocation))
+					return true;
+		}
+
 
 		return true;
 	}
@@ -773,7 +777,7 @@ public class Map
 		if(buildings.size() == 0)
 			return false;
 		System.out.println(el.getDir());
-		VertexLocation vl, vl2;
+		VertexLocation vl, vl2, vl3, vl4;
 		switch(el.getDir())
 		{
 			//NW NE N
@@ -784,6 +788,12 @@ public class Map
 				vl2 = new VertexLocation(el.getHexLoc(), VertexDirection.NW);
 				if(canPlaceSettlement(vl2))
 					return true;
+				vl3 = new VertexLocation(new HexLocation(el.getHexLoc().getX() - 1, el.getHexLoc().getY()), VertexDirection.E);
+				if(canPlaceSettlement(vl3))
+					return true;
+				vl4 = new VertexLocation(new HexLocation(el.getHexLoc().getX()  - 1, el.getHexLoc().getY() + 1), VertexDirection.NE);
+				if(canPlaceCity(vl4))
+					return true;
 				return false;
 			case NE:
 				vl = new VertexLocation(el.getHexLoc(), VertexDirection.E);
@@ -791,6 +801,12 @@ public class Map
 					return true;
 				vl2 = new VertexLocation(el.getHexLoc(), VertexDirection.NE);
 				if(canPlaceSettlement(vl2))
+					return true;
+				vl3 = new VertexLocation(new HexLocation(el.getHexLoc().getX()+1, el.getHexLoc().getY() - 1), VertexDirection.W);
+				if(canPlaceSettlement(vl3))
+					return true;
+				vl4 = new VertexLocation(new HexLocation(el.getHexLoc().getX()+1, el.getHexLoc().getY()), VertexDirection.NW);
+				if(canPlaceSettlement(vl4))
 					return true;
 				return false;
 			default:
@@ -800,8 +816,15 @@ public class Map
 				vl2 = new VertexLocation(el.getHexLoc(), VertexDirection.NW);
 				if(canPlaceSettlement(vl2))
 					return true;
+				vl3 = new VertexLocation(new HexLocation(el.getHexLoc().getX() - 1, el.getHexLoc().getY()), VertexDirection.E);
+				if(canPlaceSettlement(vl3))
+					return true;
+				vl4 = new VertexLocation(new HexLocation(el.getHexLoc().getX() + 1, el.getHexLoc().getY() - 1), VertexDirection.W);
+				if(canPlaceCity(vl4))
+					return true;
 				return false;
 		}
 
 	}
+
 }
