@@ -2,6 +2,7 @@ package client.MVC.map;
 
 import client.MVC.data.PlayerInfo;
 import client.MVC.data.RobPlayerInfo;
+import client.facade.Facade;
 import client.model.map.Road;
 import shared.definitions.CatanColor;
 import shared.definitions.PieceType;
@@ -29,8 +30,7 @@ public class StateRoadBuilding extends StateAbstract
     @Override
     public boolean canPlaceRoad(EdgeLocation edgeLoc)
     {
-        return true;
-       //return facade.canPlaceRoad(edgeLoc);
+        return Facade.getInstance().canPlaceRoadSetup(edgeLoc.getNormalizedLocation());
     }
 
     @Override
@@ -52,9 +52,11 @@ public class StateRoadBuilding extends StateAbstract
     public void placeRoad(EdgeLocation edgeLoc)
     {
         view.placeRoad(edgeLoc, color);
+        Facade.getInstance().placeRoad(Facade.getInstance().getCurrentPlayer().getPlayerId(), edgeLoc.getNormalizedLocation(), true, true);
+        Facade.getInstance().retrieveGameModel();
+        if(RoadsLaid == 0)
+            startMove(PieceType.ROAD, true, false);
         RoadsLaid++;
-//        if(RoadsLaid == 2)
-//            MapController.changeState("Playing");
     }
 
     @Override
@@ -101,4 +103,11 @@ public class StateRoadBuilding extends StateAbstract
     @Override
     public String getName() { return "RoadBuilding"; }
 //    public void cancelMove() {}
+
+    public boolean finished()
+    {
+        if(getRoadsLaid() == 2)
+            return true;
+        return false;
+    }
 }
