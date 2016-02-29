@@ -92,6 +92,13 @@ public class MapController extends Controller implements IMapController {
         if (s.equalsIgnoreCase("RoadBuilding")){
             String test = s;
         }
+
+        if(state.getName().equalsIgnoreCase("RoadBuilding"))
+        {
+            if(((StateRoadBuilding)state).finished())
+                state = new StatePlayersTurn(getView(), robView);
+            return true;
+        }
             // System.out.println("Desired State: " + s);
 //if it is in default stage go ahead and change it
         if (state.getName().equalsIgnoreCase("default")) {
@@ -242,11 +249,15 @@ public class MapController extends Controller implements IMapController {
         state.cancelMove();
     }
 
-    public void playSoldierCard() {
+    public void playSoldierCard()
+    {
+        state = new StateRobbing(getView(), robView);
         state.playSoldierCard();
     }
 
-    public void playRoadBuildingCard() {
+    public void playRoadBuildingCard()
+    {
+        state = new StateRoadBuilding(getView(), robView);
         state.playRoadBuildingCard();
     }
 
