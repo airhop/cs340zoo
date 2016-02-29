@@ -139,9 +139,13 @@ public class MapController extends Controller implements IMapController {
             //Facade.getInstance().FinishTurn(Facade.getInstance().getPlayerID());
             return;
         }
+        String tester = gm.getTurnTracker().getStatus();
+        if(tester.equalsIgnoreCase("Rolling")){
+
+        }
         //with input, it will change based on the updating to work with everyone else
         // System.out.println("Current State: " + state.getName());
-        String tester = gm.getTurnTracker().getStatus();
+
         if(tester.equalsIgnoreCase("Robbing")){
             tester = "YUM";
         }

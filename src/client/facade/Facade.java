@@ -533,12 +533,12 @@ public class Facade {
      *
      * @return boolean whether or not the player rolled the dice
      */
-    public void roll(int pid, int number) {
+    public void roll(int playerIndex, int number) {
         System.out.println("rolling");
         if (game != null) {
-            if (canRoll(pid)) {
+            if (canRoll(playerIndex)) {
                 if (number != -1)
-                    proxy.rollNumber(number, pid);
+                    proxy.rollNumber(number, playerIndex);
                 else
                     System.out.println("not a rolling phase");
             }

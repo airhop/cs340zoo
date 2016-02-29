@@ -50,9 +50,11 @@ public class RollController extends Controller implements IRollController {
         int y = r.nextInt(6); // 0 - 5
         int roll = x + y + 2;
 
-        Facade.getInstance().roll(Facade.getInstance().getPlayerID(), roll);
-        getResultView().showModal();
+        Facade.getInstance().roll(Facade.getInstance().getCurrentPlayer().getPlayerIndex(), roll);
+        getRollView().closeModal();
+//        getResultView().showModal();
         getResultView().setRollValue(roll);
+
     }
 
     public void setWaiting() {waiting = false;}
@@ -64,7 +66,9 @@ public class RollController extends Controller implements IRollController {
             return;
         if(((GameModel)o).getTurnTracker().getStatus().equalsIgnoreCase("Rolling") && !waiting)
         {
-            getRollView().showModal();
+            if(!getRollView().isModalShowing() || !getResultView().isModalShowing()){
+                getRollView().showModal();
+            }
             waiting = true;
         }
 
