@@ -317,7 +317,10 @@ public class Map
 			return roadOceanPlayable(el);
 		}
 
-		return true;
+		if(extraPlacable(el))
+			return true;
+
+		return false;
 	}
 
 	/**
@@ -752,5 +755,40 @@ public class Map
 			}
 		}
 		return returningBuildings;
+	}
+
+	public boolean extraPlacable(EdgeLocation el)
+	{
+		el = el.getNormalizedLocation();
+		VertexLocation vl, vl2;
+		switch(el.getDir())
+		{
+			//NW NE N
+			case NW:
+				vl = new VertexLocation(el.getHexLoc(), VertexDirection.W);
+				if(placable(el, vl))
+					return true;
+				vl2 = new VertexLocation(el.getHexLoc(), VertexDirection.NW);
+				if(placable(el, vl2))
+					return true;
+				return false;
+			case NE:
+				vl = new VertexLocation(el.getHexLoc(), VertexDirection.E);
+				if(placable(el, vl))
+					return true;
+				vl2 = new VertexLocation(el.getHexLoc(), VertexDirection.NE);
+				if(placable(el, vl2))
+					return true;
+				return false;
+			default:
+				vl = new VertexLocation(el.getHexLoc(), VertexDirection.NE);
+				if(placable(el, vl))
+					return true;
+				vl2 = new VertexLocation(el.getHexLoc(), VertexDirection.NW);
+				if(placable(el, vl2))
+					return true;
+				return false;
+		}
+
 	}
 }
