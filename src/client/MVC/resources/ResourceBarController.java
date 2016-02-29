@@ -83,12 +83,29 @@ public class ResourceBarController extends Controller implements IResourceBarCon
             getView().setElementAmount(ResourceBarElement.SHEEP,currentResources.getSheep());
             getView().setElementAmount(ResourceBarElement.WHEAT,currentResources.getWheat());
             getView().setElementAmount(ResourceBarElement.ORE,currentResources.getOre());
+            if(currentResources.getBrick() > 0 && currentResources.getWheat() > 0 && currentResources.getSheep() > 0 && currentResources.getWood() > 0 && currentResources.getSettlement() > 0){
+                getView().setElementEnabled(ResourceBarElement.SETTLEMENT, true);
+            }else{
+                getView().setElementEnabled(ResourceBarElement.SETTLEMENT, false);
+            }
+            if(currentResources.getWheat() > 1 && currentResources.getOre() > 2 && currentResources.getCity() > 0){
+                getView().setElementEnabled(ResourceBarElement.CITY, true);
+            }else{
+                getView().setElementEnabled(ResourceBarElement.CITY, false);
+            }
+            if(currentResources.getBrick() > 0 && currentResources.getWood() > 0 && currentResources.getRoad() > 0){
+                getView().setElementEnabled(ResourceBarElement.ROAD, true);
+            }else{
+                getView().setElementEnabled(ResourceBarElement.ROAD, false);
+            }
+
             getView().setElementAmount(ResourceBarElement.ROAD,currentResources.getRoad());
             getView().setElementAmount(ResourceBarElement.SETTLEMENT,currentResources.getSettlement());
             getView().setElementAmount(ResourceBarElement.CITY,currentResources.getCity());
             getView().setElementAmount(ResourceBarElement.BUY_CARD,currentResources.getBuyCard());
             getView().setElementAmount(ResourceBarElement.PLAY_CARD,currentResources.getPlayCard());
             getView().setElementAmount(ResourceBarElement.SOLDIERS,currentResources.getSoldiers());
+//            getView().setElementEnabled(ResourceBarElement.ROAD, true);
         }
     }
 }

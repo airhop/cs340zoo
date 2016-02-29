@@ -142,6 +142,15 @@ public class MapController extends Controller implements IMapController {
         //with input, it will change based on the updating to work with everyone else
         // System.out.println("Current State: " + state.getName());
         String tester = gm.getTurnTracker().getStatus();
+        if(tester.equalsIgnoreCase("Robbing")){
+            tester = "YUM";
+        }
+        if(tester.equalsIgnoreCase("Rolling")){
+            tester = "YUM";
+        }
+        if(tester.equalsIgnoreCase("Playing")){
+            tester = "YUM";
+        }
         String testState = state.getName();
         changeState(gm.getTurnTracker().getStatus());
 //        if (!changeState(gm.getTurnTracker().getStatus()))
