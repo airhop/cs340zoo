@@ -64,7 +64,7 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
         int lowestRatio = 4;
         for(Port port : currentPlayerPorts)
         {
-            if(port.getRatio() == 4)
+            if(true)
             {
                 if(currResources.getWheat() >= 4)
                 {
@@ -93,30 +93,35 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
                 if(currResources.getWheat() >= 3)
                 {
                     this.ratio = 3;
+                    portIsThree = true;
                     canGiveResources.add(ResourceType.WHEAT);
                 }
                 if(currResources.getSheep() >= 3)
                 {
                     this.ratio = 3;
+                    portIsThree = true;
                     canGiveResources.add(ResourceType.SHEEP);
                 }
                 if(currResources.getOre() >= 3)
                 {
                     this.ratio = 3;
+                    portIsThree = true;
                     canGiveResources.add(ResourceType.ORE);
                 }
                 if(currResources.getWood() >= 3)
                 {
                     this.ratio = 3;
+                    portIsThree = true;
                     canGiveResources.add(ResourceType.WOOD);
                 }
                 if(currResources.getBrick() >= 3)
                 {
                     this.ratio = 3;
+                    portIsThree = true;
                     canGiveResources.add(ResourceType.BRICK);
                 }
             }
-            else if(port.getResource() == "wheat")
+            else if(port.getResource().equals("wheat"))
             {
                 this.ratio = 2;
                 portIsWheat = true;
@@ -125,7 +130,7 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
                     canGiveResources.add(ResourceType.WHEAT);
                 }
             }
-            else if(port.getResource() == "sheep")
+            else if(port.getResource().equals("sheep"))
             {
                 this.ratio = 2;
                 portIsSheep = true;
@@ -137,7 +142,7 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
                     }
                 }
             }
-            else if(port.getResource() == "ore")
+            else if(port.getResource().equals("ore"))
             {
                 this.ratio = 2;
                 portIsOre = true;
@@ -149,7 +154,7 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
                     }
                 }
             }
-            else if(port.getResource() == "wood")
+            else if(port.getResource().equals("wood"))
             {
                 this.ratio = 2;
                 portIsWood = true;
@@ -161,7 +166,7 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
                     }
                 }
             }
-            else if(port.getResource() == "brick")
+            else if(port.getResource().equals("brick"))
             {
                 this.ratio = 2;
                 portIsBrick = true;
@@ -200,6 +205,7 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
         System.out.println(in);
         System.out.println(out);
         Facade.getInstance().maritimeTrade(playerId,ratio,in,out);
+        Facade.getInstance().retrieveGameModel();
         getTradeOverlay().closeModal();
     }
 
@@ -215,27 +221,27 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
         getTradeOverlay().hideGetOptions();
         if(resource == ResourceType.BRICK)
         {
-            this.in = ResourceType.BRICK;
+            this.out = ResourceType.BRICK;
             getTradeOverlay().selectGetOption(resource,1);
         }
         if(resource == ResourceType.ORE)
         {
-            this.in = ResourceType.ORE;
+            this.out = ResourceType.ORE;
             getTradeOverlay().selectGetOption(resource,1);
         }
         if(resource == ResourceType.WHEAT)
         {
-            this.in = ResourceType.WHEAT;
+            this.out = ResourceType.WHEAT;
             getTradeOverlay().selectGetOption(resource,1);
         }
         if(resource == ResourceType.WOOD)
         {
-            this.in = ResourceType.WOOD;
+            this.out = ResourceType.WOOD;
             getTradeOverlay().selectGetOption(resource,1);
         }
         if(resource == ResourceType.SHEEP)
         {
-            this.in = ResourceType.SHEEP;
+            this.out = ResourceType.SHEEP;
             getTradeOverlay().selectGetOption(resource,1);
         }
     }
@@ -254,13 +260,15 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
         int numWood = Facade.getInstance().getGameModel().getPlayers().get(currPlayerIndex).getResources().getWood();
         if(resource == ResourceType.BRICK)
         {
-            this.out = ResourceType.BRICK;
+            this.in = ResourceType.BRICK;
+            numBrick = 4;
+            this.ratio = 4;
             if(portIsThree)
             {
                 numBrick = 3;
                 this.ratio = 3;
             }
-            else if(portIsBrick)
+            if(portIsBrick)
             {
                 numBrick = 2;
                 this.ratio = 2;
@@ -269,13 +277,15 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
         }
         if(resource == ResourceType.ORE)
         {
-            this.out = ResourceType.ORE;
+            this.in = ResourceType.ORE;
+            numOre = 4;
+            this.ratio = 4;
             if(portIsThree)
             {
                 numOre = 3;
                 this.ratio = 3;
             }
-            else if(portIsOre)
+            if(portIsOre)
             {
                 numOre = 2;
                 this.ratio = 2;
@@ -284,13 +294,15 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
         }
         if(resource == ResourceType.WHEAT)
         {
-            this.out = ResourceType.WHEAT;
+            this.in = ResourceType.WHEAT;
+            numWheat = 4;
+            this.ratio = 4;
             if(portIsThree)
             {
                 numWheat = 3;
                 this.ratio = 3;
             }
-            else if(portIsWheat)
+            if(portIsWheat)
             {
                 numWheat = 2;
                 this.ratio = 2;
@@ -299,13 +311,15 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
         }
         if(resource == ResourceType.WOOD)
         {
-            this.out = ResourceType.WOOD;
+            this.in = ResourceType.WOOD;
+            numWood = 4;
+            this.ratio = 4;
             if(portIsThree)
             {
                 numWood = 3;
                 this.ratio = 3;
             }
-            else if(portIsWood)
+            if(portIsWood)
             {
                 numWood = 2;
                 this.ratio = 2;
@@ -314,13 +328,15 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
         }
         if(resource == ResourceType.SHEEP)
         {
-            this.out = ResourceType.SHEEP;
+            this.in = ResourceType.SHEEP;
+            numSheep = 4;
+            this.ratio = 4;
             if(portIsThree)
             {
                 numSheep = 3;
                 this.ratio = 3;
             }
-            else if(portIsSheep)
+            if(portIsSheep)
             {
                 numSheep = 2;
                 this.ratio = 2;
