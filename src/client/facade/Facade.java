@@ -130,6 +130,11 @@ public class Facade {
         resources.setBrick(playerResources.getBrick());
         resources.setSheep(playerResources.getSheep());
         resources.setOre(playerResources.getOre());
+        resources.setSoldiers(curPlayer.getSoldiers());
+        //City = 4, Settlement = 5, Road = 15
+        resources.setCity(curPlayer.getCities());
+        resources.setRoad(curPlayer.getRoads());
+        resources.setSettlement(curPlayer.getSettlements());
         return resources;
     }
 

@@ -90,7 +90,6 @@ public class MapController extends Controller implements IMapController {
         if (s.equalsIgnoreCase("RoadBuilding")){
             String test = s;
         }
-
             // System.out.println("Desired State: " + s);
 //if it is in default stage go ahead and change it
         if (state.getName().equalsIgnoreCase("default")) {
