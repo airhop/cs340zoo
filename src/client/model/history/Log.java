@@ -8,6 +8,14 @@ public class Log {
 	{
 		LogList = new MessageList();
 	}
+	public Log(MessageList ml)
+	{
+		if(ml == null)
+			LogList = new MessageList();
+		else
+			LogList = ml;
+
+	}
 	/**
 	 * for printing or returning the list, however the history will need it.
 	*/

@@ -3,6 +3,7 @@ package client.MVC.discard;
 import client.MVC.base.*;
 import client.MVC.misc.*;
 import client.facade.Facade;
+import client.model.GameModel;
 import client.model.bank.ResourceList;
 import shared.definitions.ResourceType;
 
@@ -90,6 +91,11 @@ public class DiscardController extends Controller implements IDiscardController 
     public void update(Observable o, Object arg)
     {
         //nothing to update
+        GameModel gm = (GameModel) o;
+        if(gm.getTurnTracker().getStatus().equalsIgnoreCase("Discard"))
+            getDiscardView().showModal();
+      //  else
+      //      getDiscardView().closeModal();
     }
 }
 
