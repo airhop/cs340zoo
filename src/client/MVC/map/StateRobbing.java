@@ -42,7 +42,7 @@ public class StateRobbing extends StateAbstract
     {
         this.victim = victim.getPlayerIndex();
         int pid = Facade.getInstance().getPlayerIndex();
-        System.out.println();
+//        System.out.println();
         Facade.getInstance().rob(pid, victim.getPlayerIndex(), hl);
         robView.closeModal();
     }

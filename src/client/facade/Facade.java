@@ -557,10 +557,11 @@ public class Facade {
         System.out.println("rolling");
         if (game != null) {
             if (canRoll(playerIndex)) {
-                if (number != -1)
-                    proxy.rollNumber(7, playerIndex);
-                else
-                    System.out.println("not a rolling phase");
+                proxy.rollNumber(number, playerIndex);
+//                if (number != -1)
+//                    proxy.rollNumber(7, playerIndex);
+//                else
+//                    System.out.println("not a rolling phase");
             }
         }
         System.out.println("success?");
