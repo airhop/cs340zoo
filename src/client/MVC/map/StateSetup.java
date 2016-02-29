@@ -48,7 +48,7 @@ public class StateSetup extends StateAbstract
     {
         if(setSettlement)
             return false;
-      return Facade.getInstance().canPlaceSettlement(vertLoc.getNormalizedLocation());
+      return Facade.getInstance().canPlaceSettlement(vertLoc);
     }
 
     @Override

@@ -91,6 +91,7 @@ public class Facade {
     }
 
     public void retrieveGameModel() {
+        System.out.println(loggedIn + " " + Joined + " " + ready + " " + game.getTurnTracker().getStatus() + " here");
         GameModel gm = null;
         if (!loggedIn)
             return;
@@ -111,7 +112,7 @@ public class Facade {
                 myStop.start();
                 (observers.get(i)).update(game, "");
                 myStop.stop();
-                System.out.println("Update Time" + i + " = " + myStop.getElapsedTime());
+               // System.out.println("Update Time" + i + " = " + myStop.getElapsedTime());
             }
         }
     }

@@ -22,8 +22,6 @@ public class Map
 	TreeMap<HexLocation,Hex> hexes;
 	ArrayList<Port> ports;
 	ArrayList<Road> roads;
-	//ArrayList<VertexObject> settlements;
-	//ArrayList<VertexObject> cities;
 	ArrayList<VertexObject> buildings;// that replace settlements and cities.
 	ArrayList<VertexObject> placements = new ArrayList<VertexObject>();
 	ArrayList<ResourceList> resources;
@@ -37,8 +35,6 @@ public class Map
 		ports = new ArrayList<Port>();
 		roads = new ArrayList<Road>();
 		robber = new Robber();
-		//settlements = new ArrayList<VertexObject>();
-		//cities = new ArrayList<VertexObject>();
 		buildings = new ArrayList<VertexObject>();
 		resources = new ArrayList<ResourceList>();
 		deserializer = new Deserializer();
@@ -309,7 +305,7 @@ public class Map
 		}
 		for(int i = 0; i < buildings.size(); i++)
 		{
-			if(el.neighbor(buildings.get(i).getLocation()))
+			if(placable(el.getNormalizedLocation(), buildings.get(i).getLocation().getNormalizedLocation()))
 				return false;
 		}
 
@@ -349,6 +345,7 @@ public class Map
 	//public boolean canAddSettlement(Settlement settlement,VertexObject settlement)
 	public boolean canPlaceSettlement(VertexLocation settlementLocation)
 	{
+		System.out.println("can Place " + settlementLocation.toString());
 		//pass and check isDisconnected.  Must be touching a road!!
 		if(placements.size() != (buildings.size()*4))
 			fixBuildings();
@@ -371,7 +368,6 @@ public class Map
 		Hex h = hexes.get(settlementLocation.getHexLoc());
 		if(h == null)
 		{
-			//System.out.println("oops " + settlementLocation.toString());
 			return false;
 		}
 //		if(HexType.convert(h.getResource()) == HexType.WATER)
@@ -379,22 +375,18 @@ public class Map
 //			return oceanPlacable(settlementLocation);
 //		}
 
-		int pid = Facade.getInstance().getPlayerID();
+		int pid = Facade.getInstance().getPlayerIndex();
 		for(int i = 0; i < roads.size(); i++)
 		{
-			//System.out.println("here");
 			Road r = roads.get(i);
+		//	System.out.println(pid + " " + r.getOwner());
 			if(r.getOwner() == pid)
 			{
 				EdgeLocation rel = r.getLocation().getNormalizedLocation();
 				VertexLocation sel = settlementLocation.getNormalizedLocation();
-				if(rel.getHexLoc().compareTo(sel.getHexLoc()) == 0)
+				if(placable (roads.get(i).getLocation(),settlementLocation))
 				{
-					if (placable(rel.getDir(), sel.getDir()))
-					{
-						//System.out.println("here");
-						return true;
-					}
+					return true;
 				}
 			}
 		}
@@ -549,22 +541,6 @@ public class Map
 		this.roads = roads;
 	}
 
-//	public ArrayList<VertexObject> getSettlements() {
-//		return settlements;
-//	}
-//
-//	public void setSettlements(ArrayList<VertexObject> settlements) {
-//		this.settlements = settlements;
-//	}
-//
-//	public ArrayList<VertexObject> getCities() {
-//		return cities;
-//	}
-//
-//	public void setCities(ArrayList<VertexObject> cities) {
-//		this.cities = cities;
-//	}
-
 	public int getRadius() {
 		return radius;
 	}
@@ -666,20 +642,49 @@ public class Map
 		return false;
 	}
 
-	public boolean placable(EdgeDirection roadDir, VertexDirection settlementDir)
+	public boolean placable(EdgeLocation roadDir, VertexLocation settlementDir)
 	{
-		switch(roadDir)
+		roadDir = roadDir.getNormalizedLocation();
+		settlementDir = settlementDir.getNormalizedLocation();
+		VertexDirection sed = settlementDir.getDir();
+		HexLocation roadHex = roadDir.getHexLoc();
+		HexLocation settHex = settlementDir.getHexLoc();
+		HexLocation hl;
+		HexLocation hl2;
+
+		System.out.println("Road " + roadDir.toString());
+		System.out.println("Settlement " + settlementDir.toString());
+
+		switch(roadDir.getDir())
 		{
 			case NW:
-				if (settlementDir == VertexDirection.NW || settlementDir == VertexDirection.W)
+				if (roadHex.compareTo(settHex) == 0 && (sed == VertexDirection.NW || sed == VertexDirection.W))
+					return true;
+				hl = new HexLocation(roadDir.getHexLoc().getX() - 1, roadDir.getHexLoc().getY() + 1);
+				if(sed == VertexDirection.NE && settHex.compareTo(hl) == 0)
+					return true;
+				hl2 = new HexLocation(roadDir.getHexLoc().getX() - 1, roadDir.getHexLoc().getY());
+				if(sed == VertexDirection.E && settHex.compareTo(hl2) == 0)
 					return true;
 				return false;
 			case NE:
-				if (settlementDir == VertexDirection.NE || settlementDir == VertexDirection.E)
+				if (roadHex.compareTo(settHex) == 0 && (sed == VertexDirection.NE || sed == VertexDirection.E))
+					return true;
+				hl = new HexLocation(roadDir.getHexLoc().getX()+1, roadDir.getHexLoc().getY());
+				if(sed == VertexDirection.NW && settHex.compareTo(hl) == 0)
+					return true;
+				hl2 = new HexLocation(roadDir.getHexLoc().getX() + 1, roadDir.getHexLoc().getY() - 1);
+				if(sed == VertexDirection.W && settHex.compareTo(hl2) == 0)
 					return true;
 				return false;
 			case N:
-				if (settlementDir == VertexDirection.NW || settlementDir == VertexDirection.NE)
+				if (roadHex.compareTo(settHex) == 0 && (sed == VertexDirection.NW || sed == VertexDirection.NE))
+					return true;
+				hl = new HexLocation(roadDir.getHexLoc().getX() - 1, roadDir.getHexLoc().getY());
+				if(sed == VertexDirection.E && settHex.compareTo(hl) == 0)
+					return true;
+				hl2 = new HexLocation(roadDir.getHexLoc().getX() + 1, roadDir.getHexLoc().getY() - 1);
+				if(sed == VertexDirection.W && settHex.compareTo(hl2) == 0)
 					return true;
 				return false;
 		}

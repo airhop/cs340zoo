@@ -66,7 +66,8 @@ public class StatePlayersTurn extends StateAbstract
     }
 
     @Override
-    public void robPlayer(RobPlayerInfo victim) {
+    public void robPlayer(RobPlayerInfo victim)
+    {
 
     }
 

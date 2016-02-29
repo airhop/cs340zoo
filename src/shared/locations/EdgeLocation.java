@@ -115,6 +115,7 @@ public class EdgeLocation
 
 	public boolean neighbor(VertexLocation vl)
 	{
+
 		vl = vl.getNormalizedLocation();
 		switch(vl.getDir())
 		{
