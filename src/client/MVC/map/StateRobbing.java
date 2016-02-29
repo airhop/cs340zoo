@@ -42,7 +42,8 @@ public class StateRobbing extends StateAbstract
     {
         this.victim = victim.getPlayerIndex();
         int pid = Facade.getInstance().getPlayerIndex();
-        Facade.getInstance().rob(pid, victim.getPlayerIndex(), Facade.getInstance().getGameModel().getMap().getRobber().getHl());
+        System.out.println();
+        Facade.getInstance().rob(pid, victim.getPlayerIndex(), hl);
         robView.closeModal();
     }
 
@@ -96,6 +97,7 @@ public class StateRobbing extends StateAbstract
     @Override
     public void placeRobber(HexLocation hexLoc)
     {
+        hl=hexLoc;
         Set<Integer> people = new HashSet<Integer>();
         for(VertexObject obj : objects)
         {

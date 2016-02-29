@@ -549,7 +549,7 @@ public class Facade {
         if (game != null) {
             if (canRoll(playerIndex)) {
                 if (number != -1)
-                    proxy.rollNumber(7, playerIndex);
+                    proxy.rollNumber(number, playerIndex);
                 else
                     System.out.println("not a rolling phase");
             }
