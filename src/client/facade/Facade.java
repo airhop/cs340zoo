@@ -122,7 +122,7 @@ public class Facade {
                 myStop.start();
                 (observers.get(i)).update(game, "");
                 myStop.stop();
-               // System.out.println("Update Time" + i + " = " + myStop.getElapsedTime());
+//                System.out.println("Update Time" + i + " = " + myStop.getElapsedTime());
             }
         }
     }
@@ -502,7 +502,7 @@ public class Facade {
         if (pid == -1)
             System.out.println("No player to be robbed?");
         if (game != null) {
-            System.out.println("Player Index: "+pid+" Victim Index: "+" hexLocation moved to: "+hl.toString());
+            if (game.canRob(pid, vid) && game.canMoveRobber(hl))
                 proxy.robPlayer(pid, vid, hl);
         }
     }
@@ -549,7 +549,7 @@ public class Facade {
         if (game != null) {
             if (canRoll(playerIndex)) {
                 if (number != -1)
-                    proxy.rollNumber(number, playerIndex);
+                    proxy.rollNumber(7, playerIndex);
                 else
                     System.out.println("not a rolling phase");
             }
@@ -578,10 +578,8 @@ public class Facade {
             if (game.canDiscardCards(pid, rl))
                 try {
                     proxy.discardCards(pid, rl);
-                    return true;
                 } catch (InsufficientResourcesException e) {
                     e.printStackTrace();
-                    return false;
                 }
         }
         return false;
@@ -718,7 +716,7 @@ public class Facade {
         }
         return false;
     }
-    public ArrayList<VertexObject> getVObjectsAroundHexlocation(HexLocation location)
+    public List<VertexObject> getVObjectsAroundHexlocation(HexLocation location)
     {
         return game.getVObjectsAroundHexlocation(location);
 

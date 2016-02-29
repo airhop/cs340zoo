@@ -96,7 +96,9 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
             Facade.getInstance().setPlayerWaiting(false);
         }else{
             getView().setPlayers(playersInfo());
-            getView().showModal();
+            if(!getView().isModalShowing()){
+                getView().showModal();
+            }
         }
     }
 }
