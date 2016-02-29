@@ -2,6 +2,7 @@ package client.MVC.points;
 
 import client.MVC.base.*;
 import client.MVC.utils.*;
+import client.facade.Facade;
 
 import javax.swing.*;
 import java.awt.*;
@@ -78,6 +79,7 @@ public class GameFinishedView extends OverlayView implements IGameFinishedView {
 
             if (e.getSource() == okButton) {
                 closeModal();
+                Facade.getInstance().reset();
             }
         }
     };

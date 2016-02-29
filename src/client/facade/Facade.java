@@ -100,8 +100,16 @@ public class Facade {
         this.proxy = proxy;
     }
 
+    public void reset()
+    {
+        ready = false;
+        Joined = false;
+        settingColor = false;
+        game = new GameModel();
+    }
+
     public void retrieveGameModel() {
-        System.out.println(loggedIn + " " + Joined + " " + ready + " " + game.getTurnTracker().getStatus() + " here");
+       // System.out.println(loggedIn + " " + Joined + " " + ready + " " + game.getTurnTracker().getStatus() + " here");
         GameModel gm = null;
         if (!loggedIn)
             return;
