@@ -203,6 +203,7 @@ public class Map
 	{
 		Hex hex = new Hex(x,y);
 		//hex.setResource(HexType.DESERT.toString());
+		relocateRober(hex.getLocation());
 		hexes.put(hex.getLocation(), hex);
 	}
 
@@ -459,10 +460,15 @@ public class Map
 	public boolean canRelocateRobber(HexLocation targetHex)
 	{
 		//HexLocation targetHex = new HexLocation(x,y);
-		if(targetHex == robber.getHl())
+		if(targetHex.getX() == robber.getHl().getX() && targetHex.getY() == robber.getHl().getY()) {
+			System.out.println("HES ALREADY HERE DUMMY");
 			return false;
-		if (HexType.convert(hexes.get(targetHex).resource) == HexType.WATER)
+		}
+		if (HexType.convert(hexes.get(targetHex).resource) == HexType.WATER) {
+			System.out.println("THIS IS WATER YOU IDIOT");
+
 			return false;
+		}
 
 		return true;
 	}
@@ -716,7 +722,7 @@ public class Map
 		return false;
 	}
 
-	public List<VertexObject> toBeRobbed(HexLocation landing)
+	public List<VertexObject> getVObjectsAroundHexlocation(HexLocation landing)
 	{
 		HexLocation landingSW = new HexLocation(landing.getX() - 1, landing.getY() + 1);
 		HexLocation landingS = new HexLocation(landing.getX(), landing.getY() + 1);
