@@ -349,7 +349,7 @@ public class Map
 	//public boolean canAddSettlement(Settlement settlement,VertexObject settlement)
 	public boolean canPlaceSettlement(VertexLocation settlementLocation)
 	{
-		System.out.println("can Place " + settlementLocation.toString());
+		//System.out.println("can Place " + settlementLocation.toString());
 		//pass and check isDisconnected.  Must be touching a road!!
 		if(placements.size() != (buildings.size()*4))
 			fixBuildings();
@@ -683,8 +683,8 @@ public class Map
 		HexLocation hl;
 		HexLocation hl2;
 
-		System.out.println("Road " + roadDir.toString());
-		System.out.println("Settlement " + settlementDir.toString());
+		//System.out.println("Road " + roadDir.toString());
+		//System.out.println("Settlement " + settlementDir.toString());
 
 		switch(roadDir.getDir())
 		{
