@@ -44,7 +44,6 @@ public class RollController extends Controller implements IRollController {
     @Override
     public void rollDice()
     {
-
         Random r = new Random();
         int x = r.nextInt(6);  //0 - 5
         int y = r.nextInt(6); // 0 - 5
@@ -56,7 +55,7 @@ public class RollController extends Controller implements IRollController {
 
         Facade.getInstance().roll(Facade.getInstance().getCurrentPlayer().getPlayerIndex(), roll);
         getRollView().closeModal();
-//        getResultView().showModal();
+        getResultView().showModal();
         getResultView().setRollValue(roll);
 
     }
@@ -66,14 +65,20 @@ public class RollController extends Controller implements IRollController {
     @Override
     public void update(Observable o, Object arg)
     {
+        GameModel gm = (GameModel) o;
         if(!Facade.getInstance().isReady())
             return;
-        if(((GameModel)o).getTurnTracker().getStatus().equalsIgnoreCase("Rolling") && !waiting)
+        if((gm.getTurnTracker().getStatus().equalsIgnoreCase("Rolling") && !waiting))
         {
             if(!getRollView().isModalShowing() || !getResultView().isModalShowing()){
                 getRollView().showModal();
             }
             waiting = true;
+        }
+        else if(gm.getTurnTracker().getStatus().equalsIgnoreCase("Discard") || gm.getTurnTracker().getStatus().equalsIgnoreCase("Playing"))
+        {
+            waiting = false;
+            getResultView().closeModal();
         }
 
     }
