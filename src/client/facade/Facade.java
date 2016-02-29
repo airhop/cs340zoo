@@ -502,7 +502,7 @@ public class Facade {
         if (pid == -1)
             System.out.println("No player to be robbed?");
         if (game != null) {
-            if (game.canRob(pid, vid) && game.canMoveRobber(hl))
+            System.out.println("Player Index: "+pid+" Victim Index: "+" hexLocation moved to: "+hl.toString());
                 proxy.robPlayer(pid, vid, hl);
         }
     }
@@ -715,7 +715,7 @@ public class Facade {
         }
         return false;
     }
-    public List<VertexObject> getVObjectsAroundHexlocation(HexLocation location)
+    public ArrayList<VertexObject> getVObjectsAroundHexlocation(HexLocation location)
     {
         return game.getVObjectsAroundHexlocation(location);
 

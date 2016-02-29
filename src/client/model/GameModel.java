@@ -522,7 +522,7 @@ public class GameModel extends Observable{
     public void setGameList(List<GameInfo> gameList) {
         this.gameList = gameList;
     }
-    public List<VertexObject> getVObjectsAroundHexlocation(HexLocation location)
+    public ArrayList<VertexObject> getVObjectsAroundHexlocation(HexLocation location)
     {
 
         return map.getVObjectsAroundHexlocation(location);

@@ -725,7 +725,7 @@ public class Map
 		return false;
 	}
 
-	public List<VertexObject> getVObjectsAroundHexlocation(HexLocation landing)
+	public ArrayList<VertexObject> getVObjectsAroundHexlocation(HexLocation landing)
 	{
 		HexLocation landingSW = new HexLocation(landing.getX() - 1, landing.getY() + 1);
 		HexLocation landingS = new HexLocation(landing.getX(), landing.getY() + 1);
@@ -738,28 +738,28 @@ public class Map
 			if(hl.compareTo(landing) == 0)
 			{
 				System.out.println("THIS IS A BUILDINGGGGGGGGGGGGGGGGG");
-				VertexDirection vd = vertex.getLocation().getDir();
+				VertexDirection vd = vertex.getLocation().getNormalizedLocation().getDir();
 				if(vd == VertexDirection.E || vd == VertexDirection.NE || vd == VertexDirection.NW || vd == VertexDirection.W)
 					returningBuildings.add(vertex);
 			}
 			else if(hl.compareTo(landingSW) == 0)
 			{
 				System.out.println("THIS IS A BUILDINGGGGGGGGGGGGGGGGG");
-				VertexDirection vd = vertex.getLocation().getDir();
+				VertexDirection vd = vertex.getLocation().getNormalizedLocation().getDir();
 				if(vd == VertexDirection.E || vd == VertexDirection.NE)
 					returningBuildings.add(vertex);
 			}
 			else if(hl.compareTo(landingS) == 0)
 			{
 				System.out.println("THIS IS A BUILDINGGGGGGGGGGGGGGGGG");
-				VertexDirection vd = vertex.getLocation().getDir();
+				VertexDirection vd = vertex.getLocation().getNormalizedLocation().getDir();
 				if(vd == VertexDirection.NE || vd == VertexDirection.NW)
 					returningBuildings.add(vertex);
 			}
 			else if(hl.compareTo(landingSE) == 0)
 			{
 				System.out.println("THIS IS A BUILDINGGGGGGGGGGGGGGGGG");
-				VertexDirection vd = vertex.getLocation().getDir();
+				VertexDirection vd = vertex.getLocation().getNormalizedLocation().getDir();
 				if(vd == VertexDirection.NW || vd == VertexDirection.W)
 					returningBuildings.add(vertex);
 			}

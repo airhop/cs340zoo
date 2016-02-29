@@ -33,28 +33,6 @@ public class StateRobbing extends StateAbstract
         view = v;
         robView = rv;
         v.startDrop(PieceType.ROBBER, CatanColor.BLUE, false);
-
-        Set<Integer> people = new HashSet<Integer>();
-        for(VertexObject obj : objects)
-        {
-            obj.getOwner();
-        }
-        RobPlayerInfo[] players = new RobPlayerInfo[people.size()];
-        int i=0;
-        for(int x : people)
-        {
-            ArrayList<Player> playas = Facade.getInstance().getGameModel().getPlayers();
-            for(Player player : playas)
-            {
-                if(player.getPlayerIndex() == x)
-                {
-                    players[i] = new RobPlayerInfo(player.getPlayerID(), player.getPlayerIndex(), player.getUsername(), CatanColor.convert(player.getColor()), 2);
-                }
-            }
-            i++;
-        }
-        rv.setPlayers(players);
-
     }
 
     //if soldier is played can the cancelMove possibly be called, because during a roll 7 it can
@@ -62,9 +40,9 @@ public class StateRobbing extends StateAbstract
     @Override
     public void robPlayer(RobPlayerInfo victim)
     {
-        this.victim = victim.getId();
+        this.victim = victim.getPlayerIndex();
         int pid = Facade.getInstance().getPlayerIndex();
-        Facade.getInstance().rob(pid, victim.getId(), Facade.getInstance().getGameModel().getMap().getRobber().getHl());
+        Facade.getInstance().rob(pid, victim.getPlayerIndex(), Facade.getInstance().getGameModel().getMap().getRobber().getHl());
         robView.closeModal();
     }
 
@@ -96,12 +74,7 @@ public class StateRobbing extends StateAbstract
     @Override
     public boolean canPlaceRobber(HexLocation hexLoc)
     {
-        System.out.println("TRYING TO PLACE ROBBERRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR");
         objects = Facade.getInstance().getVObjectsAroundHexlocation(hexLoc);
-        for(VertexObject o : objects)
-        {
-            System.out.println("OWNER INDEX: "+o.getOwner());
-        }
         return Facade.getInstance().canMoveRobber(hexLoc);
     }
 
@@ -123,6 +96,45 @@ public class StateRobbing extends StateAbstract
     @Override
     public void placeRobber(HexLocation hexLoc)
     {
+        Set<Integer> people = new HashSet<Integer>();
+        for(VertexObject obj : objects)
+        {
+            people.add(obj.getOwner());
+        }
+        RobPlayerInfo[] players = null;
+        boolean inThere = false;
+        for(int x : people)
+        {
+            if(x == Facade.getInstance().getCurrentPlayer().getPlayerIndex()) {
+                inThere = true;
+            }
+        }
+        if(inThere)
+        {
+            players = new RobPlayerInfo[people.size()-1];
+        }
+        else
+        {
+            players = new RobPlayerInfo[people.size()];
+        }
+        System.out.println("SIZE OF THE PLAYERS ARRAY: "+players.length);
+        int i=0;
+        int j=0;
+        for(int x : people)
+        {
+            if(x != Facade.getInstance().getCurrentPlayer().getPlayerIndex()) {
+                ArrayList<Player> playas = Facade.getInstance().getGameModel().getPlayers();
+                for (Player player : playas) {
+                    if (player.getPlayerIndex() == x) {
+                        players[j] = new RobPlayerInfo(player.getPlayerID(), player.getPlayerIndex(), player.getUsername(), CatanColor.convert(player.getColor()), player.getResources().getSize());
+                        j++;
+                    }
+                }
+            }
+            i++;
+        }
+        robView.setPlayers(players);
+        robView.showModal();
     }
 
     @Override

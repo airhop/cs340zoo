@@ -107,5 +107,11 @@ public class ResourceList {
         sb.append("WOOD AMOUNT: "+getWood()+"\n");
         return sb.toString();
     }
+    public int getSize()
+    {
+        int total = numOfBrick + numOfOre + numOfSheep + numOfWheat + numOfWood;
+        return total;
+    }
+
 
 }

@@ -69,5 +69,15 @@ public class RobPlayerInfo {
         this.color = color;
     }
 
+    public String toString()
+    {
+        StringBuilder sb = new StringBuilder();
+        sb.append("ID: "+id+"\n");
+        sb.append("INDEX: "+playerIndex+"\n");
+        sb.append("NAME: "+name+"\n");
+        return sb.toString();
+    }
+
+
 }
 
