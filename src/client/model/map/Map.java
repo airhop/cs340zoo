@@ -319,12 +319,18 @@ public class Map
 			return false;
 		if(HexType.convert(h.getResource())== HexType.WATER)
 		{
-			if(roadOceanPlayable(el))
-				return true;
+			if(!roadOceanPlayable(el))
+				return false;
 		}
 
-		if(!extraPlacable(el.getNormalizedLocation()))
+
+		roads.add(new Road(el, Facade.getInstance().getCurrentPlayer().getPlayerIndex()));
+		if(extraPlacable(el.getNormalizedLocation()))
+		{
+			roads.remove(roads.size() - 1);
 			return true;
+		}
+
 
 		return false;
 	}
@@ -354,20 +360,15 @@ public class Map
 	//public boolean canAddSettlement(Settlement settlement,VertexObject settlement)
 	public boolean canPlaceSettlement(VertexLocation settlementLocation)
 	{
-		//System.out.println("can Place " + settlementLocation.toString());
-		//pass and check isDisconnected.  Must be touching a road!!
 		if(placements.size() != (buildings.size()*4))
 			fixBuildings();
-		//System.out.println(buildings.size());
-		//System.out.println("settlement - " + settlementLocation.toString());
-		if (settlementLocation == null)
+
+			if (settlementLocation == null)
 		{
 			return false;
 		}
 		for (VertexObject VObjIter: placements)
 		{
-		//	System.out.println("hey " + VObjIter.getLocation().getNormalizedLocation());
-		//	System.out.println(settlementLocation.getNormalizedLocation() + "\n");
 			int vl = VObjIter.getLocation().getNormalizedLocation().compareTo(settlementLocation.getNormalizedLocation());
 			if (vl == 0)
 			{
@@ -379,10 +380,6 @@ public class Map
 		{
 			return false;
 		}
-//		if(HexType.convert(h.getResource()) == HexType.WATER)
-//		{
-//			return oceanPlacable(settlementLocation);
-//		}
 
 		int pid = Facade.getInstance().getPlayerIndex();
 		for(int i = 0; i < roads.size(); i++)
@@ -469,11 +466,11 @@ public class Map
 	{
 		//HexLocation targetHex = new HexLocation(x,y);
 		if(targetHex.getX() == robber.getHl().getX() && targetHex.getY() == robber.getHl().getY()) {
-			System.out.println("HES ALREADY HERE DUMMY");
+//			System.out.println("HES ALREADY HERE DUMMY");
 			return false;
 		}
 		if (HexType.convert(hexes.get(targetHex).resource) == HexType.WATER) {
-			System.out.println("THIS IS WATER YOU IDIOT");
+//			System.out.println("THIS IS WATER YOU IDIOT");
 
 			return false;
 		}
@@ -556,7 +553,6 @@ public class Map
 		List<Port> playerPorts = new ArrayList<Port>();
 		for(Port port: ports)
 		{
-			System.out.println(port.getOwner() + " " + playerID);
 			if(port.getOwner() == playerID)
 			{
 				playerPorts.add(port);
@@ -688,8 +684,6 @@ public class Map
 		HexLocation hl;
 		HexLocation hl2;
 
-		//System.out.println("Road " + roadDir.toString());
-		//System.out.println("Settlement " + settlementDir.toString());
 
 		switch(roadDir.getDir())
 		{
@@ -725,7 +719,7 @@ public class Map
 				return false;
 		}
 
-		System.out.println("Oops " + settlementDir);
+//		System.out.println("Oops " + settlementDir);
 
 		return false;
 	}
@@ -742,28 +736,24 @@ public class Map
 			HexLocation hl = vertex.getLocation().getNormalizedLocation().getHexLoc();
 			if(hl.compareTo(landing) == 0)
 			{
-				System.out.println("THIS IS A BUILDINGGGGGGGGGGGGGGGGG");
 				VertexDirection vd = vertex.getLocation().getNormalizedLocation().getDir();
 				if(vd == VertexDirection.E || vd == VertexDirection.NE || vd == VertexDirection.NW || vd == VertexDirection.W)
 					returningBuildings.add(vertex);
 			}
 			else if(hl.compareTo(landingSW) == 0)
 			{
-				System.out.println("THIS IS A BUILDINGGGGGGGGGGGGGGGGG");
 				VertexDirection vd = vertex.getLocation().getNormalizedLocation().getDir();
 				if(vd == VertexDirection.E || vd == VertexDirection.NE)
 					returningBuildings.add(vertex);
 			}
 			else if(hl.compareTo(landingS) == 0)
 			{
-				System.out.println("THIS IS A BUILDINGGGGGGGGGGGGGGGGG");
 				VertexDirection vd = vertex.getLocation().getNormalizedLocation().getDir();
 				if(vd == VertexDirection.NE || vd == VertexDirection.NW)
 					returningBuildings.add(vertex);
 			}
 			else if(hl.compareTo(landingSE) == 0)
 			{
-				System.out.println("THIS IS A BUILDINGGGGGGGGGGGGGGGGG");
 				VertexDirection vd = vertex.getLocation().getNormalizedLocation().getDir();
 				if(vd == VertexDirection.NW || vd == VertexDirection.W)
 					returningBuildings.add(vertex);
@@ -775,7 +765,7 @@ public class Map
 	public boolean extraPlacable(EdgeLocation el)
 	{
 		if(buildings.size() == 0)
-			return false;
+			return true;
 		System.out.println(el.getDir());
 		VertexLocation vl, vl2, vl3, vl4;
 		switch(el.getDir())
