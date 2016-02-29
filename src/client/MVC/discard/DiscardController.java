@@ -107,11 +107,23 @@ public class DiscardController extends Controller implements IDiscardController 
 
     public void verify()
     {
+        boolean discardPossible = false;
+        if((brick+ore+sheep+wheat+wood) == discardamount)
+        {
+            discardPossible = true;
+            getDiscardView().setDiscardButtonEnabled(true);
+        }
+        else
+            getDiscardView().setDiscardButtonEnabled(false);
+        getDiscardView().setStateMessage("" + (brick+ore+sheep+wood+wheat) + "/" + discardamount);
+
+
         int r = rl.getBrick();
         boolean increase = false;
         boolean decrease = false;
-        getDiscardView().setResourceDiscardAmount(ResourceType.BRICK, r);
-        if(brick >= 0 && brick < r)
+        getDiscardView().setResourceDiscardAmount(ResourceType.BRICK, brick);
+        getDiscardView().setResourceMaxAmount(ResourceType.BRICK, r);
+        if(brick >= 0 && brick < r && !discardPossible)
             increase = true;
         if(brick <= r && brick > 0)
             decrease = true;
@@ -120,8 +132,9 @@ public class DiscardController extends Controller implements IDiscardController 
         r = rl.getOre();
         increase = false;
         decrease = false;
-        getDiscardView().setResourceDiscardAmount(ResourceType.ORE, r);
-        if(ore >= 0 && ore < r)
+        getDiscardView().setResourceDiscardAmount(ResourceType.ORE, ore);
+        getDiscardView().setResourceMaxAmount(ResourceType.ORE, r);
+        if(ore >= 0 && ore < r && !discardPossible)
             increase = true;
         if(ore <= r && ore > 0)
             decrease = true;
@@ -130,8 +143,9 @@ public class DiscardController extends Controller implements IDiscardController 
         r = rl.getSheep();
         increase = false;
         decrease = false;
-        getDiscardView().setResourceDiscardAmount(ResourceType.SHEEP, r);
-        if(sheep >= 0 && sheep < r)
+        getDiscardView().setResourceDiscardAmount(ResourceType.SHEEP, sheep);
+        getDiscardView().setResourceMaxAmount(ResourceType.SHEEP, r);
+        if(sheep >= 0 && sheep < r && !discardPossible)
             increase = true;
         if(sheep <= r && sheep > 0)
             decrease = true;
@@ -140,8 +154,9 @@ public class DiscardController extends Controller implements IDiscardController 
         r = rl.getWheat();
         increase = false;
         decrease = false;
-        getDiscardView().setResourceDiscardAmount(ResourceType.WHEAT, r);
-        if(wheat >= 0 && wheat < r)
+        getDiscardView().setResourceDiscardAmount(ResourceType.WHEAT, wheat);
+        getDiscardView().setResourceMaxAmount(ResourceType.WHEAT, r);
+        if(wheat >= 0 && wheat < r && !discardPossible)
             increase = true;
         if(wheat <= r && wheat > 0)
             decrease = true;
@@ -150,19 +165,13 @@ public class DiscardController extends Controller implements IDiscardController 
         r = rl.getWood();
         increase = false;
         decrease = false;
-        getDiscardView().setResourceDiscardAmount(ResourceType.WOOD, r);
-        if(wood >= 0 && wood < r)
+        getDiscardView().setResourceDiscardAmount(ResourceType.WOOD, wood);
+        getDiscardView().setResourceMaxAmount(ResourceType.WOOD, r);
+        if(wood >= 0 && wood < r && !discardPossible)
             increase = true;
         if(wood <= r && wood > 0)
             decrease = true;
         getDiscardView().setResourceAmountChangeEnabled(ResourceType.WOOD, increase, decrease);
-
-        r = brick+ore+sheep+wheat+wood;
-        if(r == discardamount)
-            getDiscardView().setDiscardButtonEnabled(true);
-        else
-            getDiscardView().setDiscardButtonEnabled(false);
-
 
     }
 
