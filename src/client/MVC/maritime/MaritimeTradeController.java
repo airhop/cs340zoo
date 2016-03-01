@@ -64,30 +64,12 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
         ResourceList currResources = Facade.getInstance().getGameModel().getPlayers().get(Facade.getInstance().getCurrentPlayer().getPlayerIndex()).getResources();
         List<ResourceType> canGiveResources = new ArrayList<>();
         int lowestRatio = 4;
+        hasFourOfResource(currResources, canGiveResources);
         for(Port port : currentPlayerPorts)
         {
             if(true)
             {
-                if(currResources.getWheat() >= 4)
-                {
-                    canGiveResources.add(ResourceType.WHEAT);
-                }
-                if(currResources.getSheep() >= 4)
-                {
-                    canGiveResources.add(ResourceType.SHEEP);
-                }
-                if(currResources.getOre() >= 4)
-                {
-                    canGiveResources.add(ResourceType.ORE);
-                }
-                if(currResources.getWood() >= 4)
-                {
-                    canGiveResources.add(ResourceType.WOOD);
-                }
-                if(currResources.getBrick() >= 4)
-                {
-                    canGiveResources.add(ResourceType.BRICK);
-                }
+                hasFourOfResource(currResources, canGiveResources);
             }
             if(port.getRatio() == 3)
             {
@@ -181,6 +163,14 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
                 }
             }
         }
+        if(canGiveResources.size() == 0)
+        {
+            getTradeOverlay().setStateMessage("Not Enough Resources");
+        }
+        else
+        {
+            getTradeOverlay().setStateMessage("Choose What To Give Up");
+        }
         ResourceType[] canGive = new ResourceType[canGiveResources.size()];
         for(int i = 0; i < canGiveResources.size() ;i++ )
         {
@@ -202,10 +192,35 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
         {
             ResourceType[] disableAll = new ResourceType[0];
             getTradeOverlay().showGiveOptions(disableAll);
+            getTradeOverlay().setStateMessage("Not Your Turn");
+
         }
 
         getTradeOverlay().showModal();
 
+    }
+
+    private void hasFourOfResource(ResourceList currResources, List<ResourceType> canGiveResources) {
+        if(currResources.getWheat() >= 4)
+        {
+            canGiveResources.add(ResourceType.WHEAT);
+        }
+        if(currResources.getSheep() >= 4)
+        {
+            canGiveResources.add(ResourceType.SHEEP);
+        }
+        if(currResources.getOre() >= 4)
+        {
+            canGiveResources.add(ResourceType.ORE);
+        }
+        if(currResources.getWood() >= 4)
+        {
+            canGiveResources.add(ResourceType.WOOD);
+        }
+        if(currResources.getBrick() >= 4)
+        {
+            canGiveResources.add(ResourceType.BRICK);
+        }
     }
 
     @Override
@@ -228,6 +243,7 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
     @Override
     public void setGetResource(ResourceType resource) {
         getTradeOverlay().setTradeEnabled(true);
+        getTradeOverlay().setStateMessage("Trade!");
         getTradeOverlay().hideGetOptions();
         if(resource == ResourceType.BRICK)
         {
@@ -260,6 +276,7 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
     public void setGiveResource(ResourceType resource) {
 
         ResourceType[] getResources = {ResourceType.BRICK,ResourceType.ORE,ResourceType.SHEEP,ResourceType.WHEAT,ResourceType.WOOD};
+        getTradeOverlay().setStateMessage("Choose What To Get");
         getTradeOverlay().hideGiveOptions();
         getTradeOverlay().showGetOptions(getResources);
         int currPlayerIndex = Facade.getInstance().getCurrentPlayer().getPlayerIndex();
@@ -359,12 +376,14 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
     @Override
     public void unsetGetValue() {
         ResourceType[] getResources = {ResourceType.BRICK,ResourceType.ORE,ResourceType.SHEEP,ResourceType.WHEAT,ResourceType.WOOD};
+        getTradeOverlay().setStateMessage("Choose What to Get");
         getTradeOverlay().setTradeEnabled(false);
         getTradeOverlay().showGetOptions(getResources);
     }
 
     @Override
     public void unsetGiveValue() {
+        getTradeOverlay().setStateMessage("Choose What to Give");
         getTradeOverlay().hideGetOptions();
         getTradeOverlay().setTradeEnabled(false);
         getTradeOverlay().showGiveOptions(canGiveToBank);
