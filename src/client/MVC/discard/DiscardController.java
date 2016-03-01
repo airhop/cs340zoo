@@ -30,7 +30,7 @@ public class DiscardController extends Controller implements IDiscardController 
     public DiscardController(IDiscardView view, IWaitView waitView) {
 
         super(view);
-
+        Facade.getInstance().addObserver(this);
         this.waitView = waitView;
         refresh();
     }
@@ -178,11 +178,10 @@ public class DiscardController extends Controller implements IDiscardController 
     @Override
     public void update(Observable o, Object arg)
     {
-        //nothing to update
         GameModel gm = (GameModel) o;
-        ResourceList rl = gm.getPlayers().get(gm.getCurrentPlayer().getPlayerIndex()).getResources();
+        rl = gm.getPlayers().get(gm.getCurrentPlayer().getPlayerIndex()).getResources();
 
-        if(gm.getTurnTracker().getStatus().equalsIgnoreCase("Discard") && rl.size() > 7)
+        if(gm.getTurnTracker().getStatus().equalsIgnoreCase("Discarding") && rl.size() > 7)
         {
             discardamount = rl.size()/2;
             verify();
