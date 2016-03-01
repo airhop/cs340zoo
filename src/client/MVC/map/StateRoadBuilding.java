@@ -20,6 +20,7 @@ public class StateRoadBuilding extends StateAbstract
     public StateRoadBuilding(IMapView v, IRobView robView)
     {
         view = v;
+        color = Facade.getInstance().getCurrentPlayer().getColor();
      //   color = facade.getCatanColor();
     }
 
@@ -30,7 +31,7 @@ public class StateRoadBuilding extends StateAbstract
     @Override
     public boolean canPlaceRoad(EdgeLocation edgeLoc)
     {
-        return Facade.getInstance().canPlaceRoadSetup(edgeLoc.getNormalizedLocation());
+        return Facade.getInstance().canPlaceRoad(edgeLoc.getNormalizedLocation(), true);
     }
 
     @Override

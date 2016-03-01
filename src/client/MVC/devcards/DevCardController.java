@@ -98,7 +98,7 @@ public class DevCardController extends Controller implements IDevCardController 
             getPlayCardView().setCardEnabled(DevCardType.ROAD_BUILD, false);
         }
 
-        if(monument > 0){
+        if(monument > 0 && Facade.getInstance().getPoints(Facade.getInstance().getPlayerIndex()) + monument == 10){
             getPlayCardView().setCardEnabled(DevCardType.MONUMENT, true);
         }else{
             getPlayCardView().setCardEnabled(DevCardType.MONUMENT, false);
@@ -114,7 +114,7 @@ public class DevCardController extends Controller implements IDevCardController 
 
     @Override
     public void playMonopolyCard(ResourceType resource) {
-
+        Facade.getInstance().playMonopoly(Facade.getInstance().getPlayerIndex(), resource);
     }
 
     @Override
