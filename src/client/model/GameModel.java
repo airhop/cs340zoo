@@ -512,7 +512,8 @@ public class GameModel extends Observable{
 
     public int getPoints(int playerIndex)
     {
-        int points = 0;
+        return players.get(playerIndex).getVictoryPoints();
+/*        int points = 0;
         if(turnTracker.getLargestArmy() == playerIndex)
             points+=2;
         if(turnTracker.getLongestRoad() == playerIndex)
@@ -521,6 +522,7 @@ public class GameModel extends Observable{
         points += ((4 - curr.getCities()) * 2);
         points += 5 - curr.getSettlements();
         return points;
+*/
     }
 
     public List<GameInfo> getGameList() {
