@@ -31,6 +31,29 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
     boolean portIsSheep = false;
     boolean portIsWood = false;
     boolean portIsThree = false;
+
+    private void hasFourOfResource(ResourceList currResources, List<ResourceType> canGiveResources) {
+        if(currResources.getWheat() >= 4)
+        {
+            canGiveResources.add(ResourceType.WHEAT);
+        }
+        if(currResources.getSheep() >= 4)
+        {
+            canGiveResources.add(ResourceType.SHEEP);
+        }
+        if(currResources.getOre() >= 4)
+        {
+            canGiveResources.add(ResourceType.ORE);
+        }
+        if(currResources.getWood() >= 4)
+        {
+            canGiveResources.add(ResourceType.WOOD);
+        }
+        if(currResources.getBrick() >= 4)
+        {
+            canGiveResources.add(ResourceType.BRICK);
+        }
+    }
     public MaritimeTradeController(IMaritimeTradeView tradeView, IMaritimeTradeOverlay tradeOverlay) {
 
         super(tradeView);
@@ -67,10 +90,7 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
         hasFourOfResource(currResources, canGiveResources);
         for(Port port : currentPlayerPorts)
         {
-            if(true)
-            {
-                hasFourOfResource(currResources, canGiveResources);
-            }
+
             if(port.getRatio() == 3)
             {
                 portIsThree = true;
@@ -109,9 +129,12 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
             {
                 this.ratio = 2;
                 portIsWheat = true;
-                if(currResources.getWheat() >= 2 && !canGiveResources.contains(ResourceType.WHEAT));
+                if(currResources.getWheat() >= 2)
                 {
-                    canGiveResources.add(ResourceType.WHEAT);
+                    if (currResources.getWheat() >= 2 && !canGiveResources.contains(ResourceType.WHEAT)) ;
+                    {
+                        canGiveResources.add(ResourceType.WHEAT);
+                    }
                 }
             }
             else if(port.getResource().equals("sheep"))
@@ -200,28 +223,7 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 
     }
 
-    private void hasFourOfResource(ResourceList currResources, List<ResourceType> canGiveResources) {
-        if(currResources.getWheat() >= 4)
-        {
-            canGiveResources.add(ResourceType.WHEAT);
-        }
-        if(currResources.getSheep() >= 4)
-        {
-            canGiveResources.add(ResourceType.SHEEP);
-        }
-        if(currResources.getOre() >= 4)
-        {
-            canGiveResources.add(ResourceType.ORE);
-        }
-        if(currResources.getWood() >= 4)
-        {
-            canGiveResources.add(ResourceType.WOOD);
-        }
-        if(currResources.getBrick() >= 4)
-        {
-            canGiveResources.add(ResourceType.BRICK);
-        }
-    }
+
 
     @Override
     public void makeTrade() {
