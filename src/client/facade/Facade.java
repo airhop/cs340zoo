@@ -590,9 +590,10 @@ public class Facade {
                     proxy.discardCards(pid, rl);
                 } catch (InsufficientResourcesException e) {
                     e.printStackTrace();
+                    return false;
                 }
         }
-        return false;
+        return true;
     }
 
     /**

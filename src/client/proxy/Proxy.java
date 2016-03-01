@@ -701,7 +701,7 @@ public class Proxy implements IProxy {
         myObjOne.addProperty("type", "discardCards");
         myObjOne.addProperty("playerIndex", playerIndex);
         JsonObject RLO = RLO(rl);
-        myObjOne.add("dicardedCards", RLO);
+        myObjOne.add("discardedCards", RLO);
      //   System.out.println(myObjOne.toString());
         HttpURLResponse myResponse;
         try {
@@ -716,11 +716,11 @@ public class Proxy implements IProxy {
     //resourcelistobject
     public JsonObject RLO(ResourceList rl) {
         JsonObject RLO = new JsonObject();
-        RLO.addProperty("brick", "" + rl.getBrick());
-        RLO.addProperty("ore", "" + rl.getOre());
-        RLO.addProperty("sheep", "" + rl.getSheep());
-        RLO.addProperty("wheat", "" + rl.getWheat());
-        RLO.addProperty("wood", "" + rl.getWood());
+        RLO.addProperty("brick", rl.getBrick());
+        RLO.addProperty("ore", rl.getOre());
+        RLO.addProperty("sheep", rl.getSheep());
+        RLO.addProperty("wheat",  rl.getWheat());
+        RLO.addProperty("wood", rl.getWood());
         return RLO;
     }
 
