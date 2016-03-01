@@ -97,7 +97,7 @@ public class StateRoadBuilding extends StateAbstract
 
     @Override
     public void playRoadBuildingCard() {
-
+        startMove(PieceType.ROAD, true, false);
     }
 
     @Override
