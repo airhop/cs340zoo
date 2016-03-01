@@ -76,4 +76,8 @@ public class TradeOffer {
   }
   public ResourceList getSentList() {return sentList; }
   public ResourceList getRecievedList() {return recievedList; }
+  public String toString()
+  {
+    return sender + " " + reciever + " " + offer.toString();
+  }
 }

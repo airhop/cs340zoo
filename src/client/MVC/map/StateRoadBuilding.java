@@ -30,7 +30,7 @@ public class StateRoadBuilding extends StateAbstract
     @Override
     public boolean canPlaceRoad(EdgeLocation edgeLoc)
     {
-        return Facade.getInstance().canPlaceRoadSetup(edgeLoc.getNormalizedLocation());
+        return Facade.getInstance().canPlaceRoad(edgeLoc.getNormalizedLocation(), true);
     }
 
     @Override
@@ -77,7 +77,7 @@ public class StateRoadBuilding extends StateAbstract
     @Override
     public void startMove(PieceType pieceType, boolean isFree, boolean allowDisconnected)
     {
-        view.startDrop(pieceType, color, true);
+        view.startDrop(pieceType, color, false);
     }
 
     @Override

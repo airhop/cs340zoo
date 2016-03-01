@@ -434,6 +434,14 @@ public class GameModel extends Observable{
         return players.get(pid).canAcceptTrade(tradeOffer.getSentList());
     }
 
+    public boolean canAcceptTrade()
+    {
+        int pid = tradeOffer.getReciever();
+        if(pid != currentPlayer.getPlayerIndex())
+            return false;
+
+        return players.get(pid).canAcceptTrade(tradeOffer.getOffer());
+    }
     /**
      * Checks to see if the player can roll the dice
      *

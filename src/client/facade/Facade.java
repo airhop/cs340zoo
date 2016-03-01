@@ -701,6 +701,13 @@ public class Facade {
         return game.canAcceptTrade(pid);
     }
 
+    public boolean canAcceptTrade()
+    {
+        if(game == null)
+            return false;
+        return game.canAcceptTrade();
+    }
+
     /**
      * accepts the trade offer of another player
      *

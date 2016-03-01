@@ -24,6 +24,7 @@ public class MapController extends Controller implements IMapController {
     private StateAbstract state;
     private int playing; //needed for debugging when playing by yourself
     private int secondRound = 0;
+
     private int roundNum = 0;
 
     public MapController(IMapView view, IRobView robView) {
