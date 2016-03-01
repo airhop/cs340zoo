@@ -20,6 +20,7 @@ public class StateRoadBuilding extends StateAbstract
     public StateRoadBuilding(IMapView v, IRobView robView)
     {
         view = v;
+        color = Facade.getInstance().getCurrentPlayer().getColor();
      //   color = facade.getCatanColor();
     }
 

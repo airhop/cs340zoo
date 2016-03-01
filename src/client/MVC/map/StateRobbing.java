@@ -125,7 +125,7 @@ public class StateRobbing extends StateAbstract
             if(x != Facade.getInstance().getCurrentPlayer().getPlayerIndex()) {
                 ArrayList<Player> playas = Facade.getInstance().getGameModel().getPlayers();
                 for (Player player : playas) {
-                    if (player.getPlayerIndex() == x && player.getResources().getSize() > 0) {
+                    if (player.getPlayerIndex() == x) {
                         players[j] = new RobPlayerInfo(player.getPlayerID(), player.getPlayerIndex(), player.getUsername(), CatanColor.convert(player.getColor()), player.getResources().getSize());
                         j++;
                     }
