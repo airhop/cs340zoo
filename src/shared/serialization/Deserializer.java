@@ -380,6 +380,9 @@ public class Deserializer {
                             case "version":
                                 myModel.setVersion(myTree.nextInt());
                                 break;
+                            case "tradeOffer":
+                                myTree.beginObject();
+                                break;
                             default:
 //                                System.out.println(myCurrent);
                         }
