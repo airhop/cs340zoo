@@ -2,6 +2,7 @@ package client.MVC.maritime;
 
 import client.MVC.base.*;
 import client.facade.Facade;
+import client.model.GameModel;
 import client.model.bank.ResourceList;
 import client.model.map.Port;
 import client.model.map.VertexObject;
@@ -193,7 +194,15 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
             System.out.println(resource);
         }
             getTradeOverlay().setTradeEnabled(false);
+        if(Facade.getInstance().getGameModel().getTurnTracker().getCurrentPlayer() == playerId)
+        {
             getTradeOverlay().showGiveOptions(canGive);
+        }
+        else
+        {
+            ResourceType[] disableAll = new ResourceType[0];
+            getTradeOverlay().showGiveOptions(disableAll);
+        }
 
         getTradeOverlay().showModal();
 
@@ -363,6 +372,7 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 
     @Override
     public void update(Observable o, Object arg) {
+
 
     }
 }
