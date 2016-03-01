@@ -198,7 +198,6 @@ public class PlayDevCardView extends OverlayView implements IPlayDevCardView {
                 useButton.setEnabled(false);
                 resCard1.setEnabled(false);
                 resCard2.setEnabled(false);
-
                 closeModal();
                 getController().playSoldierCard();
             } else if (selectedDevCard == DevCardType.MONOPOLY) {

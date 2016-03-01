@@ -103,7 +103,7 @@ public class StateSetup extends StateAbstract
     }
 
     @Override
-    public void playSoldierCard() {
+    public void playSoldierCard(RobPlayerInfo victim) {
 
     }
 

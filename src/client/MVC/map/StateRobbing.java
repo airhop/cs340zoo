@@ -47,8 +47,11 @@ public class StateRobbing extends StateAbstract
     }
 
     @Override
-    public void playSoldierCard() {
-
+    public void playSoldierCard(RobPlayerInfo victim) {
+        this.victim = victim.getPlayerIndex();
+        int pid = Facade.getInstance().getPlayerIndex();
+        Facade.getInstance().rob(pid, victim.getPlayerIndex(), hl);
+        robView.closeModal();
     }
 
     @Override

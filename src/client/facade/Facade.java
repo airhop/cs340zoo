@@ -488,8 +488,8 @@ public class Facade {
      */
     public void playSoldier(int pid, int vid, HexLocation hl) throws IllegalMoveException {
         if (game != null) {
-            if (game.canPlaySoldier(pid) && game.canRob(pid, vid) && game.canMoveRobber(hl))
-                proxy.playSoldier(pid, vid, hl);
+            proxy.playSoldier(pid, vid, hl);
+//            if (game.canPlaySoldier(pid) && game.canRob(pid, vid) && game.canMoveRobber(hl))
         }
     }
 

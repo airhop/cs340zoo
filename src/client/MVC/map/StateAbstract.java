@@ -21,7 +21,7 @@ public abstract class StateAbstract
     abstract public void startMove(PieceType pieceType, boolean isFree, boolean allowDisconnected);
     abstract public void cancelMove();
     abstract public void robPlayer(RobPlayerInfo victim);
-    abstract public void playSoldierCard();
+    abstract public void playSoldierCard(RobPlayerInfo victim);
     abstract public void playRoadBuildingCard();
     abstract public String getName();
 }

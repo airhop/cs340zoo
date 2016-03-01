@@ -7,6 +7,7 @@ import client.model.map.VertexObject;
 import client.model.player.Player;
 import shared.definitions.CatanColor;
 import shared.definitions.PieceType;
+import shared.exceptions.IllegalMoveException;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
@@ -153,9 +154,17 @@ public class StatePlayersTurn extends StateAbstract
     }
 
     @Override
-    public void playSoldierCard()
+    public void playSoldierCard(RobPlayerInfo victim)
     {
-        startMove(PieceType.ROBBER, true, true);
+        int vid = victim.getPlayerIndex();
+        int pid = Facade.getInstance().getPlayerIndex();
+//        System.out.println();
+        try {
+            Facade.getInstance().playSoldier(pid, victim.getPlayerIndex(), RobberHL);
+        } catch (IllegalMoveException e) {
+            e.printStackTrace();
+        }
+        robView.closeModal();
     }
 
     @Override

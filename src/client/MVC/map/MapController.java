@@ -24,6 +24,7 @@ public class MapController extends Controller implements IMapController {
     private StateAbstract state;
     private int playing; //needed for debugging when playing by yourself
     private int secondRound = 0;
+    private boolean soldier;
 
     private int roundNum = 0;
 
@@ -33,6 +34,7 @@ public class MapController extends Controller implements IMapController {
         setRobView(robView);
         state = new StateDefault(view, robView);
         Facade.getInstance().addObserver(this);
+        soldier = false;
     }
 
     public IMapView getView() {
@@ -90,8 +92,7 @@ public class MapController extends Controller implements IMapController {
     }
 
     private boolean changeState(String s) {
-        if(Facade.getInstance().getCurrentPlayer().getPlayerIndex() == Facade.getInstance().getGameModel().getTurnTracker().getCurrentPlayer())
-        {
+        if(Facade.getInstance().getCurrentPlayer().getPlayerIndex() != Facade.getInstance().getGameModel().getTurnTracker().getCurrentPlayer()) {
             state = new StateDefault(getView(), robView);
             return true;
         }
@@ -258,7 +259,8 @@ public class MapController extends Controller implements IMapController {
     public void playSoldierCard()
     {
         state = new StateRobbing(getView(), robView);
-        state.playSoldierCard();
+        soldier = true;
+//        state.playSoldierCard();
     }
 
     public void playRoadBuildingCard()
@@ -268,7 +270,13 @@ public class MapController extends Controller implements IMapController {
     }
 
     public void robPlayer(RobPlayerInfo victim) {
-        state.robPlayer(victim);
+        if(soldier){
+            soldier = false;
+            state.playSoldierCard(victim);
+        }else{
+            state.robPlayer(victim);
+        }
+
     }
 
 

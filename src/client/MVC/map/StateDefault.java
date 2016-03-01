@@ -68,7 +68,7 @@ public class StateDefault extends StateAbstract
     }
 
     @Override
-    public void playSoldierCard() {
+    public void playSoldierCard(RobPlayerInfo victim) {
 
     }
 

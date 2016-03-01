@@ -184,8 +184,8 @@ public class DiscardController extends Controller implements IDiscardController 
     {
 
         GameModel gm = (GameModel) o;
-        if(gm.getTurnTracker().getCurrentPlayer() != gm.getCurrentPlayer().getPlayerIndex())
-            return;
+//        if(gm.getTurnTracker().getCurrentPlayer() != gm.getCurrentPlayer().getPlayerIndex())
+//            return;
 
         rl = gm.getPlayers().get(gm.getCurrentPlayer().getPlayerIndex()).getResources();
 
