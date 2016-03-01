@@ -439,15 +439,14 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
     {
         //System.out.println(((GameModel)o).getTradeOffer().toString());
         TradeOffer to = ((GameModel)o).getTradeOffer();
-        if(to != null)
-        {
-            if(to.getReciever() == Facade.getInstance().getCurrentPlayer().getPlayerIndex())
-            {
-                getAcceptOverlay().showModal();
-                getAcceptOverlay().setAcceptEnabled(Facade.getInstance().canAcceptTrade());
+        if(((GameModel)o).getTurnTracker().getStatus().equalsIgnoreCase("Playing")) {
+            if (to != null) {
+                if (to.getReciever() == Facade.getInstance().getCurrentPlayer().getPlayerIndex()) {
+                    getAcceptOverlay().showModal();
+                    getAcceptOverlay().setAcceptEnabled(Facade.getInstance().canAcceptTrade());
+                }
             }
         }
-
     }
     public void printPlayerResourceStatus()
     {
