@@ -513,7 +513,6 @@ public class Facade {
         if (pid == -1)
             System.out.println("No player to be robbed?");
         if (game != null) {
-            if (game.canRob(pid, vid) && game.canMoveRobber(hl))
                 proxy.robPlayer(pid, vid, hl);
         }
     }

@@ -258,7 +258,7 @@ public class MapView extends PanelView implements IMapView {
                 cancelButton.setFont(buttonFont);
                 cancelButton.addActionListener(cancelButtonListener);
                 this.add(cancelButton, BorderLayout.SOUTH);
-            }
+        }
 
             map.startDrop(pieceType, pieceColor);
         }
