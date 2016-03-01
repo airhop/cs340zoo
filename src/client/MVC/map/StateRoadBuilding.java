@@ -77,7 +77,7 @@ public class StateRoadBuilding extends StateAbstract
     @Override
     public void startMove(PieceType pieceType, boolean isFree, boolean allowDisconnected)
     {
-        view.startDrop(pieceType, color, true);
+        view.startDrop(pieceType, color, false);
     }
 
     @Override
@@ -97,7 +97,7 @@ public class StateRoadBuilding extends StateAbstract
 
     @Override
     public void playRoadBuildingCard() {
-
+        startMove(PieceType.ROAD, true, false);
     }
 
     @Override
