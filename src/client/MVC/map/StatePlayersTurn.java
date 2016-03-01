@@ -1,5 +1,6 @@
 package client.MVC.map;
 
+import client.MVC.base.OverlayView;
 import client.MVC.data.RobPlayerInfo;
 import client.facade.Facade;
 import client.model.map.VertexObject;
@@ -59,8 +60,9 @@ public class StatePlayersTurn extends StateAbstract
     @Override
     public void placeRoad(EdgeLocation edgeLoc)
     {
+        System.out.println(color.toString());
         view.placeRoad(edgeLoc, color);
-        Facade.getInstance().placeRoad(Facade.getInstance().getCurrentPlayer().getPlayerId(), edgeLoc.getNormalizedLocation(), false, true);
+        Facade.getInstance().placeRoad(Facade.getInstance().getCurrentPlayer().getPlayerIndex(), edgeLoc.getNormalizedLocation(), false, true);
         Facade.getInstance().retrieveGameModel();
         view.closeModal();
     }
@@ -69,7 +71,7 @@ public class StatePlayersTurn extends StateAbstract
     public void placeSettlement(VertexLocation vertLoc)
     {
         view.placeSettlement(vertLoc, color);
-        Facade.getInstance().placeSettlement(Facade.getInstance().getCurrentPlayer().getPlayerId(), vertLoc.getNormalizedLocation(), false);
+        Facade.getInstance().placeSettlement(Facade.getInstance().getCurrentPlayer().getPlayerIndex(), vertLoc.getNormalizedLocation(), false);
         Facade.getInstance().retrieveGameModel();
         view.closeModal();
     }
@@ -103,11 +105,9 @@ public class StatePlayersTurn extends StateAbstract
         {
             players = new RobPlayerInfo[people.size()-1];
         }
-        else
-        {
+        else {
             players = new RobPlayerInfo[people.size()];
         }
-        System.out.println("SIZE OF THE PLAYERS ARRAY: "+players.length);
         int i=0;
         int j=0;
         for(int x : people)
@@ -130,7 +130,10 @@ public class StatePlayersTurn extends StateAbstract
     @Override
     public void startMove(PieceType pieceType, boolean isFree, boolean allowDisconnected)
     {
-        view.startDrop(pieceType, Facade.getInstance().getCurrentPlayer().getColor(), isFree);
+        System.out.println("AND IN HEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEERE");
+        System.out.println("COLOR MAYBE: "+color.toString());
+        System.out.println("COLOR MAYBE PLAYER: "+Facade.getInstance().getCurrentPlayer().getColor().toString());
+        view.startDrop(pieceType, color, true);
     }
 
     @Override

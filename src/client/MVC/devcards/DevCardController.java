@@ -1,6 +1,7 @@
 package client.MVC.devcards;
 
 import client.MVC.base.*;
+import client.facade.Facade;
 import shared.definitions.ResourceType;
 
 import java.util.Observable;
@@ -55,12 +56,14 @@ public class DevCardController extends Controller implements IDevCardController 
 
     @Override
     public void buyCard() {
-
+        Facade.getInstance().buyDevCard(Facade.getInstance().getPlayerIndex());
         getBuyCardView().closeModal();
     }
 
     @Override
     public void startPlayCard() {
+        Facade.getInstance().getCurrentPlayer();
+
 
         getPlayCardView().showModal();
     }

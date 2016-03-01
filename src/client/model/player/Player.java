@@ -271,7 +271,7 @@ public class Player {
      * @return boolean whether or not the player can buy a Developement card
      */
     public boolean canBuyDevcard() {
-        if (resources.getOre() < 1 || resources.getWheat() < 1 || resources.getSheep() < 1) {
+        if (resources.getOre() > 0 && resources.getWheat() > 0 && resources.getSheep() > 0) {
             return true;
         } else {
             return false;

@@ -88,7 +88,7 @@ public class RollController extends Controller implements IRollController {
             if(!getRollView().isModalShowing() || !getResultView().isModalShowing()){
                 getRollView().showModal();
             }
-            waiting = true;
+           // waiting = true;
         }
 //        else if(gm.getTurnTracker().getStatus().equalsIgnoreCase("Discard") || gm.getTurnTracker().getStatus().equalsIgnoreCase("Playing"))
 //        {

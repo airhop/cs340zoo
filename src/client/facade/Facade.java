@@ -175,6 +175,8 @@ public class Facade {
         game = g;
     }
 
+
+
     //observer methods
     public void addObserver(Observer x) {
         observers.add(x);
@@ -511,7 +513,6 @@ public class Facade {
         if (pid == -1)
             System.out.println("No player to be robbed?");
         if (game != null) {
-            if (game.canRob(pid, vid) && game.canMoveRobber(hl))
                 proxy.robPlayer(pid, vid, hl);
         }
     }
@@ -590,9 +591,10 @@ public class Facade {
                     proxy.discardCards(pid, rl);
                 } catch (InsufficientResourcesException e) {
                     e.printStackTrace();
+                    return false;
                 }
         }
-        return false;
+        return true;
     }
 
     /**

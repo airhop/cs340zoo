@@ -199,7 +199,6 @@ public class MapController extends Controller implements IMapController {
         }
 
         //   System.out.println("\nbuildings = " + buildings.size());
-        System.out.println("AYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYSam"+map.getRobber().getHl().toString());
         getView().placeRobber(map.getRobber().getHl());
     }
 
@@ -214,7 +213,7 @@ public class MapController extends Controller implements IMapController {
 
     public boolean canPlaceCity(VertexLocation vertLoc) {
         return state.canPlaceCity(vertLoc);
-    }
+}
 
     public boolean canPlaceRobber(HexLocation hexLoc) {
         return state.canPlaceRobber(hexLoc);
@@ -241,8 +240,8 @@ public class MapController extends Controller implements IMapController {
     }
 
     public void startMove(PieceType pieceType, boolean isFree, boolean allowDisconnected) {
+        System.out.println("ISSSSS IT GETTING IN HEREEEEEEEEEEEEEEEEEEEEEEEee");
         state.startMove(pieceType, isFree, allowDisconnected);
-        getView().startDrop(pieceType, CatanColor.ORANGE, true);
     }
 
     public void cancelMove() {

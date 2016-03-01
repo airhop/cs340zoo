@@ -4,6 +4,7 @@ import client.MVC.base.*;
 import client.MVC.data.*;
 import client.MVC.misc.*;
 import client.facade.Facade;
+import client.model.player.CurrentPlayer;
 import client.model.player.Player;
 import shared.definitions.CatanColor;
 import shared.serialization.CreateGamePassObject;
@@ -167,6 +168,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
     @Override
     public void joinGame(CatanColor color) {
     //    System.out.println("Game Joining");
+        CurrentPlayer player = Facade.getInstance().getCurrentPlayer();
         Facade.getInstance().setSettingColor(true);
         Facade.getInstance().gamesJoin(color.name(), Facade.getInstance().getCurrentPlayer().getGameId());
         Facade.getInstance().getCurrentPlayer().setColor(color);
