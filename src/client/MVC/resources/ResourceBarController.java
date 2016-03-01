@@ -111,7 +111,7 @@ public class ResourceBarController extends Controller implements IResourceBarCon
             if(currentResources.getPlayCard() > 0){
                 getView().setElementEnabled(ResourceBarElement.PLAY_CARD, true);
             }else{
-                getView().setElementEnabled(ResourceBarElement.PLAY_CARD, true);
+                getView().setElementEnabled(ResourceBarElement.PLAY_CARD, false);
             }
             getView().setElementAmount(ResourceBarElement.PLAY_CARD,currentResources.getPlayCard());
             if(currentResources.getSoldiers() > 0){

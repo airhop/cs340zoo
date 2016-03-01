@@ -82,6 +82,13 @@ public class Facade {
         return facade;
     }
 
+//    public Player getPlayerFromIndex(){
+//        return game.getPlayers().get(game.get);
+//    }
+    public Player getPlayerByYourIndex(){
+        return game.getPlayers().get(getPlayerIndex());
+    }
+
     public PlayerInfo getCurrentPlayerInfo() {
         PlayerInfo curPlayer = new PlayerInfo();
         CurrentPlayer myPlayer = getCurrentPlayer();
@@ -155,7 +162,7 @@ public class Facade {
         resources.setCity(curPlayer.getCities());
         resources.setRoad(curPlayer.getRoads());
         resources.setSettlement(curPlayer.getSettlements());
-        resources.setPlayCard(0);
+        resources.setPlayCard(getPlayerByYourIndex().getNewDevCards().getSize());
         return resources;
     }
 

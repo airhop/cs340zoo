@@ -189,7 +189,9 @@ public class DiscardController extends Controller implements IDiscardController 
         {
             discardamount = rl.size()/2;
             verify();
-            getDiscardView().showModal();
+            if(!getDiscardView().isModalShowing()){
+                getDiscardView().showModal();
+            }
         }
       //  else
       //      getDiscardView().closeModal();
