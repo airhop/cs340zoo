@@ -1,6 +1,7 @@
 package client.proxy;
 
 import client.MVC.data.GameInfo;
+import client.facade.Facade;
 import client.model.GameModel;
 import client.model.bank.ResourceList;
 import com.google.gson.*;
@@ -359,7 +360,7 @@ public class Proxy implements IProxy {
         GameModel gm = null;
         try {
             myResponse = doGet(url);
-            gm = myDeSer.deserialize(myResponse.getResponseBody(), myGameModel);
+            gm = myDeSer.deserialize(myResponse.getResponseBody(), Facade.getInstance().getGameModel());
             // System.out.println("\n Heyo!!\n" + myGameModel.toString() + "\n");
         } catch (ClientException e) {
             e.printStackTrace();

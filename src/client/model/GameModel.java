@@ -60,6 +60,8 @@ public class GameModel extends Observable{
         this.chat = givenModel.getChat();
         this.log = givenModel.getLog();
         this.currentPlayer = givenModel.getCurrentPlayer();
+        CurrentPlayer player = getCurrentPlayer();
+        getCurrentPlayer();
     }
 
     public GameModel(Map m, Bank b, ArrayList<Player> ps, TurnTracker tt, TradeOffer tro, Chat c, Log l)

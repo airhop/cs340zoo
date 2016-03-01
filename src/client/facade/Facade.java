@@ -175,6 +175,8 @@ public class Facade {
         game = g;
     }
 
+
+
     //observer methods
     public void addObserver(Observer x) {
         observers.add(x);
