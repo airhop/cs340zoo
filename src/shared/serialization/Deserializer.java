@@ -369,7 +369,7 @@ public class Deserializer {
                                 myTree.nextName();
                                 turnTracker.setLongestRoad(myTree.nextInt());
                                 myTree.nextName();
-                                turnTracker.setLongestRoad(myTree.nextInt());
+                                turnTracker.setLargestArmy(myTree.nextInt());
                                 myTree.endObject();
                                 //System.out.println(myTree.peek().name());
                                 break;

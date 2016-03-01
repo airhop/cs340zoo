@@ -513,7 +513,7 @@ public class GameModel extends Observable{
         if(turnTracker.getLongestRoad() == playerIndex)
             points+=2;
         Player curr = players.get(playerIndex);
-        points += 4 - curr.getCities();
+        points += ((4 - curr.getCities()) * 2);
         points += 5 - curr.getSettlements();
         return points;
     }
