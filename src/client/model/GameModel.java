@@ -434,6 +434,14 @@ public class GameModel extends Observable{
         return players.get(pid).canAcceptTrade(tradeOffer.getSentList());
     }
 
+    public boolean canAcceptTrade()
+    {
+        int pid = tradeOffer.getReciever();
+        if(pid != currentPlayer.getPlayerIndex())
+            return false;
+
+        return players.get(pid).canAcceptTrade(tradeOffer.getOffer());
+    }
     /**
      * Checks to see if the player can roll the dice
      *
@@ -474,13 +482,13 @@ public class GameModel extends Observable{
      *
      * @return boolean whether or not the player chose to rob
      */
-    public void rob(int pid, ResourceType rt) throws IllegalMoveException, InsufficientResourcesException {
-        int cp = turnTracker.getCurrentPlayer();
-        if (cp == pid)
-            throw new IllegalMoveException("Can't rob yourself");
-        players.get(pid).depleteResource(rt);
-        players.get(cp).addResource(rt, 1);
-    }
+//    public void rob(int pid, ResourceType rt) throws IllegalMoveException, InsufficientResourcesException {
+//        int cp = turnTracker.getCurrentPlayer();
+//        if (cp == pid)
+//            throw new IllegalMoveException("Can't rob yourself");
+//        players.get(pid).depleteResource(rt);
+//        players.get(cp).addResource(rt, 1);
+//    }
 
     public boolean canSendChat(String msg, int pid) {
         chat.addMessage(players.get(pid).getUsername(), msg);
@@ -504,7 +512,8 @@ public class GameModel extends Observable{
 
     public int getPoints(int playerIndex)
     {
-        int points = 0;
+        return players.get(playerIndex).getVictoryPoints();
+/*        int points = 0;
         if(turnTracker.getLargestArmy() == playerIndex)
             points+=2;
         if(turnTracker.getLongestRoad() == playerIndex)
@@ -513,6 +522,7 @@ public class GameModel extends Observable{
         points += ((4 - curr.getCities()) * 2);
         points += 5 - curr.getSettlements();
         return points;
+*/
     }
 
     public List<GameInfo> getGameList() {

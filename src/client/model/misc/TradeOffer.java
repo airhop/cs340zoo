@@ -5,9 +5,9 @@ import client.model.bank.ResourceList;
 public class TradeOffer {
   
   //The index of the person offering the trade
-  int sender;
+  int sender = -1;
   //The index of the person the trade was offered to.
-  int reciever;
+  int reciever = -1;
   //Positive numbers are resources being offered. Negative are resources being asked for.
   ResourceList offer;
   //Resource List of whats being sent (negative)
@@ -76,4 +76,8 @@ public class TradeOffer {
   }
   public ResourceList getSentList() {return sentList; }
   public ResourceList getRecievedList() {return recievedList; }
+  public String toString()
+  {
+    return sender + " " + reciever + " " + offer.toString();
+  }
 }

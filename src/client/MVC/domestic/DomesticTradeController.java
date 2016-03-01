@@ -4,7 +4,9 @@ import client.MVC.base.*;
 import client.MVC.data.PlayerInfo;
 import client.MVC.misc.*;
 import client.facade.Facade;
+import client.model.GameModel;
 import client.model.bank.ResourceList;
+import client.model.misc.TradeOffer;
 import client.model.player.Player;
 import shared.definitions.CatanColor;
 import shared.definitions.ResourceType;
@@ -54,6 +56,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
         setTradeOverlay(tradeOverlay);
         setWaitOverlay(waitOverlay);
         setAcceptOverlay(acceptOverlay);
+        Facade.getInstance().addObserver(this);
     }
 
     public IDomesticTradeView getTradeView() {
@@ -345,6 +348,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
     @Override
     public void acceptTrade(boolean willAccept) {
 
+        Facade.getInstance().acceptTrade(Facade.getInstance().getCurrentPlayer().getPlayerIndex(), willAccept);
         getAcceptOverlay().closeModal();
     }
 
@@ -431,8 +435,18 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
     }
 
     @Override
-    public void update(Observable o, Object arg) {
-
+    public void update(Observable o, Object arg)
+    {
+        //System.out.println(((GameModel)o).getTradeOffer().toString());
+        TradeOffer to = ((GameModel)o).getTradeOffer();
+        if(((GameModel)o).getTurnTracker().getStatus().equalsIgnoreCase("Playing")) {
+            if (to != null) {
+                if (to.getReciever() == Facade.getInstance().getCurrentPlayer().getPlayerIndex()) {
+                    getAcceptOverlay().showModal();
+                    getAcceptOverlay().setAcceptEnabled(Facade.getInstance().canAcceptTrade());
+                }
+            }
+        }
     }
     public void printPlayerResourceStatus()
     {
