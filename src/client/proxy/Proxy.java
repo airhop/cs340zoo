@@ -502,8 +502,8 @@ public class Proxy implements IProxy {
         String url = "/moves/Year_of_Plenty";
         myObjOne.addProperty("type", "Year_of_Plenty");
         myObjOne.addProperty("playerIndex", playerIndex);
-        myObjOne.addProperty("resource1", r1.name());
-        myObjOne.addProperty("resource2", r2.name());
+        myObjOne.addProperty("resource1", r1.name().toLowerCase());
+        myObjOne.addProperty("resource2", r2.name().toLowerCase());
     //    System.out.println(myObjOne.toString());
         HttpURLResponse myResponse;
         try {
@@ -555,7 +555,7 @@ public class Proxy implements IProxy {
         JsonObject myObjOne = new JsonObject();
         String url = "/moves/Monopoly";
         myObjOne.addProperty("type", "Monopoly");
-        myObjOne.addProperty("resource", "" + r1.name());
+        myObjOne.addProperty("resource", "" + r1.name().toLowerCase());
         myObjOne.addProperty("playerIndex", playerIndex);
      //   System.out.println(myObjOne.toString());
         HttpURLResponse myResponse;

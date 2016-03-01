@@ -27,8 +27,7 @@ public class DevCardController extends Controller implements IDevCardController 
      * @param soldierAction Action to be executed when the user plays a soldier card.  It calls "mapController.playSoldierCard()".
      * @param roadAction    Action to be executed when the user plays a road building card.  It calls "mapController.playRoadBuildingCard()".
      */
-    public DevCardController(IPlayDevCardView view, IBuyDevCardView buyCardView,
-                             IAction soldierAction, IAction roadAction) {
+    public DevCardController(IPlayDevCardView view, IBuyDevCardView buyCardView, IAction soldierAction, IAction roadAction) {
 
         super(view);
 
@@ -47,13 +46,11 @@ public class DevCardController extends Controller implements IDevCardController 
 
     @Override
     public void startBuyCard() {
-
         getBuyCardView().showModal();
     }
 
     @Override
     public void cancelBuyCard() {
-
         getBuyCardView().closeModal();
     }
 
@@ -66,12 +63,13 @@ public class DevCardController extends Controller implements IDevCardController 
     @Override
     public void startPlayCard() {
         Player myPlayer = Facade.getInstance().getPlayerByYourIndex();
-        DevCardList myCards = myPlayer.getNewDevCards();
-        int soldier = myCards.getSoldier();
-        int yearOfPlenty = myCards.getYearOfPlenty();
-        int monopoly = myCards.getMonopoly();
-        int roadBuilding = myCards.getRoadBuilding();
-        int monument = myCards.getMonument();
+        DevCardList myNewCards = myPlayer.getNewDevCards();
+        DevCardList myOldCards = myPlayer.getOldDevCards();
+        int soldier = myOldCards.getSoldier();
+        int yearOfPlenty = myOldCards.getYearOfPlenty();
+        int monopoly = myOldCards.getMonopoly();
+        int roadBuilding = myOldCards.getRoadBuilding();
+        int monument = myNewCards.getMonument() + myOldCards.getMonument();
         getPlayCardView().setCardAmount(DevCardType.SOLDIER, soldier);
         getPlayCardView().setCardAmount(DevCardType.YEAR_OF_PLENTY, yearOfPlenty);
         getPlayCardView().setCardAmount(DevCardType.MONOPOLY, monopoly);
@@ -138,7 +136,7 @@ public class DevCardController extends Controller implements IDevCardController 
 
     @Override
     public void playYearOfPlentyCard(ResourceType resource1, ResourceType resource2) {
-
+        Facade.getInstance().playYearOfPlenty(Facade.getInstance().getPlayerIndex(), resource1, resource2);
     }
 
     @Override

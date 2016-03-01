@@ -162,7 +162,7 @@ public class Facade {
         resources.setCity(curPlayer.getCities());
         resources.setRoad(curPlayer.getRoads());
         resources.setSettlement(curPlayer.getSettlements());
-        resources.setPlayCard(getPlayerByYourIndex().getNewDevCards().getSize());
+        resources.setPlayCard(getPlayerByYourIndex().getOldDevCards().getSize() + getPlayerByYourIndex().getNewDevCards().getMonument());
         return resources;
     }
 
