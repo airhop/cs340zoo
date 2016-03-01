@@ -42,7 +42,7 @@ public class StateRobbing extends StateAbstract
     {
         this.victim = victim.getPlayerIndex();
         int pid = Facade.getInstance().getPlayerIndex();
-//        System.out.println();
+        System.out.println("PLAYER "+pid+" IS ROBBING PLAYER "+victim.getPlayerIndex()+" AT LOCATION "+hl.toString());
         Facade.getInstance().rob(pid, victim.getPlayerIndex(), hl);
         robView.closeModal();
     }
@@ -119,7 +119,6 @@ public class StateRobbing extends StateAbstract
         {
             players = new RobPlayerInfo[people.size()];
         }
-        System.out.println("SIZE OF THE PLAYERS ARRAY: "+players.length);
         int i=0;
         int j=0;
         for(int x : people)

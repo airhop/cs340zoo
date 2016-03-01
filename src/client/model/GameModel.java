@@ -60,8 +60,6 @@ public class GameModel extends Observable{
         this.chat = givenModel.getChat();
         this.log = givenModel.getLog();
         this.currentPlayer = givenModel.getCurrentPlayer();
-        CurrentPlayer player = getCurrentPlayer();
-        getCurrentPlayer();
     }
 
     public GameModel(Map m, Bank b, ArrayList<Player> ps, TurnTracker tt, TradeOffer tro, Chat c, Log l)
@@ -377,9 +375,8 @@ public class GameModel extends Observable{
 
     public boolean canFinishTurn(int pid)
     {
-        System.out.println(pid + " " + turnTracker.getStatus() + " " + turnTracker.getCurrentPlayer());
         if(turnTracker.getStatus().equalsIgnoreCase("playing") || turnTracker.getStatus().equalsIgnoreCase("Robbing"))
-           return (turnTracker.getCurrentPlayer() == currentPlayer.getPlayerIndex());
+           return (turnTracker.getCurrentPlayer() == pid);
         return false;
     }
 
@@ -513,7 +510,7 @@ public class GameModel extends Observable{
         if(turnTracker.getLongestRoad() == playerIndex)
             points+=2;
         Player curr = players.get(playerIndex);
-        points += 4 - curr.getCities();
+        points += ((4 - curr.getCities()) * 2);
         points += 5 - curr.getSettlements();
         return points;
     }

@@ -72,19 +72,23 @@ public class DiscardController extends Controller implements IDiscardController 
         switch(resource)
         {
             case BRICK: brick += change;
+                        verify();
                         return;
             case ORE: ore += change;
+                        verify();
                         return;
             case SHEEP: sheep += change;
+                        verify();
                         return;
             case WHEAT: wheat += change;
+                        verify();
                         return;
             case WOOD: wood += change;
+                        verify();
                         return;
             default:
                 System.out.println("oops!!!");
         }
-        verify();
     }
 
     @Override

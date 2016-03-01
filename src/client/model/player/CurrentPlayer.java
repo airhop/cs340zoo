@@ -65,5 +65,15 @@ public class CurrentPlayer {
         this.playerIndex = playerIndex;
     }
 
+    public String toString()
+    {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Username"+username+"\n");
+        sb.append("Index"+playerIndex+"\n");
+        sb.append("Color"+color+"\n");
+        return sb.toString();
+    }
+
+
 
 }
