@@ -58,6 +58,10 @@ public class Facade {
         getCurrentPlayer().setPlayerIndex(game.getPlayerIndex(getCurrentPlayer().getPlayerId()));
     }
 
+    public int getTurnTrackerIndex(){
+        return game.getTurnTracker().getCurrentPlayer();
+    }
+
     public boolean isJoined() {
         return Joined;
     }

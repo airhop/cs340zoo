@@ -119,7 +119,7 @@ public class DevCardController extends Controller implements IDevCardController 
 
     @Override
     public void playMonumentCard() {
-
+        Facade.getInstance().playMonument(Facade.getInstance().getPlayerIndex());
     }
 
     @Override

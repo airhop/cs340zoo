@@ -86,7 +86,9 @@ public class RollController extends Controller implements IRollController {
         if ((gm.getTurnTracker().getStatus().equalsIgnoreCase("Rolling") && !waiting)) {
             if (!getRollView().isModalShowing()) {
                 if (!getResultView().isModalShowing()) {
-                    getRollView().showModal();
+                    if(Facade.getInstance().getTurnTrackerIndex() == Facade.getInstance().getPlayerIndex()){
+                        getRollView().showModal();
+                    }
                 }
             }
             // waiting = true;
