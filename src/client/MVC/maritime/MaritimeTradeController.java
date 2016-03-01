@@ -67,10 +67,7 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
         hasFourOfResource(currResources, canGiveResources);
         for(Port port : currentPlayerPorts)
         {
-            if(true)
-            {
-                hasFourOfResource(currResources, canGiveResources);
-            }
+           
             if(port.getRatio() == 3)
             {
                 portIsThree = true;
