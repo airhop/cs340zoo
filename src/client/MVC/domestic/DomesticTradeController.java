@@ -437,7 +437,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
     @Override
     public void update(Observable o, Object arg)
     {
-        System.out.println(((GameModel)o).getTradeOffer().toString());
+        //System.out.println(((GameModel)o).getTradeOffer().toString());
         TradeOffer to = ((GameModel)o).getTradeOffer();
         if(to != null)
         {

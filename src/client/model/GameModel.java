@@ -482,13 +482,13 @@ public class GameModel extends Observable{
      *
      * @return boolean whether or not the player chose to rob
      */
-    public void rob(int pid, ResourceType rt) throws IllegalMoveException, InsufficientResourcesException {
-        int cp = turnTracker.getCurrentPlayer();
-        if (cp == pid)
-            throw new IllegalMoveException("Can't rob yourself");
-        players.get(pid).depleteResource(rt);
-        players.get(cp).addResource(rt, 1);
-    }
+//    public void rob(int pid, ResourceType rt) throws IllegalMoveException, InsufficientResourcesException {
+//        int cp = turnTracker.getCurrentPlayer();
+//        if (cp == pid)
+//            throw new IllegalMoveException("Can't rob yourself");
+//        players.get(pid).depleteResource(rt);
+//        players.get(cp).addResource(rt, 1);
+//    }
 
     public boolean canSendChat(String msg, int pid) {
         chat.addMessage(players.get(pid).getUsername(), msg);

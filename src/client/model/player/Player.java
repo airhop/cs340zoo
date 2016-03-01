@@ -240,30 +240,30 @@ public class Player {
         return false;
     }
 
-    /**
-     * Robs a player of one resource card
-     *
-     * @return boolean whether or not the player chose to rob
-     */
-    public void rob(ResourceType resourceRecieved) {
-        switch (resourceRecieved) {
-            case WOOD:
-                resources.setWood(resources.getWood() + 1);
-                break;
-            case BRICK:
-                resources.setBrick(resources.getBrick() + 1);
-                break;
-            case SHEEP:
-                resources.setSheep(resources.getSheep() + 1);
-                break;
-            case WHEAT:
-                resources.setWheat(resources.getWheat() + 1);
-                break;
-            case ORE:
-                resources.setOre(resources.getOre() + 1);
-                break;
-        }
-    }
+//    /**
+//     * Robs a player of one resource card
+//     *
+//     * @return boolean whether or not the player chose to rob
+//     */
+//    public void rob(ResourceType resourceRecieved) {
+//        switch (resourceRecieved) {
+//            case WOOD:
+//                resources.setWood(resources.getWood() + 1);
+//                break;
+//            case BRICK:
+//                resources.setBrick(resources.getBrick() + 1);
+//                break;
+//            case SHEEP:
+//                resources.setSheep(resources.getSheep() + 1);
+//                break;
+//            case WHEAT:
+//                resources.setWheat(resources.getWheat() + 1);
+//                break;
+//            case ORE:
+//                resources.setOre(resources.getOre() + 1);
+//                break;
+//        }
+//    }
 
     /**
      * Checks to see if buying a Developement Card is a legal move for the player
