@@ -83,6 +83,8 @@ public class RollController extends Controller implements IRollController {
         GameModel gm = (GameModel)o;
         if(!Facade.getInstance().isReady())
             return;
+        if(Facade.getInstance().getCurrentPlayer().getPlayerIndex() != Facade.getInstance().getGameModel().getTurnTracker().getCurrentPlayer())
+            return;
         if((gm.getTurnTracker().getStatus().equalsIgnoreCase("Rolling") && !waiting))
         {
             if(!getRollView().isModalShowing() || !getResultView().isModalShowing()){

@@ -90,6 +90,12 @@ public class MapController extends Controller implements IMapController {
     }
 
     private boolean changeState(String s) {
+        if(Facade.getInstance().getCurrentPlayer().getPlayerIndex() == Facade.getInstance().getGameModel().getTurnTracker().getCurrentPlayer())
+        {
+            state = new StateDefault(getView(), robView);
+            return true;
+        }
+
         if (s.equalsIgnoreCase("RoadBuilding")){
             String test = s;
         }

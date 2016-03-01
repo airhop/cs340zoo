@@ -57,8 +57,9 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
             return;
         Random rand = new Random();
         int x = rand.nextInt();
-        int pid = Facade.getInstance().getPlayerIndex();
+        int pid = Facade.getInstance().getCurrentPlayer().getPlayerIndex();
         String state = ((GameModel)o).getTurnTracker().getStatus();
+
         if(state.equalsIgnoreCase("FirstRound") && state.equalsIgnoreCase("SecondRound"))
             getView().updateGameState("Zzzzzzz", false);
         else if(Facade.getInstance().canFinishTurn(pid))

@@ -432,7 +432,7 @@ public class Map
 		for (VertexObject VObjIter: buildings)
 		{
 			int vl = VObjIter.getLocation().getNormalizedLocation().compareTo(vertexLocation.getNormalizedLocation());
-			if (vl == 0 && (VObjIter instanceof Settlement))
+			if (vl == 0 && (VObjIter instanceof Settlement) && VObjIter.getOwner() == Facade.getInstance().getCurrentPlayer().getPlayerIndex())
 			{
 				return true;
 			}

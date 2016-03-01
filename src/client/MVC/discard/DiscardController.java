@@ -182,7 +182,11 @@ public class DiscardController extends Controller implements IDiscardController 
     @Override
     public void update(Observable o, Object arg)
     {
+
         GameModel gm = (GameModel) o;
+        if(gm.getTurnTracker().getCurrentPlayer() != gm.getCurrentPlayer().getPlayerIndex())
+            return;
+
         rl = gm.getPlayers().get(gm.getCurrentPlayer().getPlayerIndex()).getResources();
 
         if(gm.getTurnTracker().getStatus().equalsIgnoreCase("Discarding") && rl.size() > 7)

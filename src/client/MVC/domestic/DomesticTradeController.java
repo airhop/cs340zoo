@@ -40,6 +40,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 
     private int tradeSenderId;
     private int tradeAccepterId = -1;
+    boolean usable = false;
     /**
      * DomesticTradeController constructor
      *
@@ -90,6 +91,8 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 
     @Override
     public void startTrade() {
+        if(!usable)
+            return;
         System.out.println(Facade.getInstance().getGameModel().getPlayers().get(Facade.getInstance().getCurrentPlayer().getPlayerIndex()).getResources().toString());
         tradeSenderId = Facade.getInstance().getCurrentPlayer().getPlayerId();
         PlayerInfo[] players = new PlayerInfo[3];
@@ -447,6 +450,11 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
                 }
             }
         }
+        if(((GameModel)o).getCurrentPlayer().getPlayerIndex() == ((GameModel)o).getTurnTracker().getCurrentPlayer())
+            usable = true;
+        else
+            usable = false;
+
     }
     public void printPlayerResourceStatus()
     {
