@@ -35,6 +35,7 @@ public class Facade {
     private boolean Created = false;
     private boolean playerWaiting = false;
     private boolean settingColor = false;
+    private boolean closeMap = false;
 
     public boolean isCloseMap() {
         return closeMap;
@@ -43,8 +44,6 @@ public class Facade {
     public void setCloseMap(boolean closeMap) {
         this.closeMap = closeMap;
     }
-
-    private boolean closeMap = false;
 
     public boolean isSettingColor() {
         return settingColor;
@@ -117,15 +116,24 @@ public class Facade {
         Joined = false;
         settingColor = false;
         game = new GameModel();
+        closeMap = true;
     }
 
     public void retrieveGameModel() {
        // System.out.println(loggedIn + " " + Joined + " " + ready + " " + game.getTurnTracker().getStatus() + " here");
         GameModel gm = null;
         if (!loggedIn)
+        {
+            System.out.println("Not logged in");
+            closeMap = true;
             return;
+        }
         if (!ready)
+        {
+            System.out.println("Not ready");
+            closeMap = true;
             updateGamesList();
+        }
         if (Joined && ready) {
             gm = proxy.getGameModel();
         }

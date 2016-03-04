@@ -34,7 +34,7 @@ public class GameHistoryController extends Controller implements IGameHistoryCon
             return;
         GameModel gm = (GameModel) o;
         ArrayList<MessageLine> ml = gm.getLog().getLogList().getMessages();
-        System.out.println("Game History - " + ml.size());
+        //System.out.println("Game History - " + ml.size());
         ArrayList<Player> players = gm.getPlayers();
         Map <String, CatanColor> conversion = new TreeMap<String, CatanColor>();
 

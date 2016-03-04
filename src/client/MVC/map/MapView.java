@@ -24,6 +24,7 @@ public class MapView extends PanelView implements IMapView {
 
     private MapComponent map;
     private MapOverlay overlay;
+    private boolean Overlaid = false;
 
     public MapView() {
 
@@ -34,6 +35,7 @@ public class MapView extends PanelView implements IMapView {
         this.add(map, BorderLayout.CENTER);
     }
 
+    public boolean getOverlaid() { return Overlaid; }
     @Override
     public IMapController getController() {
         return (IMapController) super.getController();
@@ -86,20 +88,28 @@ public class MapView extends PanelView implements IMapView {
     public void startDrop(PieceType pieceType, CatanColor pieceColor,
                           boolean isCancelAllowed) {
 
+        System.out.println("Overlay.startDrop");
         overlay = new MapOverlay(map);
         overlay.setController(overlayController);
         overlay.startDrop(pieceType, pieceColor, isCancelAllowed);
         overlay.showModal();
+        Overlaid = true;
     }
 
     @Override
-    public void closeModal(){
+    public void closeModal()
+    {
+        System.out.println("Overlay.closeModal");
+        Overlaid = false;
         overlay.cancelDrop();
     }
 
     @Override
-    public void showModel(){
+    public void showModel()
+    {
+        System.out.println("Show Modal");
         overlay.showModal();
+        Overlaid = true;
     }
 
     private IMapController overlayController = new IMapController() {
@@ -139,6 +149,7 @@ public class MapView extends PanelView implements IMapView {
         public void placeRoad(EdgeLocation edgeLoc) {
 
             closeModal();
+            Overlaid = false;
             getController().placeRoad(edgeLoc);
         }
 
@@ -146,6 +157,7 @@ public class MapView extends PanelView implements IMapView {
         public void placeSettlement(VertexLocation vertLoc) {
 
             closeModal();
+            Overlaid = false;
             getController().placeSettlement(vertLoc);
         }
 
@@ -153,6 +165,7 @@ public class MapView extends PanelView implements IMapView {
         public void placeCity(VertexLocation vertLoc) {
 
             closeModal();
+            Overlaid = false;
             getController().placeCity(vertLoc);
         }
 
@@ -160,6 +173,7 @@ public class MapView extends PanelView implements IMapView {
         public void placeRobber(HexLocation hexLoc) {
 
             closeModal();
+            Overlaid = false;
             getController().placeRobber(hexLoc);
         }
 
@@ -194,6 +208,7 @@ public class MapView extends PanelView implements IMapView {
         private void closeModal() {
             overlay.cancelDrop();
             overlay.closeModal();
+            Overlaid = false;
         }
     };
 

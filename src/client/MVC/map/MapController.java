@@ -62,9 +62,10 @@ public class MapController extends Controller implements IMapController {
         Facade facade = Facade.getInstance();
         String s = facade.getGameModel().getTurnTracker().getStatus();
         int pid = facade.getPlayerID();
-        // System.out.println(s + " " + pid);
+         System.out.println(s + " " + pid);
 
-        if (s.equalsIgnoreCase("FirstTurn") || s.equalsIgnoreCase("SecondTurn")) {
+        if (s.equalsIgnoreCase("FirstTurn") || s.equalsIgnoreCase("SecondTurn"))
+        {
             state = new StateSetup(getView(), robView);
             if (((StateSetup) state).finishedSetup()) {
                 state = new StateDefault(getView(), robView);
@@ -92,6 +93,20 @@ public class MapController extends Controller implements IMapController {
     }
 
     private boolean changeState(String s) {
+        System.out.println("Map State - " + s);
+
+        if(state.getName().equalsIgnoreCase("setup"))
+        {
+            if(((StateSetup)state).finishedSetup())
+            {
+                state = new StateDefault(getView(), robView);
+                return false;
+            }
+            if(Facade.getInstance().isCloseMap())
+                state = new StateDefault(getView(), robView);
+            System.out.println("Close Map = "  + Facade.getInstance().isCloseMap());
+        }
+
         if(Facade.getInstance().getCurrentPlayer().getPlayerIndex() != Facade.getInstance().getGameModel().getTurnTracker().getCurrentPlayer()) {
             state = new StateDefault(getView(), robView);
             return true;
@@ -127,7 +142,16 @@ public class MapController extends Controller implements IMapController {
         //if the state is going to be the same don't worry about updating it
         if (((s.equalsIgnoreCase("FirstRound") || s.equalsIgnoreCase("SecondRound") && state.getName().equalsIgnoreCase("Setup"))
                 || s.equalsIgnoreCase(state.getName())))
-            return false;
+        {
+            System.out.println(((MapView)getView()).getOverlaid());
+//            if(((MapView)getView()).getOverlaid())
+//            {
+//                state = new StateSetup(getView(), robView);
+//                return true;
+//            }
+//            else
+                return false;
+        }
 
 
         //otherwise the state is changing
@@ -150,28 +174,6 @@ public class MapController extends Controller implements IMapController {
         //without input it will change the phase automatically for playing with
         //changeState();
 
-        if (state.getName().equalsIgnoreCase("Setup")) {
-            if (((StateSetup) state).finishedSetup())
-                state = new StateDefault(getView(), robView);
-            //Facade.getInstance().FinishTurn(Facade.getInstance().getPlayerID());
-            return;
-        }
-        String tester = gm.getTurnTracker().getStatus();
-        //with input, it will change based on the updating to work with everyone else
-        // System.out.println("Current State: " + state.getName());
-
-        if(tester.equalsIgnoreCase("Robbing")){
-            tester = "YUM";
-        }
-        if(tester.equalsIgnoreCase("Rolling")){
-            tester = "YUM";
-        }
-        if(tester.equalsIgnoreCase("Playing")){
-            tester = "YUM";
-        }
-        if(tester.equalsIgnoreCase("Discarding")){
-            tester = "YUM";
-        }
         String testState = state.getName();
 
         changeState(gm.getTurnTracker().getStatus());
