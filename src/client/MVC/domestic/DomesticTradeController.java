@@ -441,7 +441,8 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
     public void update(Observable o, Object arg)
     {
 
-        if(Facade.getInstance().getCurrentPlayer().getPlayerIndex() == ((GameModel)o).getTurnTracker().getCurrentPlayer())
+        if(Facade.getInstance().getCurrentPlayer().getPlayerIndex() == ((GameModel)o).getTurnTracker().getCurrentPlayer()
+                && ((GameModel)o).isNotSetup())
             ((IDomesticTradeView)getView()).enableDomesticTrade(true);
         else
             ((IDomesticTradeView)getView()).enableDomesticTrade(false);

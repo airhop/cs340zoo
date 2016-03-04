@@ -537,4 +537,11 @@ public class GameModel extends Observable{
 
         return map.getVObjectsAroundHexlocation(location);
     }
+
+    public boolean isNotSetup()
+    {
+        if(turnTracker.getStatus().equalsIgnoreCase("FirstRound") || turnTracker.getStatus().equalsIgnoreCase("SecondRound"))
+            return true;
+        return false;
+    }
 }
