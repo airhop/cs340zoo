@@ -394,6 +394,10 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
     @Override
     public void update(Observable o, Object arg) {
 
+        if(Facade.getInstance().getCurrentPlayer().getPlayerIndex() == ((GameModel)o).getTurnTracker().getCurrentPlayer())
+            ((IMaritimeTradeView)getView()).enableMaritimeTrade(true);
+        else
+            ((IMaritimeTradeView)getView()).enableMaritimeTrade(false);
 
     }
 }
