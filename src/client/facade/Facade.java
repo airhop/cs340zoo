@@ -124,13 +124,11 @@ public class Facade {
         GameModel gm = null;
         if (!loggedIn)
         {
-            System.out.println("Not logged in");
             closeMap = true;
             return;
         }
         if (!ready)
         {
-            System.out.println("Not ready");
             closeMap = true;
             updateGamesList();
         }
@@ -232,6 +230,7 @@ public class Facade {
                 game.getCurrentPlayer().setUsername(username);
                 game.getCurrentPlayer().setPassword(password);
                 game.getCurrentPlayer().setPlayerId(proxy.getPlayerId());
+                System.out.println("Proxy passes back ID = " + proxy.getPlayerId());
                 CurrentPlayer myPlayer = game.getCurrentPlayer();
                 myPlayer.getPlayerIndex();
             }

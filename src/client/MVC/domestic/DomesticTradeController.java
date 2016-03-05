@@ -441,11 +441,15 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
     public void update(Observable o, Object arg)
     {
 
+      //  System.out.println(Facade.getInstance().getCurrentPlayer().getPlayerIndex() + " " +  ((GameModel)o).getTurnTracker().getCurrentPlayer());
         if(Facade.getInstance().getCurrentPlayer().getPlayerIndex() == ((GameModel)o).getTurnTracker().getCurrentPlayer()
                 && ((GameModel)o).isNotSetup())
             ((IDomesticTradeView)getView()).enableDomesticTrade(true);
         else
-            ((IDomesticTradeView)getView()).enableDomesticTrade(false);
+        {
+            ((IDomesticTradeView) getView()).enableDomesticTrade(false);
+        //    System.out.println("Domestic Button Disabled!!!");
+        }
         //System.out.println(((GameModel)o).getTradeOffer().toString());
 //        System.out.println(((GameModel)o).getTradeOffer().toString());
         TradeOffer to = ((GameModel)o).getTradeOffer();

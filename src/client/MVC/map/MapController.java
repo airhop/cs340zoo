@@ -93,7 +93,7 @@ public class MapController extends Controller implements IMapController {
     }
 
     private boolean changeState(String s) {
-        System.out.println("Map State - " + s);
+       // System.out.println("Map State - " + s);
 
         if(state.getName().equalsIgnoreCase("setup"))
         {
@@ -104,10 +104,12 @@ public class MapController extends Controller implements IMapController {
             }
             if(Facade.getInstance().isCloseMap())
                 state = new StateDefault(getView(), robView);
-            System.out.println("Close Map = "  + Facade.getInstance().isCloseMap());
+//            System.out.println("Close Map = "  + Facade.getInstance().isCloseMap());
         }
 
-        if(Facade.getInstance().getCurrentPlayer().getPlayerIndex() != Facade.getInstance().getGameModel().getTurnTracker().getCurrentPlayer()) {
+        if(Facade.getInstance().getCurrentPlayer().getPlayerIndex() != Facade.getInstance().getGameModel().getTurnTracker().getCurrentPlayer())
+        {
+//            System.out.println("Not your turn!!!");
             state = new StateDefault(getView(), robView);
             return true;
         }

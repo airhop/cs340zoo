@@ -168,10 +168,10 @@ public class JoinGameController extends Controller implements IJoinGameControlle
     @Override
     public void joinGame(CatanColor color) {
     //    System.out.println("Game Joining");
-        CurrentPlayer player = Facade.getInstance().getCurrentPlayer();
-        Facade.getInstance().setSettingColor(true);
+    //    CurrentPlayer player = Facade.getInstance().getCurrentPlayer();
         Facade.getInstance().gamesJoin(color.name(), Facade.getInstance().getCurrentPlayer().getGameId());
         Facade.getInstance().getCurrentPlayer().setColor(color);
+        Facade.getInstance().setSettingColor(true);
         getSelectColorView().closeModal();
         getJoinGameView().closeModal();
         joinAction.execute();

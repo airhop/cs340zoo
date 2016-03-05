@@ -58,7 +58,7 @@ public class Deserializer {
         JsonParser myParse = new JsonParser();
         JsonElement myEle = myParse.parse(jsonString);
         JsonTreeReader myTree = new JsonTreeReader(myEle);
-//        System.out.println(jsonString);
+        System.out.println(jsonString);
         JsonObject myObj = new JsonObject();
         String action = "";
         String myCurrent = "";
@@ -67,7 +67,7 @@ public class Deserializer {
         //System.out.println(myTree.toString());
         try {
             while (!myTree.peek().name().equals("END_DOCUMENT")) {
-//                System.out.println(myTree.peek().name());
+//                System.out.println(myTree.peek().name());Pete
                 switch (myTree.peek().name()) {
                     case "BEGIN_OBJECT":
                         myTree.beginObject();
@@ -303,6 +303,7 @@ public class Deserializer {
                                         currentPlayer.setColor(myTree.nextString());
 
                                         myTree.endObject();
+                                        players.set(i, currentPlayer);
                                     } else {
                                         myTree.nextNull();
                                         //System.out.println(myTree.peek().name());
@@ -382,6 +383,7 @@ public class Deserializer {
                                 break;
                             case "tradeOffer":
                                 myTree.beginObject();
+                                System.out.println("tradeOffer Deserialization!!");
                                 break;
                             default:
 //                                System.out.println(myCurrent);

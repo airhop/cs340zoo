@@ -57,8 +57,6 @@ public class RollController extends Controller implements IRollController {
     @Override
     public void rollDice()
     {
-        if(!Facade.getInstance().getGameModel().getTurnTracker().getStatus().equalsIgnoreCase("Rolling"))
-            return;
         Random r = new Random();
         int x = r.nextInt(6);  //0 - 5
         int y = r.nextInt(6); // 0 - 5
@@ -68,9 +66,11 @@ public class RollController extends Controller implements IRollController {
 //            Facade.getInstance().getPlayerID();
 //        }
 
-        Facade.getInstance().roll(Facade.getInstance().getCurrentPlayer().getPlayerIndex(), roll);
+        System.out.println("rolling!!");
+        getRollView().closeModal();
         getResultView().showModal();
         getResultView().setRollValue(roll);
+        Facade.getInstance().roll(Facade.getInstance().getCurrentPlayer().getPlayerIndex(), roll);
         Facade.getInstance().setCloseMap(false);
 
     }
@@ -85,13 +85,14 @@ public class RollController extends Controller implements IRollController {
             return;
         if(Facade.getInstance().getCurrentPlayer().getPlayerId() != Facade.getInstance().getGameModel().getTurnTracker().getCurrentPlayer())
             return;
+        if(!gm.getTurnTracker().getStatus().equalsIgnoreCase("Rolling"))
+            return;
 
-        if ((gm.getTurnTracker().getStatus().equalsIgnoreCase("Rolling") && !waiting)) {
+        if (!waiting)
+        {
             if (!getRollView().isModalShowing()) {
                 if (!getResultView().isModalShowing()) {
-                    if(Facade.getInstance().getTurnTrackerIndex() == Facade.getInstance().getPlayerIndex()){
                         getRollView().showModal();
-                    }
                 }
             }
            // waiting = true;

@@ -30,7 +30,7 @@ public class GameModel extends Observable{
     private Log log;
     private CurrentPlayer currentPlayer;
     private List<GameInfo> gameList;
-
+    private boolean first;
 
     public GameModel() {
         map = new Map();
@@ -47,8 +47,10 @@ public class GameModel extends Observable{
         players.add(new Player("",3));
         currentPlayer = new CurrentPlayer();
         gameList = new ArrayList<>();
+        first = false;
     }
-    public void updateGameModel(GameModel givenModel){
+    public void updateGameModel(GameModel givenModel)
+    {
         this.map = givenModel.getMap();
         this.bank = givenModel.getBank();
         this.players = givenModel.getPlayers();
@@ -60,6 +62,11 @@ public class GameModel extends Observable{
         this.chat = givenModel.getChat();
         this.log = givenModel.getLog();
         this.currentPlayer = givenModel.getCurrentPlayer();
+        if(!first)
+        {
+            setCurrentPlayerIndex();;
+            first = true;
+        }
     }
 
     public GameModel(Map m, Bank b, ArrayList<Player> ps, TurnTracker tt, TradeOffer tro, Chat c, Log l)
@@ -541,7 +548,21 @@ public class GameModel extends Observable{
     public boolean isNotSetup()
     {
         if(turnTracker.getStatus().equalsIgnoreCase("FirstRound") || turnTracker.getStatus().equalsIgnoreCase("SecondRound"))
-            return true;
-        return false;
+            return false;
+        return true;
+    }
+
+    public void setCurrentPlayerIndex()
+    {
+        int pid = currentPlayer.getPlayerId();
+        System.out.println("Player IDs saved " + players.size());
+        for(int i = 0; i < players.size(); i++)
+        {
+            System.out.print(players.get(i).getUsername() + " " + players.get(i).getPlayerID() + " ");
+            if(players.get(i).getPlayerID() == pid)
+                currentPlayer.setPlayerIndex(i);
+        }
+
+        System.out.println("\nCurrentPlayer.index = " + currentPlayer.getPlayerIndex());
     }
 }
