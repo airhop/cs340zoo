@@ -92,7 +92,6 @@ public class RobView extends OverlayView implements IRobView {
     @Override
     public void setPlayers(RobPlayerInfo[] candidateVictims) {
         victims = candidateVictims;
-        System.out.println("LEEEEEEEEEEEENGTH: " + candidateVictims.length);
         int numberOfPlayers = 0;
         if (candidateVictims != null)
             numberOfPlayers = candidateVictims.length;

@@ -105,10 +105,9 @@ public class StateRobbing extends StateAbstract
     {
         hl=hexLoc;
         Set<Integer> people = new HashSet<Integer>();
-        System.out.println("HEX LOCATIONNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN: " + hexLoc.toString());
         for(VertexObject obj : objects)
         {
-            System.out.println("OBJECT OWNER: " + obj.getOwner());
+
             people.add(obj.getOwner());
         }
         ArrayList<RobPlayerInfo> players = new ArrayList<RobPlayerInfo>();
@@ -120,7 +119,7 @@ public class StateRobbing extends StateAbstract
                 ArrayList<Player> playas = Facade.getInstance().getGameModel().getPlayers();
                 for (Player player : playas) {
                     if (player.getPlayerIndex() == x && player.getResources().getSize() > 0) {
-                        System.out.println("PLAYER NAME: " + player.getUsername());
+
                         players.add(new RobPlayerInfo(player.getPlayerID(), player.getPlayerIndex(), player.getUsername(), CatanColor.convert(player.getColor()), player.getResources().getSize()));
                         j++;
                     }
@@ -131,7 +130,6 @@ public class StateRobbing extends StateAbstract
         RobPlayerInfo[] realplz = new RobPlayerInfo[players.size()];
         int k = 0;
         for (RobPlayerInfo player : players) {
-            System.out.println("I AM ADDING THIS PERSON TO THE ROBVIEW: " + player.getName());
             realplz[k] = player;
             k++;
         }

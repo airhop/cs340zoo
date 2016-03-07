@@ -103,7 +103,6 @@ public class StatePlayersTurn extends StateAbstract
                 ArrayList<Player> playas = Facade.getInstance().getGameModel().getPlayers();
                 for (Player player : playas) {
                     if (player.getPlayerIndex() == x && player.getResources().getSize() > 0) {
-                        System.out.println("PLAYER NAME: " + player.getUsername());
                         players.add(new RobPlayerInfo(player.getPlayerID(), player.getPlayerIndex(), player.getUsername(), CatanColor.convert(player.getColor()), player.getResources().getSize()));
                         j++;
                     }
@@ -118,9 +117,6 @@ public class StatePlayersTurn extends StateAbstract
     @Override
     public void startMove(PieceType pieceType, boolean isFree, boolean allowDisconnected)
     {
-        System.out.println("AND IN HEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEERE");
-        System.out.println("COLOR MAYBE: "+color.toString());
-        System.out.println("COLOR MAYBE PLAYER: "+Facade.getInstance().getCurrentPlayer().getColor().toString());
         view.startDrop(pieceType, color, true);
     }
 
