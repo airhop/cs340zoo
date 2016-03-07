@@ -72,7 +72,6 @@ public class RollController extends Controller implements IRollController {
         getResultView().setRollValue(roll);
         Facade.getInstance().roll(Facade.getInstance().getCurrentPlayer().getPlayerIndex(), roll);
         Facade.getInstance().setCloseMap(false);
-
     }
 
     public void setWaiting() {waiting = false;}
@@ -83,7 +82,7 @@ public class RollController extends Controller implements IRollController {
         GameModel gm = (GameModel)o;
         if(!Facade.getInstance().isReady())
             return;
-        if(Facade.getInstance().getCurrentPlayer().getPlayerId() != Facade.getInstance().getGameModel().getTurnTracker().getCurrentPlayer())
+        if(Facade.getInstance().getCurrentPlayer().getPlayerIndex() != Facade.getInstance().getGameModel().getTurnTracker().getCurrentPlayer())
             return;
         if(!gm.getTurnTracker().getStatus().equalsIgnoreCase("Rolling"))
             return;

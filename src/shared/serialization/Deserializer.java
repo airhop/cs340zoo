@@ -45,6 +45,7 @@ public class Deserializer {
         String myDir = "";
         int ratio;
         ArrayList<Player> players = myModel.getPlayers();
+
         Player currentPlayer;
         MessageList myMessages = new MessageList();
         MessageList myLog = new MessageList();
@@ -303,7 +304,7 @@ public class Deserializer {
                                         currentPlayer.setColor(myTree.nextString());
 
                                         myTree.endObject();
-                                        players.set(i, currentPlayer);
+//                                        players.set(i, currentPlayer);
                                     } else {
                                         myTree.nextNull();
                                         //System.out.println(myTree.peek().name());
