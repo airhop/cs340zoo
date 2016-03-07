@@ -429,20 +429,24 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
             if (to != null) {
                 if (to.getReciever() == Facade.getInstance().getCurrentPlayer().getPlayerIndex()) {
                     if (!getAcceptOverlay().isModalShowing()) {
-                        if (brick > 0) getAcceptOverlay().addGetResource(ResourceType.BRICK, brick);
-                        else if (brick < 0) getAcceptOverlay().addGiveResource(ResourceType.BRICK, brick);
+                        if (to.getOffer().getBrick() > 0) getAcceptOverlay().addGetResource(ResourceType.BRICK, brick);
+                        else if (to.getOffer().getBrick() < 0)
+                            getAcceptOverlay().addGiveResource(ResourceType.BRICK, brick);
 
-                        if (ore > 0) getAcceptOverlay().addGetResource(ResourceType.ORE, ore);
-                        else if (ore < 0) getAcceptOverlay().addGiveResource(ResourceType.ORE, ore);
+                        if (to.getOffer().getOre() > 0) getAcceptOverlay().addGetResource(ResourceType.ORE, ore);
+                        else if (to.getOffer().getOre() < 0) getAcceptOverlay().addGiveResource(ResourceType.ORE, ore);
 
-                        if (sheep > 0) getAcceptOverlay().addGetResource(ResourceType.SHEEP, sheep);
-                        else if (sheep < 0) getAcceptOverlay().addGiveResource(ResourceType.SHEEP, sheep);
+                        if (to.getOffer().getSheep() > 0) getAcceptOverlay().addGetResource(ResourceType.SHEEP, sheep);
+                        else if (to.getOffer().getSheep() < 0)
+                            getAcceptOverlay().addGiveResource(ResourceType.SHEEP, sheep);
 
-                        if (wheat > 0) getAcceptOverlay().addGetResource(ResourceType.WHEAT, wheat);
-                        else if (wheat < 0) getAcceptOverlay().addGiveResource(ResourceType.WHEAT, wheat);
+                        if (to.getOffer().getWheat() > 0) getAcceptOverlay().addGetResource(ResourceType.WHEAT, wheat);
+                        else if (to.getOffer().getWheat() < 0)
+                            getAcceptOverlay().addGiveResource(ResourceType.WHEAT, wheat);
 
-                        if (wood > 0) getAcceptOverlay().addGetResource(ResourceType.WOOD, wood);
-                        else if (wood < 0) getAcceptOverlay().addGiveResource(ResourceType.WOOD, wood);
+                        if (to.getOffer().getWood() > 0) getAcceptOverlay().addGetResource(ResourceType.WOOD, wood);
+                        else if (to.getOffer().getWood() < 0)
+                            getAcceptOverlay().addGiveResource(ResourceType.WOOD, wood);
                         getAcceptOverlay().showModal();
                         getAcceptOverlay().setAcceptEnabled(Facade.getInstance().canAcceptTrade());
                     }
