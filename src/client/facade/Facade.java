@@ -720,6 +720,7 @@ public class Facade {
     {
         if(game == null)
             return false;
+        System.out.println("WHAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAT FACADE");
         return game.canAcceptTrade();
     }
 

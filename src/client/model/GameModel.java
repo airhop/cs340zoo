@@ -446,7 +446,7 @@ public class GameModel extends Observable{
         int pid = tradeOffer.getReciever();
         if(pid != currentPlayer.getPlayerIndex())
             return false;
-
+        System.out.println("WHAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAT GAME");
         return players.get(pid).canAcceptTrade(tradeOffer.getOffer());
     }
     /**

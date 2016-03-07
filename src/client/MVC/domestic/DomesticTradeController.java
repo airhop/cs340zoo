@@ -429,6 +429,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
             if (to != null) {
                 if (to.getReciever() == Facade.getInstance().getCurrentPlayer().getPlayerIndex()) {
                     if (!getAcceptOverlay().isModalShowing()) {
+                        getAcceptOverlay().reset();
                         if (to.getOffer().getBrick() > 0)
                             getAcceptOverlay().addGetResource(ResourceType.BRICK, to.getOffer().getBrick());
                         else if (to.getOffer().getBrick() < 0)
