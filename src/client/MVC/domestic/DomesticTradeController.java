@@ -41,6 +41,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
     private int tradeSenderId;
     private int tradeAccepterId = -1;
     boolean usable = false;
+
     /**
      * DomesticTradeController constructor
      *
@@ -91,16 +92,15 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 
     @Override
     public void startTrade() {
-        if(!usable)
+        if (!usable)
             return;
         System.out.println(Facade.getInstance().getGameModel().getPlayers().get(Facade.getInstance().getCurrentPlayer().getPlayerIndex()).getResources().toString());
         tradeSenderId = Facade.getInstance().getCurrentPlayer().getPlayerId();
         PlayerInfo[] players = new PlayerInfo[3];
-        int i=0;
-        int j=0;
-        for(Player player : Facade.getInstance().getGameModel().getPlayers())
-        {
-            if(Facade.getInstance().getCurrentPlayerInfo().getId() != j) {
+        int i = 0;
+        int j = 0;
+        for (Player player : Facade.getInstance().getGameModel().getPlayers()) {
+            if (Facade.getInstance().getCurrentPlayerInfo().getId() != j) {
                 players[i] = new PlayerInfo(player.getPlayerID(), player.getPlayerIndex(), player.getUsername(), CatanColor.convert(player.getColor())/*CatanColor.BLUE*/);
                 i++;
             }
@@ -124,53 +124,43 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 
     @Override
     public void decreaseResourceAmount(ResourceType resource) {
-        if(resource == ResourceType.BRICK)
-        {
-            if(brick > 0)
-            {
+        if (resource == ResourceType.BRICK) {
+            if (brick > 0) {
                 brick--;
-                if(brick < Facade.getInstance().getGameModel().getPlayers().get(Facade.getInstance().getCurrentPlayer().getPlayerIndex()).getResources().getBrick()) {
-                    tradeOverlay.setResourceAmountChangeEnabled(resource,true,true);
+                if (brick < Facade.getInstance().getGameModel().getPlayers().get(Facade.getInstance().getCurrentPlayer().getPlayerIndex()).getResources().getBrick()) {
+                    tradeOverlay.setResourceAmountChangeEnabled(resource, true, true);
                 }
             }
         }
-        if(resource == ResourceType.ORE)
-        {
-            if(ore > 0)
-            {
+        if (resource == ResourceType.ORE) {
+            if (ore > 0) {
                 ore--;
-                if(ore < Facade.getInstance().getGameModel().getPlayers().get(Facade.getInstance().getCurrentPlayer().getPlayerIndex()).getResources().getOre()) {
-                    tradeOverlay.setResourceAmountChangeEnabled(resource,true,true);
+                if (ore < Facade.getInstance().getGameModel().getPlayers().get(Facade.getInstance().getCurrentPlayer().getPlayerIndex()).getResources().getOre()) {
+                    tradeOverlay.setResourceAmountChangeEnabled(resource, true, true);
                 }
             }
         }
-        if(resource == ResourceType.SHEEP)
-        {
-            if(sheep > 0)
-            {
+        if (resource == ResourceType.SHEEP) {
+            if (sheep > 0) {
                 sheep--;
-                if(sheep < Facade.getInstance().getGameModel().getPlayers().get(Facade.getInstance().getCurrentPlayer().getPlayerIndex()).getResources().getSheep()) {
-                    tradeOverlay.setResourceAmountChangeEnabled(resource,true,true);
+                if (sheep < Facade.getInstance().getGameModel().getPlayers().get(Facade.getInstance().getCurrentPlayer().getPlayerIndex()).getResources().getSheep()) {
+                    tradeOverlay.setResourceAmountChangeEnabled(resource, true, true);
                 }
             }
         }
-        if(resource == ResourceType.WHEAT)
-        {
-            if(wheat > 0)
-            {
+        if (resource == ResourceType.WHEAT) {
+            if (wheat > 0) {
                 wheat--;
-                if(wheat < Facade.getInstance().getGameModel().getPlayers().get(Facade.getInstance().getCurrentPlayer().getPlayerIndex()).getResources().getWheat()) {
-                    tradeOverlay.setResourceAmountChangeEnabled(resource,true,true);
+                if (wheat < Facade.getInstance().getGameModel().getPlayers().get(Facade.getInstance().getCurrentPlayer().getPlayerIndex()).getResources().getWheat()) {
+                    tradeOverlay.setResourceAmountChangeEnabled(resource, true, true);
                 }
             }
         }
-        if(resource == ResourceType.WOOD)
-        {
-            if(wood > 0)
-            {
+        if (resource == ResourceType.WOOD) {
+            if (wood > 0) {
                 wood--;
-                if(wood < Facade.getInstance().getGameModel().getPlayers().get(Facade.getInstance().getCurrentPlayer().getPlayerIndex()).getResources().getWood()) {
-                    tradeOverlay.setResourceAmountChangeEnabled(resource,true,true);
+                if (wood < Facade.getInstance().getGameModel().getPlayers().get(Facade.getInstance().getCurrentPlayer().getPlayerIndex()).getResources().getWood()) {
+                    tradeOverlay.setResourceAmountChangeEnabled(resource, true, true);
                 }
             }
         }
@@ -181,37 +171,32 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 
     @Override
     public void increaseResourceAmount(ResourceType resource) {
-        if(resource == ResourceType.BRICK)
-        {
+        if (resource == ResourceType.BRICK) {
 
 //            if(brick+1 == Facade.getInstance().getGameModel().getPlayers().get(Facade.getInstance().getCurrentPlayer().getPlayerIndex()).getResources().getBrick()) {
 //                tradeOverlay.setResourceAmountChangeEnabled(resource,false,true);
 //            }
             brick++;
         }
-        if(resource == ResourceType.ORE)
-        {
+        if (resource == ResourceType.ORE) {
 //            if(ore+1 == Facade.getInstance().getGameModel().getPlayers().get(Facade.getInstance().getCurrentPlayer().getPlayerIndex()).getResources().getOre()) {
 //                tradeOverlay.setResourceAmountChangeEnabled(resource,false,true);
 //            }
             ore++;
         }
-        if(resource == ResourceType.SHEEP)
-        {
+        if (resource == ResourceType.SHEEP) {
 //            if(sheep+1 == Facade.getInstance().getGameModel().getPlayers().get(Facade.getInstance().getCurrentPlayer().getPlayerIndex()).getResources().getSheep()) {
 //                tradeOverlay.setResourceAmountChangeEnabled(resource,false,true);
 //            }
             sheep++;
         }
-        if(resource == ResourceType.WHEAT)
-        {
+        if (resource == ResourceType.WHEAT) {
 //            if(wheat+1 == Facade.getInstance().getGameModel().getPlayers().get(Facade.getInstance().getCurrentPlayer().getPlayerIndex()).getResources().getWheat()) {
 //                tradeOverlay.setResourceAmountChangeEnabled(resource,false,true);
 //            }
             wheat++;
         }
-        if(resource == ResourceType.WOOD)
-        {
+        if (resource == ResourceType.WOOD) {
 //            if(wood+1 == Facade.getInstance().getGameModel().getPlayers().get(Facade.getInstance().getCurrentPlayer().getPlayerIndex()).getResources().getWood()) {
 //                tradeOverlay.setResourceAmountChangeEnabled(resource,false,true);
 //            }
@@ -223,16 +208,40 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 
     @Override
     public void sendTradeOffer() {
-        if(brickStatus == 1) {brick = brick - (2*brick);} if(brickStatus == 0) {brick = 0;}
-        if(oreStatus == 1) {ore = ore - (2*ore);} if(oreStatus == 0) {ore = 0;}
-        if(sheepStatus == 1) {sheep = sheep - (2*sheep);} if(sheepStatus == 0) {sheep = 0;}
-        if(wheatStatus == 1) {wheat = wheat - (2*wheat);} if(wheatStatus == 0) {wheat = 0;}
-        if(woodStatus == 1) {wood = wood - (2*wood);} if(wheatStatus == 0) {wheat = 0;}
+        if (brickStatus == 1) {
+            brick = brick - (2 * brick);
+        }
+        if (brickStatus == 0) {
+            brick = 0;
+        }
+        if (oreStatus == 1) {
+            ore = ore - (2 * ore);
+        }
+        if (oreStatus == 0) {
+            ore = 0;
+        }
+        if (sheepStatus == 1) {
+            sheep = sheep - (2 * sheep);
+        }
+        if (sheepStatus == 0) {
+            sheep = 0;
+        }
+        if (wheatStatus == 1) {
+            wheat = wheat - (2 * wheat);
+        }
+        if (wheatStatus == 0) {
+            wheat = 0;
+        }
+        if (woodStatus == 1) {
+            wood = wood - (2 * wood);
+        }
+        if (wheatStatus == 0) {
+            wheat = 0;
+        }
 
-        tradeList = new ResourceList(brick,ore,sheep,wheat,wood);
+        tradeList = new ResourceList(brick, ore, sheep, wheat, wood);
 
-        if(Facade.getInstance().canTradePlayer(Facade.getInstance().getPlayerIndex(), tradeAccepterId, tradeList))
-        {
+        if (Facade.getInstance().canTradePlayer(Facade.getInstance().getPlayerIndex(), tradeAccepterId, tradeList)) {
             System.out.println(tradeList.toString());
             Facade.getInstance().tradePlayer(Facade.getInstance().getPlayerIndex(), tradeAccepterId, tradeList);
         }
@@ -248,28 +257,23 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 
     @Override
     public void setResourceToReceive(ResourceType resource) {
-        if(resource == ResourceType.BRICK)
-        {
+        if (resource == ResourceType.BRICK) {
             brickStatus = 1;
             brick = 0;
         }
-        if(resource == ResourceType.ORE)
-        {
+        if (resource == ResourceType.ORE) {
             oreStatus = 1;
             ore = 0;
         }
-        if(resource == ResourceType.SHEEP)
-        {
+        if (resource == ResourceType.SHEEP) {
             sheepStatus = 1;
             sheep = 0;
         }
-        if(resource == ResourceType.WHEAT)
-        {
+        if (resource == ResourceType.WHEAT) {
             wheatStatus = 1;
             wheat = 0;
         }
-        if(resource == ResourceType.WOOD)
-        {
+        if (resource == ResourceType.WOOD) {
             woodStatus = 1;
             wood = 0;
         }
@@ -280,28 +284,23 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 
     @Override
     public void setResourceToSend(ResourceType resource) {
-        if(resource == ResourceType.BRICK)
-        {
+        if (resource == ResourceType.BRICK) {
             brickStatus = -1;
             brick = 0;
         }
-        if(resource == ResourceType.ORE)
-        {
+        if (resource == ResourceType.ORE) {
             oreStatus = -1;
             ore = 0;
         }
-        if(resource == ResourceType.SHEEP)
-        {
+        if (resource == ResourceType.SHEEP) {
             sheepStatus = -1;
             sheep = 0;
         }
-        if(resource == ResourceType.WHEAT)
-        {
+        if (resource == ResourceType.WHEAT) {
             wheatStatus = -1;
             wheat = 0;
         }
-        if(resource == ResourceType.WOOD)
-        {
+        if (resource == ResourceType.WOOD) {
             woodStatus = -1;
             wood = 0;
         }
@@ -313,28 +312,23 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
     @Override
     public void unsetResource(ResourceType resource) {
 //        getTradeOverlay().setResourceAmountChangeEnabled(resource,true,false);
-        if(resource == ResourceType.BRICK)
-        {
+        if (resource == ResourceType.BRICK) {
             brickStatus = 0;
             brick = 0;
         }
-        if(resource == ResourceType.ORE)
-        {
+        if (resource == ResourceType.ORE) {
             oreStatus = 0;
             ore = 0;
         }
-        if(resource == ResourceType.SHEEP)
-        {
+        if (resource == ResourceType.SHEEP) {
             sheepStatus = 0;
             sheep = 0;
         }
-        if(resource == ResourceType.WHEAT)
-        {
+        if (resource == ResourceType.WHEAT) {
             wheatStatus = 0;
             wheat = 0;
         }
-        if(resource == ResourceType.WOOD)
-        {
+        if (resource == ResourceType.WOOD) {
             woodStatus = 0;
             wood = 0;
         }
@@ -357,79 +351,59 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 
     @Override
     public boolean checkResourceAdd(ResourceType resource, Integer amount) {
-        if(resource == ResourceType.BRICK)
-        {
+        if (resource == ResourceType.BRICK) {
 
-            if(amount < Facade.getInstance().getGameModel().getPlayers().get(Facade.getInstance().getCurrentPlayer().getPlayerIndex()).getResources().getBrick()) {
+            if (amount < Facade.getInstance().getGameModel().getPlayers().get(Facade.getInstance().getCurrentPlayer().getPlayerIndex()).getResources().getBrick()) {
                 return true;
-            }
-            else return false;
+            } else return false;
         }
-        if(resource == ResourceType.ORE)
-        {
-            if(amount < Facade.getInstance().getGameModel().getPlayers().get(Facade.getInstance().getCurrentPlayer().getPlayerIndex()).getResources().getOre()) {
+        if (resource == ResourceType.ORE) {
+            if (amount < Facade.getInstance().getGameModel().getPlayers().get(Facade.getInstance().getCurrentPlayer().getPlayerIndex()).getResources().getOre()) {
                 return true;
-            }
-            else return false;
+            } else return false;
         }
-        if(resource == ResourceType.SHEEP)
-        {
-            if(amount < Facade.getInstance().getGameModel().getPlayers().get(Facade.getInstance().getCurrentPlayer().getPlayerIndex()).getResources().getSheep()) {
+        if (resource == ResourceType.SHEEP) {
+            if (amount < Facade.getInstance().getGameModel().getPlayers().get(Facade.getInstance().getCurrentPlayer().getPlayerIndex()).getResources().getSheep()) {
                 return true;
-            }
-            else return false;
+            } else return false;
         }
-        if(resource == ResourceType.WHEAT)
-        {
-            if(amount < Facade.getInstance().getGameModel().getPlayers().get(Facade.getInstance().getCurrentPlayer().getPlayerIndex()).getResources().getWheat()) {
+        if (resource == ResourceType.WHEAT) {
+            if (amount < Facade.getInstance().getGameModel().getPlayers().get(Facade.getInstance().getCurrentPlayer().getPlayerIndex()).getResources().getWheat()) {
                 return true;
-            }
-            else return false;
+            } else return false;
         }
-        if(resource == ResourceType.WOOD)
-        {
-            if(amount < Facade.getInstance().getGameModel().getPlayers().get(Facade.getInstance().getCurrentPlayer().getPlayerIndex()).getResources().getWood()) {
+        if (resource == ResourceType.WOOD) {
+            if (amount < Facade.getInstance().getGameModel().getPlayers().get(Facade.getInstance().getCurrentPlayer().getPlayerIndex()).getResources().getWood()) {
                 return true;
-            }
-            else return false;
+            } else return false;
         }
         return false;
     }
 
     @Override
     public int checkResourceSubtract(ResourceType resource) {
-        if(resource == ResourceType.BRICK)
-        {
-            if(brickStatus == 1)
-            {
+        if (resource == ResourceType.BRICK) {
+            if (brickStatus == 1) {
                 return 1;
             }
         }
-        if(resource == ResourceType.ORE)
-        {
-            if(oreStatus == 1)
-            {
+        if (resource == ResourceType.ORE) {
+            if (oreStatus == 1) {
                 return 1;
             }
         }
-        if(resource == ResourceType.SHEEP)
-        {
-            if(sheepStatus == 1)
-            {
+        if (resource == ResourceType.SHEEP) {
+            if (sheepStatus == 1) {
                 return 1;
             }
         }
-        if(resource == ResourceType.WHEAT)
-        {
-            if(wheatStatus == 1)
-            {
+        if (resource == ResourceType.WHEAT) {
+            if (wheatStatus == 1) {
                 return 1;
             }
         }
-        if(resource == ResourceType.WOOD)
-        {
-            if(woodStatus == 1)
-            {
+        if (resource == ResourceType.WOOD) {
+            if (woodStatus == 1) {
                 return 1;
             }
 
@@ -438,126 +412,106 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
     }
 
     @Override
-    public void update(Observable o, Object arg)
-    {
+    public void update(Observable o, Object arg) {
 
-      //  System.out.println(Facade.getInstance().getCurrentPlayer().getPlayerIndex() + " " +  ((GameModel)o).getTurnTracker().getCurrentPlayer());
-        if(Facade.getInstance().getCurrentPlayer().getPlayerIndex() == ((GameModel)o).getTurnTracker().getCurrentPlayer()
-                && ((GameModel)o).isNotSetup())
-            ((IDomesticTradeView)getView()).enableDomesticTrade(true);
-        else
-        {
+        //  System.out.println(Facade.getInstance().getCurrentPlayer().getPlayerIndex() + " " +  ((GameModel)o).getTurnTracker().getCurrentPlayer());
+        if (Facade.getInstance().getCurrentPlayer().getPlayerIndex() == ((GameModel) o).getTurnTracker().getCurrentPlayer()
+                && ((GameModel) o).isNotSetup())
+            ((IDomesticTradeView) getView()).enableDomesticTrade(true);
+        else {
             ((IDomesticTradeView) getView()).enableDomesticTrade(false);
-        //    System.out.println("Domestic Button Disabled!!!");
+            //    System.out.println("Domestic Button Disabled!!!");
         }
         //System.out.println(((GameModel)o).getTradeOffer().toString());
 //        System.out.println(((GameModel)o).getTradeOffer().toString());
-        TradeOffer to = ((GameModel)o).getTradeOffer();
-        if(((GameModel)o).getTurnTracker().getStatus().equalsIgnoreCase("Playing")) {
+        TradeOffer to = ((GameModel) o).getTradeOffer();
+        if (((GameModel) o).getTurnTracker().getStatus().equalsIgnoreCase("Playing")) {
             if (to != null) {
                 if (to.getReciever() == Facade.getInstance().getCurrentPlayer().getPlayerIndex()) {
-                    getAcceptOverlay().showModal();
-                    getAcceptOverlay().setAcceptEnabled(Facade.getInstance().canAcceptTrade());
+                    if (!getAcceptOverlay().isModalShowing()) {
+                        getAcceptOverlay().showModal();
+                        getAcceptOverlay().setAcceptEnabled(Facade.getInstance().canAcceptTrade());
+                    }
                 }
             }
         }
-        if(((GameModel)o).getCurrentPlayer().getPlayerIndex() == ((GameModel)o).getTurnTracker().getCurrentPlayer())
+        if (((GameModel) o).getCurrentPlayer().getPlayerIndex() == ((GameModel) o).getTurnTracker().getCurrentPlayer())
             usable = true;
         else
             usable = false;
 
     }
-    public void printPlayerResourceStatus()
-    {
-        System.out.println("BRICK: "+brick);
-        System.out.println("ORE: "+ore);
-        System.out.println("SHEEP: "+sheep);
-        System.out.println("WHEAT: "+wheat);
-        System.out.println("WOOD: "+wood);
+
+    public void printPlayerResourceStatus() {
+        System.out.println("BRICK: " + brick);
+        System.out.println("ORE: " + ore);
+        System.out.println("SHEEP: " + sheep);
+        System.out.println("WHEAT: " + wheat);
+        System.out.println("WOOD: " + wood);
 
     }
-    public void updateTradeStatus()
-    {
 
-        if(brick == 0)
-        {
+    public void updateTradeStatus() {
+
+        if (brick == 0) {
             hasASend = false;
             hasARecieve = false;
         }
-        if(ore == 0)
-        {
+        if (ore == 0) {
             hasASend = false;
             hasARecieve = false;
         }
-        if(sheep == 0)
-        {
+        if (sheep == 0) {
             hasASend = false;
             hasARecieve = false;
         }
-        if(wheat == 0)
-        {
+        if (wheat == 0) {
             hasASend = false;
             hasARecieve = false;
         }
-        if(wood == 0)
-        {
+        if (wood == 0) {
             hasASend = false;
             hasARecieve = false;
         }
-        if(brick > 0 && brickStatus == 1)
-        {
+        if (brick > 0 && brickStatus == 1) {
             hasASend = true;
         }
-        if(brick > 0 && brickStatus == -1)
-        {
+        if (brick > 0 && brickStatus == -1) {
             hasARecieve = true;
         }
-        if(ore > 0 && oreStatus == 1)
-        {
+        if (ore > 0 && oreStatus == 1) {
             hasASend = true;
         }
-        if(ore > 0 && oreStatus == -1)
-        {
+        if (ore > 0 && oreStatus == -1) {
             hasARecieve = true;
         }
-        if(sheep > 0 && sheepStatus == 1)
-        {
+        if (sheep > 0 && sheepStatus == 1) {
             hasASend = true;
         }
-        if(sheep > 0 && sheepStatus == -1)
-        {
+        if (sheep > 0 && sheepStatus == -1) {
             hasARecieve = true;
         }
-        if(wheat > 0 && wheatStatus == 1)
-        {
+        if (wheat > 0 && wheatStatus == 1) {
             hasASend = true;
         }
-        if(wheat > 0 && wheatStatus == -1)
-        {
+        if (wheat > 0 && wheatStatus == -1) {
             hasARecieve = true;
         }
-        if(wood > 0 && woodStatus == 1)
-        {
+        if (wood > 0 && woodStatus == 1) {
             hasASend = true;
         }
-        if(wood > 0 && woodStatus == -1)
-        {
+        if (wood > 0 && woodStatus == -1) {
             hasARecieve = true;
         }
-        if(hasARecieve && hasASend)
-        {
-            if(tradeAccepterId == -1)
-            {
+        if (hasARecieve && hasASend) {
+            if (tradeAccepterId == -1) {
                 tradeOverlay.setTradeEnabled(false);
                 tradeOverlay.setStateMessage("Please select a player to trade with");
-            }
-            else {
+            } else {
                 tradeOverlay.setTradeEnabled(true);
                 tradeOverlay.setStateMessage("Trade!");
             }
-        }
-        else
-        {
+        } else {
             tradeOverlay.setTradeEnabled(false);
             tradeOverlay.setStateMessage("Please select resources");
         }

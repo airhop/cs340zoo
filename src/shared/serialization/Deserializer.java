@@ -12,6 +12,7 @@ import client.model.map.City;
 import client.model.map.Map;
 import client.model.map.Road;
 import client.model.map.Settlement;
+import client.model.misc.TradeOffer;
 import client.model.misc.TurnTracker;
 import client.model.player.Player;
 import com.google.gson.JsonElement;
@@ -37,6 +38,9 @@ public class Deserializer {
         Map myMap = new Map();
         ResourceList myResource;
         DevCardList myDevCards = myBank.getDevCards();
+        TradeOffer tradeOffer = myModel.getTradeOffer();
+        ResourceList offerList = new ResourceList();
+        tradeOffer.setOffer(offerList);
         String resourceType = "";
         int xValue;
         int yValue;
@@ -384,6 +388,23 @@ public class Deserializer {
                                 break;
                             case "tradeOffer":
                                 myTree.beginObject();
+                                myTree.nextName();
+                                tradeOffer.setSender(myTree.nextInt());
+                                myTree.nextName();
+                                tradeOffer.setReciever(myTree.nextInt());
+                                myTree.nextName();
+                                myTree.beginObject();
+                                myTree.nextName();
+                                offerList.setBrick(myTree.nextInt());
+                                myTree.nextName();
+                                offerList.setWood(myTree.nextInt());
+                                myTree.nextName();
+                                offerList.setSheep(myTree.nextInt());
+                                myTree.nextName();
+                                offerList.setWheat(myTree.nextInt());
+                                myTree.nextName();
+                                offerList.setOre(myTree.nextInt());
+                                System.out.println(myTree.peek().name());
                                 System.out.println("tradeOffer Deserialization!!");
                                 break;
                             default:
