@@ -664,7 +664,7 @@ public class Proxy implements IProxy {
         myObjOne.addProperty("type", "acceptTrade");
         myObjOne.addProperty("playerIndex", playerIndex);
         myObjOne.addProperty("willAccept", accept);
-   //     System.out.println(myObjOne.toString());
+        System.out.println(myObjOne.toString());
         HttpURLResponse myResponse;
         try {
             myResponse = doPost(url, myObjOne);

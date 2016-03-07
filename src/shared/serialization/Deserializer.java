@@ -38,7 +38,7 @@ public class Deserializer {
         Map myMap = new Map();
         ResourceList myResource;
         DevCardList myDevCards = myBank.getDevCards();
-        TradeOffer tradeOffer = myModel.getTradeOffer();
+        TradeOffer tradeOffer = new TradeOffer();
         ResourceList offerList = new ResourceList();
         tradeOffer.setOffer(offerList);
         String resourceType = "";
@@ -442,6 +442,7 @@ public class Deserializer {
         myModel.setPlayers(players);
         myModel.setChat(new Chat(myMessages));
         myModel.setLog(new Log(myLog));
+        myModel.setTradeOffer(tradeOffer);
 
         gameNew.updateGameModel(myModel);
         return gameNew;
