@@ -76,7 +76,7 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 
     @Override
     public void update(Observable o, Object arg) {
-        if(Facade.getInstance().isReady() && Facade.getInstance().getCurrentPlayer().getPlayerIndex() == Facade.getInstance().getGameModel().getTurnTracker().getCurrentPlayer())
+        if(Facade.getInstance().isReady())
         {
             CurrentResources currentResources = Facade.getInstance().getCurrentResources();
             getView().setElementAmount(ResourceBarElement.WOOD,currentResources.getWood());
