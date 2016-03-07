@@ -79,7 +79,7 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
         if(players.get(3) == null)
             return;
 
-        int playerId = gm.getCurrentPlayer().getPlayerIndex();
+        int playerId = gm.getTurnTracker().getCurrentPlayer();
         for(int i = 0; i < players.size(); i++)
         {
             boolean la = gm.getTurnTracker().getLargestArmy() == i;
