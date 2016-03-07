@@ -460,7 +460,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
             }
         }
         if (getWaitOverlay().isModalShowing()) {
-            if (to.getReciever() == 0 && to.getSender() == 0) {
+            if (to.getReciever() == -1 && to.getSender() == -1) {
                 getWaitOverlay().closeModal();
             }
         }
