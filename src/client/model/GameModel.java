@@ -64,7 +64,7 @@ public class GameModel extends Observable{
         this.currentPlayer = givenModel.getCurrentPlayer();
         if(!first)
         {
-            setCurrentPlayerIndex();;
+            setCurrentPlayerIndex();
             first = true;
         }
     }
@@ -563,6 +563,6 @@ public class GameModel extends Observable{
                 currentPlayer.setPlayerIndex(i);
         }
 
-        System.out.println("\nCurrentPlayer.index = " + currentPlayer.getPlayerIndex());
+        System.out.println("CurrentPlayer.index = " + currentPlayer.getPlayerIndex() + " Current turn = " + turnTracker.getStatus() + "The player = ");
     }
 }
