@@ -5,7 +5,6 @@ import client.facade.Facade;
 import client.model.GameModel;
 import client.model.bank.ResourceList;
 import com.google.gson.*;
-import com.sun.prism.paint.Stop;
 import shared.definitions.ResourceType;
 import shared.exceptions.*;
 import shared.extra.StopWatch;
