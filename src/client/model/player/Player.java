@@ -409,35 +409,28 @@ public class Player {
      * @return boolean whether or not the player can accept a trade offer from another player
      */
     public boolean canAcceptTrade(ResourceList resourcesRequirements) {
-        System.out.println("WHAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAT");
         if (resourcesRequirements.getBrick() < 0) {
-            System.out.println("BRICK");
-            if ((resources.getBrick() - resourcesRequirements.getBrick()) < 0) {
-                System.out.println("BRICKKKKKKKKKK");
+            if ((resources.getBrick() + resourcesRequirements.getBrick()) < 0) {
                 return false;
             }
         }
         if (resourcesRequirements.getOre() < 0) {
-            System.out.println("OREEEEEEEEEEEE");
-            if ((resources.getOre() - resourcesRequirements.getOre()) < 0) {
+            if ((resources.getOre() + resourcesRequirements.getOre()) < 0) {
                 return false;
             }
         }
         if (resourcesRequirements.getSheep() < 0) {
-            System.out.println("SHEEPPPPPPPPPPPP");
-            if ((resources.getSheep() - resourcesRequirements.getSheep()) < 0) {
+            if ((resources.getSheep() + resourcesRequirements.getSheep()) < 0) {
                 return false;
             }
         }
         if (resourcesRequirements.getWheat() < 0) {
-            System.out.println("WHEATTTTTTTTTTTTT");
-            if ((resources.getWheat() - resourcesRequirements.getWheat()) < 0) {
+            if ((resources.getWheat() + resourcesRequirements.getWheat()) < 0) {
                 return false;
             }
         }
         if (resourcesRequirements.getWood() < 0) {
-            System.out.println("WOODDDDDDDDDDDDDDDDDDDDDDD");
-            if ((resources.getWood() - resourcesRequirements.getWood()) < 0) {
+            if ((resources.getWood() + resourcesRequirements.getWood()) < 0) {
                 return false;
             }
         }
