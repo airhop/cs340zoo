@@ -41,7 +41,7 @@ public class StateRobbing extends StateAbstract
     public void robPlayer(RobPlayerInfo victim)
     {
         if (victim == null) {
-            Facade.getInstance().getGameModel().relocateRobber(hl);
+            Facade.getInstance().rob(Facade.getInstance().getPlayerIndex(), -1, hl);
         } else {
             this.victim = victim.getPlayerIndex();
             int pid = Facade.getInstance().getPlayerIndex();
