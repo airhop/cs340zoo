@@ -207,7 +207,7 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
             System.out.println(resource);
         }
             getTradeOverlay().setTradeEnabled(false);
-        if(Facade.getInstance().getGameModel().getTurnTracker().getCurrentPlayer() == playerId)
+        if(Facade.getInstance().getCurrentPlayer().getPlayerIndex() == Facade.getInstance().getGameModel().getTurnTracker().getCurrentPlayer())
         {
             getTradeOverlay().showGiveOptions(canGive);
         }
@@ -216,7 +216,6 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
             ResourceType[] disableAll = new ResourceType[0];
             getTradeOverlay().showGiveOptions(disableAll);
             getTradeOverlay().setStateMessage("Not Your Turn");
-
         }
 
         getTradeOverlay().showModal();
@@ -281,12 +280,11 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
         getTradeOverlay().setStateMessage("Choose What To Get");
         getTradeOverlay().hideGiveOptions();
         getTradeOverlay().showGetOptions(getResources);
-        int currPlayerIndex = Facade.getInstance().getCurrentPlayer().getPlayerIndex();
-        int numBrick = Facade.getInstance().getGameModel().getPlayers().get(currPlayerIndex).getResources().getBrick();
-        int numOre = Facade.getInstance().getGameModel().getPlayers().get(currPlayerIndex).getResources().getOre();
-        int numWheat = Facade.getInstance().getGameModel().getPlayers().get(currPlayerIndex).getResources().getWheat();
-        int numSheep = Facade.getInstance().getGameModel().getPlayers().get(currPlayerIndex).getResources().getSheep();
-        int numWood = Facade.getInstance().getGameModel().getPlayers().get(currPlayerIndex).getResources().getWood();
+        int numBrick;
+        int numOre;
+        int numWheat;
+        int numSheep;
+        int numWood;
         if(resource == ResourceType.BRICK)
         {
             this.in = ResourceType.BRICK;
