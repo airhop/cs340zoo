@@ -454,6 +454,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
                             getAcceptOverlay().addGetResource(ResourceType.WOOD, to.getOffer().getWood());
                         else if (to.getOffer().getWood() < 0)
                             getAcceptOverlay().addGiveResource(ResourceType.WOOD, to.getOffer().getWood());
+
                         getAcceptOverlay().setAcceptEnabled(Facade.getInstance().canAcceptTrade());
                         getAcceptOverlay().showModal();
                     }
