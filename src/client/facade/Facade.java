@@ -231,12 +231,12 @@ public class Facade {
                 game.getCurrentPlayer().setUsername(username);
                 game.getCurrentPlayer().setPassword(password);
                 game.getCurrentPlayer().setPlayerId(proxy.getPlayerId());
-                System.out.println("Proxy passes back ID = " + proxy.getPlayerId());
-                CurrentPlayer myPlayer = game.getCurrentPlayer();
-                myPlayer.getPlayerIndex();
+               // System.out.println("Proxy passes back ID = " + proxy.getPlayerId());
+               // CurrentPlayer myPlayer = game.getCurrentPlayer();
+               // myPlayer.getPlayerIndex();
             }
         } catch (InvalidUserException e) {
-            System.out.println("oops");
+            //System.out.println("oops");
             return login;
         }
         loggedIn = login;
@@ -247,6 +247,9 @@ public class Facade {
         User u = new User(username, password);
         try {
             proxy.userRegister(u);
+            game.getCurrentPlayer().setUsername(username);
+            game.getCurrentPlayer().setPassword(password);
+            game.getCurrentPlayer().setPlayerId(proxy.getPlayerId());
         } catch (InvalidUserException e) {
             return false;
         }
