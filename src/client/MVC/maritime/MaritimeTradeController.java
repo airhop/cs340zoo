@@ -80,13 +80,11 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
         System.out.println("Starting start trade");
 
         getTradeOverlay().reset();
-        //List<Port> currentPlayerPorts = Facade.getInstance().getGameModel().getMap().getPlayerPorts(Facade.getInstance().getCurrentPlayer().getPlayerIndex());
-        ArrayList<VertexObject> buildings = Facade.getInstance().getGameModel().getMap().getBuildings();
         ArrayList<Port> currentPlayerPorts = Facade.getInstance().getGameModel().getMap().checkPorts(playerId);
 
         ResourceList currResources = Facade.getInstance().getGameModel().getPlayers().get(Facade.getInstance().getCurrentPlayer().getPlayerIndex()).getResources();
         List<ResourceType> canGiveResources = new ArrayList<>();
-        int lowestRatio = 4;
+
         hasFourOfResource(currResources, canGiveResources);
         for(Port port : currentPlayerPorts)
         {
