@@ -125,5 +125,6 @@ public interface IMapController extends IController {
      * @param victim The player to be robbed
      */
     void robPlayer(RobPlayerInfo victim);
+
 }
 

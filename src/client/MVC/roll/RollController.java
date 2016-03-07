@@ -19,7 +19,7 @@ public class RollController extends Controller implements IRollController {
 
     private IRollResultView resultView;
     private boolean waiting = false;
-    private Timer timer;
+    private int timesThrough = 0;
 
     /**
      * RollController constructor
@@ -93,8 +93,13 @@ public class RollController extends Controller implements IRollController {
                 if (!getResultView().isModalShowing()) {
                         getRollView().showModal();
                 }
-            }
-           // waiting = true;
+            } else waiting = true;
+        } else {
+            timesThrough++;
+        }
+        if (timesThrough == 2) {
+            rollDice();
+            timesThrough = 0;
         }
 //        else if(gm.getTurnTracker().getStatus().equalsIgnoreCase("Discard") || gm.getTurnTracker().getStatus().equalsIgnoreCase("Playing"))
 //        {

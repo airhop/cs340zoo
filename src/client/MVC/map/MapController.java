@@ -22,6 +22,7 @@ public class MapController extends Controller implements IMapController {
 
     private IRobView robView;
     private StateAbstract state;
+    private IMapView mapView;
     private int playing; //needed for debugging when playing by yourself
     private int secondRound = 0;
     private boolean soldier;
@@ -29,8 +30,8 @@ public class MapController extends Controller implements IMapController {
     private int roundNum = 0;
 
     public MapController(IMapView view, IRobView robView) {
-
         super(view);
+        mapView = view;
         setRobView(robView);
         state = new StateDefault(view, robView);
         Facade.getInstance().addObserver(this);
@@ -252,7 +253,6 @@ public class MapController extends Controller implements IMapController {
     }
 
     public void startMove(PieceType pieceType, boolean isFree, boolean allowDisconnected) {
-        System.out.println("ISSSSS IT GETTING IN HEREEEEEEEEEEEEEEEEEEEEEEEee");
         state.startMove(pieceType, isFree, allowDisconnected);
     }
 

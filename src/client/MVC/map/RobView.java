@@ -2,6 +2,7 @@ package client.MVC.map;
 
 import client.MVC.base.*;
 import client.MVC.data.*;
+import shared.locations.HexLocation;
 
 import javax.swing.*;
 import java.awt.*;
@@ -91,7 +92,7 @@ public class RobView extends OverlayView implements IRobView {
     @Override
     public void setPlayers(RobPlayerInfo[] candidateVictims) {
         victims = candidateVictims;
-
+        System.out.println("LEEEEEEEEEEEENGTH: " + candidateVictims.length);
         int numberOfPlayers = 0;
         if (candidateVictims != null)
             numberOfPlayers = candidateVictims.length;
@@ -123,6 +124,13 @@ public class RobView extends OverlayView implements IRobView {
                 this.add(buttonPanel, BorderLayout.CENTER);
                 revalidate();
             }
+        } else {
+            victimButtons = new ArrayList<JButton>();
+            this.remove(buttonPanel);
+            buttonPanel = new JPanel();
+            buttonPanel.setBorder(BorderFactory.createEmptyBorder(25, 0, 25, 0));
+            buttonPanel.add(defaultButton);
+            this.add(buttonPanel, BorderLayout.CENTER);
         }
     }
 

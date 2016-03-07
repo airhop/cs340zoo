@@ -577,7 +577,7 @@ public class Facade {
         System.out.println("rolling");
         if (game != null) {
             if (canRoll(playerIndex)) {
-                proxy.rollNumber(number, playerIndex);
+                proxy.rollNumber(7, playerIndex);
 //                if (number != -1)
 //                    proxy.rollNumber(7, playerIndex);
 //                else

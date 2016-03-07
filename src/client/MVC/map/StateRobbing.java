@@ -40,10 +40,14 @@ public class StateRobbing extends StateAbstract
     @Override
     public void robPlayer(RobPlayerInfo victim)
     {
-        this.victim = victim.getPlayerIndex();
-        int pid = Facade.getInstance().getPlayerIndex();
-        Facade.getInstance().rob(pid, victim.getPlayerIndex(), hl);
-        robView.closeModal();
+        if (victim == null) {
+            Facade.getInstance().getGameModel().relocateRobber(hl);
+        } else {
+            this.victim = victim.getPlayerIndex();
+            int pid = Facade.getInstance().getPlayerIndex();
+            Facade.getInstance().rob(pid, victim.getPlayerIndex(), hl);
+            robView.closeModal();
+        }
     }
 
     @Override
@@ -101,42 +105,37 @@ public class StateRobbing extends StateAbstract
     {
         hl=hexLoc;
         Set<Integer> people = new HashSet<Integer>();
+        System.out.println("HEX LOCATIONNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN: " + hexLoc.toString());
         for(VertexObject obj : objects)
         {
+            System.out.println("OBJECT OWNER: " + obj.getOwner());
             people.add(obj.getOwner());
         }
-        RobPlayerInfo[] players = null;
-        boolean inThere = false;
-        for(int x : people)
-        {
-            if(x == Facade.getInstance().getCurrentPlayer().getPlayerIndex()) {
-                inThere = true;
-            }
-        }
-        if(inThere)
-        {
-            players = new RobPlayerInfo[people.size()-1];
-        }
-        else
-        {
-            players = new RobPlayerInfo[people.size()];
-        }
+        ArrayList<RobPlayerInfo> players = new ArrayList<RobPlayerInfo>();
         int i=0;
         int j=0;
         for(int x : people)
         {
-            if(x != Facade.getInstance().getCurrentPlayer().getPlayerIndex()) {
+            if (x != Facade.getInstance().getCurrentPlayer().getPlayerIndex() && Facade.getInstance().getGameModel().getPlayers().get(x).getResources().getSize() > 0) {
                 ArrayList<Player> playas = Facade.getInstance().getGameModel().getPlayers();
                 for (Player player : playas) {
-                    if (player.getPlayerIndex() == x) {
-                        players[j] = new RobPlayerInfo(player.getPlayerID(), player.getPlayerIndex(), player.getUsername(), CatanColor.convert(player.getColor()), player.getResources().getSize());
+                    if (player.getPlayerIndex() == x && player.getResources().getSize() > 0) {
+                        System.out.println("PLAYER NAME: " + player.getUsername());
+                        players.add(new RobPlayerInfo(player.getPlayerID(), player.getPlayerIndex(), player.getUsername(), CatanColor.convert(player.getColor()), player.getResources().getSize()));
                         j++;
                     }
                 }
             }
             i++;
         }
-        robView.setPlayers(players);
+        RobPlayerInfo[] realplz = new RobPlayerInfo[players.size()];
+        int k = 0;
+        for (RobPlayerInfo player : players) {
+            System.out.println("I AM ADDING THIS PERSON TO THE ROBVIEW: " + player.getName());
+            realplz[k] = player;
+            k++;
+        }
+        robView.setPlayers(realplz);
         robView.showModal();
     }
 
@@ -152,5 +151,10 @@ public class StateRobbing extends StateAbstract
 
     @Override
     public String getName()   {        return "Robbing";    }
+
+    public HexLocation getCurrentHL() {
+        return hl;
+    }
+
 
 }

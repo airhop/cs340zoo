@@ -229,7 +229,6 @@ public class MapView extends PanelView implements IMapView {
 
             this.mainMap = mainMap;
         }
-
         @Override
         public IMapController getController() {
             return (IMapController) super.getController();
