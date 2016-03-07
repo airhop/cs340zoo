@@ -46,18 +46,25 @@ public class ChatController extends Controller implements IChatController {
         ArrayList<Player> players = gm.getPlayers();
         Map<String, CatanColor> conversion = new TreeMap<String, CatanColor>();
 
+        System.out.println("colors ");
         for(int i = 0; i < players.size(); i++)
         {
             String color = players.get(i).getColor();
+            System.out.println(players.get(i).getUsername() + " " + color + " " );
             if(color == null || color.isEmpty()) //happens at start up
                 return;
             conversion.put(players.get(i).getUsername(), CatanColor.convert(color));
         }
+
+        CatanColor color = conversion.get("Brooke");
+        System.out.println("Brooke's color = " + color);
         List<LogEntry> logs = new ArrayList<LogEntry>();
         for(int i = 0;  i< ml.size(); i++)
         {
-            CatanColor c = conversion.get(ml.get(i).getSource());
-            logs.add(new LogEntry(c, ml.get(i).getMessage()));
+
+            CatanColor c = conversion.get(ml.get(i).getMessage());
+            logs.add(new LogEntry(c, ml.get(i).getSource()));
+            System.out.print("\nChat - " + c + " " + ml.get(i).getMessage());
         }
 
         getView().setEntries(logs);
