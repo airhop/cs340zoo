@@ -95,12 +95,12 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
         if (!usable)
             return;
         System.out.println(Facade.getInstance().getGameModel().getPlayers().get(Facade.getInstance().getCurrentPlayer().getPlayerIndex()).getResources().toString());
-        tradeSenderId = Facade.getInstance().getCurrentPlayer().getPlayerId();
+        tradeSenderId = Facade.getInstance().getCurrentPlayer().getPlayerIndex();
         PlayerInfo[] players = new PlayerInfo[3];
         int i = 0;
         int j = 0;
         for (Player player : Facade.getInstance().getGameModel().getPlayers()) {
-            if (Facade.getInstance().getCurrentPlayerInfo().getId() != j) {
+            if (Facade.getInstance().getCurrentPlayerInfo().getPlayerIndex() != j) {
                 players[i] = new PlayerInfo(player.getPlayerID(), player.getPlayerIndex(), player.getUsername(), CatanColor.convert(player.getColor())/*CatanColor.BLUE*/);
                 i++;
             }
