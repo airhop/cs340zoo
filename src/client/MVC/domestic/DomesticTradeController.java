@@ -445,15 +445,16 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
                         else if (wood < 0) acceptOverlay.addGiveResource(ResourceType.WOOD, wood);
                         getAcceptOverlay().showModal();
                         getAcceptOverlay().setAcceptEnabled(Facade.getInstance().canAcceptTrade());
-                        if (getWaitOverlay().isModalShowing()) {
-                            if (to.getReciever() == 0 && to.getSender() == 0) {
-                                getWaitOverlay().closeModal();
-                            }
-                        }
                     }
                 }
             }
         }
+        if (getWaitOverlay().isModalShowing()) {
+            if (to.getReciever() == 0 && to.getSender() == 0) {
+                getWaitOverlay().closeModal();
+            }
+        }
+
         if (((GameModel) o).getCurrentPlayer().getPlayerIndex() == ((GameModel) o).getTurnTracker().getCurrentPlayer())
             usable = true;
         else
