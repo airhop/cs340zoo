@@ -78,28 +78,30 @@ public class StatePlayersTurn extends StateAbstract {
 
     @Override
     public void placeRobber(HexLocation hexLoc) {
-        RobberHL = hexLoc;
-        Set<Integer> people = new HashSet<Integer>();
-        for (VertexObject obj : objects) {
-            people.add(obj.getOwner());
-        }
-        ArrayList<RobPlayerInfo> players = new ArrayList<RobPlayerInfo>();
-        int i = 0;
-        int j = 0;
-        for (int x : people) {
-            if (x != Facade.getInstance().getCurrentPlayer().getPlayerIndex()) {
-                ArrayList<Player> playas = Facade.getInstance().getGameModel().getPlayers();
-                for (Player player : playas) {
-                    if (player.getPlayerIndex() == x && player.getResources().getSize() > 0) {
-                        players.add(new RobPlayerInfo(player.getPlayerID(), player.getPlayerIndex(), player.getUsername(), CatanColor.convert(player.getColor()), player.getResources().getSize()));
-                        j++;
+        if(hexLoc != null){
+            RobberHL = hexLoc;
+            Set<Integer> people = new HashSet<Integer>();
+            for (VertexObject obj : objects) {
+                people.add(obj.getOwner());
+            }
+            ArrayList<RobPlayerInfo> players = new ArrayList<RobPlayerInfo>();
+            int i = 0;
+            int j = 0;
+            for (int x : people) {
+                if (x != Facade.getInstance().getCurrentPlayer().getPlayerIndex()) {
+                    ArrayList<Player> playas = Facade.getInstance().getGameModel().getPlayers();
+                    for (Player player : playas) {
+                        if (player.getPlayerIndex() == x && player.getResources().getSize() > 0) {
+                            players.add(new RobPlayerInfo(player.getPlayerID(), player.getPlayerIndex(), player.getUsername(), CatanColor.convert(player.getColor()), player.getResources().getSize()));
+                            j++;
+                        }
                     }
                 }
+                i++;
             }
-            i++;
+            robView.setPlayers(players.toArray(new RobPlayerInfo[players.size()]));
+            robView.showModal();
         }
-        robView.setPlayers(players.toArray(new RobPlayerInfo[players.size()]));
-        robView.showModal();
     }
 
     @Override
