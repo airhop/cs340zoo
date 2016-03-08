@@ -96,7 +96,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 
     @Override
     public void start() {
-    //    System.out.println("start");
+        //    System.out.println("start");
         Facade.getInstance().updateGamesList();
         List<GameInfo> games = Facade.getInstance().gamesList();
         GameInfo[] myType = new GameInfo[games.size()];
@@ -111,20 +111,20 @@ public class JoinGameController extends Controller implements IJoinGameControlle
     @Override
     public void startCreateNewGame() {
         Facade.getInstance().setSettingColor(true);
-    //    System.out.println("startCreateNewGame");
+        //    System.out.println("startCreateNewGame");
         getNewGameView().showModal();
     }
 
     @Override
     public void cancelCreateNewGame() {
-    //    System.out.println("cancelNewGame");
+        //    System.out.println("cancelNewGame");
         Facade.getInstance().setSettingColor(false);
         getNewGameView().closeModal();
     }
 
     @Override
     public void createNewGame() {
-    //    System.out.println("createNewGame");
+        //    System.out.println("createNewGame");
 
         CreateGamePassObject gameNew = new CreateGamePassObject();
         gameNew.setGameName(getNewGameView().getTitle());
@@ -144,13 +144,14 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 
     @Override
     public void startJoinGame(GameInfo game) {//selects game
-       // Facade.getInstance().setSettingColor(true);
+        // Facade.getInstance().setSettingColor(true);
         int gameToJoin = 0;
         if (game != null) {
             getSelectColorView().resetColors();
             List<PlayerInfo> players = game.getPlayers();
+            Facade.getInstance().setSettingColor(true);
             for (int i = 0; i < players.size(); i++) {
-                if(players.get(i).getId() != Facade.getInstance().getCurrentPlayer().getPlayerId()){
+                if (players.get(i).getId() != Facade.getInstance().getCurrentPlayer().getPlayerId()) {
                     getSelectColorView().setColorEnabled(players.get(i).getColor(), false);
                 }
             }
@@ -161,36 +162,48 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 
     @Override
     public void cancelJoinGame() {
-       // Facade.getInstance().setSettingColor(false);
+        // Facade.getInstance().setSettingColor(false);
         getJoinGameView().closeModal();
     }
 
     @Override
     public void joinGame(CatanColor color) {
-    //    System.out.println("Game Joining");
-    //    CurrentPlayer player = Facade.getInstance().getCurrentPlayer();
+        //    System.out.println("Game Joining");
+        //    CurrentPlayer player = Facade.getInstance().getCurrentPlayer();
         Facade.getInstance().gamesJoin(color.name(), Facade.getInstance().getCurrentPlayer().getGameId());
         Facade.getInstance().getCurrentPlayer().setColor(color);
-        Facade.getInstance().setSettingColor(true);
         getSelectColorView().closeModal();
         getJoinGameView().closeModal();
         joinAction.execute();
     }
 
     @Override
-    public void update(Observable o, Object arg)
-    {
-        if(!Facade.getInstance().isSettingColor()){
+    public void update(Observable o, Object arg) {
+        if (!Facade.getInstance().isSettingColor()) {
             List<GameInfo> games = Facade.getInstance().gamesList();
             GameInfo[] myType = new GameInfo[games.size()];
             for (int i = 0; i < games.size(); i++) {
                 myType[i] = games.get(i);
             }
-            if(getJoinGameView().isModalShowing()){
-               getJoinGameView().closeModal();
+            if (getJoinGameView().isModalShowing()) {
+                getJoinGameView().closeModal();
             }
             getJoinGameView().setGames(myType, Facade.getInstance().getCurrentPlayerInfo());
             getJoinGameView().showModal();
+        }
+        if (selectColorView.isModalShowing()) {
+            selectColorView.resetColors();
+            selectColorView.closeModal();
+            Facade.getInstance().updateGamesList();
+            List<GameInfo> gameInfo = Facade.getInstance().getGameModel().getGameList();
+            GameInfo game = gameInfo.get(Facade.getInstance().getCurrentPlayer().getGameId());
+            List<PlayerInfo> players = game.getPlayers();
+            for(int i = 0; i < players.size(); i++){
+                if(!players.get(i).getName().equals("")){
+                    selectColorView.setColorEnabled(players.get(i).getColor(), false);
+                }
+            }
+            selectColorView.showModal();
         }
         //update the game list with the polller?  allow to retrieve newly created games?Sam
     }

@@ -247,8 +247,9 @@ public class MapController extends Controller implements IMapController {
     }
 
     public void placeRobber(HexLocation hexLoc) {
+        mapView.placeRobber(hexLoc);
         state.placeRobber(hexLoc);
-//        getView().placeRobber(hexLoc);
+        getView().placeRobber(hexLoc);
 //        getRobView().showModal();
     }
 

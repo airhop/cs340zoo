@@ -409,7 +409,33 @@ public class Player {
      * @return boolean whether or not the player can accept a trade offer from another player
      */
     public boolean canAcceptTrade(ResourceList resourcesRequirements) {
-        return checkSufficientResources(resourcesRequirements);
+        if (resourcesRequirements.getBrick() < 0) {
+            if ((resources.getBrick() + resourcesRequirements.getBrick()) < 0) {
+                return false;
+            }
+        }
+        if (resourcesRequirements.getOre() < 0) {
+            if ((resources.getOre() + resourcesRequirements.getOre()) < 0) {
+                return false;
+            }
+        }
+        if (resourcesRequirements.getSheep() < 0) {
+            if ((resources.getSheep() + resourcesRequirements.getSheep()) < 0) {
+                return false;
+            }
+        }
+        if (resourcesRequirements.getWheat() < 0) {
+            if ((resources.getWheat() + resourcesRequirements.getWheat()) < 0) {
+                return false;
+            }
+        }
+        if (resourcesRequirements.getWood() < 0) {
+            if ((resources.getWood() + resourcesRequirements.getWood()) < 0) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     public boolean canOfferTrade(ResourceList resourcesRequirements) {
