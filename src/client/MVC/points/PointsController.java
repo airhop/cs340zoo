@@ -51,10 +51,14 @@ public class PointsController extends Controller implements IPointsController {
         }
         if(((GameModel)o).getWinner() != -1)
         {
-            if(Facade.getInstance().getCurrentPlayer().getPlayerIndex() == ((GameModel)o).getWinner())
+            if(Facade.getInstance().getCurrentPlayer().getPlayerIndex() == ((GameModel)o).getWinner()){
                 getFinishedView().setWinner(Facade.getInstance().getCurrentPlayer().getUsername(), true);
-            else
+                getFinishedView().showModal();
+            }else{
                 getFinishedView().setWinner(Facade.getInstance().getCurrentPlayer().getUsername(), false);
+                getFinishedView().showModal();
+            }
+
         }
     }
 }
