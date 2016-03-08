@@ -275,7 +275,7 @@ public class MapController extends Controller implements IMapController {
     }
 
     public void robPlayer(RobPlayerInfo victim) {
-        soldier = false;
+//        soldier = false;
         if(soldier){
             soldier = false;
             state.playSoldierCard(victim);
