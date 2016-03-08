@@ -123,7 +123,7 @@ public class StatePlayersTurn extends StateAbstract {
 
         int pid = Facade.getInstance().getPlayerIndex();
 //        System.out.println();
-        Facade.getInstance().rob(pid, victim.getPlayerIndex(), RobberHL);
+        Facade.getInstance().rob(pid, vid, RobberHL);
         robView.closeModal();
     }
 
