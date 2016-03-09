@@ -1,0 +1,110 @@
+Post methods – all moves methods should return a GameModel if we want it to work with the swagger page.
+1.       Method Name
+a.       Parameters (S=string, I=integer, RT=resourceType, b=Boolean)
+b.      Any extra notes
+
+
+1.       User/login
+a.       Username(S), password(S)
+2.       User/register
+a.       Username(S), password(S)
+3.       Games/create
+a.       RandomTiles(b), randomNumbers(b), randomPorts(b), name(S)
+b.      Should return a NewGame (Title(S), id(I), players(array[EmptyPlayer]))
+4.       Games/join
+a.       ID(int), Color(S)
+5.       Moves/sendChat
+a.       Type(sendChat), playerIndex(I), content(S)
+6.       Moves/rollNumber
+a.       Type(rollNumber), playerIndex(I), number(I)
+7.       Moves/robPlayer
+a.       Type(robPlayer), playerIndex(I), victimIndex(I), location(HexLocation(x(S), y(S)))
+8.       Moves/finishTurn
+a.       Type(finishTurn), playerIndex(I)
+9.       Moves/buyDevCard
+a.       Type(buyDevCard), playerIndex(I)
+10.   Moves/Year_of_Plenty
+a.       Type(Year_of_Plenty), playerIndex(I), resource1(Resource), resource2(resource)
+11.   Moves/Road_Building
+a.       Type(Road_building), playerindex(I), spot1(EdgeLocation(x(I), y(I), direction(S)), spot2 (edgelocation)
+12.   Moves/Soldier
+a.       Type(Soldier), playerindex(I), victimIndex(I), location(HexLocation)
+13.   Moves/Monopoly
+a.       Type(Monopoly), resource(S), playerIndex(I)
+14.   Moves/Monument
+a.       Type(Monument), playerIndex(I)
+15.   Moves/buildRoad
+a.       Type(buildRoad), playerIndex(I), roadLocation(EdgeLocation), free(b)
+16.   Moves/buildSettlement
+a.       Type(BuildSettlement), playerIndex(i), vertexLocation(VertexLocation(X(I), y(I), direction(S))), free(b)
+17.   Moves/buildCity
+a.       Type(buildCity), playerIndex(I), vertexLocation(vertexLocation)
+18.   Moves/offerTrade
+a.       Type(offerTrade), playerIndex(I), offer(ResourceList (brick(I), ore(I), sheep(I), wheat(i), wood(i)), receiver(int)
+b.      + what you get and – what you give
+19.   Moves/acceptTrade
+a.       Type(acceptTrade), playerindex(I), willAccept(b)
+20.   Moves/maritimeTrade
+a.       Type(maritimeTrade), playerIndex(I), ratio(I, optional), inputResource(S, optional), outputResource(S, optional)
+b.      Do we need to account for the ending optionals?  Or can we assume that they will be present because we are running it with our own server?
+21.   Moves/discardCards
+a.       Type(discardCards), playerindex(I), discradedCards(ResourceList)
+
+
+GetMethods
+1.       Name
+a.       Return
+
+1.       Games/list (GET)
+a.       Game (Title(S), ID(int), players(Array[Player])    (Player(Color(S), name(S), ID(int))
+2.       Game/model (GET)
+a.       JSON model of the Game
+
+
+Extra Class needed to encapsulate the everything
+List<Player> players = all registered players
+List<Game> games = all created and in progress games
+
+Classes:
+Rebecca ********
+1.       User/login
+2.       User/register
+3.       Games/create
+4.       Games/join
+5.       Moves/sendChat
+6.       Moves/rollNumber
+7.       Moves/robPlayer
+8.       Moves/finishTurn
+9.       Moves/buyDevCard
+Mike && Josh*******
+10.   Moves/Year_of_Plenty
+11.   Moves/Road_Building
+12.   Moves/Soldier
+13.   Moves/Monopoly
+14.   Moves/Monument
+15.   Moves/buildRoad
+16.   Moves/buildSettlement
+17.   Moves/buildCity
+18.   Moves/offerTrade
+19.   Moves/acceptTrade
+20.   Moves/maritimeTrade
+21.   Moves/discardCards
+
+
+GetMethods
+1.       Name
+a.       Return
+Josh*********
+1.       Games/list (GET)
+2.       Game/model (GET)
+
+Josh && David ******
+UML charts
+
+
+Aaron && Josh*****
+Extra Class needed to encapsulate the everything
+List<Player> players = all registered players
+List<Game> games = all created and in progress games
+Server Facade
+Command Interface && classes
