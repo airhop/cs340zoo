@@ -247,8 +247,9 @@ public class MapController extends Controller implements IMapController {
     }
 
     public void placeRobber(HexLocation hexLoc) {
+        mapView.placeRobber(hexLoc);
         state.placeRobber(hexLoc);
-//        getView().placeRobber(hexLoc);
+        getView().placeRobber(hexLoc);
 //        getRobView().showModal();
     }
 
@@ -274,7 +275,7 @@ public class MapController extends Controller implements IMapController {
     }
 
     public void robPlayer(RobPlayerInfo victim) {
-        soldier = false;
+//        soldier = false;
         if(soldier){
             soldier = false;
             state.playSoldierCard(victim);
