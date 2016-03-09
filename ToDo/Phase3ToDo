@@ -65,8 +65,19 @@ Extra Class needed to encapsulate the everything
 List<Player> players = all registered players
 List<Game> games = all created and in progress games
 
+Josh********
+
+
+
+
 Classes:
 Rebecca ********
+Handlers
+universal Throw
+
+
+
+Aaron************
 1.       User/login
 2.       User/register
 3.       Games/create
@@ -76,7 +87,6 @@ Rebecca ********
 7.       Moves/robPlayer
 8.       Moves/finishTurn
 9.       Moves/buyDevCard
-Mike && Josh*******
 10.   Moves/Year_of_Plenty
 11.   Moves/Road_Building
 12.   Moves/Soldier
@@ -94,17 +104,28 @@ Mike && Josh*******
 GetMethods
 1.       Name
 a.       Return
-Josh*********
 1.       Games/list (GET)
 2.       Game/model (GET)
 
-Josh && David ******
-UML charts
-
-
-Aaron && Josh*****
+Josh***************
+Think about ExtraClasses
 Extra Class needed to encapsulate the everything
 List<Player> players = all registered players
 List<Game> games = all created and in progress games
-Server Facade
+
+Josh && David ******
+Command Factory
+UML charts
+Server Stuff
+David*****
+
+
+
+Aaron && Josh*****
+
 Command Interface && classes
+
+Mike*****
+Server Facade
+Command Interface and Commands Classes
+
