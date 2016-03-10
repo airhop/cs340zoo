@@ -15,16 +15,15 @@ public class MovesFactory {
     /**
      *
      * @param info -
-     * @param globalVariable -
-     * @return
+     * @return - The command Object that we are asking for.
      */
-    public ICommand getCommand(JsonConstructionInfo info, boolean globalVariable){
+    public ICommand getCommand(JsonConstructionInfo info){
         ICommand commandObject;
-        if(globalVariable){
-            commandObject = new AcceptTrade(1, false);
-        }else{
-            commandObject = new AcceptTrade(1, true);
-        }
+        commandObject = new AcceptTrade(1, true);
+//        switch (){
+//
+//        }
+
         return commandObject;
     }
 }
