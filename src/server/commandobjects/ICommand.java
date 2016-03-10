@@ -8,4 +8,5 @@ public interface ICommand {
      * Returns information about specific command object
      */
     void execute();
+    void unexecute();
 }

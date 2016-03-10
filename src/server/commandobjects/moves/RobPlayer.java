@@ -25,4 +25,9 @@ public class RobPlayer implements ICommand {
     public void execute() {
 
     }
+
+    @Override
+    public void unexecute() {
+
+    }
 }

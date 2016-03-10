@@ -22,4 +22,9 @@ public class SendChat implements ICommand {
     public void execute() {
 
     }
+
+    @Override
+    public void unexecute() {
+
+    }
 }

@@ -19,4 +19,9 @@ public class Login implements ICommand {
     public void execute() {
 
     }
+
+    @Override
+    public void unexecute() {
+
+    }
 }

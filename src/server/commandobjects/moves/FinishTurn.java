@@ -20,4 +20,9 @@ public class FinishTurn implements ICommand {
     public void execute() {
 
     }
+
+    @Override
+    public void unexecute() {
+
+    }
 }
