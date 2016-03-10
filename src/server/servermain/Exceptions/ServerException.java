@@ -1,4 +1,4 @@
-package server.servermain;
+package server.servermain.exceptions;
 
 public class ServerException extends Exception {
     String message;

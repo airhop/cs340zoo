@@ -10,4 +10,20 @@ public class JsonConstructionInfo {
     public JsonConstructionInfo(){
 
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getJsonBody() {
+        return JsonBody;
+    }
+
+    public void setJsonBody(String jsonBody) {
+        JsonBody = jsonBody;
+    }
 }
