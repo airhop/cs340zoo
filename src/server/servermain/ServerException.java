@@ -15,5 +15,6 @@ public class ServerException extends Exception {
     public String getMessage() {
         return message;
     }
+
 }
 
