@@ -20,6 +20,10 @@ public class BuildRoad implements ICommand {
         this.free = free;
     }
 
+    /**
+     * Calls on server facade and builds a road
+     * on the map if all necessary conditions are met
+     */
     @Override
     public void execute() {
     }

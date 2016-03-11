@@ -15,6 +15,10 @@ public class Join implements ICommand {
         this.color = color;
     }
 
+    /**
+     * Calls on server facade and allows the given player to join
+     * a game with at least one vacant spot
+     */
     @Override
     public void execute() {
 

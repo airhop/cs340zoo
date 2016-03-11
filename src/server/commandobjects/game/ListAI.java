@@ -10,6 +10,10 @@ public class ListAI implements ICommand {
 
     }
 
+    /**
+     * Calls on server facade and shows a list of
+     * all the current computer players
+     */
     @Override
     public void execute() {
 

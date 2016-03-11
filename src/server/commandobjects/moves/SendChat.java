@@ -16,6 +16,11 @@ public class SendChat implements ICommand {
         this.content = content;
     }
 
+    /**
+     * Calls on server facade and allows for communication between
+     * ingame players. Adds their comment to the chatbox that all other
+     * players can see
+     */
     @Override
     public void execute() {
 

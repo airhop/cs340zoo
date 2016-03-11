@@ -19,6 +19,10 @@ public class Create implements ICommand {
         this.name = name;
     }
 
+    /**
+     * Calls on server facade and creates a game for other
+     * players to join
+     */
     @Override
     public void execute() {
 

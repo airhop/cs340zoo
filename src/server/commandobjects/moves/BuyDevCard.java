@@ -14,6 +14,10 @@ public class BuyDevCard implements ICommand {
         this.playerIndex = playerIndex;
     }
 
+    /**
+     * Calls on server facade and distributes a development card
+     * to the player if all necessary conditions are met
+     */
     @Override
     public void execute() {
 

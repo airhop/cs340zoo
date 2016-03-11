@@ -19,6 +19,11 @@ public class OfferTrade implements ICommand {
         this.offer = offer;
     }
 
+    /**
+     * Calls on server facade and allows one player to
+     * send a trade request to another player that they
+     * may either accept or deny
+     */
     @Override
     public void execute() {
 

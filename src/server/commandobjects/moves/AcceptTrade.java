@@ -16,6 +16,11 @@ public class AcceptTrade implements ICommand {
         this.willAccept = willAccept;
     }
 
+    /**
+     * Calls on server facade and either confirms
+     * or denies the trade that was offered from one
+     * player to the other
+     */
     @Override
     public void execute() {
 

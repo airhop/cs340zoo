@@ -5,8 +5,14 @@ package server.commandobjects;
  */
 public interface ICommand {
     /**
-     * Returns information about specific command object
+     * Calls on server facade and performs the necessary action based
+     * on the command object type
      */
     void execute();
+
+    /**
+     * Calls on server facade and reverses the action done
+     * by the execute method
+     */
     void unexecute();
 }

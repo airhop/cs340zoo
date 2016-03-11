@@ -14,6 +14,10 @@ public class Monument implements ICommand {
         this.playerIndex = playerIndex;
     }
 
+    /**
+     * Calls on server facade and gives the player one
+     * extra hidden victory point
+     */
     @Override
     public void execute() {
 

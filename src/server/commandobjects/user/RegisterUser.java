@@ -14,6 +14,10 @@ public class RegisterUser implements ICommand {
         this.password = password;
     }
 
+    /**
+     * Calls on server facade and allows for the registration
+     * of new users
+     */
     @Override
     public void execute() {
 
