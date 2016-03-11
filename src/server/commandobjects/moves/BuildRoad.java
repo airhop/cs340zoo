@@ -10,13 +10,11 @@ import java.lang.reflect.Type;
  * Created by airho on 3/9/2016.
  */
 public class BuildRoad implements ICommand {
-    private Type BuildRoad;
     private int playerIndex;
     private EdgeLocation roadLocation;
     private boolean free;
 
-    public BuildRoad(Type buildRoad, int playerIndex, EdgeLocation roadLocation, boolean free) {
-        BuildRoad = buildRoad;
+    public BuildRoad(int playerIndex, EdgeLocation roadLocation, boolean free) {
         this.playerIndex = playerIndex;
         this.roadLocation = roadLocation;
         this.free = free;
