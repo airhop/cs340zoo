@@ -33,70 +33,155 @@ public class MovesFactory {
         return commandObject;
     }
 
+    /**
+     *
+     * @param info -
+     * @return -
+     */
     private AcceptTrade makeAcceptTrade(JsonConstructionInfo info) {
         return new AcceptTrade(1, false);
     }
 
+    /**
+     *
+     * @param info -
+     * @return -
+     */
     private BuildCity makeBuildCity(JsonConstructionInfo info) {
         return new BuildCity(1, new VertexLocation(new HexLocation(1, 1), VertexDirection.NE));
     }
 
+    /**
+     *
+     * @param info -
+     * @return -
+     */
     private BuildRoad makeBuildRoad(JsonConstructionInfo info) {
         return new BuildRoad(1, new EdgeLocation(new HexLocation(1, 1), EdgeDirection.NE), false);
     }
 
+    /**
+     *
+     * @param info -
+     * @return -
+     */
     private BuildSettlement makeBuildSettlement(JsonConstructionInfo info) {
         return new BuildSettlement(1, 1, 1, VertexDirection.E, false);
     }
 
+    /**
+     *
+     * @param info
+     * @return
+     */
     private BuyDevCard makeBuyDevCar(JsonConstructionInfo info) {
         return new BuyDevCard(1);
     }
 
+    /**
+     *
+     * @param info
+     * @return
+     */
     private DiscardCards makeDiscardCards(JsonConstructionInfo info) {
         return new DiscardCards(1, new ResourceList());
     }
 
+    /**
+     *
+     * @param info
+     * @return
+     */
     private FinishTurn makeFinishTurn(JsonConstructionInfo info) {
         return new FinishTurn(1);
     }
 
+    /**
+     *
+     * @param info
+     * @return
+     */
     private MaritimeTrade makeMaritimeTrade(JsonConstructionInfo info) {
         return new MaritimeTrade(1, 1, "", "");
     }
 
+    /**
+     *
+     * @param info
+     * @return
+     */
     private Monopoly makeMonopoly(JsonConstructionInfo info) {
         return new Monopoly(1, "");
     }
 
+    /**
+     *
+     * @param info
+     * @return
+     */
     private Monument makeMonument(JsonConstructionInfo info) {
         return new Monument(1);
     }
 
+    /**
+     *
+     * @param info
+     * @return
+     */
     private OfferTrade makeOfferTrade(JsonConstructionInfo info) {
         return new OfferTrade(1, 1, new ResourceList());
     }
 
+    /**
+     *
+     * @param info
+     * @return
+     */
     private RoadBuilding makeRoadBuilding(JsonConstructionInfo info) {
         return new RoadBuilding(1, 1, 1, EdgeDirection.N, new EdgeLocation(new HexLocation(1, 1), EdgeDirection.N));
     }
 
+    /**
+     *
+     * @param info
+     * @return
+     */
     private RobPlayer makeRobPlayer(JsonConstructionInfo info) {
         return new RobPlayer(1, 1, "", "");
     }
 
+    /**
+     *
+     * @param info
+     * @return
+     */
     private RollNumber makeRollNumber(JsonConstructionInfo info) {
         return new RollNumber(1, 1);
     }
 
+    /**
+     *
+     * @param info
+     * @return
+     */
     private SendChat makeSendChat(JsonConstructionInfo info) {
         return new SendChat(1, "");
     }
 
+    /**
+     *
+     * @param info
+     * @return
+     */
     private Soldier makeSoldier(JsonConstructionInfo info) {
         return new Soldier(1, 1, new HexLocation(1, 1));
     }
 
+    /**
+     *
+     * @param info
+     * @return
+     */
     private YearOfPlenty makeYearOfPlenty(JsonConstructionInfo info) {
         return new YearOfPlenty(1, ResourceType.BRICK, ResourceType.WHEAT);
     }
