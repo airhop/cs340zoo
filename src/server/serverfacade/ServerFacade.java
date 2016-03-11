@@ -10,200 +10,276 @@ import client.model.player.Player;
 /**
  * Created by Josh on 3/10/2016.
  */
-public class ServerFacade implements IServerFacade
-{
+public class ServerFacade implements IServerFacade {
 
-	@Override
-	public void postLogin(String username, String password) {
-		// TODO Auto-generated method stub
-		
-	}
+    /**
+     * The command objects will call this method to run a server operation
+     * @param username -
+     * @param password -
+     */
+    @Override
+    public void userLogin(String username, String password) {
 
-	@Override
-	public void postRegister(String username, String password) {
-		// TODO Auto-generated method stub
-		
-	}
+    }
 
-	@Override
-	public GameModel getList() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    /**
+     * The command objects will call this method to run a server operation
+     * @param username -
+     * @param password -
+     */
+    @Override
+    public void userRegister(String username, String password) {
 
-	@Override
-	public void postCreate(String title, int id, Player[] players) {
-		// TODO Auto-generated method stub
-		
-	}
+    }
 
-	@Override
-	public void postJoin(int id, String color) {
-		// TODO Auto-generated method stub
-		
-	}
+    /**
+     * The command objects will call this method to run a server operation
+     * @return GameModel -
+     */
+    @Override
+    public GameModel getList() {
+        return null;
+    }
 
-	@Override
-	public void postSave(int id, String name) {
-		// TODO Auto-generated method stub
-		
-	}
+    /**
+     * The command objects will call this method to run a server operation
+     * @param title
+     * @param id
+     * @param players
+     */
+    @Override
+    public void createGame(String title, int id, Player[] players) {
 
-	@Override
-	public void postLoad(String name) {
-		// TODO Auto-generated method stub
-		
-	}
+    }
 
-	@Override
-	public GameModel getModel() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    /**
+     *
+     * @param id
+     * @param color
+     */
+    @Override
+    public void joinGame(int id, String color) {
 
-	@Override
-	public void postRest() {
-		// TODO Auto-generated method stub
-		
-	}
+    }
 
-	@Override
-	public void postCommands() {
-		// TODO Auto-generated method stub
-		
-	}
+    /**
+     *
+     * @param id
+     * @param name
+     */
+    @Override
+    public void save(int id, String name) {
 
-	@Override
-	public void getCommands() {
-		// TODO Auto-generated method stub
-		
-	}
+    }
 
-	@Override
-	public void postAddAI(String AIType) {
-		// TODO Auto-generated method stub
-		
-	}
+    /**
+     *
+     * @param name
+     */
+    @Override
+    public void load(String name) {
 
-	@Override
-	public void getListAI() {
-		// TODO Auto-generated method stub
-		
-	}
+    }
 
-	@Override
-	public void postSendChat(int playerIndex, String content) {
-		// TODO Auto-generated method stub
-		
-	}
+    /**
+     *
+     * @return
+     */
+    @Override
+    public GameModel getModel() {
+        return null;
+    }
 
-	@Override
-	public void postRollNumber(int playerIndex, int number) {
-		// TODO Auto-generated method stub
-		
-	}
+    /**
+     *
+     * @param AIType
+     */
+    @Override
+    public void addAI(String AIType) {
 
-	@Override
-	public void postRobPlayer(int plyerIndex, int victimIndex,
-			HexLocation location) {
-		// TODO Auto-generated method stub
-		
-	}
+    }
 
-	@Override
-	public void postFinishTurn(int playerIndex) {
-		// TODO Auto-generated method stub
-		
-	}
+    /**
+     *
+     */
+    @Override
+    public void listAI() {
 
-	@Override
-	public void postBuyDevCard(int playerIndex) {
-		// TODO Auto-generated method stub
-		
-	}
+    }
 
-	@Override
-	public void postYearOfPlenty(int playerIndex, ResourceList res1,
-			ResourceList res2) {
-		// TODO Auto-generated method stub
-		
-	}
+    /**
+     *
+     * @param playerIndex
+     * @param content
+     */
+    @Override
+    public void sendChat(int playerIndex, String content) {
 
-	@Override
-	public void postRoadBuilding(int playerIndex, EdgeLocation spot1,
-			EdgeLocation spot2) {
-		// TODO Auto-generated method stub
-		
-	}
+    }
 
-	@Override
-	public void postSoldier(int playerIndex, int victimIndex,
-			HexLocation location) {
-		// TODO Auto-generated method stub
-		
-	}
+    /**
+     *
+     * @param playerIndex
+     * @param number
+     */
+    @Override
+    public void rollNumber(int playerIndex, int number) {
 
-	@Override
-	public void postMonopoly(int playerIndex, String resource) {
-		// TODO Auto-generated method stub
-		
-	}
+    }
 
-	@Override
-	public void postMonument(int playerIndex) {
-		// TODO Auto-generated method stub
-		
-	}
+    /**
+     *
+     * @param plyerIndex
+     * @param victimIndex
+     * @param location
+     */
+    @Override
+    public void robPlayer(int plyerIndex, int victimIndex, HexLocation location) {
 
-	@Override
-	public void postBuildRoad(int playerIndex, EdgeLocation roadLocation,
-			Boolean free) {
-		// TODO Auto-generated method stub
-		
-	}
+    }
 
-	@Override
-	public void postBuildSettlement(int playerIndex,
-			VertexLocation vertexLocation, boolean free) {
-		// TODO Auto-generated method stub
-		
-	}
+    /**
+     *
+     * @param playerIndex
+     */
+    @Override
+    public void finishTurn(int playerIndex) {
 
-	@Override
-	public void postBuildCity(int playerIndex, VertexLocation vertexLocation) {
-		// TODO Auto-generated method stub
-		
-	}
+    }
 
-	@Override
-	public void postOfferTrade(int playerIndex, ResourceList offer, int receiver) {
-		// TODO Auto-generated method stub
-		
-	}
+    /**
+     *
+     * @param playerIndex
+     */
+    @Override
+    public void buyDevCard(int playerIndex) {
 
-	@Override
-	public void postAcceptTrade(int playerIndex, boolean willAccept) {
-		// TODO Auto-generated method stub
-		
-	}
+    }
 
-	@Override
-	public void postMaritimeTrade(int playerIndex, int ratio,
-			String inputResource, String outputResource) {
-		// TODO Auto-generated method stub
-		
-	}
+    /**
+     *
+     * @param playerIndex
+     * @param res1
+     * @param res2
+     */
+    @Override
+    public void yearOfPlenty(int playerIndex, ResourceList res1, ResourceList res2) {
 
-	@Override
-	public void postDiscardCards(int playerIndex, ResourceList discardedCards) {
-		// TODO Auto-generated method stub
-		
-	}
+    }
 
-	@Override
-	public void postChangeLogLevel(String logLevel) {
-		// TODO Auto-generated method stub
-		
-	}
-	
+    /**
+     *
+     * @param playerIndex
+     * @param spot1
+     * @param spot2
+     */
+    @Override
+    public void roadBuilding(int playerIndex, EdgeLocation spot1, EdgeLocation spot2) {
+
+    }
+
+    /**
+     *
+     * @param playerIndex
+     * @param victimIndex
+     * @param location
+     */
+    @Override
+    public void soldier(int playerIndex, int victimIndex, HexLocation location) {
+
+    }
+
+    /**
+     *
+     * @param playerIndex
+     * @param resource
+     */
+    @Override
+    public void monopoly(int playerIndex, String resource) {
+
+    }
+
+    /**
+     *
+     * @param playerIndex
+     */
+    @Override
+    public void monument(int playerIndex) {
+
+    }
+
+    /**
+     *
+     * @param playerIndex
+     * @param roadLocation
+     * @param free
+     */
+    @Override
+    public void buildRoad(int playerIndex, EdgeLocation roadLocation, Boolean free) {
+
+    }
+
+    /**
+     *
+     * @param playerIndex
+     * @param vertexLocation
+     * @param free
+     */
+    @Override
+    public void buildSettlement(int playerIndex, VertexLocation vertexLocation, boolean free) {
+
+    }
+
+    /**
+     *
+     * @param playerIndex
+     * @param vertexLocation
+     */
+    @Override
+    public void buildCity(int playerIndex, VertexLocation vertexLocation) {
+
+    }
+
+    /**
+     *
+     * @param playerIndex
+     * @param offer
+     * @param receiver
+     */
+    @Override
+    public void offerTrade(int playerIndex, ResourceList offer, int receiver) {
+
+    }
+
+    /**
+     *
+     * @param playerIndex
+     * @param willAccept
+     */
+    @Override
+    public void acceptTrade(int playerIndex, boolean willAccept) {
+
+    }
+
+    /**
+     *
+     * @param playerIndex
+     * @param ratio
+     * @param inputResource
+     * @param outputResource
+     */
+    @Override
+    public void maritimeTrade(int playerIndex, int ratio, String inputResource, String outputResource) {
+
+    }
+
+    /**
+     *
+     * @param playerIndex
+     * @param discardedCards
+     */
+    @Override
+    public void discardCards(int playerIndex, ResourceList discardedCards) {
+
+    }
 }
