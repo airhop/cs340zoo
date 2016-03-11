@@ -11,13 +11,11 @@ import java.lang.reflect.Type;
  * Created by airho on 3/9/2016.
  */
 public class BuildSettlement implements ICommand {
-    private Type BuildSettlement;
     private int playerIndex;
     private VertexLocation location;
     private boolean free;
 
-    public BuildSettlement(Type buildSettlement, int playerIndex, int x, int y, VertexDirection direction, boolean free) {
-        BuildSettlement = buildSettlement;
+    public BuildSettlement(int playerIndex, int x, int y, VertexDirection direction, boolean free) {
         this.playerIndex = playerIndex;
         this.location = new VertexLocation(new HexLocation(x, y), direction);
         this.free = free;

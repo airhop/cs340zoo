@@ -8,14 +8,12 @@ import java.lang.reflect.Type;
  * Created by airho on 3/9/2016.
  */
 public class MaritimeTrade implements ICommand {
-    private Type MaritimeTrade;
     private int playerIndex;
     private int ratio;
     private String inputResource;
     private String outputResource;
 
-    public MaritimeTrade(Type maritimeTrade, int playerIndex, int ratio, String inputResource, String outputResource) {
-        MaritimeTrade = maritimeTrade;
+    public MaritimeTrade(int playerIndex, int ratio, String inputResource, String outputResource) {
         this.playerIndex = playerIndex;
         this.ratio = ratio;
         this.inputResource = inputResource;

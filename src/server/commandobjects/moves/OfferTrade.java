@@ -9,13 +9,11 @@ import java.lang.reflect.Type;
  * Created by airho on 3/9/2016.
  */
 public class OfferTrade implements ICommand {
-    private Type OfferTrade;
     private int playerIndex;
     private int recieverIndex;
     private ResourceList offer;
 
-    public OfferTrade(Type offerTrade, int playerIndex, int recieverIndex, ResourceList offer) {
-        OfferTrade = offerTrade;
+    public OfferTrade(int playerIndex, int recieverIndex, ResourceList offer) {
         this.playerIndex = playerIndex;
         this.recieverIndex = recieverIndex;
         this.offer = offer;
