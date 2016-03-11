@@ -15,8 +15,10 @@ public interface IServerFacade
 	void postSave();
 	void postLoad();
 	//game: total 6 methods
-	void getModel();
-	void postRest();
+	void getModel(); //FYI getModel is the only required method from this section.
+					//the rest are crossed out on the Phase specs
+
+	void postRest(); //I think you meant reset not rest
 	void postCommands();
 	void getCommands();
 	void postAddAI();
