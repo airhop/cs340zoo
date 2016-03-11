@@ -18,7 +18,7 @@ public class Handler implements HttpHandler
      * This method will grab the initial incoming exchange and parse the incoming Request Method
      * If it is a GET request it will pass it to the GetMethod.  Otherwise it will parse the RequestURI
      * and pass it to the User, Game, or Moves method
-     * @param exchange
+     * @param exchange - incoming request
      * @throws IOException
      */
     public void handle(HttpExchange exchange) throws IOException //probably change to be a ServerException
@@ -29,7 +29,7 @@ public class Handler implements HttpHandler
     /**
      * This method will determine whether this is a game/model or games/list method and will
      * set the exchange in preperation to send it back
-     * @param exchange
+     * @param exchange - incoming request passed by the handle method
      */
     public void Get(HttpExchange exchange)
     {
@@ -39,7 +39,7 @@ public class Handler implements HttpHandler
     /**
      * This method will determine whether this is a user/login or user/register method before
      * passing the JSON information to the commandfactory to be processed
-     * @param exchange
+     * @param exchange - incoming request passed by the handle method
      */
     public void UserMethod(HttpExchange exchange)
     {
@@ -47,9 +47,9 @@ public class Handler implements HttpHandler
     }
 
     /**
-     * This method will handle game and games methods that will be implemented.
+     * This method will handle games Post methods that will be implemented.
      * It will pass the JSON information to the commandfactory to be processed
-     * @param exchange
+     * @param exchange - incoming request passed by the handle method
      */
     public void GameMethod(HttpExchange exchange)
     {
@@ -59,7 +59,7 @@ public class Handler implements HttpHandler
     /**
      * This method will parse the RequestURI and send the necessary information to the
      * commandfactory to be made into commandObjects
-     * @param exchange
+     * @param exchange - incoming request passed by the handle method
      */
     public void MoveMethod(HttpExchange exchange)
     {
