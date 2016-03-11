@@ -14,4 +14,9 @@ public class AddAI implements ICommand {
     public void execute() {
 
     }
+
+    @Override
+    public void unexecute() {
+
+    }
 }

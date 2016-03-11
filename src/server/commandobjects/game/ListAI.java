@@ -14,4 +14,9 @@ public class ListAI implements ICommand {
     public void execute() {
 
     }
+
+    @Override
+    public void unexecute() {
+
+    }
 }
