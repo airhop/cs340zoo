@@ -24,18 +24,18 @@ public class UserFactory {
     }
 
     /**
-     *
-     * @param info -
-     * @return -
+     * This method will create the appropriate Command Object
+     * @param info - Passed to the function to create
+     * @return - Returns the appropriate Command Object
      */
     private LoginUser makeLoginUser(JsonConstructionInfo info){
         return new LoginUser("", "");
     }
 
     /**
-     *
-     * @param info -
-     * @return -
+     * This method will create the appropriate Command Object
+     * @param info - Passed to the function to create
+     * @return - Returns the appropriate Command Object
      */
     private RegisterUser makeRegisterUser(JsonConstructionInfo info){
         return new RegisterUser("", "");

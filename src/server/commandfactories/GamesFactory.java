@@ -28,18 +28,18 @@ public class GamesFactory {
     }
 
     /**
-     *
-     * @param info -
-     * @return -
+     * This method will create the appropriate Command Object
+     * @param info - Passed to the function to create
+     * @return - Returns the appropriate Command Object
      */
     private Create makeCreate(JsonConstructionInfo info) {
         return new Create(true, true, true, "GameName");
     }
 
     /**
-     *
-     * @param info -
-     * @return -
+     * This method will create the appropriate Command Object
+     * @param info - Passed to the function to create
+     * @return - Returns the appropriate Command Object
      */
     private Join makeJoin(JsonConstructionInfo info) {
         return new Join(1, "");
