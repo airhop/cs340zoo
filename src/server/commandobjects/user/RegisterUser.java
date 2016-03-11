@@ -5,11 +5,11 @@ import server.commandobjects.ICommand;
 /**
  * Created by airho on 3/9/2016.
  */
-public class Register implements ICommand {
+public class RegisterUser implements ICommand {
     private String username;
     private String password;
 
-    public Register(String username, String password) {
+    public RegisterUser(String username, String password) {
         this.username = username;
         this.password = password;
     }

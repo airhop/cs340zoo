@@ -2,6 +2,8 @@ package server.commandfactories;
 
 import server.commandobjects.ICommand;
 import server.commandobjects.moves.AcceptTrade;
+import server.commandobjects.user.LoginUser;
+import server.commandobjects.user.RegisterUser;
 import server.servermain.JsonConstructionInfo;
 
 /**
@@ -20,4 +22,23 @@ public class UserFactory {
         ICommand command = new AcceptTrade(1, false);
         return command;
     }
+
+    /**
+     *
+     * @param info -
+     * @return -
+     */
+    private LoginUser makeLoginUser(JsonConstructionInfo info){
+        return new LoginUser("", "");
+    }
+
+    /**
+     *
+     * @param info -
+     * @return -
+     */
+    private RegisterUser makeRegisterUser(JsonConstructionInfo info){
+        return new RegisterUser("", "");
+    }
+
 }

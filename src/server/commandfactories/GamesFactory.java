@@ -4,6 +4,7 @@ import server.commandobjects.ICommand;
 import server.commandobjects.moves.AcceptTrade;
 import server.commandobjects.games.*;
 import server.servermain.JsonConstructionInfo;
+import shared.infoobjects.CurrentResources;
 
 /**
  * Created by Joshua on 3/10/2016.
@@ -23,5 +24,11 @@ public class GamesFactory {
         commandObject = new Create(true,true,true,"GameName");
 
         return commandObject;
+    }
+    private Create makeCreate(JsonConstructionInfo info){
+        return new Create(true,true,true,"GameName");
+    }
+    private Join makeJoin(JsonConstructionInfo info){
+        return new Join(1, "");
     }
 }
