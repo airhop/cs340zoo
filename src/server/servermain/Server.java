@@ -22,7 +22,7 @@ public class Server {
     /**
      * This will run the server creating the handler
      */
-    private void run() {
+    public void run() {
         try {
             server = HttpServer.create(new InetSocketAddress(SERVER_PORT_NUMBER), MAX_WAITING_CONNECTIONS);
         } catch (IOException e) {

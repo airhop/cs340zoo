@@ -38,7 +38,7 @@ public class MovesFactory {
      * @param info - Passed to the function to create
      * @return - Returns the appropriate Command Object
      */
-    private AcceptTrade makeAcceptTrade(JsonConstructionInfo info) {
+    public AcceptTrade makeAcceptTrade(JsonConstructionInfo info) {
         return new AcceptTrade(1, false);
     }
 
@@ -47,7 +47,7 @@ public class MovesFactory {
      * @param info - Passed to the function to create
      * @return - Returns the appropriate Command Object
      */
-    private BuildCity makeBuildCity(JsonConstructionInfo info) {
+    public BuildCity makeBuildCity(JsonConstructionInfo info) {
         return new BuildCity(1, new VertexLocation(new HexLocation(1, 1), VertexDirection.NE));
     }
 
@@ -56,7 +56,7 @@ public class MovesFactory {
      * @param info - Passed to the function to create
      * @return - Returns the appropriate Command Object
      */
-    private BuildRoad makeBuildRoad(JsonConstructionInfo info) {
+    public BuildRoad makeBuildRoad(JsonConstructionInfo info) {
         return new BuildRoad(1, new EdgeLocation(new HexLocation(1, 1), EdgeDirection.NE), false);
     }
 
@@ -65,7 +65,7 @@ public class MovesFactory {
      * @param info - Passed to the function to create
      * @return - Returns the appropriate Command Object
      */
-    private BuildSettlement makeBuildSettlement(JsonConstructionInfo info) {
+    public BuildSettlement makeBuildSettlement(JsonConstructionInfo info) {
         return new BuildSettlement(1, 1, 1, VertexDirection.E, false);
     }
 
@@ -74,7 +74,7 @@ public class MovesFactory {
      * @param info - Passed to the function to create
      * @return - Returns the appropriate Command Object
      */
-    private BuyDevCard makeBuyDevCar(JsonConstructionInfo info) {
+    public BuyDevCard makeBuyDevCar(JsonConstructionInfo info) {
         return new BuyDevCard(1);
     }
 
@@ -83,7 +83,7 @@ public class MovesFactory {
      * @param info - Passed to the function to create
      * @return - Returns the appropriate Command Object
      */
-    private DiscardCards makeDiscardCards(JsonConstructionInfo info) {
+    public DiscardCards makeDiscardCards(JsonConstructionInfo info) {
         return new DiscardCards(1, new ResourceList());
     }
 
@@ -92,7 +92,7 @@ public class MovesFactory {
      * @param info - Passed to the function to create
      * @return - Returns the appropriate Command Object
      */
-    private FinishTurn makeFinishTurn(JsonConstructionInfo info) {
+    public FinishTurn makeFinishTurn(JsonConstructionInfo info) {
         return new FinishTurn(1);
     }
 
@@ -101,7 +101,7 @@ public class MovesFactory {
      * @param info - Passed to the function to create
      * @return - Returns the appropriate Command Object
      */
-    private MaritimeTrade makeMaritimeTrade(JsonConstructionInfo info) {
+    public MaritimeTrade makeMaritimeTrade(JsonConstructionInfo info) {
         return new MaritimeTrade(1, 1, "", "");
     }
 
@@ -110,7 +110,7 @@ public class MovesFactory {
      * @param info - Passed to the function to create
      * @return - Returns the appropriate Command Object
      */
-    private Monopoly makeMonopoly(JsonConstructionInfo info) {
+    public Monopoly makeMonopoly(JsonConstructionInfo info) {
         return new Monopoly(1, "");
     }
 
@@ -119,7 +119,7 @@ public class MovesFactory {
      * @param info - Passed to the function to create
      * @return - Returns the appropriate Command Object
      */
-    private Monument makeMonument(JsonConstructionInfo info) {
+    public Monument makeMonument(JsonConstructionInfo info) {
         return new Monument(1);
     }
 
@@ -128,7 +128,7 @@ public class MovesFactory {
      * @param info - Passed to the function to create
      * @return - Returns the appropriate Command Object
      */
-    private OfferTrade makeOfferTrade(JsonConstructionInfo info) {
+    public OfferTrade makeOfferTrade(JsonConstructionInfo info) {
         return new OfferTrade(1, 1, new ResourceList());
     }
 
@@ -137,7 +137,7 @@ public class MovesFactory {
      * @param info - Passed to the function to create
      * @return - Returns the appropriate Command Object
      */
-    private RoadBuilding makeRoadBuilding(JsonConstructionInfo info) {
+    public RoadBuilding makeRoadBuilding(JsonConstructionInfo info) {
         return new RoadBuilding(1, 1, 1, EdgeDirection.N, new EdgeLocation(new HexLocation(1, 1), EdgeDirection.N));
     }
 
@@ -146,7 +146,7 @@ public class MovesFactory {
      * @param info - Passed to the function to create
      * @return - Returns the appropriate Command Object
      */
-    private RobPlayer makeRobPlayer(JsonConstructionInfo info) {
+    public RobPlayer makeRobPlayer(JsonConstructionInfo info) {
         return new RobPlayer(1, 1, "", "");
     }
 
@@ -155,7 +155,7 @@ public class MovesFactory {
      * @param info - Passed to the function to create
      * @return - Returns the appropriate Command Object
      */
-    private RollNumber makeRollNumber(JsonConstructionInfo info) {
+    public RollNumber makeRollNumber(JsonConstructionInfo info) {
         return new RollNumber(1, 1);
     }
 
@@ -164,7 +164,7 @@ public class MovesFactory {
      * @param info - Passed to the function to create
      * @return - Returns the appropriate Command Object
      */
-    private SendChat makeSendChat(JsonConstructionInfo info) {
+    public SendChat makeSendChat(JsonConstructionInfo info) {
         return new SendChat(1, "");
     }
 
@@ -173,7 +173,7 @@ public class MovesFactory {
      * @param info - Passed to the function to create
      * @return - Returns the appropriate Command Object
      */
-    private Soldier makeSoldier(JsonConstructionInfo info) {
+    public Soldier makeSoldier(JsonConstructionInfo info) {
         return new Soldier(1, 1, new HexLocation(1, 1));
     }
 
@@ -182,7 +182,7 @@ public class MovesFactory {
      * @param info - Passed to the function to create
      * @return - Returns the appropriate Command Object
      */
-    private YearOfPlenty makeYearOfPlenty(JsonConstructionInfo info) {
+    public YearOfPlenty makeYearOfPlenty(JsonConstructionInfo info) {
         return new YearOfPlenty(1, ResourceType.BRICK, ResourceType.WHEAT);
     }
 

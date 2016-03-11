@@ -32,7 +32,7 @@ public class GamesFactory {
      * @param info - Passed to the function to create
      * @return - Returns the appropriate Command Object
      */
-    private Create makeCreate(JsonConstructionInfo info) {
+    public Create makeCreate(JsonConstructionInfo info) {
         return new Create(true, true, true, "GameName");
     }
 
@@ -41,7 +41,7 @@ public class GamesFactory {
      * @param info - Passed to the function to create
      * @return - Returns the appropriate Command Object
      */
-    private Join makeJoin(JsonConstructionInfo info) {
+    public Join makeJoin(JsonConstructionInfo info) {
         return new Join(1, "");
     }
 }
