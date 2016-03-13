@@ -20,11 +20,11 @@ public class MovesFactory {
     /**
      * This is the method that you call when you want a Command object that is in the move category
      *
-     * @param command - this is the command that you want from the factory
+     *
      * @param info    - This is the information that is passed to the server so that the factory can create the specified object
      * @return - The command Object that we are asking for.
      */
-    public ICommand getCommand(CommandType command, JsonConstructionInfo info) {
+    public ICommand getCommand(JsonConstructionInfo info) {
         ICommand commandObject;
         commandObject = new AcceptTrade(1, true);
 //        switch (){
