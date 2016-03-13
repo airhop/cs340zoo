@@ -17,6 +17,10 @@ public class BuildCity implements ICommand {
         this.location = location;
     }
 
+    /**
+     * Calls on server facade and builds a city
+     * on the map if all necessary conditions are met
+     */
     @Override
     public void execute() {
 

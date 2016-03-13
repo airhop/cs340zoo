@@ -19,6 +19,11 @@ public class Soldier implements ICommand {
         this.location = location;
     }
 
+    /**
+     * Calls on server facade and allows the player to
+     * move the robber to a different hex and rob someone
+     * if they desire.
+     */
     @Override
     public void execute() {
 

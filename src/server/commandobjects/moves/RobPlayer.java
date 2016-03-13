@@ -19,6 +19,11 @@ public class RobPlayer implements ICommand {
         this.location = new HexLocation(Integer.parseInt(x), Integer.parseInt(y));
     }
 
+    /**
+     * Calls on server facade and allows the player to rob
+     * another player on a given hex whenever a 7 is rolled,
+     * or a soldier is played
+     */
     @Override
     public void execute() {
 

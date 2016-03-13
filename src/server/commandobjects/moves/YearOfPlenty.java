@@ -19,6 +19,10 @@ public class YearOfPlenty implements ICommand {
         this.resource2 = resource2;
     }
 
+    /**
+     * Calls on server facade and allows the player to choose
+     * two resource types to gain two cards of
+     */
     @Override
     public void execute() {
 

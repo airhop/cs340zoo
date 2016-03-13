@@ -22,6 +22,10 @@ public class RoadBuilding implements ICommand {
         this.spot2 = spot2;
     }
 
+    /**
+     * Calls on server facade and allows the player to
+     * place down two roads on the map
+     */
     @Override
     public void execute() {
 

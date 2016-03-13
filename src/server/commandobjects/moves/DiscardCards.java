@@ -17,6 +17,11 @@ public class DiscardCards implements ICommand {
         this.discardedCards = discardedCards;
     }
 
+    /**
+     * Calls on server facade and makes the player
+     * discard half of their cards if their current
+     * hand contains more that 7 resources
+     */
     @Override
     public void execute() {
 

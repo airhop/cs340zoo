@@ -17,6 +17,11 @@ public class Monopoly implements ICommand {
 
     private String resource;
 
+    /**
+     * Calls on server facade and allows the player to pick
+     * one resource, and have all other players give that player
+     * all of that resource type in their possesion
+     */
     @Override
     public void execute() {
 

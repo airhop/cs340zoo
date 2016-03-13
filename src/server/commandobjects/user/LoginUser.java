@@ -15,6 +15,10 @@ public class LoginUser implements ICommand {
         this.password = password;
     }
 
+    /**
+     * Calls on server facade and allows the user to log in to
+     * the server and choose a game to join, or create a game
+     */
     @Override
     public void execute() {
 

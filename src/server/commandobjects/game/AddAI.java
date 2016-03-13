@@ -10,6 +10,10 @@ public class AddAI implements ICommand {
 
     }
 
+    /**
+     * Calls on server facade and adds a computer player to
+     * the game
+     */
     @Override
     public void execute() {
 

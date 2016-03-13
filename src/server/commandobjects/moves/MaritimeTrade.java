@@ -20,6 +20,12 @@ public class MaritimeTrade implements ICommand {
         this.outputResource = outputResource;
     }
 
+    /**
+     * Calls on server facade and allows the player to
+     * trade resources with the bank depending on the
+     * conditions of placed settlements/cities, and as
+     * long as all other conditions are met
+     */
     @Override
     public void execute() {
 

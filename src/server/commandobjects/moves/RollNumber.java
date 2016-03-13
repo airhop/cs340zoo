@@ -16,6 +16,11 @@ public class RollNumber implements ICommand {
         this.number = number;
     }
 
+    /**
+     * Calls on server facade and rolls two numbers between
+     * 1 and 6. Adds them up and applies that number to the
+     * players roll.
+     */
     @Override
     public void execute() {
 

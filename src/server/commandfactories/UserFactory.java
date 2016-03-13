@@ -28,7 +28,7 @@ public class UserFactory {
      * @param info - Passed to the function to create
      * @return - Returns the appropriate Command Object
      */
-    private LoginUser makeLoginUser(JsonConstructionInfo info){
+    public LoginUser makeLoginUser(JsonConstructionInfo info){
         return new LoginUser("", "");
     }
 
@@ -37,7 +37,7 @@ public class UserFactory {
      * @param info - Passed to the function to create
      * @return - Returns the appropriate Command Object
      */
-    private RegisterUser makeRegisterUser(JsonConstructionInfo info){
+    public RegisterUser makeRegisterUser(JsonConstructionInfo info){
         return new RegisterUser("", "");
     }
 
