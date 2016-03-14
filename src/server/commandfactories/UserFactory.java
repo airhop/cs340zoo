@@ -29,6 +29,8 @@ public class UserFactory {
      * @return - Returns the appropriate Command Object
      */
     public LoginUser makeLoginUser(JsonConstructionInfo info){
+
+        LoginUser userObject = new LoginUser("", "");
         return new LoginUser("", "");
     }
 

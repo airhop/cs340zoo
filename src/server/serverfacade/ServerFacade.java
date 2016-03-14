@@ -12,6 +12,16 @@ import client.model.player.Player;
  */
 public class ServerFacade implements IServerFacade {
 
+
+    private static ServerFacade facade = null;
+
+    public static ServerFacade getInstance(){
+        if(facade == null){
+            facade = new ServerFacade();
+        }
+        return facade;
+    }
+
     /**
      * The command objects will call this method to run a server operation
      * @param username - the username the player is attempting
