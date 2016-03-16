@@ -34,5 +34,21 @@ public enum VertexDirection
 		}
 		return "";
 	}
+
+	//used to make the compareto for VertexLocation easier
+	public int convert(VertexDirection vd)
+	{
+		switch(vd)
+		{
+			case W: return 1;
+			case NW: return 2;
+			case NE: return 3;
+			case E: return 4;
+			case SE: return 5;
+			case SW: return 6;
+
+		}
+		return 20;
+	}
 }
 

@@ -1,5 +1,9 @@
+//GameModel needs a to JSON string method
+
 package server.servermain.handler;
 
+import client.model.GameModel;
+import client.proxy.Cookie;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import server.commandfactories.GamesFactory;
@@ -12,6 +16,8 @@ import server.servermain.Exceptions.ServerException;
 import server.servermain.JsonConstructionInfo;
 import server.servermain.Server;
 import server.shared.CommandType;
+import shared.jsonobject.CreatedGame;
+import shared.jsonobject.Login;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
@@ -21,10 +27,11 @@ import java.net.HttpURLConnection;
  */
 public class Handler implements HttpHandler
 {
-    UserFactory userFactory;
-    GamesFactory gamesFactory;
-    MovesFactory movesFactory;
-
+    private UserFactory userFactory;
+    private GamesFactory gamesFactory;
+    private MovesFactory movesFactory;
+    private static Cookie Usercookie;
+    private static Cookie Gamecookie;
     public Handler()
     {
         userFactory = new UserFactory();
@@ -45,15 +52,29 @@ public class Handler implements HttpHandler
 
         try
         {
+            //how can I get the cookies from the server facade?
             if ("GET".equals(method))
-                exchange = Get(exchange);
+                Get(exchange);
 
-            if (path.contains("/moves"))
-                MoveMethod(exchange);
-            else if (path.contains("/user"))
+            if (path.contains("/user"))
                 UserMethod(exchange);
+
+            else if(Usercookie.isActive())
+            {
+                if(path.contains("/game"))
+                    GameMethod(exchange);
+                else if(Gamecookie.isActive())
+                {
+                    if (path.contains("/moves"))
+                        MoveMethod(exchange);
+                }
+                else
+                    throw new ServerException("Not joined a game yet . . .");
+
+            }
             else
-                GameMethod(exchange);
+                throw new ServerException("Not logged in yet...");
+
         }
         catch(ServerException e)
         {
@@ -76,7 +97,7 @@ public class Handler implements HttpHandler
      * set the exchange in preperation to send it back
      * @param exchange - incoming request passed by the handle method
      */
-    public HttpExchange Get(HttpExchange exchange) throws ServerException, IOException
+    public void Get(HttpExchange exchange) throws ServerException, IOException
     {
         ICommand current;
         String path = exchange.getRequestURI().getPath();
@@ -90,11 +111,11 @@ public class Handler implements HttpHandler
 
 
         exchange.sendResponseHeaders(200, 0);
-//        xmlStream.toXML(result, exchange.getResponseBody());
         exchange.getResponseBody().write(JSonString.getBytes());
         exchange.getResponseBody().close();
 
-        return exchange;
+//does exchange need to be returned?
+//        return exchange;
     }
 
     /**
@@ -102,7 +123,7 @@ public class Handler implements HttpHandler
      * passing the JSON information to the commandfactory to be processed
      * @param exchange - incoming request passed by the handle method
      */
-    public void UserMethod(HttpExchange exchange) throws ServerException
+    public void UserMethod(HttpExchange exchange) throws ServerException, IOException
     {
         ICommand current;
         String path = exchange.getRequestURI().getPath();
@@ -113,7 +134,16 @@ public class Handler implements HttpHandler
         else
             throw new ServerException("Not a valid get request");
 
-        current.execute();
+        Object o = current.execute();
+        Login login = (Login) o;
+
+        //if cookie == null awesome, else throw serverexception...
+
+        exchange.sendResponseHeaders(200, 1);
+        exchange.getResponseBody().close();
+
+//if successful set-cookie
+//if failed, current.execute should throw a ServerException
     }
 
     /**
@@ -121,18 +151,33 @@ public class Handler implements HttpHandler
      * It will pass the JSON information to the commandfactory to be processed
      * @param exchange - incoming request passed by the handle method
      */
-    public void GameMethod(HttpExchange exchange) throws ServerException
+    public void GameMethod(HttpExchange exchange) throws ServerException, IOException
     {
         ICommand current;
         String path = exchange.getRequestURI().getPath();
         if(path.contains("games/create"))
+        {
             current = gamesFactory.getCommand(new JsonConstructionInfo(CommandType.create, exchange.getRequestBody().toString()));
+            Object o = current.execute();
+            exchange.sendResponseHeaders(200, 1);
+            exchange.getResponseBody().write(((CreatedGame)o).toString().getBytes());
+            exchange.getResponseBody().close();
+        }
+
         else if(path.contains("games/join"))
+        {
             current = gamesFactory.getCommand(new JsonConstructionInfo(CommandType.join, exchange.getRequestBody().toString()));
+            Object o = current.execute();
+            exchange.sendResponseHeaders(200, 1);
+            exchange.getResponseBody().write(((int)o));
+            //don't know if an int will write over correctly
+            exchange.getResponseBody().close();
+//set cookie for gameID
+//and return the Game Model in the ResponseBody
+        }
         else
             throw new ServerException("Not a valid get request");
 
-        current.execute();
     }
 
     /**
@@ -140,7 +185,7 @@ public class Handler implements HttpHandler
      * commandfactory to be made into commandObjects
      * @param exchange - incoming request passed by the handle method
      */
-    public void MoveMethod(HttpExchange exchange) throws ServerException
+    public void MoveMethod(HttpExchange exchange) throws ServerException, IOException
     {
         String path = exchange.getRequestURI().getPath();
         String[] tokens = path.split("/"); //split the URL path into tokens
@@ -151,7 +196,22 @@ public class Handler implements HttpHandler
         if(type == CommandType.listAI)
             throw new ServerException("Unknown Command Type");
 
-        current.execute();
+        Object o = current.execute();
+
+        //if current doesn't return anything
+        exchange.sendResponseHeaders(200, 1);
+        exchange.getResponseBody().write(((GameModel)o).toString().getBytes());
+        exchange.getResponseBody().close();
+    }
+
+    public static Cookie getUserCookie()
+    {
+        return Usercookie;
+    }
+
+    public static Cookie getGamecookie()
+    {
+        return Gamecookie;
     }
 }
 

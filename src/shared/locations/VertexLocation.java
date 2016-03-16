@@ -232,7 +232,10 @@ public class VertexLocation
 			if(vl.getHexLoc().compareTo(getHexLoc()) == 0)
 				return 0;
 		}
-		return -1;
+		int current = 10*hexLoc.getX() + hexLoc.getY() + dir.convert(dir);
+		int compare = 10*vl.getHexLoc().getX() + vl.getHexLoc().getY() + vl.getDir().convert(vl.getDir());
+
+		return current - compare;
 	}
 
 
