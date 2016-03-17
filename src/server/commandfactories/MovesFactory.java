@@ -80,20 +80,21 @@ public class MovesFactory {
         JsonParser myParse = new JsonParser();
         JsonElement myEle = myParse.parse(info.getJsonBody());
         JsonTreeReader myTree = new JsonTreeReader(myEle);
+        int playerIndex = 0;
+        boolean willAccept = false;
         try {
             myTree.beginObject();
             myTree.nextName();  //This is the first which is just the type
             myTree.nextString(); //This is the Type name
             myTree.nextName(); //This is the name == playerindex
-            myTree.nextInt(); //This is the player index
+            playerIndex = myTree.nextInt(); //This is the player index
             myTree.nextName(); //This is the willAccept
-            myTree.nextBoolean(); //This is the boolean
-
+            willAccept = myTree.nextBoolean(); //This is the boolean
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        return new AcceptTrade(1, false);
+        return new AcceptTrade(playerIndex, willAccept);
     }
 
     /**

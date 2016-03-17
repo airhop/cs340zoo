@@ -1,11 +1,14 @@
 package server.serverfacade;
 
+import client.MVC.data.GameInfo;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
 import client.model.GameModel;
 import client.model.bank.ResourceList;
 import client.model.player.Player;
+
+import java.util.List;
 
 /**
  * Created by Joshua on 3/9/2016.
@@ -16,7 +19,7 @@ public interface IServerFacade
 	void userLogin(String username, String password);
 	void userRegister(String username, String password);
 	//games: total 5 methods
-	GameModel getList();
+	List<GameInfo> getGamesList();
 	void createGame(String title, int id, Player[] players);
 	void joinGame(int id, String color);
 	void save(int id, String name);

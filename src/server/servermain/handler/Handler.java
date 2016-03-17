@@ -12,7 +12,7 @@ import server.commandfactories.UserFactory;
 import server.commandobjects.ICommand;
 import server.commandobjects.game.ListAI;
 import server.serverfacade.ServerFacade;
-import server.servermain.Exceptions.ServerException;
+import server.servermain.exceptions.ServerException;
 import server.servermain.JsonConstructionInfo;
 import server.servermain.Server;
 import server.shared.CommandType;
@@ -105,7 +105,7 @@ public class Handler implements HttpHandler
         if(path.contains("games/list"))
             JSonString = ServerFacade.getInstance().getGamesList();
         else if(path.contains("game/model"))
-            JSonString = ServerFacade.getInstance().getGameModel();
+            JSonString = ServerFacade.getInstance().getModel();
         else
             throw new ServerException("Not a valid get request");
 
