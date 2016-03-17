@@ -1,6 +1,7 @@
 package server.commandobjects.moves;
 
 import server.commandobjects.ICommand;
+import server.serverfacade.ServerFacade;
 import shared.locations.EdgeDirection;
 import shared.locations.EdgeLocation;
 
@@ -26,7 +27,9 @@ public class BuildRoad implements ICommand {
      */
     @Override
     public Object execute() {
-        return null;
+
+        ServerFacade.getInstance().buildRoad(playerIndex, roadLocation, free);
+        return ServerFacade.getInstance().getModel();
     }
 
     @Override

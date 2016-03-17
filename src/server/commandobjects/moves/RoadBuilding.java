@@ -2,6 +2,7 @@ package server.commandobjects.moves;
 
 import com.sun.javafx.geom.Edge;
 import server.commandobjects.ICommand;
+import server.serverfacade.ServerFacade;
 import shared.locations.EdgeDirection;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
@@ -28,7 +29,8 @@ public class RoadBuilding implements ICommand {
      */
     @Override
     public Object execute() {
-        return null;
+        ServerFacade.getInstance().roadBuilding(playerIndex, spot1, spot2);
+        return ServerFacade.getInstance().getModel();
     }
 
     @Override

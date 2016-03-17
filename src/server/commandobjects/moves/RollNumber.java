@@ -1,6 +1,7 @@
 package server.commandobjects.moves;
 
 import server.commandobjects.ICommand;
+import server.serverfacade.ServerFacade;
 
 import java.lang.reflect.Type;
 
@@ -23,7 +24,8 @@ public class RollNumber implements ICommand {
      */
     @Override
     public Object execute() {
-        return null;
+        ServerFacade.getInstance().rollNumber(playerIndex, number);
+        return ServerFacade.getInstance().getModel();
     }
     @Override
     public void unexecute() {

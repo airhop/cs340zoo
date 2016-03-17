@@ -1,6 +1,7 @@
 package server.commandobjects.moves;
 
 import server.commandobjects.ICommand;
+import server.serverfacade.ServerFacade;
 
 import java.lang.reflect.Type;
 
@@ -20,7 +21,9 @@ public class Monument implements ICommand {
      */
     @Override
     public Object execute() {
-        return null;
+
+        ServerFacade.getInstance().monument(playerIndex);
+        return ServerFacade.getInstance().getModel();
     }
 
     @Override

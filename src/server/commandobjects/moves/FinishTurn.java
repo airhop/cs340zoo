@@ -1,6 +1,7 @@
 package server.commandobjects.moves;
 
 import server.commandobjects.ICommand;
+import server.serverfacade.ServerFacade;
 
 import java.lang.reflect.Type;
 
@@ -21,7 +22,9 @@ public class FinishTurn implements ICommand {
      */
     @Override
     public Object execute() {
-        return null;
+
+        ServerFacade.getInstance().finishTurn(playerIndex);
+        return ServerFacade.getInstance().getModel();
     }
 
 

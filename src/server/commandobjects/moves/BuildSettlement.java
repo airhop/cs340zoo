@@ -1,6 +1,7 @@
 package server.commandobjects.moves;
 
 import server.commandobjects.ICommand;
+import server.serverfacade.ServerFacade;
 import shared.locations.HexLocation;
 import shared.locations.VertexDirection;
 import shared.locations.VertexLocation;
@@ -27,7 +28,9 @@ public class BuildSettlement implements ICommand {
      */
     @Override
     public Object execute() {
-        return null;
+
+        ServerFacade.getInstance().buildSettlement(playerIndex, location, free);
+        return ServerFacade.getInstance().getModel();
     }
 
     @Override

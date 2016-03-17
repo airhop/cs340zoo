@@ -1,6 +1,8 @@
 package server.commandobjects.moves;
 
+import client.model.GameModel;
 import server.commandobjects.ICommand;
+import server.serverfacade.ServerFacade;
 
 import java.lang.reflect.Type;
 
@@ -23,7 +25,8 @@ public class AcceptTrade implements ICommand {
      */
     @Override
     public Object execute() {
-        return null;
+        ServerFacade.getInstance().acceptTrade(playerIndex, willAccept);
+        return ServerFacade.getInstance().getModel();
     }
 
     @Override

@@ -1,6 +1,7 @@
 package server.commandobjects.moves;
 
 import server.commandobjects.ICommand;
+import server.serverfacade.ServerFacade;
 
 import java.lang.reflect.Type;
 
@@ -28,7 +29,9 @@ public class MaritimeTrade implements ICommand {
      */
     @Override
     public Object execute() {
-        return null;
+
+        ServerFacade.getInstance().maritimeTrade(playerIndex, ratio, inputResource, outputResource);
+        return ServerFacade.getInstance().getModel();
     }
 
     @Override

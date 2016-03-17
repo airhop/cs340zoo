@@ -1,6 +1,11 @@
 package server.commandobjects.user;
 
+import client.facade.Facade;
+import client.model.GameModel;
 import server.commandobjects.ICommand;
+import server.serverfacade.ServerFacade;
+import server.servermain.Server;
+import shared.jsonobject.Login;
 
 /**
  * Created by airho on 3/9/2016.
@@ -21,7 +26,9 @@ public class LoginUser implements ICommand {
      */
     @Override
     public Object execute() {
-        return null;
+        ServerFacade.getInstance().userLogin(username, password);
+        GameModel model = ServerFacade.getInstance().getModel();
+        return new Login(model.getCurrentPlayer().getUsername(), model.getCurrentPlayer().getPassword(), model.getID());
     }
 
     @Override

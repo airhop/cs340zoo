@@ -1,6 +1,7 @@
 package server.commandobjects.moves;
 
 import server.commandobjects.ICommand;
+import server.serverfacade.ServerFacade;
 
 import java.lang.reflect.Type;
 
@@ -20,7 +21,8 @@ public class BuyDevCard implements ICommand {
      */
     @Override
     public Object execute() {
-        return null;
+        ServerFacade.getInstance().buyDevCard(playerIndex);
+        return ServerFacade.getInstance().getModel();
     }
 
     @Override

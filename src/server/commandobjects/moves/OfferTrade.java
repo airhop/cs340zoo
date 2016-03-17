@@ -2,6 +2,7 @@ package server.commandobjects.moves;
 
 import client.model.bank.ResourceList;
 import server.commandobjects.ICommand;
+import server.serverfacade.ServerFacade;
 
 import java.lang.reflect.Type;
 
@@ -26,7 +27,9 @@ public class OfferTrade implements ICommand {
      */
     @Override
     public Object execute() {
-        return null;
+
+        ServerFacade.getInstance().offerTrade(playerIndex, offer, recieverIndex);
+        return ServerFacade.getInstance().getModel();
     }
 
     @Override

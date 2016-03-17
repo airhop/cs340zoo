@@ -1,6 +1,7 @@
 package server.commandobjects.moves;
 
 import server.commandobjects.ICommand;
+import server.serverfacade.ServerFacade;
 import shared.locations.HexLocation;
 
 import java.lang.reflect.Type;
@@ -26,7 +27,8 @@ public class RobPlayer implements ICommand {
      */
     @Override
     public Object execute() {
-        return null;
+        ServerFacade.getInstance().robPlayer(playerIndex, victimIndex, location);
+        return ServerFacade.getInstance().getModel();
     }
 
     @Override

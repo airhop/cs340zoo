@@ -1,6 +1,8 @@
 package server.commandobjects.games;
 
+import client.model.GameModel;
 import server.commandobjects.ICommand;
+import server.serverfacade.ServerFacade;
 
 /**
  * Created by airho on 3/9/2016.
@@ -21,7 +23,9 @@ public class Join implements ICommand {
      */
     @Override
     public Object execute() {
-        return null;
+        ServerFacade.getInstance().joinGame(id, color);
+        GameModel model = ServerFacade.getInstance().getModel();
+        return model.getID();
     }
 
     @Override

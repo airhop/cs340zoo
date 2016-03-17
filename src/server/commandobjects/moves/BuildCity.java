@@ -1,6 +1,7 @@
 package server.commandobjects.moves;
 
 import server.commandobjects.ICommand;
+import server.serverfacade.ServerFacade;
 import shared.locations.VertexLocation;
 
 import java.lang.reflect.Type;
@@ -23,7 +24,9 @@ public class BuildCity implements ICommand {
      */
     @Override
     public Object execute() {
-        return null;
+
+        ServerFacade.getInstance().buildCity(playerIndex, location);
+        return ServerFacade.getInstance().getModel();
     }
 
     @Override

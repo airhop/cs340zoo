@@ -1,6 +1,9 @@
 package server.commandobjects.user;
 
+import client.model.GameModel;
 import server.commandobjects.ICommand;
+import server.serverfacade.ServerFacade;
+import shared.jsonobject.Login;
 
 /**
  * Created by airho on 3/9/2016.
@@ -20,7 +23,9 @@ public class RegisterUser implements ICommand {
      */
     @Override
     public Object execute() {
-        return null;
+        ServerFacade.getInstance().userRegister(username, password);
+        GameModel model = ServerFacade.getInstance().getModel();
+        return new Login(model.getCurrentPlayer().getUsername(), model.getCurrentPlayer().getPassword(), model.getID());
     }
 
     @Override

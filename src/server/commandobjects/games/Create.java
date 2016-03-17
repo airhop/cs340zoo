@@ -1,6 +1,8 @@
 package server.commandobjects.games;
 
+import client.model.GameModel;
 import server.commandobjects.ICommand;
+import server.serverfacade.ServerFacade;
 
 /**
  * Created by airho on 3/9/2016.
@@ -25,6 +27,9 @@ public class Create implements ICommand {
      */
     @Override
     public Object execute() {
+        //Dont have all the proper variables yet
+        //ServerFacade.getInstance().createGame();
+        GameModel model = ServerFacade.getInstance().getModel();
         return null;
     }
 
