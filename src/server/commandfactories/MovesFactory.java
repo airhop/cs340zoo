@@ -27,9 +27,12 @@ public class MovesFactory {
     public ICommand getCommand(JsonConstructionInfo info) {
         ICommand commandObject;
         commandObject = new AcceptTrade(1, true);
-//        switch (){
-//
-//        }
+        switch(info.getName()){
+            case acceptTrade:
+                return makeAcceptTrade(info);
+            case buildCity:
+                return makeBuildCity(info);
+        }
         return commandObject;
     }
 
