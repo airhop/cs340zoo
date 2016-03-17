@@ -1,10 +1,15 @@
 package server.commandfactories;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
+import com.google.gson.internal.bind.JsonTreeReader;
 import server.commandobjects.ICommand;
 import server.commandobjects.moves.AcceptTrade;
 import server.commandobjects.games.*;
 import server.servermain.JsonConstructionInfo;
 import shared.infoobjects.CurrentResources;
+
+import java.io.IOException;
 
 /**
  * Created by Joshua on 3/10/2016.
@@ -23,6 +28,12 @@ public class GamesFactory {
     public ICommand getCommand(JsonConstructionInfo info) {
         ICommand commandObject;
         commandObject = new Create(true, true, true, "GameName");
+        switch(info.getName()){
+            case create:
+                return makeCreate(info);
+            case join:
+                return makeJoin(info);
+        }
 
         return commandObject;
     }
@@ -33,7 +44,30 @@ public class GamesFactory {
      * @return - Returns the appropriate Command Object
      */
     public Create makeCreate(JsonConstructionInfo info) {
-        return new Create(true, true, true, "GameName");
+        JsonParser myParse = new JsonParser();
+        JsonElement myEle = myParse.parse(info.getJsonBody());
+        JsonTreeReader myTree = new JsonTreeReader(myEle);
+
+        Boolean randomTiles = false;
+        Boolean randomPorts = false;
+        Boolean randomNumbers = false;
+        String gameName = "";
+        try {
+            myTree.beginObject();
+            myTree.nextName();  //This is the first boolean which is the random tiles
+            randomTiles = myTree.nextBoolean(); //This is the Random Tiles Boolean
+            myTree.nextName(); //This is the name == randomNumbers
+            randomNumbers = myTree.nextBoolean(); //This is the boolean randomNumbers
+            myTree.nextName(); //This is the randomPorts
+            randomPorts = myTree.nextBoolean(); //This is the boolean randomPorts
+            myTree.nextName(); //this is the gameName == name
+            gameName = myTree.nextString(); //this is the name of the game
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return new Create(randomTiles, randomPorts, randomNumbers, gameName);
     }
 
     /**
@@ -41,7 +75,25 @@ public class GamesFactory {
      * @param info - Passed to the function to create
      * @return - Returns the appropriate Command Object
      */
-    public Join makeJoin(JsonConstructionInfo info) {
-        return new Join(1, "");
+    public Join makeJoin(JsonConstructionInfo info)
+    {
+        JsonParser myParse = new JsonParser();
+        JsonElement myEle = myParse.parse(info.getJsonBody());
+        JsonTreeReader myTree = new JsonTreeReader(myEle);
+        int playerID = -1;
+        String playerColor = "";
+        try {
+            myTree.beginObject();
+            myTree.nextName();  //This is the first ind which is the gameID
+            playerID = myTree.nextInt(); //This is the gameID
+            myTree.nextName(); //This is the name of the Color
+            playerColor = myTree.nextString(); //This is the color of the player
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return new Join(playerID, playerColor);
     }
 }
