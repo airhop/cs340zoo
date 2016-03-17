@@ -51,6 +51,7 @@ public class Handler implements HttpHandler
         String path = exchange.getRequestURI().getPath();
 
 
+
         try
         {
             //how can I get the cookies from the server facade?
