@@ -19,8 +19,8 @@ public class BuyDevCard implements ICommand {
      * to the player if all necessary conditions are met
      */
     @Override
-    public void execute() {
-
+    public Object execute() {
+        return null;
     }
 
     @Override

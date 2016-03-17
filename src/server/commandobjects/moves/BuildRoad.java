@@ -25,7 +25,8 @@ public class BuildRoad implements ICommand {
      * on the map if all necessary conditions are met
      */
     @Override
-    public void execute() {
+    public Object execute() {
+        return null;
     }
 
     @Override

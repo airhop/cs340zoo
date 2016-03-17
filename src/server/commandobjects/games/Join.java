@@ -20,8 +20,8 @@ public class Join implements ICommand {
      * a game with at least one vacant spot
      */
     @Override
-    public void execute() {
-
+    public Object execute() {
+        return null;
     }
 
     @Override

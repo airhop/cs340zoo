@@ -23,8 +23,8 @@ public class DiscardCards implements ICommand {
      * hand contains more that 7 resources
      */
     @Override
-    public void execute() {
-
+    public Object execute() {
+        return null;
     }
 
     @Override

@@ -22,8 +22,8 @@ public class AcceptTrade implements ICommand {
      * player to the other
      */
     @Override
-    public void execute() {
-
+    public Object execute() {
+        return null;
     }
 
     @Override

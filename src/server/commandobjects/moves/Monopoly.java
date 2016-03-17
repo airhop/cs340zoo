@@ -23,8 +23,8 @@ public class Monopoly implements ICommand {
      * all of that resource type in their possesion
      */
     @Override
-    public void execute() {
-
+    public Object execute() {
+        return null;
     }
 
     @Override

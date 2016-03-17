@@ -22,10 +22,9 @@ public class RollNumber implements ICommand {
      * players roll.
      */
     @Override
-    public void execute() {
-
+    public Object execute() {
+        return null;
     }
-
     @Override
     public void unexecute() {
 

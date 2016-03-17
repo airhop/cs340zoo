@@ -20,8 +20,8 @@ public class LoginUser implements ICommand {
      * the server and choose a game to join, or create a game
      */
     @Override
-    public void execute() {
-
+    public Object execute() {
+        return null;
     }
 
     @Override

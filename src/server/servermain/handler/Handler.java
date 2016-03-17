@@ -50,6 +50,7 @@ public class Handler implements HttpHandler
         String method = exchange.getRequestMethod();
         String path = exchange.getRequestURI().getPath();
 
+
         try
         {
             //how can I get the cookies from the server facade?
@@ -102,11 +103,13 @@ public class Handler implements HttpHandler
         ICommand current;
         String path = exchange.getRequestURI().getPath();
         String JSonString = "";
-        if(path.contains("games/list"))
-            JSonString = ServerFacade.getInstance().getGamesList();
-        else if(path.contains("game/model"))
-            JSonString = ServerFacade.getInstance().getModel();
-        else
+        if(path.contains("games/list")){
+            JSonString = "";
+            ServerFacade.getInstance().getGamesList();
+        } else if(path.contains("game/model")){
+            JSonString = "";
+            ServerFacade.getInstance().getModel();
+        } else
             throw new ServerException("Not a valid get request");
 
 

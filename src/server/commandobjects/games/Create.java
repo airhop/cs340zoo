@@ -24,8 +24,8 @@ public class Create implements ICommand {
      * players to join
      */
     @Override
-    public void execute() {
-
+    public Object execute() {
+        return null;
     }
 
     @Override

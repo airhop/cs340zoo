@@ -14,14 +14,16 @@ public class FinishTurn implements ICommand {
         this.playerIndex = playerIndex;
     }
 
+
     /**
      * Calls on server facade and changes the state
      * of playing from one player to the next
      */
     @Override
-    public void execute() {
-
+    public Object execute() {
+        return null;
     }
+
 
     @Override
     public void unexecute() {

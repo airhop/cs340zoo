@@ -15,8 +15,8 @@ public class AddAI implements ICommand {
      * the game
      */
     @Override
-    public void execute() {
-
+    public Object execute() {
+        return null;
     }
 
     @Override

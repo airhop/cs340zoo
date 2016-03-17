@@ -15,8 +15,8 @@ public class ListAI implements ICommand {
      * all the current computer players
      */
     @Override
-    public void execute() {
-
+    public Object execute() {
+        return null;
     }
 
     @Override

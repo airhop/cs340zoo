@@ -18,6 +18,8 @@ public class Server {
     private Server() {
     }
 
+    private HttpHandler mainHandler = new Handler();
+
     /**
      * This will run the server creating the handler
      */
@@ -67,7 +69,7 @@ public class Server {
         server.start();
     }
 
-    private HttpHandler mainHandler = new Handler();
+
 
     /**
      * The main function

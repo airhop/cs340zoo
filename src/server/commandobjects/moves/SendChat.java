@@ -22,8 +22,8 @@ public class SendChat implements ICommand {
      * players can see
      */
     @Override
-    public void execute() {
-
+    public Object execute() {
+        return null;
     }
 
     @Override

@@ -24,8 +24,8 @@ public class YearOfPlenty implements ICommand {
      * two resource types to gain two cards of
      */
     @Override
-    public void execute() {
-
+    public Object execute() {
+        return null;
     }
 
     @Override

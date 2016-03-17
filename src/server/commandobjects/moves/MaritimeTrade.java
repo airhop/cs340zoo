@@ -27,8 +27,8 @@ public class MaritimeTrade implements ICommand {
      * long as all other conditions are met
      */
     @Override
-    public void execute() {
-
+    public Object execute() {
+        return null;
     }
 
     @Override

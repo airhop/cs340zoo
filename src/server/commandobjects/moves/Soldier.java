@@ -25,8 +25,8 @@ public class Soldier implements ICommand {
      * if they desire.
      */
     @Override
-    public void execute() {
-
+    public Object execute() {
+        return null;
     }
 
     @Override

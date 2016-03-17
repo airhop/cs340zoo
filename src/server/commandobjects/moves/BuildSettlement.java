@@ -26,8 +26,8 @@ public class BuildSettlement implements ICommand {
      * on the map if all necessary conditions are met
      */
     @Override
-    public void execute() {
-
+    public Object execute() {
+        return null;
     }
 
     @Override

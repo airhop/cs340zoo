@@ -25,8 +25,8 @@ public class RobPlayer implements ICommand {
      * or a soldier is played
      */
     @Override
-    public void execute() {
-
+    public Object execute() {
+        return null;
     }
 
     @Override

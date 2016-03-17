@@ -25,8 +25,8 @@ public class OfferTrade implements ICommand {
      * may either accept or deny
      */
     @Override
-    public void execute() {
-
+    public Object execute() {
+        return null;
     }
 
     @Override

@@ -27,8 +27,8 @@ public class RoadBuilding implements ICommand {
      * place down two roads on the map
      */
     @Override
-    public void execute() {
-
+    public Object execute() {
+        return null;
     }
 
     @Override

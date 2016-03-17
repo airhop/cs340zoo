@@ -19,8 +19,8 @@ public class Monument implements ICommand {
      * extra hidden victory point
      */
     @Override
-    public void execute() {
-
+    public Object execute() {
+        return null;
     }
 
     @Override

@@ -8,7 +8,7 @@ public interface ICommand {
      * Calls on server facade and performs the necessary action based
      * on the command object type
      */
-    void execute();
+    Object execute();
 
     /**
      * Calls on server facade and reverses the action done
