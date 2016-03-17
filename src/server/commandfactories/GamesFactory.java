@@ -88,12 +88,9 @@ public class GamesFactory {
             playerID = myTree.nextInt(); //This is the gameID
             myTree.nextName(); //This is the name of the Color
             playerColor = myTree.nextString(); //This is the color of the player
-
-
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         return new Join(playerID, playerColor);
     }
 }

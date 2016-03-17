@@ -22,9 +22,17 @@ public class NewMain {
         List<GameInfo> myList = new ArrayList<>();
         int playerIndex;
         int playerId;
+        User testUser = new User("Sam", "Sam");
+        try {
+            myProxy.userLogin(testUser);
+        } catch (InvalidUserException e) {
+            e.printStackTrace();
+        }
         myProxy.acceptTrade(0, true);
 
         CatanColor myColor = CatanColor.BLUE;
+
+
         try {
             myProxy.gamesJoin(myColor.toString(), 0);
         } catch (InvalidUserException e) {

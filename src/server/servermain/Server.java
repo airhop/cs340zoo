@@ -57,7 +57,7 @@ public class Server {
         server.createContext("/moves/Monopoly", mainHandler);
         server.createContext("/moves/Monument", mainHandler);
         server.createContext("/moves/buildRoad", mainHandler);
-        server.createContext("/moves/buildsettlement", mainHandler);
+        server.createContext("/moves/buildSettlement", mainHandler);
         server.createContext("/moves/buildCity", mainHandler);
         server.createContext("/moves/offerTrade", mainHandler);
         server.createContext("/moves/acceptTrade", mainHandler);

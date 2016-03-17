@@ -18,30 +18,34 @@ import server.servermain.Server;
 import server.shared.CommandType;
 import shared.jsonobject.CreatedGame;
 import shared.jsonobject.Login;
+import sun.misc.IOUtils;
 
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.StringWriter;
 import java.net.HttpURLConnection;
 
 /**
  * Created by Joshua on 3/9/2016.
  */
-public class Handler implements HttpHandler
-{
+public class Handler implements HttpHandler {
     private UserFactory userFactory;
     private GamesFactory gamesFactory;
     private MovesFactory movesFactory;
     private static Cookie Usercookie;
     private static Cookie Gamecookie;
-    public Handler()
-    {
+
+    public Handler() {
         userFactory = new UserFactory();
         gamesFactory = new GamesFactory();
         movesFactory = new MovesFactory();
     }
+
     /**
      * This method will grab the initial incoming exchange and parse the incoming Request Method
      * If it is a GET request it will pass it to the GetMethod.  Otherwise it will parse the RequestURI
      * and pass it to the User, Game, or Moves method
+     *
      * @param exchange - incoming request
      * @throws IOException
      */
@@ -50,10 +54,16 @@ public class Handler implements HttpHandler
         String method = exchange.getRequestMethod();
         String path = exchange.getRequestURI().getPath();
 
+        String testBody = new InputStreamReader(exchange.getRequestBody()).toString();
+        StringWriter writer = new StringWriter();
 
 
-        try
-        {
+
+
+
+
+
+        try {
             //how can I get the cookies from the server facade?
             if ("GET".equals(method))
                 Get(exchange);
@@ -61,32 +71,23 @@ public class Handler implements HttpHandler
             if (path.contains("/user"))
                 UserMethod(exchange);
 
-            else if(Usercookie.isActive())
-            {
-                if(path.contains("/game"))
+            else if (Usercookie.isActive()) {
+                if (path.contains("/game"))
                     GameMethod(exchange);
-                else if(Gamecookie.isActive())
-                {
+                else if (Gamecookie.isActive()) {
                     if (path.contains("/moves"))
                         MoveMethod(exchange);
-                }
-                else
+                } else
                     throw new ServerException("Not joined a game yet . . .");
-
-            }
-            else
+            } else
                 throw new ServerException("Not logged in yet...");
 
-        }
-        catch(ServerException e)
-        {
+        } catch (ServerException e) {
             //return 400 error
             exchange.sendResponseHeaders(400, -1);
             exchange.getResponseBody().write(e.getMessage().getBytes());
             exchange.getResponseBody().close();
-        }
-        catch(IOException e)
-        {
+        } catch (IOException e) {
             exchange.sendResponseHeaders(400, -1);
             exchange.getResponseBody().write(e.getMessage().getBytes());
             exchange.getResponseBody().close();
@@ -97,17 +98,17 @@ public class Handler implements HttpHandler
     /**
      * This method will determine whether this is a game/model or games/list method and will
      * set the exchange in preperation to send it back
+     *
      * @param exchange - incoming request passed by the handle method
      */
-    public void Get(HttpExchange exchange) throws ServerException, IOException
-    {
+    public void Get(HttpExchange exchange) throws ServerException, IOException {
         ICommand current;
         String path = exchange.getRequestURI().getPath();
         String JSonString = "";
-        if(path.contains("games/list")){
+        if (path.contains("games/list")) {
             JSonString = "";
             ServerFacade.getInstance().getGamesList();
-        } else if(path.contains("game/model")){
+        } else if (path.contains("game/model")) {
             JSonString = "";
             ServerFacade.getInstance().getModel();
         } else
@@ -125,15 +126,15 @@ public class Handler implements HttpHandler
     /**
      * This method will determine whether this is a user/login or user/register method before
      * passing the JSON information to the commandfactory to be processed
+     *
      * @param exchange - incoming request passed by the handle method
      */
-    public void UserMethod(HttpExchange exchange) throws ServerException, IOException
-    {
+    public void UserMethod(HttpExchange exchange) throws ServerException, IOException {
         ICommand current;
         String path = exchange.getRequestURI().getPath();
-        if(path.contains("user/login"))
+        if (path.contains("user/login"))
             current = userFactory.getCommand(new JsonConstructionInfo(CommandType.login, exchange.getRequestBody().toString()));
-        else if(path.contains("user/register"))
+        else if (path.contains("user/register"))
             current = userFactory.getCommand(new JsonConstructionInfo(CommandType.register, exchange.getRequestBody().toString()));
         else
             throw new ServerException("Not a valid get request");
@@ -153,33 +154,28 @@ public class Handler implements HttpHandler
     /**
      * This method will handle games Post methods that will be implemented.
      * It will pass the JSON information to the commandfactory to be processed
+     *
      * @param exchange - incoming request passed by the handle method
      */
-    public void GameMethod(HttpExchange exchange) throws ServerException, IOException
-    {
+    public void GameMethod(HttpExchange exchange) throws ServerException, IOException {
         ICommand current;
         String path = exchange.getRequestURI().getPath();
-        if(path.contains("games/create"))
-        {
+        if (path.contains("games/create")) {
             current = gamesFactory.getCommand(new JsonConstructionInfo(CommandType.create, exchange.getRequestBody().toString()));
             Object o = current.execute();
             exchange.sendResponseHeaders(200, 1);
-            exchange.getResponseBody().write(((CreatedGame)o).toString().getBytes());
+            exchange.getResponseBody().write(((CreatedGame) o).toString().getBytes());
             exchange.getResponseBody().close();
-        }
-
-        else if(path.contains("games/join"))
-        {
+        } else if (path.contains("games/join")) {
             current = gamesFactory.getCommand(new JsonConstructionInfo(CommandType.join, exchange.getRequestBody().toString()));
             Object o = current.execute();
             exchange.sendResponseHeaders(200, 1);
-            exchange.getResponseBody().write(((int)o));
+            exchange.getResponseBody().write(((int) o));
             //don't know if an int will write over correctly
             exchange.getResponseBody().close();
 //set cookie for gameID
 //and return the Game Model in the ResponseBody
-        }
-        else
+        } else
             throw new ServerException("Not a valid get request");
 
     }
@@ -187,34 +183,32 @@ public class Handler implements HttpHandler
     /**
      * This method will parse the RequestURI and send the necessary information to the
      * commandfactory to be made into commandObjects
+     *
      * @param exchange - incoming request passed by the handle method
      */
-    public void MoveMethod(HttpExchange exchange) throws ServerException, IOException
-    {
+    public void MoveMethod(HttpExchange exchange) throws ServerException, IOException {
         String path = exchange.getRequestURI().getPath();
         String[] tokens = path.split("/"); //split the URL path into tokens
         CommandType type = CommandType.convert(tokens[tokens.length - 1]); //convert the final token into a CommandType
 
         ICommand current = movesFactory.getCommand(new JsonConstructionInfo(type, exchange.getRequestBody().toString()));
 
-        if(type == CommandType.listAI)
+        if (type == CommandType.listAI)
             throw new ServerException("Unknown Command Type");
 
         Object o = current.execute();
 
         //if current doesn't return anything
         exchange.sendResponseHeaders(200, 1);
-        exchange.getResponseBody().write(((GameModel)o).toString().getBytes());
+        exchange.getResponseBody().write(((GameModel) o).toString().getBytes());
         exchange.getResponseBody().close();
     }
 
-    public static Cookie getUserCookie()
-    {
+    public static Cookie getUserCookie() {
         return Usercookie;
     }
 
-    public static Cookie getGamecookie()
-    {
+    public static Cookie getGamecookie() {
         return Gamecookie;
     }
 }
