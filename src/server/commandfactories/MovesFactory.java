@@ -2,12 +2,17 @@ package server.commandfactories;
 
 import client.model.bank.ResourceList;
 import client.model.map.Road;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
+import com.google.gson.internal.bind.JsonTreeReader;
 import server.commandobjects.ICommand;
 import server.commandobjects.moves.*;
 import server.servermain.JsonConstructionInfo;
 import server.shared.CommandType;
 import shared.definitions.ResourceType;
 import shared.locations.*;
+
+import java.io.IOException;
 
 /**
  * Created by Joshua on 3/10/2016.
@@ -32,6 +37,36 @@ public class MovesFactory {
                 return makeAcceptTrade(info);
             case buildCity:
                 return makeBuildCity(info);
+            case buildRoad:
+                return makeBuildRoad(info);
+            case buildSettlement:
+                return makeBuildSettlement(info);
+            case buyDevCard:
+                return makeBuyDevCar(info);
+            case discardCards:
+                return makeDiscardCards(info);
+            case finishTurn:
+                return makeFinishTurn(info);
+            case maritimeTrade:
+                return makeMaritimeTrade(info);
+            case Monopoly:
+                return makeMonopoly(info);
+            case Monument:
+                return makeMonument(info);
+            case offerTrade:
+                return makeOfferTrade(info);
+            case Road_Building:
+                return makeRoadBuilding(info);
+            case robPlayer:
+                return makeRobPlayer(info);
+            case rollNumber:
+                return makeRollNumber(info);
+            case sendChat:
+                return makeSendChat(info);
+            case Soldier:
+                return makeSoldier(info);
+            case Year_Of_Plenty:
+                return makeYearOfPlenty(info);
         }
         return commandObject;
     }
@@ -42,6 +77,22 @@ public class MovesFactory {
      * @return - Returns the appropriate Command Object
      */
     public AcceptTrade makeAcceptTrade(JsonConstructionInfo info) {
+        JsonParser myParse = new JsonParser();
+        JsonElement myEle = myParse.parse(info.getJsonBody());
+        JsonTreeReader myTree = new JsonTreeReader(myEle);
+        try {
+            myTree.beginObject();
+            myTree.nextName();  //This is the first which is just the type
+            myTree.nextString(); //This is the Type name
+            myTree.nextName(); //This is the name == playerindex
+            myTree.nextInt(); //This is the player index
+            myTree.nextName(); //This is the willAccept
+            myTree.nextBoolean(); //This is the boolean
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         return new AcceptTrade(1, false);
     }
 
