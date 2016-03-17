@@ -1,10 +1,15 @@
 package server.commandfactories;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
+import com.google.gson.internal.bind.JsonTreeReader;
 import server.commandobjects.ICommand;
 import server.commandobjects.moves.AcceptTrade;
 import server.commandobjects.user.LoginUser;
 import server.commandobjects.user.RegisterUser;
 import server.servermain.JsonConstructionInfo;
+
+import java.io.IOException;
 
 /**
  * Created by Joshua on 3/10/2016.
@@ -20,6 +25,12 @@ public class UserFactory {
      */
     public ICommand getCommand(JsonConstructionInfo info){
         ICommand command = new AcceptTrade(1, false);
+        switch(info.getName()){
+            case login:
+                return makeLoginUser(info);
+            case register:
+                return makeRegisterUser(info);
+        }
         return command;
     }
 
@@ -29,9 +40,24 @@ public class UserFactory {
      * @return - Returns the appropriate Command Object
      */
     public LoginUser makeLoginUser(JsonConstructionInfo info){
+        JsonParser myParse = new JsonParser();
+        JsonElement myEle = myParse.parse(info.getJsonBody());
+        JsonTreeReader myTree = new JsonTreeReader(myEle);
 
-        LoginUser userObject = new LoginUser("", "");
-        return new LoginUser("", "");
+        String username = "";
+        String password = "";
+
+        try {
+            myTree.beginObject();
+            myTree.nextName(); //This is the first thing which is the String for the username
+            username = myTree.nextString(); //This is the Username
+            myTree.nextName(); //This is the String password name
+            password = myTree.nextString(); //This is the Password
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return new LoginUser(username, password);
     }
 
     /**
@@ -39,8 +65,26 @@ public class UserFactory {
      * @param info - Passed to the function to create
      * @return - Returns the appropriate Command Object
      */
-    public RegisterUser makeRegisterUser(JsonConstructionInfo info){
-        return new RegisterUser("", "");
+    public RegisterUser makeRegisterUser(JsonConstructionInfo info)
+    {
+        JsonParser myParse = new JsonParser();
+        JsonElement myEle = myParse.parse(info.getJsonBody());
+        JsonTreeReader myTree = new JsonTreeReader(myEle);
+
+        String username = "";
+        String password = "";
+
+        try {
+            myTree.beginObject();
+            myTree.nextName(); //This is the first thing which is the String for the username
+            username = myTree.nextString(); //This is the Username
+            myTree.nextName(); //This is the String password name
+            password = myTree.nextString(); //This is the Password
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return new RegisterUser(username,password);
     }
 
 }
