@@ -12,10 +12,10 @@ import java.lang.reflect.Type;
  */
 public class YearOfPlenty implements ICommand {
     private int playerIndex;
-    private ResourceList resource1;
-    private ResourceList resource2;
+    private ResourceType resource1;
+    private ResourceType resource2;
 
-    public YearOfPlenty(int playerIndex, ResourceList resource1, ResourceList resource2) {
+    public YearOfPlenty(int playerIndex, ResourceType resource1, ResourceType resource2) {
         this.playerIndex = playerIndex;
         this.resource1 = resource1;
         this.resource2 = resource2;

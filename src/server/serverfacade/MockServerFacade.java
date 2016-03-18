@@ -1,6 +1,7 @@
 package server.serverfacade;
 
 import client.MVC.data.GameInfo;
+import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
@@ -91,7 +92,7 @@ public class MockServerFacade implements IServerFacade {
     }
 
     @Override
-    public void yearOfPlenty(int playerIndex, ResourceList res1, ResourceList res2) {
+    public void yearOfPlenty(int playerIndex, ResourceType res1, ResourceType res2) {
 
     }
 

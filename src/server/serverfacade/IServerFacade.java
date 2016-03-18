@@ -1,6 +1,7 @@
 package server.serverfacade;
 
 import client.MVC.data.GameInfo;
+import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
@@ -34,7 +35,7 @@ public interface IServerFacade
 	void robPlayer(int plyerIndex, int victimIndex, HexLocation location);
 	void finishTurn(int playerIndex);
 	void buyDevCard(int playerIndex);
-	void yearOfPlenty(int playerIndex, ResourceList res1, ResourceList res2);
+	void yearOfPlenty(int playerIndex, ResourceType res1, ResourceType res2);
 	void roadBuilding(int playerIndex, EdgeLocation spot1, EdgeLocation spot2);
 	void soldier(int playerIndex, int victimIndex, HexLocation location);
 	void monopoly(int playerIndex, String resource);
