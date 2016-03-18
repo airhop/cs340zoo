@@ -8,12 +8,16 @@ import client.model.GameModel;
 import client.model.bank.ResourceList;
 import client.model.player.Player;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by Josh on 3/10/2016.
  */
 public class ServerFacade implements IServerFacade {
+
+    private List<GameModel> gamesList;
+    private List<GameInfo> gameInfoList;
 
 
     private static ServerFacade facade = null;
@@ -23,6 +27,11 @@ public class ServerFacade implements IServerFacade {
             facade = new ServerFacade();
         }
         return facade;
+    }
+
+    public ServerFacade(){
+        gamesList = new ArrayList<>();
+        gameInfoList = new ArrayList<>();
     }
 
     /**
