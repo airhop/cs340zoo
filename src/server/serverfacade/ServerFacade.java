@@ -2,6 +2,8 @@ package server.serverfacade;
 
 import client.MVC.data.GameInfo;
 import client.MVC.data.PlayerInfo;
+import client.model.player.CurrentPlayer;
+import server.factories.MapFactory;
 import shared.definitions.ResourceType;
 import shared.jsonobject.CreatedGame;
 import shared.jsonobject.Login;
@@ -24,54 +26,72 @@ public class ServerFacade implements IServerFacade {
     private List<GameModel> gamesList;
     private List<GameInfo> gameInfoList;
     private TreeMap<String, Login> players; // first is the username, next is the password
-    int currPlayerID = 0; //the currentID for the player to be added
+    int currPlayerID; //the currentID for the player to be added
+    int currGame;
+    CurrentPlayer currPlayer;
 
-    private static ServerFacade facade = null;
 
-    public static ServerFacade getInstance(){
-        if(facade == null){
-            facade = new ServerFacade();
-        }
-        return facade;
-    }
-
-    public ServerFacade(){
+    public ServerFacade() {
         gamesList = new ArrayList<>();
         gameInfoList = new ArrayList<>();
         players = new TreeMap<String, Login>();
         players.put("Sam", new Login("Sam", "sam", 0));
         players.put("Brooke", new Login("Brooke", "brooke", 1));
+        currPlayerID = 0;
+        currGame = 0;
+        currPlayer = new CurrentPlayer();
+    }
+
+    public CurrentPlayer getCurrPlayer() {
+        return currPlayer;
+    }
+
+    public void setCurrPlayerCook(){
+
+    }
+
+    public void setCurrPlayer(CurrentPlayer currPlayer) {
+        this.currPlayer = currPlayer;
+    }
+
+    private static ServerFacade facade = null;
+
+    public static ServerFacade getInstance() {
+        if (facade == null) {
+            facade = new ServerFacade();
+        }
+        return facade;
     }
 
     /**
      * The command objects will call this method to run a server operation
+     *
      * @param username - the username the player is attempting
      * @param password - the password the player is attempting
      */
     @Override
     public Login userLogin(String username, String password) {
-        if(players.containsKey(username)){
+        if (players.containsKey(username)) {
             Login log = players.get(username);
-            if(password.equals(log.getPassword()))
-            {
+            if (password.equals(log.getPassword())) {
                 return new Login(username, password, log.getID());
             }
         }
 
-        return new Login("","", -1);
+        return new Login("", "", -1);
     }
 
     /**
      * The command objects will call this method to run a server operation
+     *
      * @param username - the player chosen username
      * @param password - the player chosen password
      */
     @Override
     public Login userRegister(String username, String password) {
-        if(players.containsKey(username))
-        {
+        if (players.containsKey(username)) {
             //cannot register a player that already exists
-            return new Login("","",-1);
+            return new Login("", "", -1);
         }
         Login noob = new Login(username, password, currPlayerID++);
         players.put(username, noob);
@@ -80,6 +100,7 @@ public class ServerFacade implements IServerFacade {
 
     /**
      * The command objects will call this method to run a server operation
+     *
      * @return GameModel -
      */
     @Override
@@ -91,26 +112,34 @@ public class ServerFacade implements IServerFacade {
      * The command objects will call this method to run a server operation of creating a game
      */
     @Override
-    public CreatedGame createGame(boolean randomTiles, boolean randomNumbers, boolean randomPorts, String name)
-    {
-
+    public CreatedGame createGame(boolean randomTiles, boolean randomNumbers, boolean randomPorts, String name) {
+        CreatedGame theGame;
+        theGame = new CreatedGame(name, 1);
+        MapFactory myMapFactory = new MapFactory();
+        GameModel myModel = myMapFactory.getWHATEVER(randomTiles, randomNumbers, randomPorts, name);
+        gamesList.add(myModel);
+        myModel.setID(gamesList.size() - 1);
+        return theGame;
     }
 
     /**
      * The command objects will call this method to run the server operation to join a game.
-     * @param id - the id of the game
+     * @param id    - the id of the game
      * @param color - the color chosen by the player for the game.
      */
     @Override
-    public int joinGame(int id, String color)
-    {
-
-
+    public int joinGame(int id, String color) {
+        GameModel myModel = gamesList.get(id);
+        List<Player> gamePlayers = myModel.getPlayers();
+        Player addedPlayer = new Player();
+        gamePlayers.add()
+        return id;
     }
 
     /**
      * The command objects will call this method to run the server operation to save a game
-     * @param id the id of the game being saved
+     *
+     * @param id   the id of the game being saved
      * @param name the name of the game being saved.
      */
     @Override
@@ -120,6 +149,7 @@ public class ServerFacade implements IServerFacade {
 
     /**
      * The command objects will call this method to load an existing game that has been saved
+     *
      * @param name the name of the game being loaded
      */
     @Override
@@ -129,6 +159,7 @@ public class ServerFacade implements IServerFacade {
 
     /**
      * The command objects will call this method to run the server operation of getting the game model
+     *
      * @return the game model
      */
     @Override
@@ -138,6 +169,7 @@ public class ServerFacade implements IServerFacade {
 
     /**
      * The comand objects will call this method to run the server operation of adding an AI player to a game
+     *
      * @param AIType the type of AI that the player wants to play against
      */
     @Override
@@ -155,8 +187,9 @@ public class ServerFacade implements IServerFacade {
 
     /**
      * The command objects will call this method to run the server operation of sending a chat message
+     *
      * @param playerIndex the id of the player sending the message
-     * @param content the content of the message being sent
+     * @param content     the content of the message being sent
      */
     @Override
     public void sendChat(int playerIndex, String content) {
@@ -165,8 +198,9 @@ public class ServerFacade implements IServerFacade {
 
     /**
      * The command objects will call this method to run the server operation of rolling a number
+     *
      * @param playerIndex the id of the player rolling
-     * @param number the number that was rolled which takes place in the client
+     * @param number      the number that was rolled which takes place in the client
      */
     @Override
     public void rollNumber(int playerIndex, int number) {
@@ -175,9 +209,10 @@ public class ServerFacade implements IServerFacade {
 
     /**
      * The command objects will call this method to run the server operation of robbing a player
-     * @param plyerIndex the id of the player doing the robbing
+     *
+     * @param plyerIndex  the id of the player doing the robbing
      * @param victimIndex the id of the player being robbed
-     * @param location the location of the robber
+     * @param location    the location of the robber
      */
     @Override
     public void robPlayer(int plyerIndex, int victimIndex, HexLocation location) {
@@ -186,6 +221,7 @@ public class ServerFacade implements IServerFacade {
 
     /**
      * The command ojects will call this method to run the server operation of finishing a turn
+     *
      * @param playerIndex the id of the player ending their turn
      */
     @Override
@@ -195,6 +231,7 @@ public class ServerFacade implements IServerFacade {
 
     /**
      * Thee command objects will call this method to run the server operation of buying a developemnt card
+     *
      * @param playerIndex the id of the player buying the developement card
      */
     @Override
@@ -204,6 +241,7 @@ public class ServerFacade implements IServerFacade {
 
     /**
      * the command objects will call this method to tun the server operation of playing a Year of Plenty card
+     *
      * @param playerIndex the id of the player using the Year of Plenty card
      * @param res1
      * @param res2
@@ -215,6 +253,7 @@ public class ServerFacade implements IServerFacade {
 
     /**
      * The command objects will call this method to run a server operation
+     *
      * @param playerIndex the index of the current player
      * @param spot1
      * @param spot2
@@ -226,9 +265,10 @@ public class ServerFacade implements IServerFacade {
 
     /**
      * The command objects will call this method to run the server operation of playing a soldier card
+     *
      * @param playerIndex the index of the player using the soldier card
      * @param victimIndex the index of the player being robbed
-     * @param location the new location of the robber
+     * @param location    the new location of the robber
      */
     @Override
     public void soldier(int playerIndex, int victimIndex, HexLocation location) {
@@ -237,6 +277,7 @@ public class ServerFacade implements IServerFacade {
 
     /**
      * The command objects will call this method to run the server operation of playing a monopoly card
+     *
      * @param playerIndex the id of the player using the monopoly card
      * @param resource
      */
@@ -247,6 +288,7 @@ public class ServerFacade implements IServerFacade {
 
     /**
      * The command objects will call this method to run the server operation of using a monument card
+     *
      * @param playerIndex the id of the player using the monument card
      */
     @Override
@@ -256,9 +298,10 @@ public class ServerFacade implements IServerFacade {
 
     /**
      * The command objects will call this method to run the server operation of building a road
-     * @param playerIndex the id of the player building the road
+     *
+     * @param playerIndex  the id of the player building the road
      * @param roadLocation the location the player wishes to place the road
-     * @param free whether or not the spot they are trying to build on is available
+     * @param free         whether or not the spot they are trying to build on is available
      */
     @Override
     public void buildRoad(int playerIndex, EdgeLocation roadLocation, Boolean free) {
@@ -267,9 +310,10 @@ public class ServerFacade implements IServerFacade {
 
     /**
      * The command objects will call this method to run the server operation of building a settlement
-     * @param playerIndex the id of the player building the settlement
+     *
+     * @param playerIndex    the id of the player building the settlement
      * @param vertexLocation the location the player wishes to place the settlement
-     * @param free whether or not the spot the player is attempting to build on is available
+     * @param free           whether or not the spot the player is attempting to build on is available
      */
     @Override
     public void buildSettlement(int playerIndex, VertexLocation vertexLocation, boolean free) {
@@ -278,7 +322,8 @@ public class ServerFacade implements IServerFacade {
 
     /**
      * The command objects will call this method to run the server operation of building a city
-     * @param playerIndex the id of the player wishing to build a city
+     *
+     * @param playerIndex    the id of the player wishing to build a city
      * @param vertexLocation the location the player wants to build the city at (on an existing settlement)
      */
     @Override
@@ -288,9 +333,10 @@ public class ServerFacade implements IServerFacade {
 
     /**
      * The command objects will call this method to run the server operation of making a trade offer
+     *
      * @param playerIndex the id of the player making an offer
-     * @param offer the offered resources by the offeree
-     * @param receiver the id of the player receiving the trade offer
+     * @param offer       the offered resources by the offeree
+     * @param receiver    the id of the player receiving the trade offer
      */
     @Override
     public void offerTrade(int playerIndex, ResourceList offer, int receiver) {
@@ -299,8 +345,9 @@ public class ServerFacade implements IServerFacade {
 
     /**
      * The command objects will call this method to run the server operation of accepting a trade
+     *
      * @param playerIndex the id of the player who will accept a trade
-     * @param willAccept whether or not the player did accept the trade (true = yes)
+     * @param willAccept  whether or not the player did accept the trade (true = yes)
      */
     @Override
     public void acceptTrade(int playerIndex, boolean willAccept) {
@@ -309,9 +356,10 @@ public class ServerFacade implements IServerFacade {
 
     /**
      * The command objects will call this method to run the server operation of conducting a maritime trade
-     * @param playerIndex the id of the player wanting to maritime trade
-     * @param ratio the ratio the player is able to trade at
-     * @param inputResource the resource that the player is offering
+     *
+     * @param playerIndex    the id of the player wanting to maritime trade
+     * @param ratio          the ratio the player is able to trade at
+     * @param inputResource  the resource that the player is offering
      * @param outputResource the resource the player wants to receive
      */
     @Override
@@ -321,7 +369,8 @@ public class ServerFacade implements IServerFacade {
 
     /**
      * The command objects will call this method to run the server operation of discarding cards
-     * @param playerIndex the id of the player being forced to discard cards
+     *
+     * @param playerIndex    the id of the player being forced to discard cards
      * @param discardedCards the resources the player is discarding
      */
     @Override

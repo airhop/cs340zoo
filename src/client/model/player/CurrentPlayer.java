@@ -13,16 +13,22 @@ public class CurrentPlayer {
     private int playerIndex;
     private int gameId;
 
+    public CurrentPlayer(){
+        String username = "";
+        String password = "";
+        CatanColor color = CatanColor.BLUE;
+        int playerId = 0;
+        int playerIndex = 0;
+        int gameId = 0;
+    }
+
+
     public int getGameId() {
         return gameId;
     }
 
     public void setGameId(int gameId) {
         this.gameId = gameId;
-    }
-
-    public CurrentPlayer(){
-
     }
 
     public int getPlayerId() {
