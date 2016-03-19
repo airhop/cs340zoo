@@ -23,9 +23,7 @@ public class Join implements ICommand {
      */
     @Override
     public Object execute() {
-        ServerFacade.getInstance().joinGame(id, color);
-        GameModel model = ServerFacade.getInstance().getModel();
-        return model.getID();
+        return ServerFacade.getInstance().joinGame(id, color);
     }
 
     @Override

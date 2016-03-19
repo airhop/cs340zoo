@@ -26,9 +26,7 @@ public class LoginUser implements ICommand {
      */
     @Override
     public Object execute() {
-        ServerFacade.getInstance().userLogin(username, password);
-        GameModel model = ServerFacade.getInstance().getModel();
-        return new Login(model.getCurrentPlayer().getUsername(), model.getCurrentPlayer().getPassword(), model.getID());
+        return ServerFacade.getInstance().userLogin(username, password);
     }
 
     @Override
