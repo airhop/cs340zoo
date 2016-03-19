@@ -37,6 +37,9 @@ public class ServerFacade implements IServerFacade {
     public ServerFacade(){
         gamesList = new ArrayList<>();
         gameInfoList = new ArrayList<>();
+        players = new TreeMap<String, Login>();
+        players.put("Sam", new Login("Sam", "sam", 0));
+        players.put("Brooke", new Login("Brooke", "brooke", 1));
     }
 
     /**
