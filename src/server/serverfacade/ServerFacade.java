@@ -11,6 +11,7 @@ import client.model.player.Player;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TreeMap;
 
 /**
  * Created by Josh on 3/10/2016.
@@ -19,7 +20,7 @@ public class ServerFacade implements IServerFacade {
 
     private List<GameModel> gamesList;
     private List<GameInfo> gameInfoList;
-
+    private TreeMap<String, String> players; // first is the username, next is the password
 
     private static ServerFacade facade = null;
 
@@ -41,8 +42,13 @@ public class ServerFacade implements IServerFacade {
      * @param password - the password the player is attempting
      */
     @Override
-    public void userLogin(String username, String password) {
-
+    public boolean userLogin(String username, String password) {
+        if(players.containsKey(username)){
+            if(players.get(username).equals(password)){
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -51,8 +57,12 @@ public class ServerFacade implements IServerFacade {
      * @param password - the player chosen password
      */
     @Override
-    public void userRegister(String username, String password) {
-
+    public boolean userRegister(String username, String password) {
+        if(players.containsKey(username)){
+            players.put(username, password);
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -61,7 +71,7 @@ public class ServerFacade implements IServerFacade {
      */
     @Override
     public List<GameInfo> getGamesList() {
-        return null;
+        return gameInfoList;
     }
 
     /**
@@ -77,7 +87,7 @@ public class ServerFacade implements IServerFacade {
 
     /**
      * The command objects will call this method to run the server operation to join a game.
-     * @param id - the id of the player joining the game
+     * @param id - the id of the game
      * @param color - the color chosen by the player for the game.
      */
     @Override

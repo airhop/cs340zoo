@@ -191,7 +191,6 @@ public class MovesFactory {
             myTree.endObject();//exiting the Edge Location Object
             myTree.nextName(); //the name of the is free boolean
             isFree = myTree.nextBoolean();//the is free boolean
-
         } catch (IOException e) {
             e.printStackTrace();
         }

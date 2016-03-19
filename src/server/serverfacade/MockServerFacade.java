@@ -17,13 +17,13 @@ import java.util.List;
 public class MockServerFacade implements IServerFacade {
 
     @Override
-    public void userLogin(String username, String password) {
-
+    public boolean userLogin(String username, String password) {
+        return false;
     }
 
     @Override
-    public void userRegister(String username, String password) {
-
+    public boolean userRegister(String username, String password) {
+        return false;
     }
 
     @Override
