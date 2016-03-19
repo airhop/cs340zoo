@@ -32,7 +32,7 @@ public class MockServerFacade implements IServerFacade {
     }
 
     @Override
-    public void createGame(String title, int id, Player[] players) {
+    public void createGame(boolean randomTiles, boolean randomNumbers, boolean randomPorts, String name) {
 
     }
 

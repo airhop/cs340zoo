@@ -76,12 +76,9 @@ public class ServerFacade implements IServerFacade {
 
     /**
      * The command objects will call this method to run a server operation of creating a game
-     * @param title the title of the game
-     * @param id the id of the game
-     * @param players the players in the game
      */
     @Override
-    public void createGame(String title, int id, Player[] players) {
+    public void createGame(boolean randomTiles, boolean randomNumbers, boolean randomPorts, String name) {
 
     }
 

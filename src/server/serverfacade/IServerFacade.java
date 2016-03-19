@@ -26,7 +26,7 @@ public interface IServerFacade
 	void save(int id, String name);
 	void load(String name);
 	//game: total 6 methods
-	GameModel getModel(int gameId);
+	GameModel getModel();
 	void addAI(String AIType);
 	void listAI();
 	//moves: total 17 methods
