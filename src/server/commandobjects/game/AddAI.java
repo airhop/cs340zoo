@@ -1,13 +1,16 @@
 package server.commandobjects.game;
 
 import server.commandobjects.ICommand;
+import server.serverfacade.ServerFacade;
 
 /**
  * Created by airho on 3/9/2016.
  */
 public class AddAI implements ICommand {
-    public AddAI() {
+    String name;
 
+    public AddAI(String name) {
+        this.name = name;
     }
 
     /**

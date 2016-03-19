@@ -42,6 +42,21 @@ public class Map
 		fixBuildings();
 	}
 
+	public Map(ArrayList<Hex> hs, ArrayList<Port> ps)
+	{
+		this.hexes = new TreeMap<HexLocation,Hex>();
+		for(int i = 0; i< hs.size(); i++)
+			hexes.put(hs.get(i).getLocation(), hs.get(i));
+		this.ports = ps;
+		roads = new ArrayList<Road>();
+		robber = new Robber();
+		buildings = new ArrayList<VertexObject>();
+		resources = new ArrayList<ResourceList>();
+		deserializer = new Deserializer();
+		addOcean();
+		fixBuildings();
+	}
+
 	public void clearHexes()
 	{
 		hexes.clear();
@@ -49,6 +64,57 @@ public class Map
 	public void clearBuildings()
 	{
 		buildings.clear();
+	}
+
+	public ArrayList<ResourceList> giveResources(int rolledNumber) {
+		ResourceList playerOne = new ResourceList();
+		ResourceList playerTwo = new ResourceList();
+		ResourceList playerThree = new ResourceList();
+		ResourceList playerFour = new ResourceList();
+
+		ArrayList<HexLocation> locations = new ArrayList<HexLocation>();
+		for (HexLocation hex : hexes.keySet()) {
+			Hex currentHex = hexes.get(hex);
+			if (currentHex.chit == rolledNumber) {
+				locations.add(hex);
+			}
+		}
+		for (HexLocation loc : locations) {
+			ArrayList<VertexObject> builds = getVObjectsAroundHexlocation(loc);
+			for (VertexObject building : builds) {
+				if (buildings.contains(building)) {
+					if (building.getOwner() == 0) {
+						if (building instanceof Settlement) {
+							playerOne.addResourceType(hexes.get(loc).getResource(), 1);
+						} else playerOne.addResourceType(hexes.get(loc).getResource(), 2);
+					}
+					if (building.getOwner() == 1) {
+						if (building instanceof Settlement) {
+							playerTwo.addResourceType(hexes.get(loc).getResource(), 1);
+						} else playerTwo.addResourceType(hexes.get(loc).getResource(), 2);
+					}
+					if (building.getOwner() == 2) {
+						if (building instanceof Settlement) {
+							playerThree.addResourceType(hexes.get(loc).getResource(), 1);
+						} else playerThree.addResourceType(hexes.get(loc).getResource(), 2);
+					}
+					if (building.getOwner() == 3) {
+						if (building instanceof Settlement) {
+							playerFour.addResourceType(hexes.get(loc).getResource(), 1);
+						} else playerFour.addResourceType(hexes.get(loc).getResource(), 2);
+					}
+				}
+			}
+		}
+		ArrayList<ResourceList> lists = new ArrayList<ResourceList>();
+		lists.add(playerOne);
+		lists.add(playerTwo);
+		lists.add(playerThree);
+		lists.add(playerFour);
+		for (ResourceList list : lists) {
+			list.toString();
+		}
+		return lists;
 	}
 
 	private void addOcean()

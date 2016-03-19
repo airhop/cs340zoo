@@ -1,6 +1,8 @@
 package server.commandobjects.game;
 
 import server.commandobjects.ICommand;
+import server.serverfacade.ServerFacade;
+import server.servermain.Server;
 
 /**
  * Created by airho on 3/9/2016.
@@ -16,6 +18,7 @@ public class ListAI implements ICommand {
      */
     @Override
     public Object execute() {
+        ServerFacade.getInstance().listAI();
         return null;
     }
 

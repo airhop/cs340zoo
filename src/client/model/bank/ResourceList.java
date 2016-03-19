@@ -1,6 +1,9 @@
 package client.model.bank;
 
+import shared.definitions.ResourceType;
+
 import javax.annotation.Resource;
+import java.util.ArrayList;
 
 public class ResourceList {
 
@@ -97,6 +100,70 @@ public class ResourceList {
         ResourceList result = new ResourceList(newbrick, newore, newsheep, newwheat, newwood);
         return result;
     }
+
+    public ResourceType stealCard() {
+        ResourceType card = null;
+        ArrayList<Integer> ints = new ArrayList<Integer>();
+        for (int i = 0; i < numOfBrick; i++) {
+            ints.add(0);
+        }
+        for (int i = 0; i < numOfOre; i++) {
+            ints.add(1);
+        }
+        for (int i = 0; i < numOfSheep; i++) {
+            ints.add(2);
+        }
+        for (int i = 0; i < numOfWheat; i++) {
+            ints.add(3);
+        }
+        for (int i = 0; i < numOfWood; i++) {
+            ints.add(4);
+        }
+        if (ints.size() == 0) {
+            return null;
+        }
+        int random = ints.get((int) (Math.random() * ints.size() - 1));
+        if (random == 0) {
+            card = ResourceType.BRICK;
+            this.numOfBrick--;
+        }
+        if (random == 1) {
+            card = ResourceType.ORE;
+            this.numOfOre--;
+        }
+        if (random == 2) {
+            card = ResourceType.SHEEP;
+            this.numOfSheep--;
+        }
+        if (random == 3) {
+            card = ResourceType.WHEAT;
+            this.numOfWheat--;
+        }
+        if (random == 4) {
+            card = ResourceType.WOOD;
+            this.numOfWood--;
+        }
+        return card;
+    }
+
+    public void addResourceType(String type, int num) {
+        if (type.equals("BRICK")) {
+            numOfBrick += num;
+        }
+        if (type.equals("ORE")) {
+            numOfOre += num;
+        }
+        if (type.equals("SHEEP")) {
+            numOfSheep += num;
+        }
+        if (type.equals("WHEAT")) {
+            numOfWheat += num;
+        }
+        if (type.equals("WOOD")) {
+            numOfWood += num;
+        }
+    }
+
     public String toString()
     {
         StringBuilder sb = new StringBuilder();
