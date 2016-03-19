@@ -2,6 +2,7 @@ package server.serverfacade;
 
 import client.MVC.data.GameInfo;
 import shared.definitions.ResourceType;
+import shared.jsonobject.CreatedGame;
 import shared.jsonobject.Login;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
@@ -33,13 +34,13 @@ public class MockServerFacade implements IServerFacade {
     }
 
     @Override
-    public void createGame(boolean randomTiles, boolean randomNumbers, boolean randomPorts, String name) {
-
+    public CreatedGame createGame(boolean randomTiles, boolean randomNumbers, boolean randomPorts, String name) {
+        return new CreatedGame("GameName", -1);
     }
 
     @Override
-    public void joinGame(int id, String color) {
-
+    public int joinGame(int id, String color) {
+        return -1;
     }
 
     @Override

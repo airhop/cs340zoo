@@ -2,6 +2,7 @@ package server.serverfacade;
 
 import client.MVC.data.GameInfo;
 import shared.definitions.ResourceType;
+import shared.jsonobject.CreatedGame;
 import shared.jsonobject.Login;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
@@ -22,8 +23,8 @@ public interface IServerFacade
 	Login userRegister(String username, String password);
 	//games: total 5 methods
 	List<GameInfo> getGamesList();
-	void createGame(boolean randomTiles, boolean randomNumbers, boolean randomPorts, String name);
-	void joinGame(int id, String color);
+	CreatedGame createGame(boolean randomTiles, boolean randomNumbers, boolean randomPorts, String name);
+	int joinGame(int id, String color);
 	void save(int id, String name);
 	void load(String name);
 	//game: total 6 methods
