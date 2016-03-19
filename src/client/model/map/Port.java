@@ -27,6 +27,19 @@ public class Port {
         ratio = rat;
     }
 
+    public void setType(String type)
+    {
+        if(type.equalsIgnoreCase("three"))
+        {
+            resource = "";
+            ratio = 3;
+            return;
+        }
+
+        ratio = 2;
+        resource = type.toUpperCase();
+
+    }
     public HexLocation getLocation() {
         return location;
     }

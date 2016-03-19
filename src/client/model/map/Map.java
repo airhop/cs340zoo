@@ -42,6 +42,21 @@ public class Map
 		fixBuildings();
 	}
 
+	public Map(ArrayList<Hex> hs, ArrayList<Port> ps)
+	{
+		this.hexes = new TreeMap<HexLocation,Hex>();
+		for(int i = 0; i< hs.size(); i++)
+			hexes.put(hs.get(i).getLocation(), hs.get(i));
+		this.ports = ps;
+		roads = new ArrayList<Road>();
+		robber = new Robber();
+		buildings = new ArrayList<VertexObject>();
+		resources = new ArrayList<ResourceList>();
+		deserializer = new Deserializer();
+		addOcean();
+		fixBuildings();
+	}
+
 	public void clearHexes()
 	{
 		hexes.clear();
