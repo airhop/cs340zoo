@@ -116,7 +116,7 @@ public class ServerFacade implements IServerFacade {
         CreatedGame theGame;
         theGame = new CreatedGame(name, 1);
         MapFactory myMapFactory = new MapFactory();
-        GameModel myModel = myMapFactory.getWHATEVER(randomTiles, randomNumbers, randomPorts, name);
+        GameModel myModel = myMapFactory.newModel(randomTiles, randomNumbers, randomPorts, name);
         gamesList.add(myModel);
         myModel.setID(gamesList.size() - 1);
         return theGame;
@@ -131,8 +131,8 @@ public class ServerFacade implements IServerFacade {
     public int joinGame(int id, String color) {
         GameModel myModel = gamesList.get(id);
         List<Player> gamePlayers = myModel.getPlayers();
-        Player addedPlayer = new Player();
-        gamePlayers.add()
+        Player addedPlayer = new Player(currPlayer.getUsername(), currPlayer.getGameId());
+        gamePlayers.add(addedPlayer);
         return id;
     }
 
