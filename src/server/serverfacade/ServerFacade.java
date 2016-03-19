@@ -1,7 +1,9 @@
 package server.serverfacade;
 
 import client.MVC.data.GameInfo;
+import client.MVC.data.PlayerInfo;
 import shared.definitions.ResourceType;
+import shared.jsonobject.Login;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
@@ -20,7 +22,8 @@ public class ServerFacade implements IServerFacade {
 
     private List<GameModel> gamesList;
     private List<GameInfo> gameInfoList;
-    private TreeMap<String, String> players; // first is the username, next is the password
+    private TreeMap<String, Login> players; // first is the username, next is the password
+    static int currPlayerID = 0; //the currentID for the player to be added
 
     private static ServerFacade facade = null;
 
@@ -42,13 +45,16 @@ public class ServerFacade implements IServerFacade {
      * @param password - the password the player is attempting
      */
     @Override
-    public boolean userLogin(String username, String password) {
+    public Login userLogin(String username, String password) {
         if(players.containsKey(username)){
-            if(players.get(username).equals(password)){
-                return true;
+            Login log = players.get(username);
+            if(password.equals(log.getPassword()))
+            {
+                return new Login(username, password, log.getID());
             }
         }
-        return false;
+
+        return new Login("","", -1);
     }
 
     /**
@@ -57,12 +63,15 @@ public class ServerFacade implements IServerFacade {
      * @param password - the player chosen password
      */
     @Override
-    public boolean userRegister(String username, String password) {
-        if(players.containsKey(username)){
-            players.put(username, password);
-            return true;
+    public Login userRegister(String username, String password) {
+        if(players.containsKey(username))
+        {
+            //cannot register a player that already exists
+            return new Login("","",-1);
         }
-        return false;
+        Login noob = new Login(username, password, currPlayerID++);
+        players.put(username, noob);
+        return noob;
     }
 
     /**
@@ -78,7 +87,8 @@ public class ServerFacade implements IServerFacade {
      * The command objects will call this method to run a server operation of creating a game
      */
     @Override
-    public void createGame(boolean randomTiles, boolean randomNumbers, boolean randomPorts, String name) {
+    public void createGame(boolean randomTiles, boolean randomNumbers, boolean randomPorts, String name)
+    {
 
     }
 

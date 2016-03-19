@@ -2,6 +2,7 @@ package server.serverfacade;
 
 import client.MVC.data.GameInfo;
 import shared.definitions.ResourceType;
+import shared.jsonobject.Login;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
@@ -17,13 +18,13 @@ import java.util.List;
 public class MockServerFacade implements IServerFacade {
 
     @Override
-    public boolean userLogin(String username, String password) {
-        return false;
+    public Login userLogin(String username, String password) {
+        return new Login("","", -1);
     }
 
     @Override
-    public boolean userRegister(String username, String password) {
-        return false;
+    public Login userRegister(String username, String password) {
+        return new Login("","", -1);
     }
 
     @Override
