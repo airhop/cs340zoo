@@ -1,13 +1,11 @@
-package server.commandfactories;
+package server.factories;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.google.gson.internal.bind.JsonTreeReader;
 import server.commandobjects.ICommand;
-import server.commandobjects.moves.AcceptTrade;
 import server.commandobjects.games.*;
 import server.servermain.JsonConstructionInfo;
-import shared.infoobjects.CurrentResources;
 
 import java.io.IOException;
 

@@ -7,24 +7,18 @@ import client.proxy.Cookie;
 import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
-import server.commandfactories.GamesFactory;
-import server.commandfactories.MovesFactory;
-import server.commandfactories.UserFactory;
+import server.factories.GamesFactory;
+import server.factories.MovesFactory;
+import server.factories.UserFactory;
 import server.commandobjects.ICommand;
-import server.commandobjects.game.ListAI;
 import server.serverfacade.ServerFacade;
 import server.servermain.exceptions.ServerException;
 import server.servermain.JsonConstructionInfo;
-import server.servermain.Server;
 import server.shared.CommandType;
 import shared.jsonobject.CreatedGame;
 import shared.jsonobject.Login;
-import sun.misc.IOUtils;
 
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.StringWriter;
-import java.net.HttpURLConnection;
 import java.util.Scanner;
 
 /**
@@ -59,12 +53,6 @@ public class Handler implements HttpHandler {
 
         requestBody = new Scanner(exchange.getRequestBody()).next();
         Headers test = exchange.getRequestHeaders();
-
-
-
-
-
-
 
         try {
             //how can I get the cookies from the server facade?
@@ -144,6 +132,9 @@ public class Handler implements HttpHandler {
 
         Object o = current.execute();
         Login login = (Login) o;
+        if(login.getID() == -1){
+            throw new ServerException("False user");
+        }
 
         //if cookie == null awesome, else throw serverexception...
 
