@@ -5,6 +5,7 @@ import com.sun.net.httpserver.HttpServer;
 import server.servermain.handler.Handler;
 import java.io.IOException;
 import java.net.InetSocketAddress;
+import server.servermain.handler.Handlers;
 
 /**
  * Created by Joshua on 3/11/2016.
@@ -64,6 +65,8 @@ public class Server {
         server.createContext("/moves/maritimeTrade", mainHandler);
         server.createContext("/moves/discardCards", mainHandler);
 
+        server.createContext("/docs/api/data", new Handlers.JSONAppender(""));
+        server.createContext("/docs/api/view", new Handlers.BasicFile(""));
 
 //        logger.info("Starting HTTP Server");
         server.start();

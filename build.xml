@@ -100,6 +100,7 @@
 	<property name="java.build" location="${java.dir}/out/production"/>
 	<property name="java.dist" location="${java.dir}/dist"/>
 	<property name="java.lib" location="${java.dir}/lib"/>
+	<property name="java.docs" location="${java.dir}/src/docs"/>
  
 	<target name="init" description="create build directories">
 		<tstamp/>
@@ -128,6 +129,12 @@
 		<mkdir dir="${java.dist}/images"/>
 		<copy todir="${java.dist}/images">
 			<fileset dir="${java.images}">
+				<include name="**"/>
+			</fileset>
+		</copy>
+		<mkdir dir="${java.dist}/docs"/>
+		<copy todir="${java.dist}/docs">
+			<fileset dir="${java.docs}">
 				<include name="**"/>
 			</fileset>
 		</copy>

@@ -51,7 +51,11 @@ public class Handler implements HttpHandler {
         String method = exchange.getRequestMethod();
         String path = exchange.getRequestURI().getPath();
 
-        requestBody = new Scanner(exchange.getRequestBody()).next();
+        Scanner scan = new Scanner(exchange.getRequestBody());
+        requestBody = "";
+        while(scan.hasNext())
+            requestBody += scan.nextLine();
+
         Headers test = exchange.getRequestHeaders();
 
         try {
@@ -59,9 +63,9 @@ public class Handler implements HttpHandler {
             if ("GET".equals(method))
                 Get(exchange);
 
+//            System.out.println(path);
             if (path.contains("/user"))
                 UserMethod(exchange);
-
             else if (Usercookie.isActive()) {
                 if (path.contains("/game"))
                     GameMethod(exchange);
@@ -83,6 +87,8 @@ public class Handler implements HttpHandler {
             exchange.getResponseBody().write(e.getMessage().getBytes());
             exchange.getResponseBody().close();
         }
+
+        System.out.println("Exchange response Body " + exchange.getResponseBody().toString());
     }
 
 
@@ -123,15 +129,18 @@ public class Handler implements HttpHandler {
     public void UserMethod(HttpExchange exchange) throws ServerException, IOException {
         ICommand current;
         String path = exchange.getRequestURI().getPath();
-        if (path.contains("user/login"))
+        System.out.println("User Method " + path + " " + path.contains("/login"));
+        if (path.contains("/login"))
             current = userFactory.getCommand(new JsonConstructionInfo(CommandType.login, requestBody));
-        else if (path.contains("user/register"))
+        else if (path.contains("/register"))
             current = userFactory.getCommand(new JsonConstructionInfo(CommandType.register, requestBody));
         else
             throw new ServerException("Not a valid get request");
 
         Object o = current.execute();
         Login login = (Login) o;
+
+        System.out.println("LoginObject " + login.toString());
         if(login.getID() == -1){
             throw new ServerException("False user");
         }
@@ -139,6 +148,7 @@ public class Handler implements HttpHandler {
         //if cookie == null awesome, else throw serverexception...
 
         exchange.sendResponseHeaders(200, 1);
+        exchange.getResponseBody().write(login.toString().getBytes());
         exchange.getResponseBody().close();
 
 //if successful set-cookie

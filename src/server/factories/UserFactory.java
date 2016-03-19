@@ -47,6 +47,7 @@ public class UserFactory {
         String username = "";
         String password = "";
 
+
         try {
             myTree.beginObject();
             myTree.nextName(); //This is the first thing which is the String for the username
@@ -57,6 +58,8 @@ public class UserFactory {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        System.out.println("Username = " + username + " Password = " + password);
         return new LoginUser(username, password);
     }
 

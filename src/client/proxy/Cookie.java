@@ -95,6 +95,8 @@ public class Cookie {
     }
 
     public void setFullCookie(String given) {
+        if(given == null)
+            return;
         cookieName = given.substring(0, 10);
         cookieValue = given.substring(11);
         cookieValue = cookieValue.substring(0, cookieValue.length() - 1);

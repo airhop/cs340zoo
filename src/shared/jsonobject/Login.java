@@ -34,4 +34,9 @@ public class Login
 	public void setID(int ID) {
 		this.ID = ID;
 	}
+
+	public String toString()
+	{
+		return username + " " + password + " " + ID;
+	}
 }
