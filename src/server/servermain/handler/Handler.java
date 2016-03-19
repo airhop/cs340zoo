@@ -4,6 +4,7 @@ package server.servermain.handler;
 
 import client.model.GameModel;
 import client.proxy.Cookie;
+import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import server.commandfactories.GamesFactory;
@@ -24,6 +25,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.StringWriter;
 import java.net.HttpURLConnection;
+import java.util.Scanner;
 
 /**
  * Created by Joshua on 3/9/2016.
@@ -32,6 +34,7 @@ public class Handler implements HttpHandler {
     private UserFactory userFactory;
     private GamesFactory gamesFactory;
     private MovesFactory movesFactory;
+    private String requestBody;
     private static Cookie Usercookie;
     private static Cookie Gamecookie;
 
@@ -54,8 +57,8 @@ public class Handler implements HttpHandler {
         String method = exchange.getRequestMethod();
         String path = exchange.getRequestURI().getPath();
 
-        String testBody = new InputStreamReader(exchange.getRequestBody()).toString();
-        StringWriter writer = new StringWriter();
+        requestBody = new Scanner(exchange.getRequestBody()).next();
+        Headers test = exchange.getRequestHeaders();
 
 
 
@@ -133,9 +136,9 @@ public class Handler implements HttpHandler {
         ICommand current;
         String path = exchange.getRequestURI().getPath();
         if (path.contains("user/login"))
-            current = userFactory.getCommand(new JsonConstructionInfo(CommandType.login, exchange.getRequestBody().toString()));
+            current = userFactory.getCommand(new JsonConstructionInfo(CommandType.login, requestBody));
         else if (path.contains("user/register"))
-            current = userFactory.getCommand(new JsonConstructionInfo(CommandType.register, exchange.getRequestBody().toString()));
+            current = userFactory.getCommand(new JsonConstructionInfo(CommandType.register, requestBody));
         else
             throw new ServerException("Not a valid get request");
 
