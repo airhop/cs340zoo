@@ -3,6 +3,7 @@ package server.serverfacade;
 import client.MVC.data.GameInfo;
 import client.MVC.data.PlayerInfo;
 import shared.definitions.ResourceType;
+import shared.jsonobject.CreatedGame;
 import shared.jsonobject.Login;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
@@ -90,7 +91,7 @@ public class ServerFacade implements IServerFacade {
      * The command objects will call this method to run a server operation of creating a game
      */
     @Override
-    public void createGame(boolean randomTiles, boolean randomNumbers, boolean randomPorts, String name)
+    public CreatedGame createGame(boolean randomTiles, boolean randomNumbers, boolean randomPorts, String name)
     {
 
     }
@@ -101,7 +102,9 @@ public class ServerFacade implements IServerFacade {
      * @param color - the color chosen by the player for the game.
      */
     @Override
-    public void joinGame(int id, String color) {
+    public int joinGame(int id, String color)
+    {
+
 
     }
 
