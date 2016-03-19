@@ -193,7 +193,8 @@ public class ServerFacade implements IServerFacade {
      */
     @Override
     public void sendChat(int playerIndex, String content) {
-
+        GameModel game = gamesList.get(currGame);
+        game.getChat().addMessage(currPlayer.getUsername(), content);
     }
 
     /**
@@ -204,7 +205,15 @@ public class ServerFacade implements IServerFacade {
      */
     @Override
     public void rollNumber(int playerIndex, int number) {
-
+        GameModel game = gamesList.get(currGame);
+        List<ResourceList> resources = game.getMap().giveResources(number);
+        for(int i = 0; i < 4; i++){
+            game.getPlayers().get(i).addResource(ResourceType.BRICK, resources.get(i).getBrick());
+            game.getPlayers().get(i).addResource(ResourceType.ORE, resources.get(i).getOre());
+            game.getPlayers().get(i).addResource(ResourceType.SHEEP, resources.get(i).getSheep());
+            game.getPlayers().get(i).addResource(ResourceType.WHEAT, resources.get(i).getWheat());
+            game.getPlayers().get(i).addResource(ResourceType.WOOD, resources.get(i).getWood());
+        }
     }
 
     /**
@@ -216,7 +225,7 @@ public class ServerFacade implements IServerFacade {
      */
     @Override
     public void robPlayer(int plyerIndex, int victimIndex, HexLocation location) {
-
+        GameModel game = gamesList.get(currGame);
     }
 
     /**
