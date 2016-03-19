@@ -48,9 +48,9 @@ public class GamesFactory {
         JsonElement myEle = myParse.parse(info.getJsonBody());
         JsonTreeReader myTree = new JsonTreeReader(myEle);
 
-        Boolean randomTiles = false;
-        Boolean randomPorts = false;
-        Boolean randomNumbers = false;
+        boolean randomTiles = false;
+        boolean randomPorts = false;
+        boolean randomNumbers = false;
         String gameName = "";
         try {
             myTree.beginObject();

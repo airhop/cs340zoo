@@ -103,7 +103,57 @@ public class MovesFactory {
      * @return - Returns the appropriate Command Object
      */
     public BuildCity makeBuildCity(JsonConstructionInfo info) {
-        return new BuildCity(1, new VertexLocation(new HexLocation(1, 1), VertexDirection.NE));
+        JsonParser myParse = new JsonParser();
+        JsonElement myEle = myParse.parse(info.getJsonBody());
+        JsonTreeReader myTree = new JsonTreeReader(myEle);
+        int playerIndex = 0;
+        int x = 0;
+        int y = 0;
+        String jsonDirection = "";
+        VertexDirection direction = null;
+        try {
+            myTree.beginObject();
+            myTree.nextName();  //This is the first which is just the type
+            myTree.nextString(); //This is the Type name
+            myTree.nextName(); //This is the name == playerindex
+            playerIndex = myTree.nextInt(); //This is the player index
+            myTree.nextName(); //This is the Vertex Location name
+            myTree.beginObject();//Begining the vertex location object
+            myTree.nextName();//the next name is the Hex location
+            myTree.beginObject(); //begining the hex location object
+            myTree.nextName(); //the first integer x name
+            x = myTree.nextInt();// the x-coordinate
+            myTree.nextName();//the y-coordinate name
+            y = myTree.nextInt();//the y-coordinate
+            myTree.endObject();//exiting the hexlocation object
+            myTree.nextName(); // getting the name of the string vertex direction
+            jsonDirection= myTree.nextString(); // the actual vertex direction
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        switch(jsonDirection)
+        {
+            case "W":
+                direction =  VertexDirection.W;
+                break;
+            case "NW":
+                direction = VertexDirection.NW;
+                break;
+            case "NE":
+                direction = VertexDirection.NE;
+                break;
+            case "E":
+                direction = VertexDirection.E;
+                break;
+            case "SE":
+                direction = VertexDirection.SE;
+                break;
+            case "SW":
+                direction = VertexDirection.SW;
+                break;
+        }
+        return new BuildCity(playerIndex, new VertexLocation(new HexLocation(x, y), direction));
     }
 
     /**
@@ -112,7 +162,61 @@ public class MovesFactory {
      * @return - Returns the appropriate Command Object
      */
     public BuildRoad makeBuildRoad(JsonConstructionInfo info) {
-        return new BuildRoad(1, new EdgeLocation(new HexLocation(1, 1), EdgeDirection.NE), false);
+        JsonParser myParse = new JsonParser();
+        JsonElement myEle = myParse.parse(info.getJsonBody());
+        JsonTreeReader myTree = new JsonTreeReader(myEle);
+        int playerIndex = 0;
+        int x = 0;
+        int y = 0;
+        String jsonDirection = null;
+        EdgeDirection direction = null;
+        boolean isFree = false;
+        try {
+            myTree.beginObject();
+            myTree.nextName();  //This is the first which is just the type
+            myTree.nextString(); //This is the Type name
+            myTree.nextName(); //This is the name == playerindex
+            playerIndex = myTree.nextInt(); //This is the player index
+            myTree.nextName(); //This is the EdgeLocation name
+            myTree.beginObject(); // beginning the Edge Location Object
+            myTree.nextName(); //beginning the hex location object
+            myTree.beginObject(); // beginning the hex location object
+            myTree.nextName(); //the first integer x name
+            x = myTree.nextInt();// the x-coordinate
+            myTree.nextName();//the y-coordinate name
+            y = myTree.nextInt();//the y-coordinate
+            myTree.endObject();//exiting the hexlocation object
+            myTree.nextName(); // the name of Edge Direction
+            myTree.nextString(); //the edge direction in string form
+            myTree.endObject();//exiting the Edge Location Object
+            myTree.nextName(); //the name of the is free boolean
+            isFree = myTree.nextBoolean();//the is free boolean
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        switch(jsonDirection)
+        {
+            case "N":
+                direction = EdgeDirection.N;
+                break;
+            case "S":
+                direction = EdgeDirection.S;
+                break;
+            case "NW":
+                direction = EdgeDirection.NW;
+                break;
+            case "NE":
+                direction = EdgeDirection.NE;
+                break;
+            case "SE":
+                direction = EdgeDirection.SE;
+                break;
+            case "SW":
+                direction = EdgeDirection.SW;
+                break;
+        }
+        return new BuildRoad(playerIndex, new EdgeLocation(new HexLocation(x, y), direction), isFree);
     }
 
     /**
@@ -121,9 +225,62 @@ public class MovesFactory {
      * @return - Returns the appropriate Command Object
      */
     public BuildSettlement makeBuildSettlement(JsonConstructionInfo info) {
-        return new BuildSettlement(1, 1, 1, VertexDirection.E, false);
-    }
+        JsonParser myParse = new JsonParser();
+        JsonElement myEle = myParse.parse(info.getJsonBody());
+        JsonTreeReader myTree = new JsonTreeReader(myEle);
+        int playerIndex = 0;
+        int x = 0;
+        int y = 0;
+        String jsonDirection = "";
+        boolean isFree = false;
+        VertexDirection direction = null;
+        try {
+            myTree.beginObject();
+            myTree.nextName();  //This is the first which is just the type
+            myTree.nextString(); //This is the Type name
+            myTree.nextName(); //This is the name == playerindex
+            playerIndex = myTree.nextInt(); //This is the player index
+            myTree.nextName(); //This is the Vertex Location name
+            myTree.beginObject();//Begining the vertex location object
+            myTree.nextName();//the next name is the Hex location
+            myTree.beginObject(); //begining the hex location object
+            myTree.nextName(); //the first integer x name
+            x = myTree.nextInt();// the x-coordinate
+            myTree.nextName();//the y-coordinate name
+            y = myTree.nextInt();//the y-coordinate
+            myTree.endObject();//exiting the hexlocation object
+            myTree.nextName(); // getting the name of the string vertex direction
+            jsonDirection= myTree.nextString(); // the actual vertex direction
+            myTree.endObject();//ending the vertexLocation object
+            myTree.nextName();//the name of the free boolean
+            isFree = myTree.nextBoolean();//the "free" boolean
 
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        switch(jsonDirection)
+        {
+            case "W":
+                direction =  VertexDirection.W;
+                break;
+            case "NW":
+                direction = VertexDirection.NW;
+                break;
+            case "NE":
+                direction = VertexDirection.NE;
+                break;
+            case "E":
+                direction = VertexDirection.E;
+                break;
+            case "SE":
+                direction = VertexDirection.SE;
+                break;
+            case "SW":
+                direction = VertexDirection.SW;
+                break;
+        }
+        return new BuildSettlement(playerIndex, x, y, direction, isFree);
+    }
     /**
      * This method will create the appropriate Command Object
      * @param info - Passed to the function to create
