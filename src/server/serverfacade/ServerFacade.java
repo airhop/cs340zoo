@@ -23,7 +23,7 @@ public class ServerFacade implements IServerFacade {
     private List<GameModel> gamesList;
     private List<GameInfo> gameInfoList;
     private TreeMap<String, Login> players; // first is the username, next is the password
-    static int currPlayerID = 0; //the currentID for the player to be added
+    int currPlayerID = 0; //the currentID for the player to be added
 
     private static ServerFacade facade = null;
 
