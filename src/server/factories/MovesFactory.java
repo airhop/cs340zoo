@@ -1,14 +1,12 @@
-package server.commandfactories;
+package server.factories;
 
 import client.model.bank.ResourceList;
-import client.model.map.Road;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.google.gson.internal.bind.JsonTreeReader;
 import server.commandobjects.ICommand;
 import server.commandobjects.moves.*;
 import server.servermain.JsonConstructionInfo;
-import server.shared.CommandType;
 import shared.definitions.ResourceType;
 import shared.locations.*;
 

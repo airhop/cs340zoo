@@ -1,4 +1,4 @@
-package server.commandfactories;
+package server.factories;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
