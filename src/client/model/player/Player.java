@@ -98,7 +98,7 @@ public class Player {
         return false;
     }
 
-    public void alterResource(ResourceType resource, int numberOfResource) {
+    public void addResource(ResourceType resource, int numberOfResource) {
         //switch statement for each resource type adding them to the resource list
         switch (resource) {
             case WOOD:

@@ -22,7 +22,6 @@ import client.model.player.Player;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeMap;
-import java.util.concurrent.locks.ReadWriteLock;
 
 /**
  * Created by Josh on 3/10/2016.
@@ -215,11 +214,11 @@ public class ServerFacade implements IServerFacade {
         GameModel game = gamesList.get(currGame);
         List<ResourceList> resources = game.getMap().giveResources(number);
         for (int i = 0; i < 4; i++) {
-            game.getPlayers().get(i).alterResource(ResourceType.BRICK, resources.get(i).getBrick());
-            game.getPlayers().get(i).alterResource(ResourceType.ORE, resources.get(i).getOre());
-            game.getPlayers().get(i).alterResource(ResourceType.SHEEP, resources.get(i).getSheep());
-            game.getPlayers().get(i).alterResource(ResourceType.WHEAT, resources.get(i).getWheat());
-            game.getPlayers().get(i).alterResource(ResourceType.WOOD, resources.get(i).getWood());
+            game.getPlayers().get(i).addResource(ResourceType.BRICK, resources.get(i).getBrick());
+            game.getPlayers().get(i).addResource(ResourceType.ORE, resources.get(i).getOre());
+            game.getPlayers().get(i).addResource(ResourceType.SHEEP, resources.get(i).getSheep());
+            game.getPlayers().get(i).addResource(ResourceType.WHEAT, resources.get(i).getWheat());
+            game.getPlayers().get(i).addResource(ResourceType.WOOD, resources.get(i).getWood());
         }
     }
 
@@ -273,12 +272,13 @@ public class ServerFacade implements IServerFacade {
     @Override
     public void buyDevCard(int playerIndex) {
         GameModel game = gamesList.get(currGame);
-        Player curPlayer = game.getPlayers().get(currPlayer.getPlayerIndex());
-        DevCardList playerDevCards = curPlayer.getNewDevCards();
+        Player buyPlayer = game.getPlayers().get(currPlayer.getPlayerIndex());
+        DevCardList playerDevCards = buyPlayer.getNewDevCards();
         DevCardList bankCards = game.getBank().getDevCards();
-        if (bankCards.getSize() > 0) {//get a random if it is not there than fall down through the switch
+        if (bankCards.getSize() > 0 && buyPlayer.canBuyDevcard()) {//get a random if it is not there than fall down through the switch
             try {
                 String buyCard = bankCards.buyDevCard();
+
                 switch (buyCard) {
                     case "monopoly":
                         bankCards.setMonopoly(bankCards.getMonopoly() - 1);
@@ -327,8 +327,8 @@ public class ServerFacade implements IServerFacade {
         if (resourceOne && resourceTwo) {
             bankResources.addResourceType(res1.toString(), -1);
             bankResources.addResourceType(res2.toString(), -1);
-            addPlayer.alterResource(res1, 1);
-            addPlayer.alterResource(res2, 1);
+            addPlayer.addResource(res1, 1);
+            addPlayer.addResource(res2, 1);
         }
     }
 
@@ -387,7 +387,7 @@ public class ServerFacade implements IServerFacade {
                 players.get(i).depleteResource(ResourceType.valueOf(resource));
             }
         }
-        players.get(playerIndex).alterResource(ResourceType.valueOf(resource), addAmount);
+        players.get(playerIndex).addResource(ResourceType.valueOf(resource), addAmount);
     }
 
     /**
@@ -426,8 +426,8 @@ public class ServerFacade implements IServerFacade {
         } else {
             if (roadPlayer.getResources().getBrick() > 0 && roadPlayer.getResources().getWood() > 0) {
                 try {
-                    roadPlayer.alterResource(ResourceType.WOOD, -1);
-                    roadPlayer.alterResource(ResourceType.BRICK, -1);
+                    roadPlayer.addResource(ResourceType.WOOD, -1);
+                    roadPlayer.addResource(ResourceType.BRICK, -1);
                     ourMap.addRoad(roadLocation.getHexLoc().getX(), roadLocation.getHexLoc().getY(), roadLocation.getDir(), playerIndex);
                 } catch (FailureToAddException e) {
                     e.printStackTrace();
@@ -460,10 +460,10 @@ public class ServerFacade implements IServerFacade {
         } else {
             if (setPlayer.enoughResourcesForSett()) {
                 try {
-                    setPlayer.alterResource(ResourceType.WOOD, -1);
-                    setPlayer.alterResource(ResourceType.BRICK, -1);
-                    setPlayer.alterResource(ResourceType.WHEAT, -1);
-                    setPlayer.alterResource(ResourceType.SHEEP, -1);
+                    setPlayer.addResource(ResourceType.WOOD, -1);
+                    setPlayer.addResource(ResourceType.BRICK, -1);
+                    setPlayer.addResource(ResourceType.WHEAT, -1);
+                    setPlayer.addResource(ResourceType.SHEEP, -1);
                     ourMap.addSettlement(vertexLocation.getHexLoc().getX(), vertexLocation.getHexLoc().getY(), vertexLocation.getDir(), playerIndex);
                 } catch (FailureToAddException e) {
                     e.printStackTrace();
@@ -539,7 +539,17 @@ public class ServerFacade implements IServerFacade {
      */
     @Override
     public void maritimeTrade(int playerIndex, int ratio, String inputResource, String outputResource) {
-
+        GameModel game = gamesList.get(currGame);
+        Player tradePlayer = game.getPlayers().get(playerIndex);
+        if(ratio < 4 && ratio > 1){
+            if(tradePlayer.getResources().getNumOfResource(inputResource) >= ratio){
+                if(game.getBank().getResources().getNumOfResource(outputResource) > 0){
+                    tradePlayer.addResource(ResourceType.valueOf(inputResource), -ratio);
+                    tradePlayer.addResource(ResourceType.valueOf(outputResource), 1);
+                    game.getBank().getResources().addResourceType(outputResource, -1);
+                }
+            }
+        }
     }
 
     /**
@@ -553,10 +563,10 @@ public class ServerFacade implements IServerFacade {
         //TODO check if these values need to be flipped
         GameModel game = gamesList.get(currGame);
         Player disPlayer = game.getPlayers().get(playerIndex);
-        disPlayer.alterResource(ResourceType.BRICK, discardedCards.getBrick());
-        disPlayer.alterResource(ResourceType.ORE, discardedCards.getOre());
-        disPlayer.alterResource(ResourceType.SHEEP, discardedCards.getSheep());
-        disPlayer.alterResource(ResourceType.WHEAT, discardedCards.getWheat());
-        disPlayer.alterResource(ResourceType.WOOD, discardedCards.getWood());
+        disPlayer.addResource(ResourceType.BRICK, discardedCards.getBrick());
+        disPlayer.addResource(ResourceType.ORE, discardedCards.getOre());
+        disPlayer.addResource(ResourceType.SHEEP, discardedCards.getSheep());
+        disPlayer.addResource(ResourceType.WHEAT, discardedCards.getWheat());
+        disPlayer.addResource(ResourceType.WOOD, discardedCards.getWood());
     }
 }

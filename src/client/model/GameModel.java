@@ -512,7 +512,7 @@ public class GameModel extends Observable{
 //        if (cp == pid)
 //            throw new IllegalMoveException("Can't rob yourself");
 //        players.get(pid).depleteResource(rt);
-//        players.get(cp).alterResource(rt, 1);
+//        players.get(cp).addResource(rt, 1);
 //    }
 
     public boolean canSendChat(String msg, int pid) {
