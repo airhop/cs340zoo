@@ -85,8 +85,20 @@ public class Player {
         }
 
     }
+    public boolean enoughResourcesForSett(){
+        if(getResources().getBrick() > 0 && getResources().getWood() > 0 && getResources().getWheat() > 0 && getResources().getSheep() > 0){
+            return true;
+        }
+        return false;
+    }
+    public boolean enoughResourcesForCity(){
+        if(getResources().getWheat() > 1 && getResources().getOre() > 2){
+            return true;
+        }
+        return false;
+    }
 
-    public void addResource(ResourceType resource, int numberOfResource) {
+    public void alterResource(ResourceType resource, int numberOfResource) {
         //switch statement for each resource type adding them to the resource list
         switch (resource) {
             case WOOD:
