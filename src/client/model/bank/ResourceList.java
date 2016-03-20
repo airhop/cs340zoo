@@ -22,7 +22,7 @@ public class ResourceList {
     }
 
     public ResourceList(int given) {
-        if(given > 20 || given < 0){
+        if (given > 20 || given < 0) {
             given = 19;
         }
         numOfBrick = given;
@@ -39,9 +39,9 @@ public class ResourceList {
         numOfWheat = wh;
         numOfWood = wo;
     }
+
     //copy constructor
-    public ResourceList(ResourceList resourcesToCopy)
-    {
+    public ResourceList(ResourceList resourcesToCopy) {
         numOfBrick = resourcesToCopy.getBrick();
         numOfOre = resourcesToCopy.getOre();
         numOfSheep = resourcesToCopy.getSheep();
@@ -49,6 +49,21 @@ public class ResourceList {
         numOfWood = resourcesToCopy.getWood();
     }
     //overload the constructor so that RL can be used for trades, bank, map, players etc.
+
+    public void setAllResources(ResourceList first){
+        numOfBrick = first.numOfBrick;
+        numOfOre = first.numOfOre;
+        numOfSheep = first.numOfSheep;
+        numOfWheat = first.numOfWheat;
+        numOfWood = first.numOfWood;
+    }
+    public void alterAllResources(ResourceList first){
+        numOfBrick += first.numOfBrick;
+        numOfOre += first.numOfOre;
+        numOfSheep += first.numOfSheep;
+        numOfWheat += first.numOfWheat;
+        numOfWood += first.numOfWood;
+    }
 
     public int getBrick() {
         return numOfBrick;
@@ -164,25 +179,76 @@ public class ResourceList {
         }
     }
 
-    public String toString()
-    {
+    public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("BRICK AMOUNT: "+getBrick()+"\n");
-        sb.append("ORE AMOUNT: "+getOre()+"\n");
-        sb.append("SHEEP AMOUNT: "+getSheep()+"\n");
-        sb.append("WHEAT AMOUNT: "+getWheat()+"\n");
-        sb.append("WOOD AMOUNT: "+getWood()+"\n");
+        sb.append("BRICK AMOUNT: " + getBrick() + "\n");
+        sb.append("ORE AMOUNT: " + getOre() + "\n");
+        sb.append("SHEEP AMOUNT: " + getSheep() + "\n");
+        sb.append("WHEAT AMOUNT: " + getWheat() + "\n");
+        sb.append("WOOD AMOUNT: " + getWood() + "\n");
         return sb.toString();
     }
-    public int getSize()
-    {
+
+    public int getSize() {
         int total = numOfBrick + numOfOre + numOfSheep + numOfWheat + numOfWood;
         return total;
     }
 
+    public int getNumOfResource(String resource) {
+        int resourceNum = 0;
+        switch (resource) {
+            case "BRICK":
+                resourceNum = getBrick();
+                break;
+            case "ORE":
+                resourceNum = getOre();
+                break;
+            case "SHEEP":
+                resourceNum = getSheep();
+                break;
+            case "WHEAT":
+                resourceNum = getWheat();
+                break;
+            case "WOOD":
+                resourceNum = getWood();
+                break;
+        }
+        return resourceNum;
+    }
 
-    public int size()
-    {
+    public boolean canTakeResource(ResourceType resource) {
+        boolean canTake = false;
+        switch (resource) {
+            case BRICK:
+                if (numOfBrick > 0) {
+                    canTake = true;
+                }
+                break;
+            case ORE:
+                if (numOfOre > 0) {
+                    canTake = true;
+                }
+                break;
+            case SHEEP:
+                if (numOfSheep > 0) {
+                    canTake = true;
+                }
+                break;
+            case WHEAT:
+                if (numOfWheat > 0) {
+                    canTake = true;
+                }
+                break;
+            case WOOD:
+                if (numOfWood > 0) {
+                    canTake = true;
+                }
+                break;
+        }
+        return canTake;
+    }
+
+    public int size() {
         return getBrick() + getOre() + getSheep() + getWheat() + getWood();
     }
 

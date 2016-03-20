@@ -17,12 +17,11 @@ public class Player {
     private int biggestRoadLength;
     private int playerID;
     private int playerIndex;
-
     //placeable items
     private int cities;//how many cities the player has left to play
     private int roads;//how many roads the player has left to play
     private int settlements;//how many settlements the player has left to play
-    //cards, resources, etc
+    // cards, resources, etc
     private int monuments;
     private int soldiers;
     private DevCardList newDevCards;
@@ -85,6 +84,18 @@ public class Player {
             newDevCards.buyDevCard();
         }
 
+    }
+    public boolean enoughResourcesForSett(){
+        if(getResources().getBrick() > 0 && getResources().getWood() > 0 && getResources().getWheat() > 0 && getResources().getSheep() > 0){
+            return true;
+        }
+        return false;
+    }
+    public boolean enoughResourcesForCity(){
+        if(getResources().getWheat() > 1 && getResources().getOre() > 2){
+            return true;
+        }
+        return false;
     }
 
     public void addResource(ResourceType resource, int numberOfResource) {
