@@ -33,6 +33,7 @@ public class Deserializer {
      * @return object, you must cast this object to the thing you are deseralizing.
      */
     public GameModel deserialize(String jsonString, GameModel myModel) {
+        System.out.println("Deserializing!!");
         GameModel gameNew = new GameModel();
         Bank myBank = new Bank();
         Map myMap = new Map();

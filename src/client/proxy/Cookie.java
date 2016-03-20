@@ -5,6 +5,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.internal.bind.JsonTreeReader;
+import shared.jsonobject.Login;
 
 
 import java.io.IOException;
@@ -22,6 +23,14 @@ public class Cookie {
 
     public Cookie() {
         myId = "";
+    }
+
+    public Cookie(Login l)
+    {
+        cookieName = l.getUsername();
+        cookieValue = l.getPassword();
+        decodedValue = "";
+        myId = Integer.toString(l.getID());
     }
 
     public boolean isActive() {
@@ -97,6 +106,7 @@ public class Cookie {
     public void setFullCookie(String given) {
         if(given == null)
             return;
+        System.out.println("Given = " + given);
         cookieName = given.substring(0, 10);
         cookieValue = given.substring(11);
         cookieValue = cookieValue.substring(0, cookieValue.length() - 1);
@@ -104,5 +114,11 @@ public class Cookie {
             cookieValue = cookieValue.substring(0, cookieValue.length() - 1);
         }
         cookieValue = cookieValue.substring(0, cookieValue.length() - 1);
+    }
+
+    public String toStirng()
+    {
+        System.out.println("Cookie.toString() cn " + cookieName + " cv " + cookieValue + " id "  + myId + " dc " + decodedValue);
+        return cookieName + " " + cookieValue + " " + myId + "\n" + decodedValue;
     }
 }

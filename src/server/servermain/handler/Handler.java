@@ -17,8 +17,10 @@ import server.servermain.JsonConstructionInfo;
 import server.shared.CommandType;
 import shared.jsonobject.CreatedGame;
 import shared.jsonobject.Login;
+import shared.serialization.HttpURLResponse;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -50,6 +52,9 @@ public class Handler implements HttpHandler {
     {
         String method = exchange.getRequestMethod();
         String path = exchange.getRequestURI().getPath();
+        Headers reqHeaders = exchange.getRequestHeaders();
+         //reqHeaders.get("Cookie");
+          //for(String cookie ; cookies) if(!cookie.contains(username)/(gameID)
 
         Scanner scan = new Scanner(exchange.getRequestBody());
         requestBody = "";
@@ -145,10 +150,15 @@ public class Handler implements HttpHandler {
             throw new ServerException("False user");
         }
 
-        //if cookie == null awesome, else throw serverexception...
-
+        //HttpURLResponse rep = new HttpURLResponse();
+        //rep.setCookie(login.toString());
+        Usercookie = new Cookie(login);
+        ArrayList<String> cookies = new ArrayList<String>();
+        System.out.println("Usercookie.toString() = " + Usercookie.toString());
+        cookies.add(Usercookie.toString());
+        exchange.getResponseHeaders().put("Set-Cookie", cookies);
         exchange.sendResponseHeaders(200, 1);
-        exchange.getResponseBody().write(login.toString().getBytes());
+        exchange.getResponseBody().write("success".getBytes());
         exchange.getResponseBody().close();
 
 //if successful set-cookie
