@@ -17,12 +17,11 @@ public class Player {
     private int biggestRoadLength;
     private int playerID;
     private int playerIndex;
-
     //placeable items
     private int cities;//how many cities the player has left to play
     private int roads;//how many roads the player has left to play
     private int settlements;//how many settlements the player has left to play
-    //cards, resources, etc
+    // cards, resources, etc
     private int monuments;
     private int soldiers;
     private DevCardList newDevCards;

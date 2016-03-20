@@ -2,9 +2,12 @@ package server.serverfacade;
 
 import client.MVC.data.GameInfo;
 import client.MVC.data.PlayerInfo;
+import client.model.bank.Bank;
+import client.model.bank.DevCardList;
 import client.model.player.CurrentPlayer;
 import server.factories.MapFactory;
 import shared.definitions.ResourceType;
+import shared.exceptions.InsufficientResourcesException;
 import shared.jsonobject.CreatedGame;
 import shared.jsonobject.Login;
 import shared.locations.EdgeLocation;
@@ -16,6 +19,7 @@ import client.model.player.Player;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.TreeMap;
 
 /**
@@ -46,7 +50,7 @@ public class ServerFacade implements IServerFacade {
         return currPlayer;
     }
 
-    public void setCurrPlayerCook(){
+    public void setCurrPlayerCook() {
 
     }
 
@@ -124,6 +128,7 @@ public class ServerFacade implements IServerFacade {
 
     /**
      * The command objects will call this method to run the server operation to join a game.
+     *
      * @param id    - the id of the game
      * @param color - the color chosen by the player for the game.
      */
@@ -164,7 +169,7 @@ public class ServerFacade implements IServerFacade {
      */
     @Override
     public GameModel getModel() {
-        return null;
+        return gamesList.get(currPlayer.getGameId());
     }
 
     /**
@@ -207,7 +212,7 @@ public class ServerFacade implements IServerFacade {
     public void rollNumber(int playerIndex, int number) {
         GameModel game = gamesList.get(currGame);
         List<ResourceList> resources = game.getMap().giveResources(number);
-        for(int i = 0; i < 4; i++){
+        for (int i = 0; i < 4; i++) {
             game.getPlayers().get(i).addResource(ResourceType.BRICK, resources.get(i).getBrick());
             game.getPlayers().get(i).addResource(ResourceType.ORE, resources.get(i).getOre());
             game.getPlayers().get(i).addResource(ResourceType.SHEEP, resources.get(i).getSheep());
@@ -226,6 +231,7 @@ public class ServerFacade implements IServerFacade {
     @Override
     public void robPlayer(int plyerIndex, int victimIndex, HexLocation location) {
         GameModel game = gamesList.get(currGame);
+        //Ask aaron about pull random card
     }
 
     /**
@@ -235,7 +241,23 @@ public class ServerFacade implements IServerFacade {
      */
     @Override
     public void finishTurn(int playerIndex) {
-
+        GameModel game = gamesList.get(currGame);
+        if(currPlayer.getPlayerIndex() == game.getTurnTracker().getCurrentPlayer()){
+            if(playerIndex == 3){
+                playerIndex = -1;
+                if(game.getTurnTracker().getStatus().equals("FirstRound")){
+                    game.getTurnTracker().updateStatus("SecondRound");
+                } else if(game.getTurnTracker().getStatus().equals("SecondRound")){
+                    game.getTurnTracker().updateStatus("Rolling");
+                }
+            }
+            if(!game.getTurnTracker().getStatus().equals("FirstRound") && !game.getTurnTracker().getStatus().equals("SecondRound")){
+                game.getTurnTracker().updateStatus("Rolling");
+            }
+        }
+        playerIndex++;
+        game.getTurnTracker().setCurrentPlayer(playerIndex);
+        game.getTurnTracker().updateStatus("");
     }
 
     /**
@@ -245,31 +267,66 @@ public class ServerFacade implements IServerFacade {
      */
     @Override
     public void buyDevCard(int playerIndex) {
-
+        GameModel game = gamesList.get(currGame);
+        Player curPlayer = game.getPlayers().get(currPlayer.getPlayerIndex());
+        DevCardList playerDevCards = curPlayer.getNewDevCards();
+        DevCardList bankCards = game.getBank().getDevCards();
+        if(bankCards.getSize() > 0){//get a random if it is not there than fall down through the switch
+            try {
+                String buyCard = bankCards.buyDevCard();
+                switch (buyCard){
+                    case "monopoly":
+                        bankCards.setMonopoly(bankCards.getMonopoly() - 1);
+                        playerDevCards.setMonopoly(1);
+                        break;
+                    case "monument":
+                        bankCards.setMonument(bankCards.getMonument() - 1);
+                        playerDevCards.setMonument(1);
+                        break;
+                    case "roadbuilding":
+                        bankCards.setRoadBuilding(bankCards.getRoadBuilding() - 1);
+                        playerDevCards.setRoadBuilding(1);
+                        break;
+                    case "soldier":
+                        bankCards.setSoldier(bankCards.getSoldier() - 1);
+                        playerDevCards.setSoldier(1);
+                        break;
+                    case "yearofplenty":
+                        bankCards.setYearOfPlenty(bankCards.getYearOfPlenty() - 1);
+                        playerDevCards.setYearOfPlenty(1);
+                        break;
+                }
+            } catch (InsufficientResourcesException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     /**
      * the command objects will call this method to tun the server operation of playing a Year of Plenty card
      *
      * @param playerIndex the id of the player using the Year of Plenty card
-     * @param res1
-     * @param res2
+     * @param res1 -
+     * @param res2 -
      */
     @Override
     public void yearOfPlenty(int playerIndex, ResourceType res1, ResourceType res2) {
-
+        GameModel game = gamesList.get(currGame);
+        Bank myBank = game.getBank();
+        ResourceList bankResources = myBank.getResources();
+        boolean brick = false;
     }
 
     /**
      * The command objects will call this method to run a server operation
      *
      * @param playerIndex the index of the current player
-     * @param spot1
-     * @param spot2
+     * @param spot1 -
+     * @param spot2 -
      */
     @Override
     public void roadBuilding(int playerIndex, EdgeLocation spot1, EdgeLocation spot2) {
-
+        GameModel game = gamesList.get(currGame);
     }
 
     /**
