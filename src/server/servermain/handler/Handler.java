@@ -62,6 +62,8 @@ public class Handler implements HttpHandler {
             requestBody += scan.nextLine();
 
         Headers test = exchange.getRequestHeaders();
+//        Object something = exchange.getAttribute("Cookie");
+//        System.out.println("Something  = " + something.getClass() + " " + something.toString());
 
         try {
             //how can I get the cookies from the server facade?
@@ -150,8 +152,6 @@ public class Handler implements HttpHandler {
             throw new ServerException("False user");
         }
 
-        //HttpURLResponse rep = new HttpURLResponse();
-        //rep.setCookie(login.toString());
         Usercookie = new Cookie(login);
         ArrayList<String> cookies = new ArrayList<String>();
         System.out.println("Usercookie.toString() = " + Usercookie.toString());
@@ -183,12 +183,20 @@ public class Handler implements HttpHandler {
         } else if (path.contains("games/join")) {
             current = gamesFactory.getCommand(new JsonConstructionInfo(CommandType.join, exchange.getRequestBody().toString()));
             Object o = current.execute();
+
+            Gamecookie = new Cookie(((CreatedGame)o).getId());
+            ArrayList<String> cookies = new ArrayList<String>();
+            System.out.println("Gamecookie.toString() " + Gamecookie.toString());
+            cookies.add(Gamecookie.toString());
+            exchange.getResponseHeaders().put("Set-Cookie", cookies);
+
             exchange.sendResponseHeaders(200, 1);
             exchange.getResponseBody().write(((int) o));
             //don't know if an int will write over correctly
             exchange.getResponseBody().close();
 //set cookie for gameID
 //and return the Game Model in the ResponseBody
+
         } else
             throw new ServerException("Not a valid get request");
 

@@ -33,6 +33,14 @@ public class Cookie {
         myId = Integer.toString(l.getID());
     }
 
+    public Cookie(int GameID)
+    {
+        cookieName = GameID + ""; //need to set to something in order to keep the isActive() method valid
+        cookieValue = "";
+        decodedValue = "";
+        myId = GameID +"";
+    }
+
     public boolean isActive() {
         if (cookieName.equals("")) {
             return false;
@@ -116,7 +124,7 @@ public class Cookie {
         cookieValue = cookieValue.substring(0, cookieValue.length() - 1);
     }
 
-    public String toStirng()
+    public String toString()
     {
         System.out.println("Cookie.toString() cn " + cookieName + " cv " + cookieValue + " id "  + myId + " dc " + decodedValue);
         return cookieName + " " + cookieValue + " " + myId + "\n" + decodedValue;

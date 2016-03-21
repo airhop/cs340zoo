@@ -3,6 +3,8 @@ package server.servermain;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
 import server.servermain.handler.Handler;
+import server.servermain.handler.Handlers;
+
 import java.io.IOException;
 import java.net.InetSocketAddress;
 
@@ -62,8 +64,8 @@ public class Server {
         server.createContext("/moves/maritimeTrade", mainHandler);
         server.createContext("/moves/discardCards", mainHandler);
 
-//        server.createContext("/docs/api/data", new Handlers.JSONAppender(""));
-//        server.createContext("/docs/api/view", new Handlers.BasicFile(""));
+        server.createContext("/docs/api/data", new Handlers.JSONAppender(""));
+        server.createContext("/docs/api/view", new Handlers.BasicFile(""));
 
 //        logger.info("Starting HTTP Server");
         server.start();

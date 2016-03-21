@@ -7,6 +7,7 @@ import client.poller.Poller;
 import client.proxy.Cookie;
 import client.proxy.IProxy;
 import client.proxy.Proxy;
+import server.servermain.Server;
 import shared.definitions.CatanColor;
 import shared.exceptions.FailedCreateGameException;
 import shared.exceptions.InvalidUserException;
@@ -22,7 +23,7 @@ public class NewMain {
         List<GameInfo> myList = new ArrayList<>();
         int playerIndex;
         int playerId;
-        User testUser = new User("Sam", "Sam");
+        User testUser = new User("Sam", "sam");
         try {
             myProxy.userLogin(testUser);
         } catch (InvalidUserException e) {
