@@ -22,6 +22,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class Proxy implements IProxy {
     private String SERVER_HOST;
@@ -54,7 +55,7 @@ public class Proxy implements IProxy {
 
     public int getPlayerId() {
         if (playerId == -1) {
-            playerId = Integer.parseInt(userCookie.getPlayerId());
+            playerId = Integer.parseInt(userCookie.retrieveID());
             return playerId;
         } else {
             return playerId;
@@ -249,10 +250,9 @@ public class Proxy implements IProxy {
             System.out.println("survived the dopost " + myResponse.getResponseCode());
 
             if(myResponse.getResponseCode() == 200){
-                userCookie.setFullCookie(myResponse.getCookie());
-                userCookie.getPlayerId();
-                userCookie.getDecode();
-                System.out.println("cookie decoded . . .");
+                String cookie = myResponse.getCookie();
+                Scanner scan = new Scanner(cookie);
+                userCookie  = new Cookie(scan.next(), scan.next(), scan.next());
                 return true;
             }else{
                 throw new ClientException("response code was not 200 ");
@@ -272,9 +272,10 @@ public class Proxy implements IProxy {
         HttpURLResponse myResponse;
         try {
             myResponse = doPost(url, myObjOne);
-            userCookie.setFullCookie(myResponse.getCookie());
-            userCookie.getPlayerId();
-            userCookie.getDecode();
+            String cookie = myResponse.getCookie();
+            Scanner scan = new Scanner(cookie);
+            userCookie  = new Cookie(scan.next(), scan.next(), scan.next());
+
         } catch (ClientException e) {
             e.printStackTrace();
             throw new InvalidUserException("Server hates you :)");

@@ -33,6 +33,14 @@ public class Cookie {
         myId = Integer.toString(l.getID());
     }
 
+    public Cookie(String n, String v, String id)
+    {
+        cookieName = n;
+        cookieValue = v;
+        decodedValue = "";
+        myId = id;
+    }
+
     public Cookie(int GameID)
     {
         cookieName = GameID + ""; //need to set to something in order to keep the isActive() method valid
@@ -64,6 +72,8 @@ public class Cookie {
     public void setCookieValue(String cookieValue) {
         this.cookieValue = cookieValue;
     }
+
+    public String retrieveID() { return myId; }
 
     public String getDecode() {
         decodedValue = URLDecoder.decode(cookieValue);
