@@ -19,6 +19,7 @@ import shared.jsonobject.CreatedGame;
 import shared.jsonobject.Login;
 import shared.serialization.HttpURLResponse;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
@@ -159,15 +160,15 @@ public class Handler implements HttpHandler {
         System.out.println("Usercookie.toString() = " + Usercookie.toString());
         cookies.add(Usercookie.toString());
         exchange.getResponseHeaders().put("Set-Cookie", cookies);
-        exchange.sendResponseHeaders(200, 1);
+        String success = "success";
+        exchange.sendResponseHeaders(200, success.length());
 
         System.out.println("Heyo!");
         OutputStream out = exchange.getResponseBody();
-        out.write("success".getBytes());
+        out.write(success.getBytes());
         out.flush();
 
         System.out.println("Response Body = " + exchange.getResponseBody());
-//        exchange.getResponseBody().write("success".getBytes());
         exchange.getResponseBody().close();
 
     }
@@ -184,8 +185,9 @@ public class Handler implements HttpHandler {
         if (path.contains("games/create")) {
             current = gamesFactory.getCommand(new JsonConstructionInfo(CommandType.create, exchange.getRequestBody().toString()));
             Object o = current.execute();
-            exchange.sendResponseHeaders(200, 1);
-            exchange.getResponseBody().write(((CreatedGame) o).toString().getBytes());
+            String info = ((CreatedGame)o).toString();
+            exchange.sendResponseHeaders(200, info.length());
+            exchange.getResponseBody().write(info.getBytes());
             exchange.getResponseBody().close();
         } else if (path.contains("games/join")) {
             current = gamesFactory.getCommand(new JsonConstructionInfo(CommandType.join, exchange.getRequestBody().toString()));
@@ -199,11 +201,7 @@ public class Handler implements HttpHandler {
 
             exchange.sendResponseHeaders(200, 1);
             exchange.getResponseBody().write(((int) o));
-            //don't know if an int will write over correctly
             exchange.getResponseBody().close();
-//set cookie for gameID
-//and return the Game Model in the ResponseBody
-
         } else
             throw new ServerException("Not a valid get request");
 
@@ -228,8 +226,9 @@ public class Handler implements HttpHandler {
         Object o = current.execute();
 
         //if current doesn't return anything
-        exchange.sendResponseHeaders(200, 1);
-        exchange.getResponseBody().write(((GameModel) o).toString().getBytes());
+        String info = ((GameModel)o).toString();
+        exchange.sendResponseHeaders(200, info.length());
+        exchange.getResponseBody().write(info.getBytes());
         exchange.getResponseBody().close();
     }
 
