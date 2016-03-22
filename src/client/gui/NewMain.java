@@ -26,6 +26,7 @@ public class NewMain {
         User testUser = new User("Sam", "sam");
         try {
             myProxy.userLogin(testUser);
+            myProxy.gamesJoin("red", 0);
         } catch (InvalidUserException e) {
             e.printStackTrace();
         }

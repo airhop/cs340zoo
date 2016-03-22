@@ -20,6 +20,7 @@ import shared.jsonobject.Login;
 import shared.serialization.HttpURLResponse;
 
 import java.io.IOException;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -90,6 +91,7 @@ public class Handler implements HttpHandler {
             exchange.getResponseBody().write(e.getMessage().getBytes());
             exchange.getResponseBody().close();
         } catch (IOException e) {
+            e.printStackTrace();
             exchange.sendResponseHeaders(400, -1);
             exchange.getResponseBody().write(e.getMessage().getBytes());
             exchange.getResponseBody().close();
@@ -158,11 +160,16 @@ public class Handler implements HttpHandler {
         cookies.add(Usercookie.toString());
         exchange.getResponseHeaders().put("Set-Cookie", cookies);
         exchange.sendResponseHeaders(200, 1);
-        exchange.getResponseBody().write("success".getBytes());
+
+        System.out.println("Heyo!");
+        OutputStream out = exchange.getResponseBody();
+        out.write("success".getBytes());
+        out.flush();
+
+        System.out.println("Response Body = " + exchange.getResponseBody());
+//        exchange.getResponseBody().write("success".getBytes());
         exchange.getResponseBody().close();
 
-//if successful set-cookie
-//if failed, current.execute should throw a ServerException
     }
 
     /**

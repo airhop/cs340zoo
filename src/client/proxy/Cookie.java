@@ -127,6 +127,6 @@ public class Cookie {
     public String toString()
     {
         System.out.println("Cookie.toString() cn " + cookieName + " cv " + cookieValue + " id "  + myId + " dc " + decodedValue);
-        return cookieName + " " + cookieValue + " " + myId + "\n" + decodedValue;
+        return cookieName + " " + cookieValue + " " + myId;
     }
 }
