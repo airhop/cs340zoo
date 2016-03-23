@@ -45,7 +45,7 @@ public class GamesFactory {
      * @return - Returns the appropriate Command Object
      */
     public Create makeCreate(JsonConstructionInfo info) {
-        System.out.println("Making a game creation");
+        System.out.println("Making a game creation for " + info.getJsonBody());
         JsonParser myParse = new JsonParser();
         JsonElement myEle = myParse.parse(info.getJsonBody());
         JsonTreeReader myTree = new JsonTreeReader(myEle);
@@ -61,7 +61,8 @@ public class GamesFactory {
           //  System.out.println("Parsing the game . . ." + i++ + " " + myTree.peek().name());
           //  myTree.beginObject();
             System.out.println("Parsing the game . . ." + i++ + " " + myTree.peek().name() + " " + myTree.peek());
-            myTree.nextString();  //This is the first boolean which is the random tiles
+            String information = myTree.nextString();  //This is the first boolean which is the random tiles
+            System.out.println("information " + information);
             System.out.println("Parsing the game . . ." + i++ + " " + myTree.peek().name());
             randomTiles = myTree.nextBoolean(); //This is the Random Tiles Boolean
             System.out.println("Parsing the game . . ." + i++);

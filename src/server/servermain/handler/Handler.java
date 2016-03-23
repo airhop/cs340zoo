@@ -22,6 +22,7 @@ import shared.serialization.HttpURLResponse;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -114,7 +115,6 @@ public class Handler implements HttpHandler {
      */
     public void Get(HttpExchange exchange) throws ServerException, IOException {
         ICommand current;
-        System.out.println("Request body " + exchange.getRequestBody().toString());
         String path = exchange.getRequestURI().getPath();
         System.out.println("Path " + path);
         String info;
@@ -196,7 +196,15 @@ public class Handler implements HttpHandler {
         System.out.println("Path " + path);
 
         if (path.contains("games/create")) {
-            current = gamesFactory.getCommand(new JsonConstructionInfo(CommandType.create, exchange.getRequestBody().toString()));
+
+            InputStream is = exchange.getRequestBody();
+            int i = 0;
+            String input = "";
+            while((i = is.read()) != -1)
+                input += (char)i;
+
+            System.out.println(input);
+            current = gamesFactory.getCommand(new JsonConstructionInfo(CommandType.create, requestBody));
      System.out.println("success in getting to creation " + exchange.getRequestBody().toString());
             Object o = current.execute();
      System.out.println("success in getting to creation");
@@ -207,7 +215,7 @@ public class Handler implements HttpHandler {
             exchange.getResponseBody().write(info.getBytes());
             exchange.getResponseBody().close();
         } else if (path.contains("games/join")) {
-            current = gamesFactory.getCommand(new JsonConstructionInfo(CommandType.join, exchange.getRequestBody().toString()));
+            current = gamesFactory.getCommand(new JsonConstructionInfo(CommandType.join, requestBody));
             Object o = current.execute();
 
             Gamecookie = new Cookie(((CreatedGame)o).getId());
@@ -247,7 +255,7 @@ public class Handler implements HttpHandler {
         String[] tokens = path.split("/"); //split the URL path into tokens
         CommandType type = CommandType.convert(tokens[tokens.length - 1]); //convert the final token into a CommandType
 
-        ICommand current = movesFactory.getCommand(new JsonConstructionInfo(type, exchange.getRequestBody().toString()));
+        ICommand current = movesFactory.getCommand(new JsonConstructionInfo(type, requestBody));
 
         if (type == CommandType.listAI)
             throw new ServerException("Unknown Command Type");
