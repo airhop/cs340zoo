@@ -2,6 +2,7 @@
 
 package server.servermain.handler;
 
+import client.MVC.data.GameInfo;
 import client.model.GameModel;
 import client.proxy.Cookie;
 import com.sun.net.httpserver.Headers;
@@ -23,6 +24,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -68,12 +70,14 @@ public class Handler implements HttpHandler {
 //        System.out.println("Something  = " + something.getClass() + " " + something.toString());
 
         try {
-            //how can I get the cookies from the server facade?
-            if ("GET".equals(method))
+            //Get doesn't work so I moves game/model to another method and games/list to gamemethod
+            System.out.println("Method " + method);
+            //if ("GET".equals(method))
+            //    Get(exchange);
+            if(path.contains("model"))
                 Get(exchange);
-
 //            System.out.println(path);
-            if (path.contains("/user"))
+            else if (path.contains("/user"))
                 UserMethod(exchange);
             else if (Usercookie.isActive()) {
                 if (path.contains("/game"))
@@ -87,7 +91,7 @@ public class Handler implements HttpHandler {
                 throw new ServerException("Not logged in yet...");
 
         } catch (ServerException e) {
-            //return 400 error
+            e.printStackTrace();
             exchange.sendResponseHeaders(400, -1);
             exchange.getResponseBody().write(e.getMessage().getBytes());
             exchange.getResponseBody().close();
@@ -98,7 +102,7 @@ public class Handler implements HttpHandler {
             exchange.getResponseBody().close();
         }
 
-        System.out.println("Exchange response Body " + exchange.getResponseBody().toString());
+        System.out.println("Exchange response Body " + exchange.getResponseBody().toString().length());
     }
 
 
@@ -110,20 +114,22 @@ public class Handler implements HttpHandler {
      */
     public void Get(HttpExchange exchange) throws ServerException, IOException {
         ICommand current;
+        System.out.println("Request body " + exchange.getRequestBody().toString());
         String path = exchange.getRequestURI().getPath();
-        String JSonString = "";
+        System.out.println("Path " + path);
+        String info;
         if (path.contains("games/list")) {
-            JSonString = "";
-            ServerFacade.getInstance().getGamesList();
+            List<GameInfo> gameInfo = ServerFacade.getInstance().getGamesList();
+            info = new com.google.gson.Gson().toJson(gameInfo);
         } else if (path.contains("game/model")) {
-            JSonString = "";
-            ServerFacade.getInstance().getModel();
+            GameModel gm = ServerFacade.getInstance().getModel();
+            info = new com.google.gson.Gson().toJson(gm);
         } else
-            throw new ServerException("Not a valid get request");
+            throw new ServerException("Not a valid get request + " + path);
 
 
-        exchange.sendResponseHeaders(200, 0);
-        exchange.getResponseBody().write(JSonString.getBytes());
+        exchange.sendResponseHeaders(200, info.length());
+        exchange.getResponseBody().write(info.getBytes());
         exchange.getResponseBody().close();
 
 //does exchange need to be returned?
@@ -145,7 +151,7 @@ public class Handler implements HttpHandler {
         else if (path.contains("/register"))
             current = userFactory.getCommand(new JsonConstructionInfo(CommandType.register, requestBody));
         else
-            throw new ServerException("Not a valid get request");
+            throw new ServerException("Not a valid user request");
 
         Object o = current.execute();
         Login login = (Login) o;
@@ -182,10 +188,15 @@ public class Handler implements HttpHandler {
     public void GameMethod(HttpExchange exchange) throws ServerException, IOException {
         ICommand current;
         String path = exchange.getRequestURI().getPath();
+        System.out.println("Path " + path);
         if (path.contains("games/create")) {
             current = gamesFactory.getCommand(new JsonConstructionInfo(CommandType.create, exchange.getRequestBody().toString()));
+            System.out.println("success in getting to creation");
             Object o = current.execute();
-            String info = ((CreatedGame)o).toString();
+            System.out.println("success in getting to creation");
+            CreatedGame cg = ((CreatedGame)current.execute());
+            String info = new com.google.gson.Gson().toJson(cg);
+     System.out.println("Game created = " + info);
             exchange.sendResponseHeaders(200, info.length());
             exchange.getResponseBody().write(info.getBytes());
             exchange.getResponseBody().close();
@@ -195,15 +206,23 @@ public class Handler implements HttpHandler {
 
             Gamecookie = new Cookie(((CreatedGame)o).getId());
             ArrayList<String> cookies = new ArrayList<String>();
-            System.out.println("Gamecookie.toString() " + Gamecookie.toString());
+//            System.out.println("Gamecookie.toString() " + Gamecookie.toString());
             cookies.add(Gamecookie.toString());
             exchange.getResponseHeaders().put("Set-Cookie", cookies);
 
             exchange.sendResponseHeaders(200, 1);
             exchange.getResponseBody().write(((int) o));
             exchange.getResponseBody().close();
-        } else
-            throw new ServerException("Not a valid get request");
+        }
+        else if (path.contains("games/list")) {
+            List<GameInfo> gameInfo = ServerFacade.getInstance().getGamesList();
+            String info = new com.google.gson.Gson().toJson(gameInfo);
+            exchange.sendResponseHeaders(200, info.length());
+            exchange.getResponseBody().write(info.getBytes());
+            exchange.getResponseBody().close();
+        }
+        else
+            throw new ServerException("Not a valid game request");
 
     }
 

@@ -76,6 +76,7 @@ public class ServerFacade implements IServerFacade {
      */
     @Override
     public Login userLogin(String username, String password) {
+        System.out.println("User logging in through facade");
         if (players.containsKey(username)) {
             Login log = players.get(username);
             if (password.equals(log.getPassword())) {
@@ -119,7 +120,8 @@ public class ServerFacade implements IServerFacade {
     @Override
     public CreatedGame createGame(boolean randomTiles, boolean randomNumbers, boolean randomPorts, String name) {
         CreatedGame theGame;
-        theGame = new CreatedGame(name, 1);
+        System.out.println("Creating a brand new game of " + name + " " + gameInfoList.size());
+        theGame = new CreatedGame(name, gameInfoList.size());
         MapFactory myMapFactory = new MapFactory();
         GameModel myModel = myMapFactory.newModel(randomTiles, randomNumbers, randomPorts, name);
         gamesList.add(myModel);

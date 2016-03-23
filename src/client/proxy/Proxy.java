@@ -8,6 +8,7 @@ import com.google.gson.*;
 import shared.definitions.ResourceType;
 import shared.exceptions.*;
 import shared.extra.StopWatch;
+import shared.jsonobject.CreatedGame;
 import shared.jsonobject.User;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
@@ -289,6 +290,7 @@ public class Proxy implements IProxy {
         HttpURLResponse myResponse;
         try {
             myResponse = doGet(url);
+          //  System.out.println(myResponse.getResponseBody().toString().length());
             GameListDeserialize listDeserialize = new GameListDeserialize(myResponse.getResponseBody());
             games = listDeserialize.deserialize();
             //This is when i am going to create the deSerialization later
@@ -322,8 +324,12 @@ public class Proxy implements IProxy {
     //    System.out.println(myObjOne.toString());
         HttpURLResponse myResponse;
         try {
+            System.out.println("game creation . . .");
             myResponse = doPost(url, myObjOne);
-    //        System.out.println(myResponse.getResponseBody());
+
+            System.out.println("Body " + myResponse.getResponseBody().toString().length());
+        //    System.out.println("Stringified " + myResponse.getResponseBody().toString());
+
             //This is when i am going to create the deSerialization later
         } catch (ClientException e) {
             e.printStackTrace();

@@ -42,6 +42,7 @@ public class GamesFactory {
      * @return - Returns the appropriate Command Object
      */
     public Create makeCreate(JsonConstructionInfo info) {
+        System.out.println("Making a game creation");
         JsonParser myParse = new JsonParser();
         JsonElement myEle = myParse.parse(info.getJsonBody());
         JsonTreeReader myTree = new JsonTreeReader(myEle);
@@ -50,21 +51,36 @@ public class GamesFactory {
         boolean randomPorts = false;
         boolean randomNumbers = false;
         String gameName = "";
+
+        int i = 0;
+        System.out.println("Parsing the game . . ." + i++);
         try {
+            System.out.println("Parsing the game . . ." + i++);
             myTree.beginObject();
+            System.out.println("Parsing the game . . ." + i++);
             myTree.nextName();  //This is the first boolean which is the random tiles
+            System.out.println("Parsing the game . . ." + i++);
             randomTiles = myTree.nextBoolean(); //This is the Random Tiles Boolean
+            System.out.println("Parsing the game . . ." + i++);
             myTree.nextName(); //This is the name == randomNumbers
+            System.out.println("Parsing the game . . ." + i++);
             randomNumbers = myTree.nextBoolean(); //This is the boolean randomNumbers
+            System.out.println("Parsing the game . . ." + i++);
             myTree.nextName(); //This is the randomPorts
+            System.out.println("Parsing the game . . ." + i++);
             randomPorts = myTree.nextBoolean(); //This is the boolean randomPorts
+            System.out.println("Parsing the game . . ." + i++);
             myTree.nextName(); //this is the gameName == name
+            System.out.println("Parsing the game . . ." + i++);
             gameName = myTree.nextString(); //this is the name of the game
+            System.out.println("Parsing the game . . ." + i++);
 
         } catch (IOException e) {
+            System.out.println("error with an exception being tossed?");
             e.printStackTrace();
         }
 
+        System.out.println("Information " + randomTiles + " " + randomPorts + " " + randomNumbers + " " + gameName);
         return new Create(randomTiles, randomPorts, randomNumbers, gameName);
     }
 
