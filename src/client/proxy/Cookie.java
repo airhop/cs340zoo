@@ -74,7 +74,7 @@ public class Cookie {
         this.cookieValue = cookieValue;
     }
 
-    public String retrieveID() { return myId; }
+    public int retrieveID() { return Integer.parseInt(myId); }
 
     public String getDecode() {
         decodedValue = URLDecoder.decode(cookieValue);
