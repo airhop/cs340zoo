@@ -43,8 +43,8 @@ public class ServerFacade implements IServerFacade {
         players = new TreeMap<String, Login>();
         players.put("Sam", new Login("Sam", "sam", 0));
         players.put("Brooke", new Login("Brooke", "brooke", 1));
-        currPlayerID = players.size() - 1;
-        currGame = 0;
+        currPlayerID = players.size();
+        currGame = gamesList.size();
         currPlayer = new CurrentPlayer();
     }
 
