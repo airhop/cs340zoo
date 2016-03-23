@@ -34,8 +34,8 @@ public class ServerFacade implements IServerFacade {
     private List<GameModel> gamesList;
     private List<GameInfo> gameInfoList;
     private TreeMap<String, Login> players; // first is the username, next is the password
-    int currPlayerID; //the currentID for the player to be added
-    int currGame;
+    int createPlayerIndex; //the currentID for the player to be added
+    int createGameIndex;
     CurrentPlayer currPlayer;
     MapFactory myMapFactory;
 
@@ -47,10 +47,8 @@ public class ServerFacade implements IServerFacade {
         players.put("Brooke", new Login("Brooke", "brooke", 1));
         players.put("Bob", new Login("Bob", "bob", 2));
         players.put("Suzzie", new Login("Suzzie", "suzzie", 3));
-        currPlayerID = players.size() - 1;
-        currGame = 0;
-        currPlayerID = players.size();
-        currGame = gamesList.size();
+        createPlayerIndex = players.size();
+        createGameIndex = gamesList.size();
         currPlayer = new CurrentPlayer();
         myMapFactory = new MapFactory();
 
@@ -61,10 +59,10 @@ public class ServerFacade implements IServerFacade {
         ps.add(new Player("Bob", 2));
         ps.add(new Player("Suzzie", 3));
         gm.setPlayers(ps);
-        gm.setID(currGame++);
+        gm.setID(createGameIndex++);
         gamesList.add(gm);
 
-        ArrayList<PlayerInfo> info = new ArrayList<PlayerInfo>();
+        List<PlayerInfo> info = new ArrayList<>();
         info.add(new PlayerInfo(0, 0, "Sam", CatanColor.BLUE));
         info.add(new PlayerInfo(1, 1, "Brooke", CatanColor.GREEN));
         info.add(new PlayerInfo(2, 2, "Bob", CatanColor.PUCE));
@@ -149,7 +147,7 @@ public class ServerFacade implements IServerFacade {
             //cannot register a player that already exists
             return new Login("", "", -1);
         }
-        Login noob = new Login(username, password, currPlayerID++);
+        Login noob = new Login(username, password, createPlayerIndex++);
         players.put(username, noob);
         return noob;
     }
@@ -197,6 +195,11 @@ public class ServerFacade implements IServerFacade {
         gamePlayers.add(addedPlayer);
         addedPlayer.setPlayerIndex(gamePlayers.size() - 1);
         addedPlayer.setColor(color);
+        PlayerInfo myPlayer = new PlayerInfo();
+        myPlayer.setColor(CatanColor.valueOf(color));
+        myPlayer.setId(currPlayer.getPlayerId());
+        myPlayer.setName(currPlayer.getUsername());
+        gameInfoList.get(id).addPlayer(myPlayer);
         return id;
     }
 
