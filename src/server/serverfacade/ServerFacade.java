@@ -62,11 +62,16 @@ public class ServerFacade implements IServerFacade {
         gm.setID(createGameIndex++);
         gamesList.add(gm);
 
+
         List<PlayerInfo> info = new ArrayList<>();
         info.add(new PlayerInfo(0, 0, "Sam", CatanColor.BLUE));
+        gm.getPlayers().get(0).setColor(CatanColor.BLUE.toString());
         info.add(new PlayerInfo(1, 1, "Brooke", CatanColor.GREEN));
+        gm.getPlayers().get(1).setColor(CatanColor.GREEN.toString());
         info.add(new PlayerInfo(2, 2, "Bob", CatanColor.PUCE));
+        gm.getPlayers().get(2).setColor(CatanColor.PUCE.toString());
         info.add(new PlayerInfo(3, 3, "Suzzie", CatanColor.ORANGE));
+        gm.getPlayers().get(3).setColor(CatanColor.ORANGE.toString());
         gameInfoList.add(new GameInfo(0, "First Game", info));
 
     }
