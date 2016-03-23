@@ -49,7 +49,7 @@ public class Hex {
 
   public void setResource(String resource) 
   {
-	  this.resource = resource;
+	  this.resource = resource.toUpperCase();
   }
 
   public int getNumber()
