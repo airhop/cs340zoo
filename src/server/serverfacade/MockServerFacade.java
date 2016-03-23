@@ -39,8 +39,8 @@ public class MockServerFacade implements IServerFacade {
     }
 
     @Override
-    public int joinGame(int id, String color) {
-        return -1;
+    public CreatedGame joinGame(int id, String color) {
+        return null;
     }
 
     @Override

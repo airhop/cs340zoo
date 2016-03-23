@@ -24,7 +24,7 @@ public interface IServerFacade
 	//games: total 5 methods
 	List<GameInfo> getGamesList();
 	CreatedGame createGame(boolean randomTiles, boolean randomNumbers, boolean randomPorts, String name);
-	int joinGame(int id, String color);
+	CreatedGame joinGame(int id, String color);
 	void save(int id, String name);
 	void load(String name);
 	//game: total 6 methods

@@ -188,7 +188,7 @@ public class ServerFacade implements IServerFacade {
      * @param color - the color chosen by the player for the game.
      */
     @Override
-    public int joinGame(int id, String color) {
+    public CreatedGame joinGame(int id, String color) {
         GameModel myModel = gamesList.get(id);
         List<Player> gamePlayers = myModel.getPlayers();
         int playerIndex = -1;
@@ -219,7 +219,7 @@ public class ServerFacade implements IServerFacade {
         changePlayer.setColor(color);
         changePlayer.setPlayerIndex(playerIndex);
 
-        return id;
+        return new CreatedGame(gameInfoList.get(id).getTitle(), id);
     }
 
     /**
