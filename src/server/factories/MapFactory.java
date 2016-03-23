@@ -23,11 +23,12 @@ public class MapFactory
     public GameModel newModel(boolean randomTiles, boolean randomNumbers, boolean randomPorts, String name)
     {
         ArrayList<Hex> hexes = initializeHexes();
-        if(randomTiles)
-            hexes = initializeRandomHexes(hexes);
 
         if(randomNumbers)
             hexes = randomizeNumbers(hexes);
+
+        if(randomTiles)
+            hexes = initializeRandomHexes(hexes);
 
         ArrayList<Port> ports = initializePorts();
         if(randomPorts)
@@ -106,13 +107,14 @@ public class MapFactory
             values[b] = type;
         }
 
+        int j = 0;
         for(int i = 0; i < hexes.size(); i++)
         {
-            if(i == 7)
-                i++; //skip the desert hex
-            Hex hes = hexes.get(i);
+            if(i >= 7)
+                j++;
+            Hex hes = hexes.get(j);
             hes.setNumber(values[i]);
-            hexes.set(i, hes);
+            hexes.set(j, hes);
         }
 
         return hexes;
