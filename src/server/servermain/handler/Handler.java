@@ -93,9 +93,10 @@ public class Handler implements HttpHandler {
             }
             ServerFacade.getInstance().buildCurrentPlayer(userCookie, gameCookie);
 
-            if (path.contains("model"))
+            if (path.contains("model")){
                 Get(exchange);
-            else if (path.contains("/user")) {
+                return;
+            } else if (path.contains("/user")) {
                 UserMethod(exchange);
                 return;
             }
