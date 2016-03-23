@@ -57,18 +57,7 @@ public class Handler implements HttpHandler {
         String method = exchange.getRequestMethod();
         String path = exchange.getRequestURI().getPath();
 
-        Usercookie = new Cookie();
-        Gamecookie = new Cookie();
-        Headers reqHeaders = exchange.getRequestHeaders();
-        List<String> rh = reqHeaders.get("Cookie");
-        if(rh.size() > 0)
-        {
-            Scanner scan = new Scanner(rh.get(0));
-            Usercookie = new Cookie(scan.next(), scan.next(), scan.next());
-            if(rh.size() > 1)
-                Gamecookie = new Cookie(Integer.parseInt(rh.get(1)));
-        }
-        ServerFacade.getInstance().buildCurrentPlayer(Usercookie, Gamecookie);
+        ServerFacade.getInstance().buildCurrentPlayer(new Cookie(), new Cookie());
 
         Scanner scan = new Scanner(exchange.getRequestBody());
         requestBody = "";
@@ -76,8 +65,6 @@ public class Handler implements HttpHandler {
             requestBody += scan.nextLine();
 
         Headers test = exchange.getRequestHeaders();
-//        Object something = exchange.getAttribute("Cookie");
-//        System.out.println("Something  = " + something.getClass() + " " + something.toString());
 
         try {
             //Get doesn't work so I moves game/model to another method and games/list to gamemethod
@@ -86,9 +73,25 @@ public class Handler implements HttpHandler {
             //    Get(exchange);
             if(path.contains("model"))
                 Get(exchange);
-            else if (path.contains("/user"))
+            else if (path.contains("/user")) {
                 UserMethod(exchange);
-            else if (Usercookie.isActive()) {
+                return;
+            }
+
+            Usercookie = new Cookie();
+            Gamecookie = new Cookie();
+            Headers reqHeaders = exchange.getRequestHeaders();
+            List<String> rh = reqHeaders.get("Cookie");
+            if(rh.size() > 0)
+            {
+                scan = new Scanner(rh.get(0));
+                Usercookie = new Cookie(scan.next(), scan.next(), scan.next());
+                if(rh.size() > 1)
+                    Gamecookie = new Cookie(Integer.parseInt(rh.get(1)));
+            }
+            ServerFacade.getInstance().buildCurrentPlayer(new Cookie(), new Cookie());
+
+            if (Usercookie.isActive()) {
                 if (path.contains("/game"))
                     GameMethod(exchange);
                 else if (Gamecookie.isActive()) {

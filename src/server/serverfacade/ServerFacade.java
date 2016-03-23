@@ -172,7 +172,6 @@ public class ServerFacade implements IServerFacade {
         CreatedGame theGame;
         System.out.println("Creating a brand new game of " + name + " " + gameInfoList.size());
         theGame = new CreatedGame(name, gameInfoList.size());
-        MapFactory myMapFactory = new MapFactory();
         GameModel myModel = myMapFactory.newModel(randomTiles, randomNumbers, randomPorts, name);
         gamesList.add(myModel);
         myModel.setID(gamesList.size() - 1);
