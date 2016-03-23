@@ -81,25 +81,25 @@ public class ServerFacade implements IServerFacade {
 
     }
 
-    public void buildCurrentPlayer(Cookie userCookie, Cookie gameCookie){
-        if(userCookie.isActive()){
+    public void buildCurrentPlayer(Cookie userCookie, Cookie gameCookie) {
+        if (userCookie.isActive()) {
             currPlayer.setUsername(userCookie.getCookieName());
             currPlayer.setPassword(userCookie.getCookieValue());
-        }else{
+        } else {
             currPlayer.setUsername("");
             currPlayer.setPassword("");
         }
-        if(gameCookie.isActive()){
+        if (gameCookie.isActive()) {
             currPlayer.setGameId(gameCookie.retrieveID());
             List<PlayerInfo> playerList = gameInfoList.get(currPlayer.getGameId()).getPlayers();
             int playerIndex = -1;
-            for(int i = 0; i < playerList.size(); i++){
-                if(playerList.get(i).getName().equals(currPlayer.getUsername())){
+            for (int i = 0; i < playerList.size(); i++) {
+                if (playerList.get(i).getName().equals(currPlayer.getUsername())) {
                     playerIndex = i;
                 }
             }
             currPlayer.setPlayerIndex(playerIndex);
-        }else{
+        } else {
             currPlayer.setGameId(-1);
             currPlayer.setPlayerIndex(-1);
         }
@@ -160,8 +160,7 @@ public class ServerFacade implements IServerFacade {
      * @return GameModel -
      */
     @Override
-    public List<GameInfo> getGamesList()
-    {
+    public List<GameInfo> getGamesList() {
         System.out.println("here! " + gameInfoList.size());
         return gameInfoList;
     }
@@ -229,9 +228,9 @@ public class ServerFacade implements IServerFacade {
      */
     @Override
     public GameModel getModel() {
-        if(currPlayer.getGameId() != -1){
+        if (currPlayer.getGameId() != -1) {
             return gamesList.get(currPlayer.getGameId());
-        }else{
+        } else {
             return null;
         }
     }
@@ -262,7 +261,7 @@ public class ServerFacade implements IServerFacade {
      */
     @Override
     public void sendChat(int playerIndex, String content) {
-        if(!currPlayer.getUsername().equals("")){
+        if (!currPlayer.getUsername().equals("")) {
             GameModel game = gamesList.get(currPlayer.getGameId());
             game.getChat().addMessage(currPlayer.getUsername(), content);
         }
@@ -276,7 +275,7 @@ public class ServerFacade implements IServerFacade {
      */
     @Override
     public void rollNumber(int playerIndex, int number) {
-        if(currPlayer.getGameId() != -1){
+        if (currPlayer.getGameId() != -1) {
             GameModel game = gamesList.get(currPlayer.getGameId());
             List<ResourceList> resources = game.getMap().giveResources(number);
             for (int i = 0; i < 4; i++) {
@@ -309,7 +308,7 @@ public class ServerFacade implements IServerFacade {
      */
     @Override
     public void finishTurn(int playerIndex) {
-        if(currPlayer.getGameId() != -1){
+        if (currPlayer.getGameId() != -1) {
             GameModel game = gamesList.get(currPlayer.getGameId());
             if (playerIndex == game.getTurnTracker().getCurrentPlayer()) {
                 if (playerIndex == 3) {
@@ -340,7 +339,7 @@ public class ServerFacade implements IServerFacade {
      */
     @Override
     public void buyDevCard(int playerIndex) {
-        if(currPlayer.getGameId() != -1){
+        if (currPlayer.getGameId() != -1) {
             GameModel game = gamesList.get(currPlayer.getGameId());
             Player buyPlayer = game.getPlayers().get(currPlayer.getPlayerIndex());
             DevCardList playerDevCards = buyPlayer.getNewDevCards();
@@ -387,7 +386,7 @@ public class ServerFacade implements IServerFacade {
      */
     @Override
     public void yearOfPlenty(int playerIndex, ResourceType res1, ResourceType res2) {
-        if(currPlayer.getGameId() != -1){
+        if (currPlayer.getGameId() != -1) {
             GameModel game = gamesList.get(currPlayer.getGameId());
             Player addPlayer = game.getPlayers().get(playerIndex);
             Bank myBank = game.getBank();
@@ -414,7 +413,7 @@ public class ServerFacade implements IServerFacade {
      */
     @Override
     public void roadBuilding(int playerIndex, EdgeLocation spot1, EdgeLocation spot2) {
-        if(currPlayer.getGameId() != -1){
+        if (currPlayer.getGameId() != -1) {
             GameModel game = gamesList.get(currPlayer.getGameId());
             Map ourMap = game.getMap();
             if (ourMap.canPlaceRoad(spot1, false) && ourMap.canPlaceRoad(spot1, false)) {
@@ -437,7 +436,7 @@ public class ServerFacade implements IServerFacade {
      */
     @Override
     public void soldier(int playerIndex, int victimIndex, HexLocation location) {
-        if(currPlayer.getGameId() != -1){
+        if (currPlayer.getGameId() != -1) {
             GameModel game = gamesList.get(currPlayer.getGameId());
             List<Player> players = game.getPlayers();
             Player robber = players.get(playerIndex);
@@ -452,11 +451,11 @@ public class ServerFacade implements IServerFacade {
      * The command objects will call this method to run the server operation of playing a monopoly card
      *
      * @param playerIndex the id of the player using the monopoly card
-     * @param resource -
+     * @param resource    -
      */
     @Override
     public void monopoly(int playerIndex, String resource) {
-        if(currPlayer.getGameId() != -1){
+        if (currPlayer.getGameId() != -1) {
             GameModel game = gamesList.get(currPlayer.getGameId());
             List<Player> players = game.getPlayers();
             int addAmount = 0;
@@ -477,7 +476,7 @@ public class ServerFacade implements IServerFacade {
      */
     @Override
     public void monument(int playerIndex) {
-        if(currPlayer.getGameId() != -1){
+        if (currPlayer.getGameId() != -1) {
             GameModel game = gamesList.get(currPlayer.getGameId());
             Player addPointPlayer = game.getPlayers().get(playerIndex);
             addPointPlayer.setVictoryPoints(addPointPlayer.getVictoryPoints() + 1);
@@ -493,7 +492,7 @@ public class ServerFacade implements IServerFacade {
      */
     @Override
     public void buildRoad(int playerIndex, EdgeLocation roadLocation, Boolean free) {
-        if(currPlayer.getGameId() != -1){
+        if (currPlayer.getGameId() != -1) {
             GameModel game = gamesList.get(currPlayer.getGameId());
             Map ourMap = game.getMap();
             Player roadPlayer = game.getPlayers().get(playerIndex);
@@ -529,7 +528,7 @@ public class ServerFacade implements IServerFacade {
      */
     @Override
     public void buildSettlement(int playerIndex, VertexLocation vertexLocation, boolean free) {
-        if(currPlayer.getGameId() != -1){
+        if (currPlayer.getGameId() != -1) {
             GameModel game = gamesList.get(currPlayer.getGameId());
             Map ourMap = game.getMap();
             Player setPlayer = game.getPlayers().get(playerIndex);
@@ -566,7 +565,7 @@ public class ServerFacade implements IServerFacade {
      */
     @Override
     public void buildCity(int playerIndex, VertexLocation vertexLocation) {
-        if(currPlayer.getGameId() != -1){
+        if (currPlayer.getGameId() != -1) {
             GameModel game = gamesList.get(currPlayer.getGameId());
             Map ourMap = game.getMap();
             Player cityPlayer = game.getPlayers().get(playerIndex);
@@ -590,7 +589,7 @@ public class ServerFacade implements IServerFacade {
      */
     @Override
     public void offerTrade(int playerIndex, ResourceList offer, int receiver) {
-        if(currPlayer.getGameId() != -1){
+        if (currPlayer.getGameId() != -1) {
             GameModel game = gamesList.get(currPlayer.getGameId());
             game.setTradeOffer(new TradeOffer(playerIndex, receiver, offer));
         }
@@ -606,12 +605,12 @@ public class ServerFacade implements IServerFacade {
     public void acceptTrade(int playerIndex, boolean willAccept) {
         //TODO check the null value on the trade offer :/
         //TODO check the values on the send and receive
-        if(currPlayer.getGameId() != -1){
+        if (currPlayer.getGameId() != -1) {
             GameModel game = gamesList.get(currPlayer.getGameId());
             TradeOffer trade;
             Player sender;
             Player receiver;
-            if(willAccept){
+            if (willAccept) {
                 trade = game.getTradeOffer();
                 sender = game.getPlayers().get(trade.getSender());
                 receiver = game.getPlayers().get(trade.getReciever());
@@ -632,12 +631,12 @@ public class ServerFacade implements IServerFacade {
      */
     @Override
     public void maritimeTrade(int playerIndex, int ratio, String inputResource, String outputResource) {
-        if(currPlayer.getGameId() != -1){
+        if (currPlayer.getGameId() != -1) {
             GameModel game = gamesList.get(currPlayer.getGameId());
             Player tradePlayer = game.getPlayers().get(playerIndex);
-            if(ratio < 4 && ratio > 1){
-                if(tradePlayer.getResources().getNumOfResource(inputResource) >= ratio){
-                    if(game.getBank().getResources().getNumOfResource(outputResource) > 0){
+            if (ratio < 4 && ratio > 1) {
+                if (tradePlayer.getResources().getNumOfResource(inputResource) >= ratio) {
+                    if (game.getBank().getResources().getNumOfResource(outputResource) > 0) {
                         tradePlayer.addResource(ResourceType.valueOf(inputResource), -ratio);
                         tradePlayer.addResource(ResourceType.valueOf(outputResource), 1);
                         game.getBank().getResources().addResourceType(outputResource, -1);
@@ -656,7 +655,7 @@ public class ServerFacade implements IServerFacade {
     @Override
     public void discardCards(int playerIndex, ResourceList discardedCards) {
         //TODO check if these values need to be flipped
-        if(currPlayer.getGameId() != -1){
+        if (currPlayer.getGameId() != -1) {
             GameModel game = gamesList.get(currPlayer.getGameId());
             Player disPlayer = game.getPlayers().get(playerIndex);
             disPlayer.addResource(ResourceType.BRICK, discardedCards.getBrick());

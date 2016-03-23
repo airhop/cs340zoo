@@ -236,7 +236,7 @@ public class Handler implements HttpHandler {
             List<GameInfo> gameInfo = ServerFacade.getInstance().getGamesList();
             GameListDeserialize gld = new GameListDeserialize(gameInfo);
             String info = new com.google.gson.Gson().toJson(gameInfo);
-            System.out.println("Game Info . .  ." + gameInfo.size() + " " + gameInfo.get(0).toString());
+//            System.out.println("Game Info . .  ." + gameInfo.size() + " " + gameInfo.get(0).toString());
             exchange.sendResponseHeaders(200, info.length());
             exchange.getResponseBody().write(info.getBytes());
             exchange.getResponseBody().close();
