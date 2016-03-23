@@ -20,11 +20,9 @@ import server.shared.CommandType;
 import shared.jsonobject.CreatedGame;
 import shared.jsonobject.Login;
 import shared.serialization.GameListDeserialize;
-import shared.serialization.HttpURLResponse;
+
 import java.lang.reflect.Type;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -38,8 +36,8 @@ public class Handler implements HttpHandler {
     private GamesFactory gamesFactory;
     private MovesFactory movesFactory;
     private String requestBody;
-    private static Cookie Usercookie;
-    private static Cookie Gamecookie;
+    private Cookie userCookie;
+    private Cookie gameCookie;
 
     public Handler() {
         userFactory = new UserFactory();
@@ -58,8 +56,6 @@ public class Handler implements HttpHandler {
     {
         String method = exchange.getRequestMethod();
         String path = exchange.getRequestURI().getPath();
-
-        ServerFacade.getInstance().buildCurrentPlayer(new Cookie(), new Cookie());
 
         Scanner scan = new Scanner(exchange.getRequestBody());
         requestBody = "";
@@ -80,24 +76,24 @@ public class Handler implements HttpHandler {
                 return;
             }
 
-            Usercookie = new Cookie();
-            Gamecookie = new Cookie();
+            userCookie = new Cookie();
+            gameCookie = new Cookie();
             Headers reqHeaders = exchange.getRequestHeaders();
             List<String> rh = reqHeaders.get("Cookie");
             if(rh!= null)
             {
                 scan = new Scanner( rh.get(0));
                 if(scan.hasNext())
-                    Usercookie = new Cookie(scan.next(), scan.next(), scan.next());
+                    userCookie = new Cookie(scan.next(), scan.next(), scan.next());
                 if(scan.hasNext())
-                    Gamecookie = new Cookie(Integer.parseInt(scan.next()));
+                    gameCookie = new Cookie(Integer.parseInt(scan.next()));
             }
-            ServerFacade.getInstance().buildCurrentPlayer(new Cookie(), new Cookie());
+            ServerFacade.getInstance().buildCurrentPlayer(userCookie, gameCookie);
 
-            if (Usercookie.isActive()) {
+            if (userCookie.isActive()) {
                 if (path.contains("/game"))
                     GameMethod(exchange);
-                else if (Gamecookie.isActive()) {
+                else if (gameCookie.isActive()) {
                     if (path.contains("/moves"))
                         MoveMethod(exchange);
                 } else
@@ -178,10 +174,10 @@ public class Handler implements HttpHandler {
             throw new ServerException("False user");
         }
 
-        Usercookie = new Cookie(login);
+        userCookie = new Cookie(login);
         ArrayList<String> cookies = new ArrayList<String>();
-        System.out.println("Usercookie.toString() = " + Usercookie.toString());
-        cookies.add(Usercookie.toString());
+        System.out.println("userCookie.toString() = " + userCookie.toString());
+        cookies.add(userCookie.toString());
         exchange.getResponseHeaders().put("Set-Cookie", cookies);
         cookies = new ArrayList<String>();
         cookies.add("text/html");
@@ -222,10 +218,10 @@ public class Handler implements HttpHandler {
             current = gamesFactory.getCommand(new JsonConstructionInfo(CommandType.join, requestBody));
             Object o = current.execute();
 
-            Gamecookie = new Cookie(((CreatedGame)o).getId());
+            gameCookie = new Cookie(((CreatedGame)o).getId());
             ArrayList<String> cookies = new ArrayList<String>();
-//            System.out.println("Gamecookie.toString() " + Gamecookie.toString());
-            cookies.add(Gamecookie.toString());
+//            System.out.println("gameCookie.toString() " + gameCookie.toString());
+            cookies.add(gameCookie.toString());
             exchange.getResponseHeaders().put("Set-Cookie", cookies);
 
             exchange.sendResponseHeaders(200, 1);
@@ -279,13 +275,6 @@ public class Handler implements HttpHandler {
         exchange.getResponseBody().close();
     }
 
-    public static Cookie getUserCookie() {
-        return Usercookie;
-    }
-
-    public static Cookie getGamecookie() {
-        return Gamecookie;
-    }
 }
 
 //reference

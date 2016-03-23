@@ -191,15 +191,34 @@ public class ServerFacade implements IServerFacade {
     public int joinGame(int id, String color) {
         GameModel myModel = gamesList.get(id);
         List<Player> gamePlayers = myModel.getPlayers();
-        Player addedPlayer = new Player(currPlayer.getUsername(), id);
-        gamePlayers.add(addedPlayer);
-        addedPlayer.setPlayerIndex(gamePlayers.size() - 1);
-        addedPlayer.setColor(color);
-        PlayerInfo myPlayer = new PlayerInfo();
-        myPlayer.setColor(CatanColor.valueOf(color));
-        myPlayer.setId(currPlayer.getPlayerId());
-        myPlayer.setName(currPlayer.getUsername());
-        gameInfoList.get(id).addPlayer(myPlayer);
+        int playerIndex = -1;
+        boolean firstJoin = false;
+        for(int i = 0; i < 4; i++){
+            if(gamePlayers.get(i).getUsername().equals(currPlayer.getUsername()) && playerIndex == -1){
+                playerIndex = i;
+            }
+        }
+        for(int i = 0; i < 4; i++){
+            if(gamePlayers.get(i).getUsername().equals("") && playerIndex == -1){
+                playerIndex = i;
+                firstJoin = true;
+            }
+        }
+
+
+        if(firstJoin){
+            PlayerInfo myPlayer = new PlayerInfo();
+            myPlayer.setColor(CatanColor.valueOf(color));
+            myPlayer.setId(currPlayer.getPlayerId());
+            myPlayer.setName(currPlayer.getUsername());
+            myPlayer.setPlayerIndex(playerIndex);
+            gameInfoList.get(id).addPlayer(myPlayer);
+        }
+        Player changePlayer = gamePlayers.get(playerIndex);
+
+        changePlayer.setColor(color);
+        changePlayer.setPlayerIndex(playerIndex);
+
         return id;
     }
 
