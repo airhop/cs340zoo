@@ -16,8 +16,9 @@ import java.util.TreeMap;
 public class MapSerializer implements JsonSerializer<TreeMap<HexLocation, Hex>> {
     @Override
     public JsonElement serialize(TreeMap<HexLocation, Hex> src, Type typeOfSrc, JsonSerializationContext context) {
-        Type typeSource= new TypeToken<TreeMap<HexLocation, Hex>>() {}.getType();
-        return new JsonPrimitive(new Gson().toJson(src, typeSource));
+        Type typeSource = new TypeToken<TreeMap<HexLocation, Hex>>() {}.getType();
+        JsonObject object = new JsonObject();
+        return new JsonPrimitive(new Gson().toJson(src, typeOfSrc));
     }
 //    private class DateTimeSerializer implements JsonSerializer<DateTime> {
 //        public JsonElement serialize(DateTime src, Type typeOfSrc, JsonSerializationContext context) {

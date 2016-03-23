@@ -4,6 +4,7 @@ import client.MVC.data.GameInfo;
 import client.facade.Facade;
 import client.model.GameModel;
 import client.model.bank.ResourceList;
+import client.model.map.Map;
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
 import shared.definitions.ResourceType;
@@ -14,10 +15,7 @@ import shared.jsonobject.User;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
-import shared.serialization.CreateGamePassObject;
-import shared.serialization.Deserializer;
-import shared.serialization.GameListDeserialize;
-import shared.serialization.HttpURLResponse;
+import shared.serialization.*;
 
 import java.io.*;
 import java.lang.reflect.Type;
@@ -26,6 +24,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.TreeMap;
 
 public class Proxy implements IProxy {
     private String SERVER_HOST;
@@ -397,7 +396,10 @@ public class Proxy implements IProxy {
             myResponse = doGet(url);
             String test = myResponse.getResponseBody();
             System.out.println(test);
-            gm = myGson.fromJson(myResponse.getResponseBody(), GameModel.class);
+            GsonBuilder gson = new GsonBuilder();
+//            gson.registerTypeAdapter(TreeMap.class, new MapDeserializer());
+            gson.enableComplexMapKeySerialization();
+            gm = gson.create().fromJson(myResponse.getResponseBody(), GameModel.class);
 //            gm = myDeSer.deserialize(myResponse.getResponseBody(), Facade.getInstance().getGameModel());
             // System.out.println("\n Heyo!!\n" + myGameModel.toString() + "\n");
         } catch (ClientException e) {

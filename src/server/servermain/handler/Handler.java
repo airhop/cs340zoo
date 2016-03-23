@@ -145,15 +145,14 @@ public class Handler implements HttpHandler {
             System.out.println("Game Info . .  ." + gameInfo.size() + " " + gameInfo.get(0).toString());
         } else if (path.contains("game/model")) {
             GameModel gm = ServerFacade.getInstance().getModel();
-            Gson myGson = new Gson();
             GsonBuilder gson = new GsonBuilder();
-
+            gson.enableComplexMapKeySerialization();
 //            private class DateTimeSerializer implements JsonSerializer<DateTime> {
 //                public JsonElement serialize(DateTime src, Type typeOfSrc, JsonSerializationContext context) {
 //                    return new JsonPrimitive(src.toString());
 //                }
 //            }
-            gson.registerTypeAdapter(Map.class, new MapSerializer());
+//            gson.registerTypeAdapter(TreeMap.class, new MapSerializer());
             info = gson.create().toJson(gm);
         } else
             throw new ServerException("Not a valid get request + " + path);

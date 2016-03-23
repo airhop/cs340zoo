@@ -24,11 +24,11 @@ public class MapFactory
     {
         ArrayList<Hex> hexes = initializeHexes();
 
-        if(randomNumbers)
-            hexes = randomizeNumbers(hexes);
-
         if(randomTiles)
             hexes = initializeRandomHexes(hexes);
+
+        if(randomNumbers)
+            hexes = randomizeNumbers(hexes);
 
         ArrayList<Port> ports = initializePorts();
         if(randomPorts)
@@ -110,9 +110,11 @@ public class MapFactory
         int j = 0;
         for(int i = 0; i < (hexes.size() - 1); i++)
         {
-            if(i == 7)
-                j++;
             Hex hes = hexes.get(j);
+            if(hes.getResource().equalsIgnoreCase("DESERT")){
+                hes.setNumber(0);
+                j++;
+            }
             hes.setNumber(values[i]);
             hexes.set(j, hes);
             j++;
