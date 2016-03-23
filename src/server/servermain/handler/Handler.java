@@ -56,16 +56,24 @@ public class Handler implements HttpHandler {
     {
         String method = exchange.getRequestMethod();
         String path = exchange.getRequestURI().getPath();
+
+        Usercookie = new Cookie();
+        Gamecookie = new Cookie();
         Headers reqHeaders = exchange.getRequestHeaders();
-         //reqHeaders.get("Cookie");
-          //for(String cookie ; cookies) if(!cookie.contains(username)/(gameID)
+        List<String> rh = reqHeaders.get("Cookie");
+        if(rh.size() > 0)
+        {
+            Scanner scan = new Scanner(rh.get(0));
+            Usercookie = new Cookie(scan.next(), scan.next(), scan.next());
+            if(rh.size() > 1)
+                Gamecookie = new Cookie(Integer.parseInt(rh.get(1)));
+        }
+        ServerFacade.getInstance().buildCurrentPlayer(Usercookie, Gamecookie);
 
         Scanner scan = new Scanner(exchange.getRequestBody());
         requestBody = "";
         while(scan.hasNext())
             requestBody += scan.nextLine();
-
-
 
         Headers test = exchange.getRequestHeaders();
 //        Object something = exchange.getAttribute("Cookie");
@@ -206,16 +214,18 @@ public class Handler implements HttpHandler {
 
             System.out.println(input);
             current = gamesFactory.getCommand(new JsonConstructionInfo(CommandType.create, requestBody));
-     System.out.println("success in getting to creation " + exchange.getRequestBody().toString());
+//     System.out.println("success in getting to creation " + exchange.getRequestBody().toString());
             Object o = current.execute();
-     System.out.println("success in getting to creation");
+//     System.out.println("success in getting to creation");
             CreatedGame cg = ((CreatedGame)current.execute());
             String info = new com.google.gson.Gson().toJson(cg);
-     System.out.println("Game created = " + info);
+//     System.out.println("Game created = " + info);
             exchange.sendResponseHeaders(200, info.length());
             exchange.getResponseBody().write(info.getBytes());
             exchange.getResponseBody().close();
-        } else if (path.contains("games/join")) {
+
+        }
+        else if (path.contains("games/join")) {
             current = gamesFactory.getCommand(new JsonConstructionInfo(CommandType.join, requestBody));
             Object o = current.execute();
 
