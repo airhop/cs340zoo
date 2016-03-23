@@ -49,6 +49,8 @@ public class ServerFacade implements IServerFacade {
         players.put("Suzzie", new Login("Suzzie", "suzzie", 3));
         currPlayerID = players.size() - 1;
         currGame = 0;
+        currPlayerID = players.size();
+        currGame = gamesList.size();
         currPlayer = new CurrentPlayer();
         myMapFactory = new MapFactory();
 
@@ -166,6 +168,7 @@ public class ServerFacade implements IServerFacade {
         CreatedGame theGame;
         System.out.println("Creating a brand new game of " + name + " " + gameInfoList.size());
         theGame = new CreatedGame(name, gameInfoList.size());
+        MapFactory myMapFactory = new MapFactory();
         GameModel myModel = myMapFactory.newModel(randomTiles, randomNumbers, randomPorts, name);
         gamesList.add(myModel);
         myModel.setID(gamesList.size() - 1);
