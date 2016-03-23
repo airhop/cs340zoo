@@ -87,6 +87,11 @@ public class MapFactory
         {
             Hex hex = hexes.get(i);
             hex.setResource(resources[i]);
+            if(resources[i].equalsIgnoreCase("Desert"))
+            {
+                hexes.get(7).setNumber(hex.getNumber());
+                hex.setNumber(0);
+            }
             hexes.set(i, hex);
         }
         return hexes;
@@ -110,11 +115,12 @@ public class MapFactory
         int j = 0;
         for(int i = 0; i < (hexes.size() - 1); i++)
         {
-            Hex hes = hexes.get(j);
-            if(hes.getResource().equalsIgnoreCase("DESERT")){
-                hes.setNumber(0);
+            Hex hes1 = hexes.get(j);
+            if(hes1.getResource().equalsIgnoreCase("DESERT")){
+                hes1.setNumber(0);
                 j++;
             }
+            Hex hes = hexes.get(j);
             hes.setNumber(values[i]);
             hexes.set(j, hes);
             j++;
@@ -154,7 +160,6 @@ public class MapFactory
 
         for(int i = 0; i < type.length; i++)
         {
-            System.out.println(type[i] + " " );
             Port p = ports.get(i);
             p.setType(type[i]);
             ports.set(i, p);
