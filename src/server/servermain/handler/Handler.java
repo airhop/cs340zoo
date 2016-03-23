@@ -49,7 +49,6 @@ public class Handler implements HttpHandler {
      * This method will grab the initial incoming exchange and parse the incoming Request Method
      * If it is a GET request it will pass it to the GetMethod.  Otherwise it will parse the RequestURI
      * and pass it to the User, Game, or Moves method
-     *
      * @param exchange - incoming request
      * @throws IOException
      */
@@ -65,6 +64,8 @@ public class Handler implements HttpHandler {
         requestBody = "";
         while(scan.hasNext())
             requestBody += scan.nextLine();
+
+
 
         Headers test = exchange.getRequestHeaders();
 //        Object something = exchange.getAttribute("Cookie");

@@ -55,8 +55,8 @@ public class ServerFacade implements IServerFacade {
 
     }
 
-    public void setCurrPlayer(CurrentPlayer currPlayer) {
-        this.currPlayer = currPlayer;
+    public void setCurrPlayer() {
+
     }
 
     private static ServerFacade facade = null;
