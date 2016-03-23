@@ -211,15 +211,12 @@ public class Handler implements HttpHandler {
         System.out.println("Path " + path);
 
         if (path.contains("games/create")) {
-
             current = gamesFactory.getCommand(new JsonConstructionInfo(CommandType.create, requestBody));
-            Object o = current.execute();
             CreatedGame cg = ((CreatedGame)current.execute());
             String info = new com.google.gson.Gson().toJson(cg);
             exchange.sendResponseHeaders(200, info.length());
             exchange.getResponseBody().write(info.getBytes());
             exchange.getResponseBody().close();
-
         }
         else if (path.contains("games/join")) {
             current = gamesFactory.getCommand(new JsonConstructionInfo(CommandType.join, requestBody));
