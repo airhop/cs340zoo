@@ -138,7 +138,7 @@ public class Handler implements HttpHandler {
             System.out.println("Game Info . .  ." + gameInfo.size() + " " + gameInfo.get(0).toString());
         } else if (path.contains("game/model")) {
             GameModel gm = ServerFacade.getInstance().getModel();
-            info = new com.google.gson.Gson().toJson(gm);
+            info = new com.google.gson.Gson().toJson(gm, GameModel.class);
         } else
             throw new ServerException("Not a valid get request + " + path);
 
