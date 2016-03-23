@@ -61,7 +61,7 @@ public class GameModel extends Observable {
         this.dice = givenModel.getDice();
         this.chat = givenModel.getChat();
         this.log = givenModel.getLog();
-        this.currentPlayer = givenModel.getCurrentPlayer();
+//        this.currentPlayer = givenModel.getCurrentPlayer();
         if (!first) {
             setCurrentPlayerIndex();
             first = true;

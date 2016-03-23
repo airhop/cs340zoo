@@ -89,9 +89,6 @@ public class ServerFacade implements IServerFacade {
         game.getTurnTracker().updateStatus("Rolling");
         game.getTurnTracker().setCurrentPlayer(0);
         gameInfoList.add(new GameInfo(1, "Second Game", info));
-
-
-
     }
 
     public CurrentPlayer getCurrPlayer() {

@@ -290,6 +290,7 @@ public class Facade {
             proxy.gamesJoin(s, gameId);
             Joined = true;
             game.setID(gameId);
+            game.getCurrentPlayer().setPlayerIndex(game.getPlayerIndex(game.getCurrentPlayer().getPlayerId()));
         } catch (InvalidUserException e) {
             //exceptionair!!
         }
