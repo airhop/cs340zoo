@@ -110,11 +110,12 @@ public class MapFactory
         int j = 0;
         for(int i = 0; i < hexes.size(); i++)
         {
-            if(i >= 7)
+            if(i == 7)
                 j++;
             Hex hes = hexes.get(j);
             hes.setNumber(values[i]);
             hexes.set(j, hes);
+            j++;
         }
 
         return hexes;
