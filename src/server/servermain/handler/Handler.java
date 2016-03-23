@@ -86,7 +86,6 @@ public class Handler implements HttpHandler {
             //    Get(exchange);
             if(path.contains("model"))
                 Get(exchange);
-//            System.out.println(path);
             else if (path.contains("/user"))
                 UserMethod(exchange);
             else if (Usercookie.isActive()) {
@@ -112,7 +111,6 @@ public class Handler implements HttpHandler {
             exchange.getResponseBody().close();
         }
 
-        System.out.println("Exchange response Body " + exchange.getResponseBody().toString().length());
     }
 
 

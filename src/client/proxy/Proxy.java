@@ -56,7 +56,7 @@ public class Proxy implements IProxy {
 
     public int getPlayerId() {
         if (playerId == -1) {
-            playerId = Integer.parseInt(userCookie.retrieveID());
+            playerId = userCookie.retrieveID();
             return playerId;
         } else {
             return playerId;

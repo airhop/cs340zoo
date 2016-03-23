@@ -1,6 +1,7 @@
 package server.serverfacade;
 
 import client.MVC.data.GameInfo;
+import client.MVC.data.PlayerInfo;
 import client.model.bank.Bank;
 import client.model.bank.DevCardList;
 import client.model.map.Map;
@@ -8,6 +9,7 @@ import client.model.misc.TradeOffer;
 import client.model.player.CurrentPlayer;
 import client.proxy.Cookie;
 import server.factories.MapFactory;
+import shared.definitions.CatanColor;
 import shared.definitions.ResourceType;
 import shared.exceptions.FailureToAddException;
 import shared.exceptions.InsufficientResourcesException;
@@ -35,7 +37,7 @@ public class ServerFacade implements IServerFacade {
     int currPlayerID; //the currentID for the player to be added
     int currGame;
     CurrentPlayer currPlayer;
-
+    MapFactory myMapFactory;
 
     public ServerFacade() {
         gamesList = new ArrayList<>();
@@ -43,9 +45,30 @@ public class ServerFacade implements IServerFacade {
         players = new TreeMap<String, Login>();
         players.put("Sam", new Login("Sam", "sam", 0));
         players.put("Brooke", new Login("Brooke", "brooke", 1));
-        currPlayerID = 0;
+        players.put("Bob", new Login("Bob", "bob", 2));
+        players.put("Suzzie", new Login("Suzzie", "suzzie", 3));
+        currPlayerID = 4;
         currGame = 0;
         currPlayer = new CurrentPlayer();
+        myMapFactory = new MapFactory();
+
+        GameModel gm = myMapFactory.newModel(true, false, false, "First Game");
+        ArrayList<Player> ps = new ArrayList<Player>();
+        ps.add(new Player("Sam", 0));
+        ps.add(new Player("Brooke", 1));
+        ps.add(new Player("Bob", 2));
+        ps.add(new Player("Suzzie", 3));
+        gm.setPlayers(ps);
+        gm.setID(currGame++);
+        gamesList.add(gm);
+
+        ArrayList<PlayerInfo> info = new ArrayList<PlayerInfo>();
+        info.add(new PlayerInfo(0, 0, "Sam", CatanColor.BLUE));
+        info.add(new PlayerInfo(1, 1, "Brooke", CatanColor.GREEN));
+        info.add(new PlayerInfo(2, 2, "Bob", CatanColor.PUCE));
+        info.add(new PlayerInfo(3, 3, "Suzzie", CatanColor.ORANGE));
+        gameInfoList.add(new GameInfo(0, "First Game", info));
+
     }
 
     public CurrentPlayer getCurrPlayer() {
@@ -127,7 +150,6 @@ public class ServerFacade implements IServerFacade {
         CreatedGame theGame;
         System.out.println("Creating a brand new game of " + name + " " + gameInfoList.size());
         theGame = new CreatedGame(name, gameInfoList.size());
-        MapFactory myMapFactory = new MapFactory();
         GameModel myModel = myMapFactory.newModel(randomTiles, randomNumbers, randomPorts, name);
         gamesList.add(myModel);
         myModel.setID(gamesList.size() - 1);
