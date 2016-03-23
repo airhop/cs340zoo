@@ -58,11 +58,10 @@ public class GamesFactory {
         int i = 0;
         System.out.println("Parsing the game . . ." + i++);
         try {
-          //  System.out.println("Parsing the game . . ." + i++ + " " + myTree.peek().name());
-          //  myTree.beginObject();
+            System.out.println("Parsing the game . . ." + i++ + " " + myTree.peek().name());
+            myTree.beginObject();
             System.out.println("Parsing the game . . ." + i++ + " " + myTree.peek().name() + " " + myTree.peek());
-            String information = myTree.nextString();  //This is the first boolean which is the random tiles
-            System.out.println("information " + information);
+            myTree.nextName();  //This is the first boolean which is the random tiles
             System.out.println("Parsing the game . . ." + i++ + " " + myTree.peek().name());
             randomTiles = myTree.nextBoolean(); //This is the Random Tiles Boolean
             System.out.println("Parsing the game . . ." + i++);
