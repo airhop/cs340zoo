@@ -57,7 +57,7 @@ public class ServerFacade implements IServerFacade {
 
     }
 
-    public void buildCurrPlayer(Cookie userCookie, Cookie gameCookie){
+    public void buildCurrentPlayer(Cookie userCookie, Cookie gameCookie){
         if(userCookie.isActive()){
             currPlayer.setUsername(userCookie.getCookieName());
             currPlayer.setPassword(userCookie.getCookieValue());
@@ -152,6 +152,10 @@ public class ServerFacade implements IServerFacade {
         GameModel myModel = myMapFactory.newModel(randomTiles, randomNumbers, randomPorts, name);
         gamesList.add(myModel);
         myModel.setID(gamesList.size() - 1);
+        GameInfo gameObject = new GameInfo();
+        gameObject.setId(myModel.getID());
+        gameObject.setTitle(name);
+        gameInfoList.add(gameObject);
         return theGame;
     }
 
