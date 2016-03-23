@@ -1,8 +1,11 @@
 package server.factories;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.internal.bind.JsonTreeReader;
+import jdk.nashorn.internal.parser.JSONParser;
 import server.commandobjects.ICommand;
 import server.commandobjects.games.*;
 import server.servermain.JsonConstructionInfo;
@@ -55,11 +58,11 @@ public class GamesFactory {
         int i = 0;
         System.out.println("Parsing the game . . ." + i++);
         try {
-            System.out.println("Parsing the game . . ." + i++);
-            myTree.beginObject();
-            System.out.println("Parsing the game . . ." + i++);
-            myTree.nextName();  //This is the first boolean which is the random tiles
-            System.out.println("Parsing the game . . ." + i++);
+          //  System.out.println("Parsing the game . . ." + i++ + " " + myTree.peek().name());
+          //  myTree.beginObject();
+            System.out.println("Parsing the game . . ." + i++ + " " + myTree.peek().name() + " " + myTree.peek());
+            myTree.nextString();  //This is the first boolean which is the random tiles
+            System.out.println("Parsing the game . . ." + i++ + " " + myTree.peek().name());
             randomTiles = myTree.nextBoolean(); //This is the Random Tiles Boolean
             System.out.println("Parsing the game . . ." + i++);
             myTree.nextName(); //This is the name == randomNumbers
@@ -79,6 +82,8 @@ public class GamesFactory {
             System.out.println("error with an exception being tossed?");
             e.printStackTrace();
         }
+
+
 
         System.out.println("Information " + randomTiles + " " + randomPorts + " " + randomNumbers + " " + gameName);
         return new Create(randomTiles, randomPorts, randomNumbers, gameName);

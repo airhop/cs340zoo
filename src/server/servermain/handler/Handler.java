@@ -197,7 +197,7 @@ public class Handler implements HttpHandler {
 
         if (path.contains("games/create")) {
             current = gamesFactory.getCommand(new JsonConstructionInfo(CommandType.create, exchange.getRequestBody().toString()));
-     System.out.println("success in getting to creation");
+     System.out.println("success in getting to creation " + exchange.getRequestBody().toString());
             Object o = current.execute();
      System.out.println("success in getting to creation");
             CreatedGame cg = ((CreatedGame)current.execute());

@@ -321,7 +321,7 @@ public class Proxy implements IProxy {
         myObjOne.addProperty("randomNumbers", gameName.isRandomNumbers());
         myObjOne.addProperty("randomPorts", gameName.isRandomPorts());
         myObjOne.addProperty("name", gameName.getGameName());
-    //    System.out.println(myObjOne.toString());
+        System.out.println(myObjOne.toString());
         HttpURLResponse myResponse;
         try {
             System.out.println("game creation . . .");
