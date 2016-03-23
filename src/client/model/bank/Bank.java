@@ -4,16 +4,16 @@ import shared.exceptions.InsufficientResourcesException;
 
 public class Bank {
     ResourceList resources;
-    DevCardList dcl;
+    DevCardList devList;
 
     public Bank() {
         resources = new ResourceList();
-        dcl = new DevCardList();
+        devList = new DevCardList();
     }
 
     public Bank(ResourceList res, DevCardList devs) {
         resources = res;
-        dcl = devs;
+        devList = devs;
     }
 
     public ResourceList getResources() {
@@ -25,7 +25,7 @@ public class Bank {
     }
 
     public DevCardList getDevCards() {
-        return dcl;
+        return devList;
     }
 
     public void setDevCards(DevCardList list) {
@@ -272,7 +272,7 @@ public class Bank {
         if (sheep < 1 || wheat < 1 || ore < 1) {
             return false;
         }
-        if (dcl.getSize() < 1) {
+        if (devList.getSize() < 1) {
             return false;
         }
         return true;
@@ -289,10 +289,10 @@ public class Bank {
         if (sheep < 1 || wheat < 1 || ore < 1) {
             throw new InsufficientResourcesException();
         }
-        if (dcl.getSize() < 1) {
+        if (devList.getSize() < 1) {
             throw new InsufficientResourcesException();
         }
-        return dcl.buyDevCard();
+        return devList.buyDevCard();
     }
 
     public boolean canGive(String type, int amount) {

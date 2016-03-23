@@ -70,12 +70,7 @@ public class Handler implements HttpHandler {
             System.out.println("Method " + method);
             //if ("GET".equals(method))
             //    Get(exchange);
-            if (path.contains("model"))
-                Get(exchange);
-            else if (path.contains("/user")) {
-                UserMethod(exchange);
-                return;
-            }
+
 
             userCookie = new Cookie();
             gameCookie = new Cookie();
@@ -89,6 +84,14 @@ public class Handler implements HttpHandler {
                     gameCookie = new Cookie(Integer.parseInt(scan.next()));
             }
             ServerFacade.getInstance().buildCurrentPlayer(userCookie, gameCookie);
+
+            if (path.contains("model"))
+                Get(exchange);
+            else if (path.contains("/user")) {
+                UserMethod(exchange);
+                return;
+            }
+
 
             if (userCookie.isActive()) {
                 if (path.contains("/game"))

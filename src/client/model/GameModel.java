@@ -16,20 +16,20 @@ import shared.locations.*;
 
 import java.util.*;
 
-public class GameModel extends Observable{
+public class GameModel extends Observable {
     private int GameID;
     private Map map;
     private Bank bank;
     private ArrayList<Player> players;
     private TurnTracker turnTracker;
     private TradeOffer tradeOffer;
-    private int version = 0;
-    private int winner = -1;
     private Dice dice;
     private Chat chat;
     private Log log;
     private CurrentPlayer currentPlayer;
     private List<GameInfo> gameList;
+    private int version = 0;
+    private int winner = -1;
     private boolean first;
 
     public GameModel() {
@@ -41,16 +41,16 @@ public class GameModel extends Observable{
         chat = new Chat();
         log = new Log();
         players = new ArrayList<>();
-        players.add(new Player("",0));
-        players.add(new Player("",1));
-        players.add(new Player("",2));
-        players.add(new Player("",3));
+        players.add(new Player("", 0));
+        players.add(new Player("", 1));
+        players.add(new Player("", 2));
+        players.add(new Player("", 3));
         currentPlayer = new CurrentPlayer();
         gameList = new ArrayList<>();
         first = false;
     }
-    public void updateGameModel(GameModel givenModel)
-    {
+
+    public void updateGameModel(GameModel givenModel) {
         this.map = givenModel.getMap();
         this.bank = givenModel.getBank();
         this.players = givenModel.getPlayers();
@@ -62,15 +62,13 @@ public class GameModel extends Observable{
         this.chat = givenModel.getChat();
         this.log = givenModel.getLog();
         this.currentPlayer = givenModel.getCurrentPlayer();
-        if(!first)
-        {
+        if (!first) {
             setCurrentPlayerIndex();
             first = true;
         }
     }
 
-    public GameModel(Map m, Bank b, ArrayList<Player> ps, TurnTracker tt, TradeOffer tro, Chat c, Log l)
-    {
+    public GameModel(Map m, Bank b, ArrayList<Player> ps, TurnTracker tt, TradeOffer tro, Chat c, Log l) {
         map = m;
         bank = b;
         players = ps;
@@ -87,16 +85,15 @@ public class GameModel extends Observable{
         turnTracker = new TurnTracker();
         tradeOffer = new TradeOffer();
         dice = new Dice();
-        players.add(new Player(names[0],0));
-        players.add(new Player(names[1],1));
-        players.add(new Player(names[2],2));
-        players.add(new Player(names[3],3));
+        players.add(new Player(names[0], 0));
+        players.add(new Player(names[1], 1));
+        players.add(new Player(names[2], 2));
+        players.add(new Player(names[3], 3));
         log = new Log();
         chat = new Chat();
     }
 
-    public GameModel(String name, ArrayList<Hex> hexes, ArrayList<Port> ports)
-    {
+    public GameModel(String name, ArrayList<Hex> hexes, ArrayList<Port> ports) {
         map = new Map(hexes, ports);
         bank = new Bank();
         turnTracker = new TurnTracker();
@@ -105,10 +102,10 @@ public class GameModel extends Observable{
         chat = new Chat();
         log = new Log();
         players = new ArrayList<>();
-        players.add(new Player("",0));
-        players.add(new Player("",1));
-        players.add(new Player("",2));
-        players.add(new Player("",3));
+        players.add(new Player("", 0));
+        players.add(new Player("", 1));
+        players.add(new Player("", 2));
+        players.add(new Player("", 3));
         currentPlayer = new CurrentPlayer();
         gameList = new ArrayList<>();
         first = false;
@@ -126,9 +123,9 @@ public class GameModel extends Observable{
     }
 */
 
-    public int getPlayerIndex(int playerId){
-        for(int i = 0; i < 4; i++){
-            if(players.get(i).getPlayerID() == playerId){
+    public int getPlayerIndex(int playerId) {
+        for (int i = 0; i < 4; i++) {
+            if (players.get(i).getPlayerID() == playerId) {
                 return players.get(i).getPlayerIndex();
             }
         }
@@ -215,25 +212,29 @@ public class GameModel extends Observable{
         this.log = log;
     }
 
-    public CurrentPlayer getCurrentPlayer()
-    {
+    public CurrentPlayer getCurrentPlayer() {
         return currentPlayer;
     }
 
-    public void setID(int id) {GameID = id; }
-    public int getID() { return GameID; }
+    public void setID(int id) {
+        GameID = id;
+    }
 
-    public void setCurrentPlayer(CurrentPlayer cp)
-    {
+    public int getID() {
+        return GameID;
+    }
+
+    public void setCurrentPlayer(CurrentPlayer cp) {
         currentPlayer = cp;
     }
 
-    public CatanColor getCurrentColor()
-    {
+    public CatanColor getCurrentColor() {
         return CatanColor.convert(players.get(getTurnTracker().getCurrentPlayer()).getColor());
     }
-    public CatanColor getPlayerColor (int player)
-    { return CatanColor.convert(players.get(player).getColor());}
+
+    public CatanColor getPlayerColor(int player) {
+        return CatanColor.convert(players.get(player).getColor());
+    }
 
     /**
      * updates version of the game model
@@ -273,10 +274,10 @@ public class GameModel extends Observable{
         return map.canPlaceRoad(el, isDisconnected);
     }
 
-    public boolean canPlaceRoadSetup(EdgeLocation el)
-    {
+    public boolean canPlaceRoadSetup(EdgeLocation el) {
         return map.canPlaceRoadSetup(el);
     }
+
     /**
      * Checks to see if building a settlement is a legal move for the player
      *
@@ -398,11 +399,9 @@ public class GameModel extends Observable{
         return map.canRelocateRobber(hl);
     }
 
-
-    public boolean canFinishTurn(int pid)
-    {
-        if(turnTracker.getStatus().equalsIgnoreCase("playing") || turnTracker.getStatus().equalsIgnoreCase("Robbing"))
-           return (turnTracker.getCurrentPlayer() == pid);
+    public boolean canFinishTurn(int pid) {
+        if (turnTracker.getStatus().equalsIgnoreCase("playing") || turnTracker.getStatus().equalsIgnoreCase("Robbing"))
+            return (turnTracker.getCurrentPlayer() == pid);
         return false;
     }
 
@@ -460,13 +459,13 @@ public class GameModel extends Observable{
         return players.get(pid).canAcceptTrade(tradeOffer.getSentList());
     }
 
-    public boolean canAcceptTrade()
-    {
+    public boolean canAcceptTrade() {
         int pid = tradeOffer.getReciever();
-        if(pid != currentPlayer.getPlayerIndex())
+        if (pid != currentPlayer.getPlayerIndex())
             return false;
         return players.get(pid).canAcceptTrade(tradeOffer.getOffer());
     }
+
     /**
      * Checks to see if the player can roll the dice
      *
@@ -497,8 +496,8 @@ public class GameModel extends Observable{
             return false;
         return players.get(pid).canBuyDevcard();
     }
-    public void relocateRobber(HexLocation hl)
-    {
+
+    public void relocateRobber(HexLocation hl) {
         map.relocateRober(hl);
     }
 
@@ -514,15 +513,13 @@ public class GameModel extends Observable{
 //        players.get(pid).depleteResource(rt);
 //        players.get(cp).addResource(rt, 1);
 //    }
-
     public boolean canSendChat(String msg, int pid) {
         chat.addMessage(players.get(pid).getUsername(), msg);
         return true;
     }
 
 
-    public String toString()
-    {
+    public String toString() {
 //        TreeMap<HexLocation, Hex> hexmap = map.getHexes();
 //        Set keys = hexmap.keySet();
 //        for(Iterator i = keys.iterator(); i.hasNext();)
@@ -535,8 +532,7 @@ public class GameModel extends Observable{
         return s;
     }
 
-    public int getPoints(int playerIndex)
-    {
+    public int getPoints(int playerIndex) {
         return players.get(playerIndex).getVictoryPoints();
 /*        int points = 0;
         if(turnTracker.getLargestArmy() == playerIndex)
@@ -557,27 +553,24 @@ public class GameModel extends Observable{
     public void setGameList(List<GameInfo> gameList) {
         this.gameList = gameList;
     }
-    public ArrayList<VertexObject> getVObjectsAroundHexlocation(HexLocation location)
-    {
+
+    public ArrayList<VertexObject> getVObjectsAroundHexlocation(HexLocation location) {
 
         return map.getVObjectsAroundHexlocation(location);
     }
 
-    public boolean isNotSetup()
-    {
-        if(turnTracker.getStatus().equalsIgnoreCase("FirstRound") || turnTracker.getStatus().equalsIgnoreCase("SecondRound"))
+    public boolean isNotSetup() {
+        if (turnTracker.getStatus().equalsIgnoreCase("FirstRound") || turnTracker.getStatus().equalsIgnoreCase("SecondRound"))
             return false;
         return true;
     }
 
-    public void setCurrentPlayerIndex()
-    {
+    public void setCurrentPlayerIndex() {
         int pid = currentPlayer.getPlayerId();
         System.out.println("Player IDs saved " + players.size());
-        for(int i = 0; i < players.size(); i++)
-        {
+        for (int i = 0; i < players.size(); i++) {
             System.out.print(players.get(i).getUsername() + " " + players.get(i).getPlayerID() + " ");
-            if(players.get(i).getPlayerID() == pid)
+            if (players.get(i).getPlayerID() == pid)
                 currentPlayer.setPlayerIndex(i);
         }
 
