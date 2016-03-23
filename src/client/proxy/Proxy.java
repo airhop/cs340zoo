@@ -305,16 +305,14 @@ public class Proxy implements IProxy {
     @Override
     public List<GameInfo> gamesList() {
         String url = "/games/list";
-        List<GameInfo> games = new ArrayList<>();
+        ArrayList<GameInfo> games = new ArrayList<>();
         HttpURLResponse myResponse;
         try {
             myResponse = doGet(url);
           //  System.out.println(myResponse.getResponseBody().toString().length());
             JsonParser myParse = new JsonParser();
             JsonElement myEle = myParse.parse(myResponse.getResponseBody());
-            GameListDeserialize gld = new com.google.gson.Gson().fromJson(myEle, GameListDeserialize.class);
-
-            games = gld.getGames();
+            games = (ArrayList<GameInfo>) myGson.fromJson(myResponse.getResponseBody(), ArrayList.class);
             //This is when i am going to create the deSerialization later
         } catch (ClientException e) {
             e.printStackTrace();
