@@ -49,6 +49,7 @@ public class MapFactory
         hexes.add(new Hex(-1, 1, "sheep", 9));
         hexes.add(new Hex(-1, 2, "ore", 3));
         hexes.add(new Hex(0, -2, "Desert", 0));
+        hexes.add(new Hex(0, -1, "wood", 3));
         hexes.add(new Hex(0, 0, "wheat", 11));
         hexes.add(new Hex(0, 1, "wood", 4));
         hexes.add(new Hex(0, 2, "wheat", 8));
@@ -65,7 +66,9 @@ public class MapFactory
 
     public ArrayList<Hex> initializeRandomHexes(ArrayList<Hex> hexes)
     {
-        String[] resources = {"ore", "wheat", "wood", "brick", "sheep", "sheep", "ore", "Desert", "wheat", "wood", "wheat", "brick", "ore", "brick", "sheep", "wood", "sheep", "wheat"};
+        String[] resources = {"ore", "wheat", "wood", "brick", "sheep", "sheep", "ore",
+                "Desert", "wood", "wheat", "wood", "wheat", "brick", "ore",
+                "brick", "sheep", "wood", "sheep", "wheat"};
 
         //randomize the resources
         for(int i= 0; i < resources.length; i++)
@@ -90,7 +93,7 @@ public class MapFactory
 
     public ArrayList<Hex> randomizeNumbers(ArrayList<Hex> hexes)
     {
-        int[] values = {5, 2, 6, 8, 10, 9, 3, 0, 3, 11, 4, 8, 4, 9, 5, 10, 11, 12, 6};
+        int[] values = {5, 2, 6, 8, 10, 9, 3, 3, 11, 4, 8, 4, 9, 5, 10, 11, 12, 6};
 
         //randomize the resources
         for(int i= 0; i < values.length; i++)
@@ -103,8 +106,10 @@ public class MapFactory
             values[b] = type;
         }
 
-        for(int i = 0; i < values.length; i++)
+        for(int i = 0; i < hexes.size(); i++)
         {
+            if(i == 7)
+                i++; //skip the desert hex
             Hex hes = hexes.get(i);
             hes.setNumber(values[i]);
             hexes.set(i, hes);
@@ -130,7 +135,8 @@ public class MapFactory
 
     public ArrayList<Port> randomizePorts(ArrayList<Port> ports)
     {
-        String[] type = {"three", "wood", "brick", "three", "three", "sheep", "three", "ore", "wheat"};
+        String[] type = {"three", "wood", "brick", "three",
+                "three", "sheep", "three", "ore", "wheat"};
         for(int i= 0; i < type.length; i++)
         {
             int a = rand.nextInt(type.length);
