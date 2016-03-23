@@ -52,6 +52,7 @@ public class ServerFacade implements IServerFacade {
         currPlayer = new CurrentPlayer();
         myMapFactory = new MapFactory();
 
+
         GameModel gm = myMapFactory.newModel(true, false, false, "First Game");
         ArrayList<Player> ps = new ArrayList<Player>();
         ps.add(new Player("David", 0));
@@ -66,15 +67,19 @@ public class ServerFacade implements IServerFacade {
         List<PlayerInfo> info = new ArrayList<>();
         info.add(new PlayerInfo(0, 0, "David", CatanColor.BLUE));
         gm.getPlayers().get(0).setColor(CatanColor.BLUE.toString());
+        gm.getPlayers().get(0).setPlayerIndex(0);
         info.add(new PlayerInfo(1, 1, "Aaron", CatanColor.GREEN));
         gm.getPlayers().get(1).setColor(CatanColor.GREEN.toString());
+        gm.getPlayers().get(1).setPlayerIndex(1);
         info.add(new PlayerInfo(2, 2, "Josh", CatanColor.PUCE));
         gm.getPlayers().get(2).setColor(CatanColor.PUCE.toString());
+        gm.getPlayers().get(2).setPlayerIndex(2);
         info.add(new PlayerInfo(3, 3, "Rebecca", CatanColor.ORANGE));
         gm.getPlayers().get(3).setColor(CatanColor.ORANGE.toString());
+        gm.getPlayers().get(3).setPlayerIndex(3);
         gameInfoList.add(new GameInfo(0, "First Game", info));
         gm.getTurnTracker().updateStatus("FirstRound");
-
+        gm.getTurnTracker().setCurrentPlayer(0);
     }
 
     public CurrentPlayer getCurrPlayer() {
