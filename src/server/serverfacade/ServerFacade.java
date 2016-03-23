@@ -43,10 +43,10 @@ public class ServerFacade implements IServerFacade {
         gamesList = new ArrayList<>();
         gameInfoList = new ArrayList<>();
         players = new TreeMap<String, Login>();
-        players.put("Sam", new Login("Sam", "sam", 0));
-        players.put("Brooke", new Login("Brooke", "brooke", 1));
-        players.put("Bob", new Login("Bob", "bob", 2));
-        players.put("Suzzie", new Login("Suzzie", "suzzie", 3));
+        players.put("David", new Login("David", "david", 0));
+        players.put("Aaron", new Login("Aaron", "aaron", 1));
+        players.put("Josh", new Login("Josh", "josh", 2));
+        players.put("Rebecca", new Login("Rebecca", "rebecca", 3));
         createPlayerIndex = players.size();
         createGameIndex = gamesList.size();
         currPlayer = new CurrentPlayer();
@@ -54,25 +54,26 @@ public class ServerFacade implements IServerFacade {
 
         GameModel gm = myMapFactory.newModel(true, false, false, "First Game");
         ArrayList<Player> ps = new ArrayList<Player>();
-        ps.add(new Player("Sam", 0));
-        ps.add(new Player("Brooke", 1));
-        ps.add(new Player("Bob", 2));
-        ps.add(new Player("Suzzie", 3));
+        ps.add(new Player("David", 0));
+        ps.add(new Player("Aaron", 1));
+        ps.add(new Player("Josh", 2));
+        ps.add(new Player("Rebecca", 3));
         gm.setPlayers(ps);
         gm.setID(createGameIndex++);
         gamesList.add(gm);
 
 
         List<PlayerInfo> info = new ArrayList<>();
-        info.add(new PlayerInfo(0, 0, "Sam", CatanColor.BLUE));
+        info.add(new PlayerInfo(0, 0, "David", CatanColor.BLUE));
         gm.getPlayers().get(0).setColor(CatanColor.BLUE.toString());
-        info.add(new PlayerInfo(1, 1, "Brooke", CatanColor.GREEN));
+        info.add(new PlayerInfo(1, 1, "Aaron", CatanColor.GREEN));
         gm.getPlayers().get(1).setColor(CatanColor.GREEN.toString());
-        info.add(new PlayerInfo(2, 2, "Bob", CatanColor.PUCE));
+        info.add(new PlayerInfo(2, 2, "Josh", CatanColor.PUCE));
         gm.getPlayers().get(2).setColor(CatanColor.PUCE.toString());
-        info.add(new PlayerInfo(3, 3, "Suzzie", CatanColor.ORANGE));
+        info.add(new PlayerInfo(3, 3, "Rebecca", CatanColor.ORANGE));
         gm.getPlayers().get(3).setColor(CatanColor.ORANGE.toString());
         gameInfoList.add(new GameInfo(0, "First Game", info));
+        gm.getTurnTracker().updateStatus("FirstRound");
 
     }
 
