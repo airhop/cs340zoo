@@ -395,7 +395,8 @@ public class Proxy implements IProxy {
         GameModel gm = null;
         try {
             myResponse = doGet(url);
-            gm = myDeSer.deserialize(myResponse.getResponseBody(), Facade.getInstance().getGameModel());
+            gm = myGson.fromJson(myResponse.getResponseBody(), GameModel.class);
+//            gm = myDeSer.deserialize(myResponse.getResponseBody(), Facade.getInstance().getGameModel());
             // System.out.println("\n Heyo!!\n" + myGameModel.toString() + "\n");
         } catch (ClientException e) {
             e.printStackTrace();

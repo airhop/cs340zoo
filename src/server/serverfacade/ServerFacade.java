@@ -213,11 +213,19 @@ public class ServerFacade implements IServerFacade {
             myPlayer.setName(currPlayer.getUsername());
             myPlayer.setPlayerIndex(playerIndex);
             gameInfoList.get(id).addPlayer(myPlayer);
+        }else{
+            PlayerInfo myPlayer = gameInfoList.get(id).getPlayers().get(playerIndex);
+            myPlayer.setColor(CatanColor.valueOf(color.toUpperCase()));
+            myPlayer.setId(currPlayer.getPlayerId());
+            myPlayer.setName(currPlayer.getUsername());
+            myPlayer.setPlayerIndex(playerIndex);
         }
         Player changePlayer = gamePlayers.get(playerIndex);
 
         changePlayer.setColor(color);
         changePlayer.setPlayerIndex(playerIndex);
+        changePlayer.setUsername(currPlayer.getUsername());
+        changePlayer.setPlayerID(currPlayer.getPlayerId());
 
         return new CreatedGame(gameInfoList.get(id).getTitle(), id);
     }

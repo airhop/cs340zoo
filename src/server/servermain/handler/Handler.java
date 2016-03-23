@@ -66,7 +66,7 @@ public class Handler implements HttpHandler {
         Headers test = exchange.getRequestHeaders();
 
         try {
-            //Get doesn't work so I moves game/model to another method and games/list to gamemethod
+            //Get doesn't work so I moved game/model to another method and games/list to gamemethod
             System.out.println("Method " + method);
             //if ("GET".equals(method))
             //    Get(exchange);
@@ -129,8 +129,7 @@ public class Handler implements HttpHandler {
         String info;
         if (path.contains("games/list")) {
             List<GameInfo> gameInfo = ServerFacade.getInstance().getGamesList();
-            Type listOfTestObject = new TypeToken<ArrayList<GameInfo>>() {
-            }.getType();
+            Type listOfTestObject = new TypeToken<ArrayList<GameInfo>>() {}.getType();
             info = new com.google.gson.Gson().toJson(gameInfo, listOfTestObject);
             System.out.println("Game Info . .  ." + gameInfo.size() + " " + gameInfo.get(0).toString());
         } else if (path.contains("game/model")) {
@@ -226,7 +225,6 @@ public class Handler implements HttpHandler {
             exchange.getResponseBody().close();
         } else if (path.contains("games/list")) {
             List<GameInfo> gameInfo = ServerFacade.getInstance().getGamesList();
-            GameListDeserialize gld = new GameListDeserialize(gameInfo);
             String info = new com.google.gson.Gson().toJson(gameInfo);
 //            System.out.println("Game Info . .  ." + gameInfo.size() + " " + gameInfo.get(0).toString());
             exchange.sendResponseHeaders(200, info.length());
@@ -265,6 +263,7 @@ public class Handler implements HttpHandler {
         exchange.getResponseHeaders().put("Content-Type", content);
         //if current doesn't return anything
         String info = ((GameModel) o).toString();
+
         exchange.sendResponseHeaders(200, info.length());
         exchange.getResponseBody().write(info.getBytes());
         exchange.getResponseBody().close();
