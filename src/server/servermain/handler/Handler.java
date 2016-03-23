@@ -220,7 +220,7 @@ public class Handler implements HttpHandler {
 
             gameCookie = new Cookie(((CreatedGame)o).getId());
             ArrayList<String> cookies = new ArrayList<String>();
-//            System.out.println("gameCookie.toString() " + gameCookie.toString());
+            System.out.println("gameCookie.toString() " + gameCookie.toString());
             cookies.add(gameCookie.toString());
             exchange.getResponseHeaders().put("Set-Cookie", cookies);
 

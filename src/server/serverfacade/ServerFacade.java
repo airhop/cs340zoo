@@ -208,7 +208,7 @@ public class ServerFacade implements IServerFacade {
 
         if(firstJoin){
             PlayerInfo myPlayer = new PlayerInfo();
-            myPlayer.setColor(CatanColor.valueOf(color));
+            myPlayer.setColor(CatanColor.valueOf(color.toUpperCase()));
             myPlayer.setId(currPlayer.getPlayerId());
             myPlayer.setName(currPlayer.getUsername());
             myPlayer.setPlayerIndex(playerIndex);
