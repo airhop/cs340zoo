@@ -4,7 +4,12 @@ package server.servermain.handler;
 
 import client.MVC.data.GameInfo;
 import client.model.GameModel;
+import client.model.map.Hex;
+import client.model.map.Map;
 import client.proxy.Cookie;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.TypeAdapter;
 import com.google.gson.reflect.TypeToken;
 import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
@@ -19,7 +24,9 @@ import server.servermain.JsonConstructionInfo;
 import server.shared.CommandType;
 import shared.jsonobject.CreatedGame;
 import shared.jsonobject.Login;
+import shared.locations.HexLocation;
 import shared.serialization.GameListDeserialize;
+import shared.serialization.MapSerializer;
 
 import java.lang.reflect.Type;
 import java.io.IOException;
@@ -27,6 +34,7 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.TreeMap;
 
 /**
  * Created by Joshua on 3/9/2016.
@@ -137,7 +145,16 @@ public class Handler implements HttpHandler {
             System.out.println("Game Info . .  ." + gameInfo.size() + " " + gameInfo.get(0).toString());
         } else if (path.contains("game/model")) {
             GameModel gm = ServerFacade.getInstance().getModel();
-            info = new com.google.gson.Gson().toJson(gm, GameModel.class);
+            Gson myGson = new Gson();
+            GsonBuilder gson = new GsonBuilder();
+
+//            private class DateTimeSerializer implements JsonSerializer<DateTime> {
+//                public JsonElement serialize(DateTime src, Type typeOfSrc, JsonSerializationContext context) {
+//                    return new JsonPrimitive(src.toString());
+//                }
+//            }
+            gson.registerTypeAdapter(Map.class, new MapSerializer());
+            info = gson.create().toJson(gm);
         } else
             throw new ServerException("Not a valid get request + " + path);
 

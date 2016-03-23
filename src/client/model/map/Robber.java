@@ -7,7 +7,7 @@ public class Robber {
 
     public Robber() {
         //TODO may take this out
-        hl = new HexLocation(0,0);
+//        hl = new HexLocation(0,0);
     }
 
     //need a getLocation method

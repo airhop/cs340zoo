@@ -37,6 +37,7 @@ public class Player {
 
 
     public Player(String playerName, int ID) {
+        color = "";
         resources = new ResourceList();
         newDevCards = new DevCardList();
         oldDevCards = new DevCardList();
