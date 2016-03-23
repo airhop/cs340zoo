@@ -5,6 +5,7 @@ import client.facade.Facade;
 import client.model.GameModel;
 import client.model.bank.ResourceList;
 import com.google.gson.*;
+import com.google.gson.reflect.TypeToken;
 import shared.definitions.ResourceType;
 import shared.exceptions.*;
 import shared.extra.StopWatch;
@@ -19,6 +20,7 @@ import shared.serialization.GameListDeserialize;
 import shared.serialization.HttpURLResponse;
 
 import java.io.*;
+import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
@@ -305,17 +307,17 @@ public class Proxy implements IProxy {
     @Override
     public List<GameInfo> gamesList() {
         String url = "/games/list";
-        ArrayList<GameInfo> games = new ArrayList<>();
+        List<GameInfo> games = new ArrayList<>();
+        games.add(new GameInfo());
         HttpURLResponse myResponse;
         try {
             myResponse = doGet(url);
           //  System.out.println(myResponse.getResponseBody().toString().length());
             JsonParser myParse = new JsonParser();
             JsonElement myEle = myParse.parse(myResponse.getResponseBody());
-            games = (ArrayList<GameInfo>) myGson.fromJson(myResponse.getResponseBody(), ArrayList.class);
+            Type listOfTestObject = new TypeToken<ArrayList<GameInfo>>(){}.getType();
+            games = myGson.fromJson(myResponse.getResponseBody(), listOfTestObject);
             //This is when i am going to create the deSerialization later
-            GameInfo myGame = games.get(0);
-            GameInfo myGameThis = games.get(1);
         } catch (ClientException e) {
             e.printStackTrace();
         }

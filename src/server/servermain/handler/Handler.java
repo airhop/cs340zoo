@@ -5,6 +5,7 @@ package server.servermain.handler;
 import client.MVC.data.GameInfo;
 import client.model.GameModel;
 import client.proxy.Cookie;
+import com.google.gson.reflect.TypeToken;
 import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
@@ -20,7 +21,7 @@ import shared.jsonobject.CreatedGame;
 import shared.jsonobject.Login;
 import shared.serialization.GameListDeserialize;
 import shared.serialization.HttpURLResponse;
-
+import java.lang.reflect.Type;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -132,8 +133,8 @@ public class Handler implements HttpHandler {
         String info;
         if (path.contains("games/list")) {
             List<GameInfo> gameInfo = ServerFacade.getInstance().getGamesList();
-            GameListDeserialize gld = new GameListDeserialize(gameInfo);
-            info = new com.google.gson.Gson().toJson(gameInfo, ArrayList.class);
+            Type listOfTestObject = new TypeToken<ArrayList<GameInfo>>(){}.getType();
+            info = new com.google.gson.Gson().toJson(gameInfo, listOfTestObject);
             System.out.println("Game Info . .  ." + gameInfo.size() + " " + gameInfo.get(0).toString());
         } else if (path.contains("game/model")) {
             GameModel gm = ServerFacade.getInstance().getModel();
