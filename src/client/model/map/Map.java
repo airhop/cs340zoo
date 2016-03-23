@@ -27,32 +27,29 @@ public class Map
 	ArrayList<ResourceList> resources;
 	int radius = -1;
 	Robber robber;
-	Deserializer deserializer;
 	//regular constructor to create map
 	public Map()
 	{
-		hexes = new TreeMap<HexLocation,Hex>();
-		ports = new ArrayList<Port>();
-		roads = new ArrayList<Road>();
+		hexes = new TreeMap<>();
+		ports = new ArrayList<>();
+		roads = new ArrayList<>();
 		robber = new Robber();
-		buildings = new ArrayList<VertexObject>();
-		resources = new ArrayList<ResourceList>();
-		deserializer = new Deserializer();
+		buildings = new ArrayList<>();
+		resources = new ArrayList<>();
 		addOcean();
 		fixBuildings();
 	}
 
 	public Map(ArrayList<Hex> hs, ArrayList<Port> ps)
 	{
-		this.hexes = new TreeMap<HexLocation,Hex>();
+		this.hexes = new TreeMap<>();
 		for(int i = 0; i< hs.size(); i++)
 			hexes.put(hs.get(i).getLocation(), hs.get(i));
 		this.ports = ps;
-		roads = new ArrayList<Road>();
+		roads = new ArrayList<>();
 		robber = new Robber();
-		buildings = new ArrayList<VertexObject>();
-		resources = new ArrayList<ResourceList>();
-		deserializer = new Deserializer();
+		buildings = new ArrayList<>();
+		resources = new ArrayList<>();
 		addOcean();
 		fixBuildings();
 	}
