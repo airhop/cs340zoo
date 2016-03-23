@@ -5,6 +5,7 @@ import client.MVC.data.PlayerInfo;
 import client.model.bank.Bank;
 import client.model.bank.DevCardList;
 import client.model.map.Map;
+import client.model.map.Road;
 import client.model.misc.TradeOffer;
 import client.model.player.CurrentPlayer;
 import client.proxy.Cookie;
@@ -61,8 +62,6 @@ public class ServerFacade implements IServerFacade {
         ps.add(new Player("Rebecca", 3));
         gm.setPlayers(ps);
         gm.setID(createGameIndex++);
-        gamesList.add(gm);
-
 
         List<PlayerInfo> info = new ArrayList<>();
         info.add(new PlayerInfo(0, 0, "David", CatanColor.BLUE));
@@ -80,6 +79,19 @@ public class ServerFacade implements IServerFacade {
         gameInfoList.add(new GameInfo(0, "First Game", info));
         gm.getTurnTracker().updateStatus("FirstRound");
         gm.getTurnTracker().setCurrentPlayer(0);
+        gamesList.add(gm);
+
+
+
+        GameModel game = myMapFactory.newModel(true, false, true, "Second Game");
+        game.setPlayers(ps);
+        game.setID(createGameIndex++);
+        game.getTurnTracker().updateStatus("Rolling");
+        game.getTurnTracker().setCurrentPlayer(0);
+        gameInfoList.add(new GameInfo(1, "Second Game", info));
+
+
+
     }
 
     public CurrentPlayer getCurrPlayer() {
