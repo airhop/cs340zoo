@@ -43,7 +43,7 @@ public class ServerFacade implements IServerFacade {
         players = new TreeMap<String, Login>();
         players.put("Sam", new Login("Sam", "sam", 0));
         players.put("Brooke", new Login("Brooke", "brooke", 1));
-        currPlayerID = 0;
+        currPlayerID = players.size() - 1;
         currGame = 0;
         currPlayer = new CurrentPlayer();
     }
@@ -57,7 +57,23 @@ public class ServerFacade implements IServerFacade {
     }
 
     public void buildCurrPlayer(Cookie userCookie, Cookie gameCookie){
-
+        if(userCookie.isActive()){
+            currPlayer.setUsername(userCookie.getCookieName());
+            currPlayer.setPassword(userCookie.getCookieValue());
+        }else{
+            currPlayer.setUsername("");
+            currPlayer.setPassword("");
+        }
+        if(gameCookie.isActive()){
+            currPlayer.setGameId(gameCookie.retrieveID());
+//            for(){
+//                gameInfoList.get(currPlayer.getGameId());
+//            }
+//            currPlayer.setPlayerIndex(gamesList.get());
+        }else{
+            currPlayer.setGameId(-1);
+            currPlayer.setPlayerIndex(-1);
+        }
     }
 
     public void setCurrPlayer(CurrentPlayer currPlayer) {
@@ -144,8 +160,9 @@ public class ServerFacade implements IServerFacade {
     public int joinGame(int id, String color) {
         GameModel myModel = gamesList.get(id);
         List<Player> gamePlayers = myModel.getPlayers();
-        Player addedPlayer = new Player(currPlayer.getUsername(), currPlayer.getGameId());
+        Player addedPlayer = new Player(currPlayer.getUsername(), id);
         gamePlayers.add(addedPlayer);
+        addedPlayer.setPlayerIndex(gamePlayers.size() - 1);
         return id;
     }
 
