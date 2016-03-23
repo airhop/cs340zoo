@@ -160,7 +160,9 @@ public class ServerFacade implements IServerFacade {
      * @return GameModel -
      */
     @Override
-    public List<GameInfo> getGamesList() {
+    public List<GameInfo> getGamesList()
+    {
+        System.out.println("here! " + gameInfoList.size());
         return gameInfoList;
     }
 

@@ -19,13 +19,23 @@ public class GameListDeserialize {
     JsonParser myParse;
     JsonElement myEle;
     JsonTreeReader myTree;
-
+    List<GameInfo> gi;
 
     public GameListDeserialize(String jsonString) {
         myParse = new JsonParser();
         myEle = myParse.parse(jsonString);
         myTree = new JsonTreeReader(myEle);
 
+    }
+
+    public GameListDeserialize(List<GameInfo> info)
+    {
+        gi = info;
+    }
+
+    public List<GameInfo> getGames()
+    {
+        return gi;
     }
 
     public List<GameInfo> deserialize() {

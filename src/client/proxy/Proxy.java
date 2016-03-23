@@ -72,15 +72,24 @@ public class Proxy implements IProxy {
             connection.setRequestMethod(HTTP_GET);
             connection.setDoOutput(true);
 
-            if (userCookie.isActive()) {
-                cookiesList = userCookie.getCookieName() + "=" + userCookie.getCookieValue();
-                if (gameCookie.isActive()) {
-                    cookiesList = cookiesList + "; " + gameCookie.getCookieName() + "=" + gameCookie.getCookieValue();
-                //    System.out.println(cookiesList);
-                    connection.setRequestProperty("Cookie", cookiesList);
-                } else {
-                    connection.setRequestProperty("Cookie", cookiesList);
+//            if (userCookie.isActive()) {
+//                cookiesList = userCookie.getCookieName() + " " + userCookie.getCookieValue() + " " + userCookie.retrieveID();
+//                if (gameCookie.isActive()) {
+//                    cookiesList = cookiesList + " " + gameCookie.getCookieName() + "=" + gameCookie.getCookieValue();
+//                //    System.out.println(cookiesList);
+//                    connection.setRequestProperty("Cookie", cookiesList);
+//                } else {
+//                    connection.setRequestProperty("Cookie", cookiesList);
+//                }
+//            }
+            if(userCookie.isActive())
+            {
+                String cookieInfo = userCookie.getCookieName() + " " + userCookie.getCookieValue() + " " + userCookie.retrieveID();
+                if(gameCookie.isActive())
+                {
+                    cookieInfo += " " + gameCookie.getCookieName();
                 }
+                connection.setRequestProperty("Cookie", cookieInfo);
             }
 
 
@@ -122,18 +131,28 @@ public class Proxy implements IProxy {
             connection.setRequestMethod(HTTP_POST);
             connection.setDoOutput(true);
 
-            if (userCookie.isActive()) {
-                cookiesList = userCookie.getCookieName() + "=" + userCookie.getCookieValue();
-                if (gameCookie.isActive()) {
-                    cookiesList = cookiesList + "; " + gameCookie.getCookieName() + "=" + gameCookie.getCookieValue();
-                //    System.out.println(cookiesList);
-                    connection.setRequestProperty("Cookie", cookiesList);
-                } else {
-                    connection.setRequestProperty("Cookie", cookiesList);
+//            if (userCookie.isActive()) {
+//                cookiesList = userCookie.getCookieName() + "=" + userCookie.getCookieValue();
+//                if (gameCookie.isActive()) {
+//                    cookiesList = cookiesList + "; " + gameCookie.getCookieName() + "=" + gameCookie.getCookieValue();
+//                //    System.out.println(cookiesList);
+//                    connection.setRequestProperty("Cookie", cookiesList);
+//                } else {
+//                    connection.setRequestProperty("Cookie", cookiesList);
+//                }
+//
+//            }
+
+
+            if(userCookie.isActive())
+            {
+                String cookieInfo = userCookie.getCookieName() + " " + userCookie.getCookieValue() + " " + userCookie.retrieveID();
+                if(gameCookie.isActive())
+                {
+                    cookieInfo += " " + gameCookie.getCookieName();
                 }
-
+                connection.setRequestProperty("Cookie", cookieInfo);
             }
-
             //System.out.println(url.toString());
             connection.connect();
             OutputStreamWriter myOut = new OutputStreamWriter(connection.getOutputStream());
@@ -291,8 +310,11 @@ public class Proxy implements IProxy {
         try {
             myResponse = doGet(url);
           //  System.out.println(myResponse.getResponseBody().toString().length());
-            GameListDeserialize listDeserialize = new GameListDeserialize(myResponse.getResponseBody());
-            games = listDeserialize.deserialize();
+            JsonParser myParse = new JsonParser();
+            JsonElement myEle = myParse.parse(myResponse.getResponseBody());
+            GameListDeserialize gld = new com.google.gson.Gson().fromJson(myEle, GameListDeserialize.class);
+
+            games = gld.getGames();
             //This is when i am going to create the deSerialization later
         } catch (ClientException e) {
             e.printStackTrace();

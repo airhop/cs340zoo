@@ -18,6 +18,7 @@ import server.servermain.JsonConstructionInfo;
 import server.shared.CommandType;
 import shared.jsonobject.CreatedGame;
 import shared.jsonobject.Login;
+import shared.serialization.GameListDeserialize;
 import shared.serialization.HttpURLResponse;
 
 import java.io.ByteArrayOutputStream;
@@ -82,12 +83,13 @@ public class Handler implements HttpHandler {
             Gamecookie = new Cookie();
             Headers reqHeaders = exchange.getRequestHeaders();
             List<String> rh = reqHeaders.get("Cookie");
-            if(rh.size() > 0)
+            if(rh!= null)
             {
-                scan = new Scanner(rh.get(0));
-                Usercookie = new Cookie(scan.next(), scan.next(), scan.next());
-                if(rh.size() > 1)
-                    Gamecookie = new Cookie(Integer.parseInt(rh.get(1)));
+                scan = new Scanner( rh.get(0));
+                if(scan.hasNext())
+                    Usercookie = new Cookie(scan.next(), scan.next(), scan.next());
+                if(scan.hasNext())
+                    Gamecookie = new Cookie(Integer.parseInt(scan.next()));
             }
             ServerFacade.getInstance().buildCurrentPlayer(new Cookie(), new Cookie());
 
@@ -130,7 +132,9 @@ public class Handler implements HttpHandler {
         String info;
         if (path.contains("games/list")) {
             List<GameInfo> gameInfo = ServerFacade.getInstance().getGamesList();
+            GameListDeserialize gld = new GameListDeserialize(gameInfo);
             info = new com.google.gson.Gson().toJson(gameInfo);
+            System.out.println("Game Info . .  ." + gameInfo.size() + " " + gameInfo.get(0).toString());
         } else if (path.contains("game/model")) {
             GameModel gm = ServerFacade.getInstance().getModel();
             info = new com.google.gson.Gson().toJson(gm);
@@ -207,20 +211,10 @@ public class Handler implements HttpHandler {
 
         if (path.contains("games/create")) {
 
-            InputStream is = exchange.getRequestBody();
-            int i = 0;
-            String input = "";
-            while((i = is.read()) != -1)
-                input += (char)i;
-
-            System.out.println(input);
             current = gamesFactory.getCommand(new JsonConstructionInfo(CommandType.create, requestBody));
-//     System.out.println("success in getting to creation " + exchange.getRequestBody().toString());
             Object o = current.execute();
-//     System.out.println("success in getting to creation");
             CreatedGame cg = ((CreatedGame)current.execute());
             String info = new com.google.gson.Gson().toJson(cg);
-//     System.out.println("Game created = " + info);
             exchange.sendResponseHeaders(200, info.length());
             exchange.getResponseBody().write(info.getBytes());
             exchange.getResponseBody().close();
@@ -242,7 +236,9 @@ public class Handler implements HttpHandler {
         }
         else if (path.contains("games/list")) {
             List<GameInfo> gameInfo = ServerFacade.getInstance().getGamesList();
+            GameListDeserialize gld = new GameListDeserialize(gameInfo);
             String info = new com.google.gson.Gson().toJson(gameInfo);
+            System.out.println("Game Info . .  ." + gameInfo.size() + " " + gameInfo.get(0).toString());
             exchange.sendResponseHeaders(200, info.length());
             exchange.getResponseBody().write(info.getBytes());
             exchange.getResponseBody().close();
