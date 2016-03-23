@@ -274,7 +274,7 @@ public class Proxy implements IProxy {
             if(myResponse.getResponseCode() == 200){
                 String cookie = myResponse.getCookie();
                 Scanner scan = new Scanner(cookie);
-                userCookie  = new Cookie(scan.next(), scan.next(), scan.next());
+                userCookie = new Cookie(scan.next(), scan.next(), scan.next());
                 return true;
             }else{
                 throw new ClientException("response code was not 200 ");
@@ -296,8 +296,7 @@ public class Proxy implements IProxy {
             myResponse = doPost(url, myObjOne);
             String cookie = myResponse.getCookie();
             Scanner scan = new Scanner(cookie);
-            userCookie  = new Cookie(scan.next(), scan.next(), scan.next());
-
+            userCookie = new Cookie(scan.next(), scan.next(), scan.next());
         } catch (ClientException e) {
             e.printStackTrace();
             throw new InvalidUserException("Server hates you :)");
@@ -370,7 +369,10 @@ public class Proxy implements IProxy {
         HttpURLResponse myResponse;
         try {
             myResponse = doPost(url, myObjOne);
-            gameCookie.setFullCookie(myResponse.getCookie());
+            String cookie = myResponse.getCookie();
+            Scanner scan = new Scanner(cookie);
+            gameCookie = new Cookie();
+            gameCookie.setCookieName(scan.next());
         } catch (ClientException e) {
             e.printStackTrace();
         }

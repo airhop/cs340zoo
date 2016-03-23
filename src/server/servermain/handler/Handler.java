@@ -49,6 +49,7 @@ public class Handler implements HttpHandler {
      * This method will grab the initial incoming exchange and parse the incoming Request Method
      * If it is a GET request it will pass it to the GetMethod.  Otherwise it will parse the RequestURI
      * and pass it to the User, Game, or Moves method
+     *
      * @param exchange - incoming request
      * @throws IOException
      */
@@ -59,7 +60,7 @@ public class Handler implements HttpHandler {
 
         Scanner scan = new Scanner(exchange.getRequestBody());
         requestBody = "";
-        while(scan.hasNext())
+        while (scan.hasNext())
             requestBody += scan.nextLine();
 
         Headers test = exchange.getRequestHeaders();
@@ -69,7 +70,7 @@ public class Handler implements HttpHandler {
             System.out.println("Method " + method);
             //if ("GET".equals(method))
             //    Get(exchange);
-            if(path.contains("model"))
+            if (path.contains("model"))
                 Get(exchange);
             else if (path.contains("/user")) {
                 UserMethod(exchange);
@@ -80,12 +81,11 @@ public class Handler implements HttpHandler {
             gameCookie = new Cookie();
             Headers reqHeaders = exchange.getRequestHeaders();
             List<String> rh = reqHeaders.get("Cookie");
-            if(rh!= null)
-            {
-                scan = new Scanner( rh.get(0));
-                if(scan.hasNext())
+            if (rh != null) {
+                scan = new Scanner(rh.get(0));
+                if (scan.hasNext())
                     userCookie = new Cookie(scan.next(), scan.next(), scan.next());
-                if(scan.hasNext())
+                if (scan.hasNext())
                     gameCookie = new Cookie(Integer.parseInt(scan.next()));
             }
             ServerFacade.getInstance().buildCurrentPlayer(userCookie, gameCookie);
@@ -129,7 +129,8 @@ public class Handler implements HttpHandler {
         String info;
         if (path.contains("games/list")) {
             List<GameInfo> gameInfo = ServerFacade.getInstance().getGamesList();
-            Type listOfTestObject = new TypeToken<ArrayList<GameInfo>>(){}.getType();
+            Type listOfTestObject = new TypeToken<ArrayList<GameInfo>>() {
+            }.getType();
             info = new com.google.gson.Gson().toJson(gameInfo, listOfTestObject);
             System.out.println("Game Info . .  ." + gameInfo.size() + " " + gameInfo.get(0).toString());
         } else if (path.contains("game/model")) {
@@ -137,7 +138,6 @@ public class Handler implements HttpHandler {
             info = new com.google.gson.Gson().toJson(gm, GameModel.class);
         } else
             throw new ServerException("Not a valid get request + " + path);
-
 
 
         ArrayList<String> content = new ArrayList<String>();
@@ -170,7 +170,7 @@ public class Handler implements HttpHandler {
         Login login = (Login) o;
 
         System.out.println("LoginObject " + login.toString());
-        if(login.getID() == -1){
+        if (login.getID() == -1) {
             throw new ServerException("False user");
         }
 
@@ -208,27 +208,24 @@ public class Handler implements HttpHandler {
 
         if (path.contains("games/create")) {
             current = gamesFactory.getCommand(new JsonConstructionInfo(CommandType.create, requestBody));
-            CreatedGame cg = ((CreatedGame)current.execute());
+            CreatedGame cg = ((CreatedGame) current.execute());
             String info = new com.google.gson.Gson().toJson(cg);
             exchange.sendResponseHeaders(200, info.length());
             exchange.getResponseBody().write(info.getBytes());
             exchange.getResponseBody().close();
-        }
-        else if (path.contains("games/join")) {
+        } else if (path.contains("games/join")) {
             current = gamesFactory.getCommand(new JsonConstructionInfo(CommandType.join, requestBody));
             Object o = current.execute();
 
-            gameCookie = new Cookie(((CreatedGame)o).getId());
+            gameCookie = new Cookie(((CreatedGame) o).getId());
             ArrayList<String> cookies = new ArrayList<String>();
             System.out.println("gameCookie.toString() " + gameCookie.toString());
             cookies.add(gameCookie.toString());
             exchange.getResponseHeaders().put("Set-Cookie", cookies);
 
             exchange.sendResponseHeaders(200, 1);
-            exchange.getResponseBody().write(((int) o));
             exchange.getResponseBody().close();
-        }
-        else if (path.contains("games/list")) {
+        } else if (path.contains("games/list")) {
             List<GameInfo> gameInfo = ServerFacade.getInstance().getGamesList();
             GameListDeserialize gld = new GameListDeserialize(gameInfo);
             String info = new com.google.gson.Gson().toJson(gameInfo);
@@ -236,8 +233,7 @@ public class Handler implements HttpHandler {
             exchange.sendResponseHeaders(200, info.length());
             exchange.getResponseBody().write(info.getBytes());
             exchange.getResponseBody().close();
-        }
-        else
+        } else
             throw new ServerException("Not a valid game request");
 
         ArrayList<String> content = new ArrayList<String>();
@@ -269,7 +265,7 @@ public class Handler implements HttpHandler {
         content.add("application/json");
         exchange.getResponseHeaders().put("Content-Type", content);
         //if current doesn't return anything
-        String info = ((GameModel)o).toString();
+        String info = ((GameModel) o).toString();
         exchange.sendResponseHeaders(200, info.length());
         exchange.getResponseBody().write(info.getBytes());
         exchange.getResponseBody().close();
