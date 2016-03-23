@@ -314,6 +314,8 @@ public class Proxy implements IProxy {
             JsonElement myEle = myParse.parse(myResponse.getResponseBody());
             games = (ArrayList<GameInfo>) myGson.fromJson(myResponse.getResponseBody(), ArrayList.class);
             //This is when i am going to create the deSerialization later
+            GameInfo myGame = games.get(0);
+            GameInfo myGameThis = games.get(1);
         } catch (ClientException e) {
             e.printStackTrace();
         }

@@ -133,7 +133,7 @@ public class Handler implements HttpHandler {
         if (path.contains("games/list")) {
             List<GameInfo> gameInfo = ServerFacade.getInstance().getGamesList();
             GameListDeserialize gld = new GameListDeserialize(gameInfo);
-            info = new com.google.gson.Gson().toJson(gameInfo);
+            info = new com.google.gson.Gson().toJson(gameInfo, ArrayList.class);
             System.out.println("Game Info . .  ." + gameInfo.size() + " " + gameInfo.get(0).toString());
         } else if (path.contains("game/model")) {
             GameModel gm = ServerFacade.getInstance().getModel();
