@@ -108,7 +108,7 @@ public class MapFactory
         }
 
         int j = 0;
-        for(int i = 0; i < hexes.size(); i++)
+        for(int i = 0; i < (hexes.size() - 1); i++)
         {
             if(i == 7)
                 j++;
@@ -152,6 +152,7 @@ public class MapFactory
 
         for(int i = 0; i < type.length; i++)
         {
+            System.out.println(type[i] + " " );
             Port p = ports.get(i);
             p.setType(type[i]);
             ports.set(i, p);
