@@ -128,12 +128,14 @@ public class Handler implements HttpHandler {
             throw new ServerException("Not a valid get request + " + path);
 
 
+
+        ArrayList<String> content = new ArrayList<String>();
+        content.add("application/json");
+        exchange.getResponseHeaders().put("Content-Type", content);
         exchange.sendResponseHeaders(200, info.length());
         exchange.getResponseBody().write(info.getBytes());
         exchange.getResponseBody().close();
 
-//does exchange need to be returned?
-//        return exchange;
     }
 
     /**
@@ -166,6 +168,9 @@ public class Handler implements HttpHandler {
         System.out.println("Usercookie.toString() = " + Usercookie.toString());
         cookies.add(Usercookie.toString());
         exchange.getResponseHeaders().put("Set-Cookie", cookies);
+        cookies = new ArrayList<String>();
+        cookies.add("text/html");
+        exchange.getResponseHeaders().put("Content-Type", cookies);
         String success = "success";
         exchange.sendResponseHeaders(200, success.length());
 
@@ -189,11 +194,12 @@ public class Handler implements HttpHandler {
         ICommand current;
         String path = exchange.getRequestURI().getPath();
         System.out.println("Path " + path);
+
         if (path.contains("games/create")) {
             current = gamesFactory.getCommand(new JsonConstructionInfo(CommandType.create, exchange.getRequestBody().toString()));
-            System.out.println("success in getting to creation");
+     System.out.println("success in getting to creation");
             Object o = current.execute();
-            System.out.println("success in getting to creation");
+     System.out.println("success in getting to creation");
             CreatedGame cg = ((CreatedGame)current.execute());
             String info = new com.google.gson.Gson().toJson(cg);
      System.out.println("Game created = " + info);
@@ -224,6 +230,10 @@ public class Handler implements HttpHandler {
         else
             throw new ServerException("Not a valid game request");
 
+        ArrayList<String> content = new ArrayList<String>();
+        content.add("application/json");
+        exchange.getResponseHeaders().put("Content-Type", content);
+
     }
 
     /**
@@ -244,6 +254,10 @@ public class Handler implements HttpHandler {
 
         Object o = current.execute();
 
+
+        ArrayList<String> content = new ArrayList<String>();
+        content.add("application/json");
+        exchange.getResponseHeaders().put("Content-Type", content);
         //if current doesn't return anything
         String info = ((GameModel)o).toString();
         exchange.sendResponseHeaders(200, info.length());
