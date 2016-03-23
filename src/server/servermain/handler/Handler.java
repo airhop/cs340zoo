@@ -222,8 +222,7 @@ public class Handler implements HttpHandler {
             System.out.println("gameCookie.toString() " + gameCookie.toString());
             cookies.add(gameCookie.toString());
             exchange.getResponseHeaders().put("Set-Cookie", cookies);
-
-            exchange.sendResponseHeaders(200, 1);
+            exchange.sendResponseHeaders(200, 0);
             exchange.getResponseBody().close();
         } else if (path.contains("games/list")) {
             List<GameInfo> gameInfo = ServerFacade.getInstance().getGamesList();
