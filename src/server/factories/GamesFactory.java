@@ -55,37 +55,23 @@ public class GamesFactory {
         boolean randomNumbers = false;
         String gameName = "";
 
-        int i = 0;
-        System.out.println("Parsing the game . . ." + i++);
         try {
-            System.out.println("Parsing the game . . ." + i++ + " " + myTree.peek().name());
             myTree.beginObject();
-            System.out.println("Parsing the game . . ." + i++ + " " + myTree.peek().name() + " " + myTree.peek());
             myTree.nextName();  //This is the first boolean which is the random tiles
-            System.out.println("Parsing the game . . ." + i++ + " " + myTree.peek().name());
             randomTiles = myTree.nextBoolean(); //This is the Random Tiles Boolean
-            System.out.println("Parsing the game . . ." + i++);
             myTree.nextName(); //This is the name == randomNumbers
-            System.out.println("Parsing the game . . ." + i++);
             randomNumbers = myTree.nextBoolean(); //This is the boolean randomNumbers
-            System.out.println("Parsing the game . . ." + i++);
             myTree.nextName(); //This is the randomPorts
-            System.out.println("Parsing the game . . ." + i++);
-            randomPorts = myTree.nextBoolean(); //This is the boolean randomPorts
-            System.out.println("Parsing the game . . ." + i++);
+            randomPorts = myTree.nextBoolean(); //This is the boolean randomPorts;
             myTree.nextName(); //this is the gameName == name
-            System.out.println("Parsing the game . . ." + i++);
             gameName = myTree.nextString(); //this is the name of the game
-            System.out.println("Parsing the game . . ." + i++);
 
         } catch (IOException e) {
             System.out.println("error with an exception being tossed?");
             e.printStackTrace();
         }
 
-
-
-        System.out.println("Information " + randomTiles + " " + randomPorts + " " + randomNumbers + " " + gameName);
+       // System.out.println("Information " + randomTiles + " " + randomPorts + " " + randomNumbers + " " + gameName);
         return new Create(randomTiles, randomPorts, randomNumbers, gameName);
     }
 
