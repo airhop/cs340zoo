@@ -6,6 +6,7 @@ import client.model.bank.DevCardList;
 import client.model.map.Map;
 import client.model.misc.TradeOffer;
 import client.model.player.CurrentPlayer;
+import client.proxy.Cookie;
 import server.factories.MapFactory;
 import shared.definitions.ResourceType;
 import shared.exceptions.FailureToAddException;
@@ -55,8 +56,12 @@ public class ServerFacade implements IServerFacade {
 
     }
 
-    public void setCurrPlayer() {
+    public void buildCurrPlayer(Cookie userCookie, Cookie gameCookie){
 
+    }
+
+    public void setCurrPlayer(CurrentPlayer currPlayer) {
+        this.currPlayer = currPlayer;
     }
 
     private static ServerFacade facade = null;
