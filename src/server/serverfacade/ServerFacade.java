@@ -86,7 +86,7 @@ public class ServerFacade implements IServerFacade {
         gamesList.add(gm);
 
 
-
+System.out.println("blah de blah");
         GameModel game = myMapFactory.newModel(true, false, true, "Second Game");
         game.setPlayers(ps);
         game.setID(createGameIndex++);
