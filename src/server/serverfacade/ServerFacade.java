@@ -409,9 +409,11 @@ public class ServerFacade implements IServerFacade {
                     game.getTurnTracker().updateStatus("Rolling");
                 }
             }
-            for (int i = 0; i < 3; i++) {
-
-            }
+            Player playerChange = game.getPlayers().get(playerIndex);
+            DevCardList old = playerChange.getOldDevCards();
+            DevCardList listNew = playerChange.getNewDevCards();
+            old.mergeList(listNew);
+            listNew.clearList();
             playerIndex++;
             game.getTurnTracker().setCurrentPlayer(playerIndex);
 
