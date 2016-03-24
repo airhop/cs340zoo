@@ -10,8 +10,10 @@ import client.model.map.VertexObject;
 import client.model.misc.TradeOffer;
 import client.model.player.CurrentPlayer;
 import client.proxy.Cookie;
+import server.commandobjects.moves.Monopoly;
 import server.factories.MapFactory;
 import shared.definitions.CatanColor;
+import shared.definitions.DevCardType;
 import shared.definitions.ResourceType;
 import shared.exceptions.FailureToAddException;
 import shared.exceptions.InsufficientResourcesException;
@@ -547,12 +549,12 @@ public class ServerFacade implements IServerFacade {
             List<Player> players = game.getPlayers();
             int addAmount = 0;
             for (int i = 0; i < players.size(); i++) {
-                if (i != playerIndex) {
-                    addAmount += players.get(i).getResources().getNumOfResource(resource);
-                    players.get(i).depleteResource(ResourceType.valueOf(resource));
-                }
+                addAmount += players.get(i).getResources().getNumOfResource(resource);
+                players.get(i).depleteResource(ResourceType.valueOf(resource));
             }
             players.get(playerIndex).addResource(ResourceType.valueOf(resource), addAmount);
+            players.get(playerIndex).getOldDevCards().use(DevCardType.MONOPOLY);
+            players.get(playerIndex).getNewDevCards().add(DevCardType.MONOPOLY);
             game.getLog().addMessage(currPlayer.getUsername(), currPlayer.getUsername() + " used a monopoly card");
         }
     }

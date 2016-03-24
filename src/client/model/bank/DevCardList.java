@@ -1,6 +1,7 @@
 
 package client.model.bank;
 
+import shared.definitions.DevCardType;
 import shared.exceptions.InsufficientResourcesException;
 
 import java.util.ArrayList;
@@ -153,5 +154,30 @@ public class DevCardList {
 
     public void setYearOfPlenty(int yearOfPlenty) {
         this.yearOfPlenty = yearOfPlenty;
+    }
+
+    public void use(DevCardType dct)
+    {
+        switch(dct)
+        {
+            case MONOPOLY: monopoly--; break;
+            case MONUMENT: monument--; break;
+            case YEAR_OF_PLENTY: yearOfPlenty--; break;
+            case ROAD_BUILD: roadBuilding--; break;
+            case SOLDIER: soldier--; break;
+        }
+    }
+
+    public void add(DevCardType dct)
+    {
+        switch(dct)
+        {
+            case MONOPOLY: monopoly++; break;
+            case MONUMENT: monument++; break;
+            case YEAR_OF_PLENTY: yearOfPlenty++; break;
+            case ROAD_BUILD: roadBuilding++; break;
+            case SOLDIER: soldier++; break;
+        }
+
     }
 }
