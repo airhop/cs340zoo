@@ -82,6 +82,7 @@ public class MovesFactory {
         boolean willAccept = false;
         try {
             myTree.beginObject();
+            System.out.println(info.getJsonBody());
             myTree.nextName();  //This is the first which is just the type
             myTree.nextString(); //This is the Type name
             myTree.nextName(); //This is the name == playerindex
@@ -111,19 +112,17 @@ public class MovesFactory {
         VertexDirection direction = null;
         try {
             myTree.beginObject();
+            System.out.println(info.getJsonBody());
             myTree.nextName();  //This is the first which is just the type
             myTree.nextString(); //This is the Type name
             myTree.nextName(); //This is the name == playerindex
             playerIndex = myTree.nextInt(); //This is the player index
             myTree.nextName(); //This is the Vertex Location name
             myTree.beginObject();//Begining the vertex location object
-            myTree.nextName();//the next name is the Hex location
-            myTree.beginObject(); //begining the hex location object
             myTree.nextName(); //the first integer x name
             x = myTree.nextInt();// the x-coordinate
             myTree.nextName();//the y-coordinate name
             y = myTree.nextInt();//the y-coordinate
-            myTree.endObject();//exiting the hexlocation object
             myTree.nextName(); // getting the name of the string vertex direction
             jsonDirection= myTree.nextString(); // the actual vertex direction
 
@@ -298,6 +297,7 @@ public class MovesFactory {
         int playerIndex = -1;
         try {
             myTree.beginObject();
+            System.out.println(info.getJsonBody());
             myTree.nextName();  //This is the first which is just the type
             myTree.nextString(); //This is the Type name
             myTree.nextName(); //This is the name == playerindex
@@ -328,6 +328,7 @@ public class MovesFactory {
         int numOfWood = 0;
         try {
             myTree.beginObject();
+            System.out.println(info.getJsonBody());
             myTree.nextName();  //This is the first which is just the type
             myTree.nextString(); //This is the Type name
             myTree.nextName(); //This is the name == playerindex
@@ -365,6 +366,7 @@ public class MovesFactory {
         int playerIndex = -1;
         try {
             myTree.beginObject();
+            System.out.println(info.getJsonBody());
             myTree.nextName();  //This is the first which is just the type
             myTree.nextString(); //This is the Type name
             myTree.nextName(); //This is the name == playerindex
@@ -393,6 +395,7 @@ public class MovesFactory {
         String output = null;
         try {
             myTree.beginObject();
+            System.out.println(info.getJsonBody());
             myTree.nextName();  //This is the first which is just the type
             myTree.nextString(); //This is the Type name
             myTree.nextName(); //This is the name == playerindex
@@ -424,6 +427,7 @@ public class MovesFactory {
         String resource = null;
         try {
             myTree.beginObject();
+            System.out.println(info.getJsonBody());
             myTree.nextName();  //This is the first which is just the type
             myTree.nextString(); //This is the Type name
             myTree.nextName();//the name of the resource
@@ -451,6 +455,7 @@ public class MovesFactory {
         int playerIndex = -1;
         try {
             myTree.beginObject();
+            System.out.println(info.getJsonBody());
             myTree.nextName();  //This is the first which is just the type
             myTree.nextString(); //This is the Type name
             myTree.nextName(); //This is the name == playerindex
@@ -482,12 +487,11 @@ public class MovesFactory {
         int numOfWood = 0;
         try {
             myTree.beginObject();
+            System.out.println(info.getJsonBody());
             myTree.nextName();  //This is the first which is just the type
             myTree.nextString(); //This is the Type name
             myTree.nextName(); //This is the name == playerindex
             playerIndex = myTree.nextInt(); //This is the player index
-            myTree.nextName();//the name of the reciever index
-            recieverIndex = myTree.nextInt();//the player index of the reciever
             myTree.nextName();//the name of the resourceList
             myTree.beginObject();//beginning the resourceList object
             myTree.nextName();//the numOfBrick name
@@ -500,7 +504,9 @@ public class MovesFactory {
             numOfWheat = myTree.nextInt(); // the actual numOfWheat
             myTree.nextName(); // the numOfWood name
             numOfWood = myTree.nextInt(); // the actual numOfWood
-
+            myTree.endObject(); // the end of the offer resource list
+            myTree.nextName();//the name of the reciever index
+            recieverIndex = myTree.nextInt();//the player index of the reciever
 
 
         } catch (IOException e) {
@@ -538,24 +544,19 @@ public class MovesFactory {
             playerIndex = myTree.nextInt(); //This is the player index
             myTree.nextName(); //This is the EdgeLocation name
             myTree.beginObject(); // beginning the Edge Location Object
-            myTree.nextName(); //beginning the hex location object
-            myTree.beginObject(); // beginning the hex location object
             myTree.nextName(); //the first integer x name
             x1 = myTree.nextInt();// the x-coordinate
             myTree.nextName();//the y-coordinate name
             y1 = myTree.nextInt();//the y-coordinate
-            myTree.endObject();//exiting the hexlocation object
             myTree.nextName(); // the name of Edge Direction
             jsonDirection1 = myTree.nextString(); //the edge direction in string form
             myTree.endObject();//exiting the Edge Location Object
             myTree.nextName(); //the name of the second Edge Location
-            myTree.nextName(); //beginning the hex location object
-            myTree.beginObject(); // beginning the hex location object
+            myTree.beginObject(); //beginning the second Edge Location object
             myTree.nextName(); //the first integer x name
             x2 = myTree.nextInt();// the x-coordinate
             myTree.nextName();//the y-coordinate name
             y2 = myTree.nextInt();//the y-coordinate
-            myTree.endObject();//exiting the hexlocation object
             myTree.nextName(); // the name of the second Edge Direction
             jsonDirection2 = myTree.nextString(); //the second edge direction in string form
             myTree.endObject();//exiting the second Edge Location Object
@@ -621,10 +622,11 @@ public class MovesFactory {
         JsonTreeReader myTree = new JsonTreeReader(myEle);
         int playerIndex = -1;
         int victimIndex = -1;
-        int x = 0;
-        int y = 0;
+        String x = null;
+        String y = null;
         try {
             myTree.beginObject();
+            System.out.println(info.getJsonBody());
             myTree.nextName();  //This is the first which is just the type
             myTree.nextString(); //This is the Type name
             myTree.nextName(); //This is the name == playerindex
@@ -634,9 +636,9 @@ public class MovesFactory {
             myTree.nextName();//the next name is the Hex location
             myTree.beginObject(); //begining the hex location object
             myTree.nextName(); //the first integer x name
-            x = myTree.nextInt();// the x-coordinate
+            x = myTree.nextString();// the x-coordinate
             myTree.nextName();//the y-coordinate name
-            y = myTree.nextInt();//the y-coordinate
+            y = myTree.nextString();//the y-coordinate
             myTree.endObject();//exiting the hexlocation object
 
 
@@ -644,7 +646,7 @@ public class MovesFactory {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return new RobPlayer(playerIndex, victimIndex, Integer.toString(x) , Integer.toString(y));//ask Aaron about his...why is it a string?
+        return new RobPlayer(playerIndex, victimIndex, x , y);//ask Aaron about his...why is it a string?
     }
 
     /**
@@ -661,6 +663,7 @@ public class MovesFactory {
         int rolled = 0;
         try {
             myTree.beginObject();
+            System.out.println(info.getJsonBody());
             myTree.nextName();  //This is the first which is just the type
             myTree.nextString(); //This is the Type name
             myTree.nextName(); //This is the name == playerindex
@@ -689,6 +692,7 @@ public class MovesFactory {
         String content = null;
         try {
             myTree.beginObject();
+            System.out.println(info.getJsonBody());
             myTree.nextName();  //This is the first which is just the type
             myTree.nextString(); //This is the Type name
             myTree.nextName(); //This is the name == playerindex
@@ -715,10 +719,11 @@ public class MovesFactory {
         JsonTreeReader myTree = new JsonTreeReader(myEle);
         int playerIndex = -1;
         int victimIndex = -1;
-        int x = 0;
-        int y = 0;
+        String x = null;
+        String y = null;
         try {
             myTree.beginObject();
+            System.out.println(info.getJsonBody());
             myTree.nextName();  //This is the first which is just the type
             myTree.nextString(); //This is the Type name
             myTree.nextName(); //This is the name == playerindex
@@ -728,9 +733,9 @@ public class MovesFactory {
             myTree.nextName();//the next name is the Hex location
             myTree.beginObject(); //begining the hex location object
             myTree.nextName(); //the first integer x name
-            x = myTree.nextInt();// the x-coordinate
+            x = myTree.nextString();// the x-coordinate
             myTree.nextName();//the y-coordinate name
-            y = myTree.nextInt();//the y-coordinate
+            y = myTree.nextString();//the y-coordinate
             myTree.endObject();//exiting the hexlocation object
 
 
@@ -738,7 +743,7 @@ public class MovesFactory {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return new Soldier(playerIndex, victimIndex, new HexLocation(x, y));
+        return new Soldier(playerIndex, victimIndex, new HexLocation(Integer.parseInt(x), Integer.parseInt(y)));
     }
 
     /**
@@ -758,6 +763,7 @@ public class MovesFactory {
         ResourceType resourceType2 = null;
         try {
             myTree.beginObject();
+            System.out.println(info.getJsonBody());
             myTree.nextName();  //This is the first which is just the type
             myTree.nextString(); //This is the Type name
             myTree.nextName(); //This is the name == playerindex
@@ -766,9 +772,6 @@ public class MovesFactory {
             resource1 = myTree.nextString();//the first resource type in string form
             myTree.nextName();//the name of the second resource type
             resource2 = myTree.nextString();//the second resource type in string form
-
-
-
 
         } catch (IOException e) {
             e.printStackTrace();
