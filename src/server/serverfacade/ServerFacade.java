@@ -732,8 +732,8 @@ public class ServerFacade implements IServerFacade {
             if (ratio < 5 && ratio > 1) {
                 if (tradePlayer.getResources().getNumOfResource(inputResource) >= ratio) {
                     if (game.getBank().getResources().getNumOfResource(outputResource) > 0) {
-                        tradePlayer.addResource(ResourceType.valueOf(inputResource), -ratio);
-                        tradePlayer.addResource(ResourceType.valueOf(outputResource), 1);
+                        tradePlayer.addResource(ResourceType.valueOf(inputResource.toUpperCase()), -ratio);
+                        tradePlayer.addResource(ResourceType.valueOf(outputResource.toUpperCase()), 1);
                         game.getBank().getResources().addResourceType(outputResource, -1);
                     }
                 }
