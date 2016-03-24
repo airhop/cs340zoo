@@ -464,7 +464,7 @@ public class ServerFacade implements IServerFacade {
                     e.printStackTrace();
                 }
             }
-            game.getLog().addMessage(currPlayer.getUsername(), currPlayer.getUsername() + " finished their turn");
+            game.getLog().addMessage(currPlayer.getUsername(), currPlayer.getUsername() + " bought a dev card");
         }
     }
 
@@ -618,6 +618,8 @@ public class ServerFacade implements IServerFacade {
             }
             game.getPlayers().get(currPlayer.getPlayerIndex()).setRoads( game.getPlayers().get(currPlayer.getPlayerIndex()).getRoads() - 1);
             game.getLog().addMessage(currPlayer.getUsername(), currPlayer.getUsername() + " built a road");
+            game.getTurnTracker().calcLongestRoad(currPlayer.getPlayerIndex(), game.getPlayers().get(currPlayer.getPlayerIndex()).getRoads());
+            game.calcVP(currPlayer.getPlayerIndex());
         }
     }
 
@@ -773,6 +775,7 @@ public class ServerFacade implements IServerFacade {
             disPlayer.addResource(ResourceType.SHEEP, discardedCards.getSheep());
             disPlayer.addResource(ResourceType.WHEAT, discardedCards.getWheat());
             disPlayer.addResource(ResourceType.WOOD, discardedCards.getWood());
+            game.getTurnTracker().updateStatus("robbing");
         }
     }
 }
