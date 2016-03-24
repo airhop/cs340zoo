@@ -6,6 +6,7 @@ import client.model.bank.Bank;
 import client.model.bank.DevCardList;
 import client.model.map.Map;
 import client.model.map.Road;
+import client.model.map.VertexObject;
 import client.model.misc.TradeOffer;
 import client.model.player.CurrentPlayer;
 import client.proxy.Cookie;
@@ -18,6 +19,7 @@ import shared.jsonobject.CreatedGame;
 import shared.jsonobject.Login;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
+import shared.locations.VertexDirection;
 import shared.locations.VertexLocation;
 import client.model.GameModel;
 import client.model.bank.ResourceList;
@@ -86,12 +88,15 @@ public class ServerFacade implements IServerFacade {
         gamesList.add(gm);
 
 
-
         GameModel game = myMapFactory.newModel(true, false, true, "Second Game");
         game.setPlayers(ps);
         game.setID(createGameIndex++);
         game.getTurnTracker().updateStatus("Rolling");
         game.getTurnTracker().setCurrentPlayer(0);
+        game.getMap().getBuildings().add(new VertexObject(new VertexLocation(new HexLocation(0, 0), VertexDirection.NW), 0));
+        game.getMap().getBuildings().add(new VertexObject(new VertexLocation(new HexLocation(2, 1), VertexDirection.NE), 0));
+        game.getMap().getBuildings().add(new VertexObject(new VertexLocation(new HexLocation(1, 2), VertexDirection.NW), 0));
+        gamesList.add(game);
         gameInfoList.add(new GameInfo(1, "Second Game", info));
     }
 
@@ -107,6 +112,7 @@ public class ServerFacade implements IServerFacade {
         if (userCookie.isActive()) {
             currPlayer.setUsername(userCookie.getCookieName());
             currPlayer.setPassword(userCookie.getCookieValue());
+            currPlayer.setPlayerId(userCookie.retrieveID());
         } else {
             currPlayer.setUsername("");
             currPlayer.setPassword("");
@@ -215,6 +221,8 @@ public class ServerFacade implements IServerFacade {
      */
     @Override
     public CreatedGame joinGame(int id, String color) {
+        System.out.println("Game ID = " + id + " gamelistsize " + gamesList.size());
+
         GameModel myModel = gamesList.get(id);
         List<Player> gamePlayers = myModel.getPlayers();
         int playerIndex = -1;
@@ -285,6 +293,7 @@ public class ServerFacade implements IServerFacade {
      */
     @Override
     public GameModel getModel() {
+        System.out.println("GameId " + currPlayer.getGameId());
         if (currPlayer.getGameId() != -1) {
             return gamesList.get(currPlayer.getGameId());
         } else {
@@ -342,7 +351,15 @@ public class ServerFacade implements IServerFacade {
                 game.getPlayers().get(i).addResource(ResourceType.WHEAT, resources.get(i).getWheat());
                 game.getPlayers().get(i).addResource(ResourceType.WOOD, resources.get(i).getWood());
             }
+            if (number == 7) {
+                System.out.println("YAY ROB ME");
+                game.getTurnTracker().updateStatus("robbing");
+            } else {
+                game.getTurnTracker().updateStatus("playing");
+                System.out.println("YAY MOVE TO PLAY GAME");
+            }
         }
+
     }
 
     /**
@@ -431,6 +448,7 @@ public class ServerFacade implements IServerFacade {
                     e.printStackTrace();
                 }
             }
+
         }
     }
 
@@ -549,11 +567,14 @@ public class ServerFacade implements IServerFacade {
      */
     @Override
     public void buildRoad(int playerIndex, EdgeLocation roadLocation, Boolean free) {
+        System.out.println("GETTING IN HERE");
         if (currPlayer.getGameId() != -1) {
+            System.out.println("AND IN HERE");
             GameModel game = gamesList.get(currPlayer.getGameId());
             Map ourMap = game.getMap();
             Player roadPlayer = game.getPlayers().get(playerIndex);
             if (!ourMap.canPlaceRoad(roadLocation, false)) {
+                System.out.println("HELLO CANT DO THAT");
                 return;
             }
             if (free) {

@@ -39,7 +39,7 @@ public class Map {
         fixBuildings();
     }
 
-    public Map(ArrayList<Hex> hs, ArrayList<Port> ps) {
+    public Map(ArrayList<Hex> hs, ArrayList<Port> ps, Robber r) {
         this.hexes = new TreeMap<>();
         for (int i = 0; i < hs.size(); i++)
             hexes.put(hs.get(i).getLocation(), hs.get(i));
@@ -50,6 +50,7 @@ public class Map {
         resources = new ArrayList<>();
         addOcean();
         fixBuildings();
+        robber = r;
     }
 
     public void clearHexes() {

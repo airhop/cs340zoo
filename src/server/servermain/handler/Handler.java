@@ -155,13 +155,13 @@ public class Handler implements HttpHandler {
             GameModel gm = ServerFacade.getInstance().getModel();
             GsonBuilder gson = new GsonBuilder();
             gson.enableComplexMapKeySerialization();
+            info = gson.create().toJson(gm);
 //            private class DateTimeSerializer implements JsonSerializer<DateTime> {
 //                public JsonElement serialize(DateTime src, Type typeOfSrc, JsonSerializationContext context) {
 //                    return new JsonPrimitive(src.toString());
 //                }
 //            }
 //            gson.registerTypeAdapter(TreeMap.class, new MapSerializer());
-            info = gson.create().toJson(gm);
         } else
             throw new ServerException("Not a valid get request + " + path);
 
@@ -277,11 +277,13 @@ public class Handler implements HttpHandler {
         String[] tokens = path.split("/"); //split the URL path into tokens
         CommandType type = CommandType.convert(tokens[tokens.length - 1]); //convert the final token into a CommandType
 
-        ICommand current = movesFactory.getCommand(new JsonConstructionInfo(type, requestBody));
-
         if (type == CommandType.listAI)
             throw new ServerException("Unknown Command Type");
 
+        System.out.println(tokens[tokens.length - 1]);
+        ICommand current = movesFactory.getCommand(new JsonConstructionInfo(type, requestBody));
+
+        System.out.println("here!");
         Object o = current.execute();
 
 
@@ -289,8 +291,13 @@ public class Handler implements HttpHandler {
         content.add("application/json");
         exchange.getResponseHeaders().put("Content-Type", content);
         //if current doesn't return anything
-        String info = ((GameModel) o).toString();
 
+        GameModel gm = (GameModel) o;
+        GsonBuilder gson = new GsonBuilder();
+        gson.enableComplexMapKeySerialization();
+        String info = gson.create().toJson(gm);
+
+        System.out.println("still here!");
         exchange.sendResponseHeaders(200, info.length());
         exchange.getResponseBody().write(info.getBytes());
         exchange.getResponseBody().close();
