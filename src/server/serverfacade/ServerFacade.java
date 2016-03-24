@@ -96,6 +96,7 @@ public class ServerFacade implements IServerFacade {
         game.getMap().getBuildings().add(new VertexObject(new VertexLocation(new HexLocation(0, 0), VertexDirection.NW), 0));
         game.getMap().getBuildings().add(new VertexObject(new VertexLocation(new HexLocation(2, 1), VertexDirection.NE), 0));
         game.getMap().getBuildings().add(new VertexObject(new VertexLocation(new HexLocation(1, 2), VertexDirection.NW), 0));
+        game.getPlayers().get(0).setResources(new ResourceList(19));
         gamesList.add(game);
         gameInfoList.add(new GameInfo(1, "Second Game", info));
     }

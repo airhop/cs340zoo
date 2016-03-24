@@ -62,8 +62,8 @@ public class ChatController extends Controller implements IChatController {
         for(int i = 0;  i< ml.size(); i++)
         {
 
-            CatanColor c = conversion.get(ml.get(i).getMessage());
-            logs.add(new LogEntry(c, ml.get(i).getSource()));
+            CatanColor c = conversion.get(ml.get(i).getSource());
+            logs.add(new LogEntry(c, ml.get(i).getMessage()));
             System.out.print("\nChat - " + c + " " + ml.get(i).getMessage());
         }
 
