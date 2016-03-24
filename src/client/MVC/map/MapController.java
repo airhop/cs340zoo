@@ -179,10 +179,14 @@ public class MapController extends Controller implements IMapController {
 
         String testState = state.getName();
 
-        changeState(gm.getTurnTracker().getStatus());
+
+        if(gm.getTurnTracker().getCurrentPlayer() == Facade.getInstance().getCurrentPlayer().getPlayerIndex())
+            changeState(gm.getTurnTracker().getStatus());
+
+        System.out.println(gm.getTurnTracker().getCurrentPlayer() + " " + Facade.getInstance().getCurrentPlayer().getPlayerIndex() + " " + state.getName());
 //        if (!changeState(gm.getTurnTracker().getStatus()))
 //            return;
-        Facade.getInstance().setCurPlayerIndex();
+//        Facade.getInstance().setCurPlayerIndex();
         Facade facade = Facade.getInstance();
         Map map = gm.getMap();
         ArrayList<Hex> hexes = map.getHexMap();
