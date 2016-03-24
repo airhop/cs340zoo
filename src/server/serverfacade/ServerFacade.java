@@ -351,7 +351,13 @@ public class ServerFacade implements IServerFacade {
                 game.getPlayers().get(i).addResource(ResourceType.WHEAT, resources.get(i).getWheat());
                 game.getPlayers().get(i).addResource(ResourceType.WOOD, resources.get(i).getWood());
             }
-
+            if (number == 7) {
+                System.out.println("YAY ROB ME");
+                game.getTurnTracker().updateStatus("robbing");
+            } else {
+                game.getTurnTracker().updateStatus("playing");
+                System.out.println("YAY MOVE TO PLAY GAME");
+            }
         }
 
     }
@@ -442,6 +448,7 @@ public class ServerFacade implements IServerFacade {
                     e.printStackTrace();
                 }
             }
+
         }
     }
 
@@ -560,11 +567,14 @@ public class ServerFacade implements IServerFacade {
      */
     @Override
     public void buildRoad(int playerIndex, EdgeLocation roadLocation, Boolean free) {
+        System.out.println("GETTING IN HERE");
         if (currPlayer.getGameId() != -1) {
+            System.out.println("AND IN HERE");
             GameModel game = gamesList.get(currPlayer.getGameId());
             Map ourMap = game.getMap();
             Player roadPlayer = game.getPlayers().get(playerIndex);
             if (!ourMap.canPlaceRoad(roadLocation, false)) {
+                System.out.println("HELLO CANT DO THAT");
                 return;
             }
             if (free) {
