@@ -6,6 +6,7 @@ import client.model.bank.Bank;
 import client.model.bank.DevCardList;
 import client.model.map.Map;
 import client.model.map.Road;
+import client.model.map.VertexObject;
 import client.model.misc.TradeOffer;
 import client.model.player.CurrentPlayer;
 import client.proxy.Cookie;
@@ -18,6 +19,7 @@ import shared.jsonobject.CreatedGame;
 import shared.jsonobject.Login;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
+import shared.locations.VertexDirection;
 import shared.locations.VertexLocation;
 import client.model.GameModel;
 import client.model.bank.ResourceList;
@@ -86,12 +88,14 @@ public class ServerFacade implements IServerFacade {
         gamesList.add(gm);
 
 
-System.out.println("blah de blah");
         GameModel game = myMapFactory.newModel(true, false, true, "Second Game");
         game.setPlayers(ps);
         game.setID(createGameIndex++);
         game.getTurnTracker().updateStatus("Rolling");
         game.getTurnTracker().setCurrentPlayer(0);
+        game.getMap().getBuildings().add(new VertexObject(new VertexLocation(new HexLocation(0, 0), VertexDirection.NW), 0));
+        game.getMap().getBuildings().add(new VertexObject(new VertexLocation(new HexLocation(2, 1), VertexDirection.NE), 0));
+        game.getMap().getBuildings().add(new VertexObject(new VertexLocation(new HexLocation(1, 2), VertexDirection.NW), 0));
         gamesList.add(game);
         gameInfoList.add(new GameInfo(1, "Second Game", info));
     }
@@ -347,7 +351,9 @@ System.out.println("blah de blah");
                 game.getPlayers().get(i).addResource(ResourceType.WHEAT, resources.get(i).getWheat());
                 game.getPlayers().get(i).addResource(ResourceType.WOOD, resources.get(i).getWood());
             }
+
         }
+
     }
 
     /**
