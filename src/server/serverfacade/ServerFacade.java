@@ -358,7 +358,7 @@ public class ServerFacade implements IServerFacade {
                 System.out.println("YAY ROB ME");
                 game.getTurnTracker().updateStatus("robbing");
             } else {
-                game.getTurnTracker().updateStatus("robbing");
+                game.getTurnTracker().updateStatus("playing");
                 System.out.println("YAY MOVE TO PLAY GAME");
             }
 
