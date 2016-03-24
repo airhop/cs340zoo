@@ -614,6 +614,7 @@ public class ServerFacade implements IServerFacade {
                     }
                 }
             }
+            game.getPlayers().get(currPlayer.getPlayerIndex()).setRoads( game.getPlayers().get(currPlayer.getPlayerIndex()).getRoads() - 1);
             game.getLog().addMessage(currPlayer.getUsername(), currPlayer.getUsername() + " built a road");
         }
     }
@@ -653,7 +654,9 @@ public class ServerFacade implements IServerFacade {
                     }
                 }
             }
+            game.getPlayers().get(currPlayer.getPlayerIndex()).setSettlements( game.getPlayers().get(currPlayer.getPlayerIndex()).getSettlements() - 1);
             game.getLog().addMessage(currPlayer.getUsername(), currPlayer.getUsername() + " built a settlement");
+            game.calcVP(currPlayer.getPlayerIndex());
         }
     }
 
@@ -677,7 +680,9 @@ public class ServerFacade implements IServerFacade {
                 }
             }
 
+            game.getPlayers().get(currPlayer.getPlayerIndex()).setCities( game.getPlayers().get(currPlayer.getPlayerIndex()).getCities() - 1);
             game.getLog().addMessage(currPlayer.getUsername(), currPlayer.getUsername() + " built a city");
+            game.calcVP(currPlayer.getPlayerIndex());
         }
 
     }
