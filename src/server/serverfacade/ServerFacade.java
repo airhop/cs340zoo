@@ -107,7 +107,7 @@ public class ServerFacade implements IServerFacade {
         if (userCookie.isActive()) {
             currPlayer.setUsername(userCookie.getCookieName());
             currPlayer.setPassword(userCookie.getCookieValue());
-            currPlayer.setGameId(userCookie.retrieveID());
+            currPlayer.setPlayerId(userCookie.retrieveID());
         } else {
             currPlayer.setUsername("");
             currPlayer.setPassword("");
