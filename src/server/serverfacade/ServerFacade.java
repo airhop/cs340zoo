@@ -443,7 +443,7 @@ public class ServerFacade implements IServerFacade {
                             break;
                         case "monument":
                             bankCards.setMonument(bankCards.getMonument() - 1);
-                            playerDevCards.setMonument(1);
+                            buyPlayer.getOldDevCards().setMonument(1);
                             break;
                         case "roadbuilding":
                             bankCards.setRoadBuilding(bankCards.getRoadBuilding() - 1);
@@ -554,7 +554,6 @@ public class ServerFacade implements IServerFacade {
             }
             players.get(playerIndex).addResource(ResourceType.valueOf(resource), addAmount);
             players.get(playerIndex).getOldDevCards().use(DevCardType.MONOPOLY);
-            players.get(playerIndex).getNewDevCards().add(DevCardType.MONOPOLY);
             game.getLog().addMessage(currPlayer.getUsername(), currPlayer.getUsername() + " used a monopoly card");
         }
     }
@@ -568,8 +567,8 @@ public class ServerFacade implements IServerFacade {
     public void monument(int playerIndex) {
         if (currPlayer.getGameId() != -1) {
             GameModel game = gamesList.get(currPlayer.getGameId());
-            Player addPointPlayer = game.getPlayers().get(playerIndex);
-            addPointPlayer.setVictoryPoints(addPointPlayer.getVictoryPoints() + 1);
+            game.getPlayers().get(playerIndex).setMonuments(game.getPlayers().get(playerIndex).getMonuments() + 1);
+            game.getPlayers().get(playerIndex).getOldDevCards().use(DevCardType.MONUMENT);
             game.getLog().addMessage(currPlayer.getUsername(), currPlayer.getUsername() + " used a monument card");
         }
     }
