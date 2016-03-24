@@ -454,7 +454,7 @@ public class Map {
         }
         for (VertexObject VObjIter : buildings) {
             int vl = VObjIter.getLocation().getNormalizedLocation().compareTo(vertexLocation.getNormalizedLocation());
-            if (vl == 0 && (VObjIter instanceof Settlement) && VObjIter.getOwner() == Facade.getInstance().getCurrentPlayer().getPlayerIndex()) {
+            if (vl == 0 && (VObjIter.getType()) && VObjIter.getOwner() == Facade.getInstance().getCurrentPlayer().getPlayerIndex()) {
                 return true;
             }
         }
@@ -805,4 +805,12 @@ public class Map {
 
     }
 
+    public ArrayList<VertexObject> getBuildingsFor(int pid)
+    {
+        ArrayList<VertexObject> owned = new ArrayList<>();
+        for(int i = 0; i < buildings.size(); i++)
+            if(buildings.get(i).getOwner() == pid)
+                owned.add(buildings.get(i));
+        return owned;
+    }
 }

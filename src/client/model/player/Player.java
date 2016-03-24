@@ -651,4 +651,5 @@ public class Player {
     public int getNumBuildings() {
         return settlements + cities;
     }
+
 }
