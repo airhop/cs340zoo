@@ -168,29 +168,38 @@ public class MovesFactory {
         int y = 0;
         String jsonDirection = null;
         EdgeDirection direction = null;
-        boolean isFree = false;
+        String isFree = null;
+        boolean free = false;
         try {
+            System.out.println("We are about to view the JSON");
+            System.out.println(info.getJsonBody());
             myTree.beginObject();
             myTree.nextName();  //This is the first which is just the type
             myTree.nextString(); //This is the Type name
             myTree.nextName(); //This is the name == playerindex
             playerIndex = myTree.nextInt(); //This is the player index
-            myTree.nextName(); //This is the EdgeLocation name
-            myTree.beginObject(); // beginning the Edge Location Object
-            myTree.nextName(); //beginning the hex location object
-            myTree.beginObject(); // beginning the hex location object
+            myTree.nextName(); //This is the roadLocation name
+            myTree.beginObject(); // beginning the Road Location object
             myTree.nextName(); //the first integer x name
             x = myTree.nextInt();// the x-coordinate
             myTree.nextName();//the y-coordinate name
             y = myTree.nextInt();//the y-coordinate
-            myTree.endObject();//exiting the hexlocation object
-            myTree.nextName(); // the name of Edge Direction
-            myTree.nextString(); //the edge direction in string form
-            myTree.endObject();//exiting the Edge Location Object
+            myTree.nextName(); // the name of road direction
+            jsonDirection = myTree.nextString(); //the road direction in string form
+            myTree.endObject();//exiting the Road Location Object
             myTree.nextName(); //the name of the is free boolean
-            isFree = myTree.nextBoolean();//the is free boolean
+            String test = myTree.peek().toString();
+            isFree = myTree.nextString();//the is free boolean
         } catch (IOException e) {
             e.printStackTrace();
+        }
+        if(isFree.equals("true"))
+        {
+            free = true;
+        }
+        else
+        {
+            free = false;
         }
         switch(jsonDirection)
         {
@@ -213,7 +222,7 @@ public class MovesFactory {
                 direction = EdgeDirection.SW;
                 break;
         }
-        return new BuildRoad(playerIndex, new EdgeLocation(new HexLocation(x, y), direction), isFree);
+        return new BuildRoad(playerIndex, new EdgeLocation(new HexLocation(x, y), direction), free);
     }
 
     /**
@@ -233,19 +242,17 @@ public class MovesFactory {
         VertexDirection direction = null;
         try {
             myTree.beginObject();
+            System.out.println(info.getJsonBody());
             myTree.nextName();  //This is the first which is just the type
             myTree.nextString(); //This is the Type name
             myTree.nextName(); //This is the name == playerindex
             playerIndex = myTree.nextInt(); //This is the player index
             myTree.nextName(); //This is the Vertex Location name
             myTree.beginObject();//Begining the vertex location object
-            myTree.nextName();//the next name is the Hex location
-            myTree.beginObject(); //begining the hex location object
             myTree.nextName(); //the first integer x name
             x = myTree.nextInt();// the x-coordinate
             myTree.nextName();//the y-coordinate name
             y = myTree.nextInt();//the y-coordinate
-            myTree.endObject();//exiting the hexlocation object
             myTree.nextName(); // getting the name of the string vertex direction
             jsonDirection= myTree.nextString(); // the actual vertex direction
             myTree.endObject();//ending the vertexLocation object
