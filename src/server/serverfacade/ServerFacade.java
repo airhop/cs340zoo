@@ -355,9 +355,10 @@ public class ServerFacade implements IServerFacade {
                 System.out.println("YAY ROB ME");
                 game.getTurnTracker().updateStatus("robbing");
             } else {
-                game.getTurnTracker().updateStatus("playing");
+                game.getTurnTracker().updateStatus("robbing");
                 System.out.println("YAY MOVE TO PLAY GAME");
             }
+            game.getLog().addMessage(currPlayer.getUsername(), currPlayer.getUsername() + " rolled a " + number);
         }
 
     }
@@ -384,6 +385,10 @@ public class ServerFacade implements IServerFacade {
     public void finishTurn(int playerIndex) {
         if (currPlayer.getGameId() != -1) {
             GameModel game = gamesList.get(currPlayer.getGameId());
+            if (game.getPlayers().get(playerIndex).getVictoryPoints() >= 10) {
+                game.setWinner(playerIndex);
+                return;
+            }
             if (playerIndex == game.getTurnTracker().getCurrentPlayer()) {
                 if (playerIndex == 3) {
                     playerIndex = -1;
@@ -403,6 +408,8 @@ public class ServerFacade implements IServerFacade {
             playerIndex++;
             game.getTurnTracker().setCurrentPlayer(playerIndex);
             game.getTurnTracker().updateStatus("");
+
+            game.getLog().addMessage(currPlayer.getUsername(), currPlayer.getUsername() + " finished a turn");
         }
     }
 
@@ -448,7 +455,7 @@ public class ServerFacade implements IServerFacade {
                     e.printStackTrace();
                 }
             }
-
+            game.getLog().addMessage(currPlayer.getUsername(), currPlayer.getUsername() + " finished their turn");
         }
     }
 
@@ -476,6 +483,7 @@ public class ServerFacade implements IServerFacade {
                 addPlayer.addResource(res1, 1);
                 addPlayer.addResource(res2, 1);
             }
+            game.getLog().addMessage(currPlayer.getUsername(), currPlayer.getUsername() + " used Year of Plenty");
         }
     }
 
@@ -499,6 +507,7 @@ public class ServerFacade implements IServerFacade {
                     e.printStackTrace();
                 }
             }
+            game.getLog().addMessage(currPlayer.getUsername(), currPlayer.getUsername() + " used a Road Building card");
         }
     }
 
@@ -514,10 +523,8 @@ public class ServerFacade implements IServerFacade {
         if (currPlayer.getGameId() != -1) {
             GameModel game = gamesList.get(currPlayer.getGameId());
             List<Player> players = game.getPlayers();
-            Player robber = players.get(playerIndex);
-            Player victim = players.get(victimIndex);
-            robber.getResources().addResourceType(victim.getResources().stealCard().toString(), 1);
-            game.relocateRobber(location);
+            game.getTurnTracker().updateStatus("Robbing");
+            game.getLog().addMessage(currPlayer.getUsername(), currPlayer.getUsername() + " used Soldier");
         }
 
     }
@@ -541,6 +548,7 @@ public class ServerFacade implements IServerFacade {
                 }
             }
             players.get(playerIndex).addResource(ResourceType.valueOf(resource), addAmount);
+            game.getLog().addMessage(currPlayer.getUsername(), currPlayer.getUsername() + " used a monopoly card");
         }
     }
 
@@ -555,6 +563,7 @@ public class ServerFacade implements IServerFacade {
             GameModel game = gamesList.get(currPlayer.getGameId());
             Player addPointPlayer = game.getPlayers().get(playerIndex);
             addPointPlayer.setVictoryPoints(addPointPlayer.getVictoryPoints() + 1);
+            game.getLog().addMessage(currPlayer.getUsername(), currPlayer.getUsername() + " used a monument card");
         }
     }
 
@@ -594,6 +603,7 @@ public class ServerFacade implements IServerFacade {
                     }
                 }
             }
+            game.getLog().addMessage(currPlayer.getUsername(), currPlayer.getUsername() + " built a road");
         }
     }
 
@@ -632,6 +642,7 @@ public class ServerFacade implements IServerFacade {
                     }
                 }
             }
+            game.getLog().addMessage(currPlayer.getUsername(), currPlayer.getUsername() + " built a settlement");
         }
     }
 
@@ -654,6 +665,8 @@ public class ServerFacade implements IServerFacade {
                     e.printStackTrace();
                 }
             }
+
+            game.getLog().addMessage(currPlayer.getUsername(), currPlayer.getUsername() + " built a city");
         }
 
     }
@@ -696,6 +709,7 @@ public class ServerFacade implements IServerFacade {
                 receiver.getResources().alterAllResources(trade.getRecievedList());
             }
             game.setTradeOffer(null);
+            game.getLog().addMessage(currPlayer.getUsername(), "someone accepted a trade");
         }
     }
 

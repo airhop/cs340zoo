@@ -579,4 +579,23 @@ public class GameModel extends Observable {
         for(int i = 0; i < players.size(); i++)
             players.get(i).setPlayerIndex(i);
     }
+
+    public void calcVP(int playerIndex)
+    {
+        int vp = 0;
+        ArrayList<VertexObject> vo = map.getBuildingsFor(playerIndex);
+        for(int i = 0; i < vo.size(); i++)
+        {
+            if(vo.get(i).getType())
+                vp++;
+            else
+                vp+=2;
+        }
+        vp+= players.get(playerIndex).getMonuments();
+        if(turnTracker.getLargestArmy() == playerIndex)
+            vp+=2;
+        if(turnTracker.getLongestRoad() == playerIndex)
+            vp+= 2;
+        players.get(playerIndex).setVictoryPoints(vp);
+    }
 }

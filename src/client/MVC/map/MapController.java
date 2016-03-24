@@ -209,7 +209,7 @@ public class MapController extends Controller implements IMapController {
 
         ArrayList<VertexObject> buildings = map.getBuildings();
         for (int i = 0; i < buildings.size(); i++) {
-            if ((buildings.get(i)) instanceof Settlement)
+            if ((buildings.get(i)).getType())
                 getView().placeSettlement(buildings.get(i).getLocation(), facade.getPlayerColor(buildings.get(i).getOwner()));
             else
                 getView().placeCity(buildings.get(i).getLocation(), facade.getPlayerColor(buildings.get(i).getOwner()));
