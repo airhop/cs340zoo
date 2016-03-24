@@ -98,6 +98,7 @@ public class ServerFacade implements IServerFacade {
         game.getMap().getBuildings().add(new VertexObject(new VertexLocation(new HexLocation(1, 2), VertexDirection.NW), 0));
         game.getPlayers().get(0).setResources(new ResourceList(15));
         game.getPlayers().get(1).setResources(new ResourceList(4));
+        game.getPlayers().get(0).setOldDevCards(new DevCardList(1, 1, 1, 1, 1));
         gamesList.add(game);
         gameInfoList.add(new GameInfo(1, "Second Game", info));
     }
@@ -388,6 +389,7 @@ public class ServerFacade implements IServerFacade {
     public void finishTurn(int playerIndex) {
         if (currPlayer.getGameId() != -1) {
             GameModel game = gamesList.get(currPlayer.getGameId());
+            game.calcVP(currPlayer.getPlayerIndex());
             if (game.getPlayers().get(playerIndex).getVictoryPoints() >= 10) {
                 game.setWinner(playerIndex);
                 return;
@@ -410,7 +412,7 @@ public class ServerFacade implements IServerFacade {
             }
             playerIndex++;
             game.getTurnTracker().setCurrentPlayer(playerIndex);
-            game.getTurnTracker().updateStatus("");
+
 
             game.getLog().addMessage(currPlayer.getUsername(), currPlayer.getUsername() + " finished a turn");
         }
