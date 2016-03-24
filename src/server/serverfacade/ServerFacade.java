@@ -92,6 +92,7 @@ public class ServerFacade implements IServerFacade {
         game.setID(createGameIndex++);
         game.getTurnTracker().updateStatus("Rolling");
         game.getTurnTracker().setCurrentPlayer(0);
+        gamesList.add(game);
         gameInfoList.add(new GameInfo(1, "Second Game", info));
     }
 
@@ -215,6 +216,8 @@ public class ServerFacade implements IServerFacade {
      */
     @Override
     public CreatedGame joinGame(int id, String color) {
+        System.out.println("Game ID = " + id + " gamelistsize " + gamesList.size());
+
         GameModel myModel = gamesList.get(id);
         List<Player> gamePlayers = myModel.getPlayers();
         int playerIndex = -1;
@@ -285,6 +288,7 @@ public class ServerFacade implements IServerFacade {
      */
     @Override
     public GameModel getModel() {
+        System.out.println("GameId " + currPlayer.getGameId());
         if (currPlayer.getGameId() != -1) {
             return gamesList.get(currPlayer.getGameId());
         } else {
