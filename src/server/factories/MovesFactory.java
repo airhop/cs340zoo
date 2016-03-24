@@ -401,7 +401,7 @@ public class MovesFactory {
             myTree.nextName(); //This is the name == playerindex
             playerIndex = myTree.nextInt(); //This is the player index
             myTree.nextName();//the name of the ratio
-            myTree.nextInt();//the ratio
+            ratio = myTree.nextInt();//the ratio
             myTree.nextName();//the name of the input resource
             input = myTree.nextString();//the input resource
             myTree.nextName();//the name of the output resource
