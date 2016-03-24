@@ -5,6 +5,8 @@ public class TurnTracker {
     String status;
     int longestRoad = -1;
     int largestArmy = -1;
+    int currLongestRoad = 4;
+    int currLargestArmy= 2;
     //must be at least 3 to claim largest army, therefore if player army >  currLA they earn largest army and currLA = player army size
 
     public TurnTracker() {
@@ -71,14 +73,26 @@ public class TurnTracker {
      * @param pid - player id of player wishing to try for largest army
      *            might return bool in future, not a necessity at the moment though
      */
-    public void calcLargestArmy(int pid) {
+    public void calcLargestArmy(int pid, int soldiers)
+    {
+        if(soldiers > currLargestArmy)
+        {
+            currLargestArmy = soldiers;
+            largestArmy = pid;
+        }
     }
 
     /**
      * @param pid = player id of player wishing to try for longest road
      *            again might return bool in future, not a necessity at the moment
      */
-    public void calcLongestRoad(int pid) {
+    public void calcLongestRoad(int pid, int roads)
+    {
+        if(roads > currLongestRoad)
+        {
+            currLongestRoad = roads;
+            longestRoad = pid;
+        }
     }
 
 }

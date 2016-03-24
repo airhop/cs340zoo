@@ -506,10 +506,15 @@ public class ServerFacade implements IServerFacade {
         if (currPlayer.getGameId() != -1) {
             GameModel game = gamesList.get(currPlayer.getGameId());
             Map ourMap = game.getMap();
+            if(game.getPlayers().get(currPlayer.getPlayerIndex()).getRoads() < 2)
+                return;
             if (ourMap.canPlaceRoad(spot1, false) && ourMap.canPlaceRoad(spot1, false)) {
                 try {
                     ourMap.addRoad(spot1.getHexLoc().getX(), spot1.getHexLoc().getY(), spot1.getDir(), playerIndex);
                     ourMap.addRoad(spot2.getHexLoc().getX(), spot2.getHexLoc().getY(), spot2.getDir(), playerIndex);
+                    game.getPlayers().get(currPlayer.getPlayerIndex()).setRoads( game.getPlayers().get(currPlayer.getPlayerIndex()).getRoads() - 2);
+                    game.getTurnTracker().calcLongestRoad(currPlayer.getPlayerIndex(),game.getPlayers().get(currPlayer.getPlayerIndex()).getRoads() );
+                    game.calcVP(currPlayer.getPlayerIndex());
                 } catch (FailureToAddException e) {
                     e.printStackTrace();
                 }
