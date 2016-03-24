@@ -179,6 +179,24 @@ public class ResourceList {
         }
     }
 
+    public void addResourceType(int type) {
+        if (type == 0) {
+            numOfBrick++;
+        }
+        if (type == 1) {
+            numOfOre++;
+        }
+        if (type == 2) {
+            numOfSheep++;
+        }
+        if (type == 3) {
+            numOfWheat++;
+        }
+        if (type == 4) {
+            numOfWood++;
+        }
+    }
+
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("BRICK AMOUNT: " + getBrick() + "\n");

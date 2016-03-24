@@ -37,6 +37,24 @@ public class DevCardList {
      *
      * @return cardtype of card to be returned
      */
+
+
+    public void clearList(){
+        monopoly = 0;
+        monument = 0;
+        roadBuilding = 0;
+        soldier = 0;
+        yearOfPlenty = 0;
+    }
+
+    public void mergeList(DevCardList devList){
+        monopoly += devList.getMonopoly();
+        monument += devList.getMonument();
+        roadBuilding += devList.getRoadBuilding();
+        soldier += devList.getSoldier();
+        yearOfPlenty += devList.getYearOfPlenty();
+    }
+
     public String buyDevCard() throws InsufficientResourcesException {
         //Initialize array
         ArrayList<Integer> randomize = new ArrayList<Integer>();
@@ -156,27 +174,43 @@ public class DevCardList {
         this.yearOfPlenty = yearOfPlenty;
     }
 
-    public void use(DevCardType dct)
-    {
-        switch(dct)
-        {
-            case MONOPOLY: monopoly--; break;
-            case MONUMENT: monument--; break;
-            case YEAR_OF_PLENTY: yearOfPlenty--; break;
-            case ROAD_BUILD: roadBuilding--; break;
-            case SOLDIER: soldier--; break;
+    public void use(DevCardType dct) {
+        switch (dct) {
+            case MONOPOLY:
+                monopoly--;
+                break;
+            case MONUMENT:
+                monument--;
+                break;
+            case YEAR_OF_PLENTY:
+                yearOfPlenty--;
+                break;
+            case ROAD_BUILD:
+                roadBuilding--;
+                break;
+            case SOLDIER:
+                soldier--;
+                break;
         }
     }
 
-    public void add(DevCardType dct)
-    {
-        switch(dct)
-        {
-            case MONOPOLY: monopoly++; break;
-            case MONUMENT: monument++; break;
-            case YEAR_OF_PLENTY: yearOfPlenty++; break;
-            case ROAD_BUILD: roadBuilding++; break;
-            case SOLDIER: soldier++; break;
+    public void add(DevCardType dct) {
+        switch (dct) {
+            case MONOPOLY:
+                monopoly++;
+                break;
+            case MONUMENT:
+                monument++;
+                break;
+            case YEAR_OF_PLENTY:
+                yearOfPlenty++;
+                break;
+            case ROAD_BUILD:
+                roadBuilding++;
+                break;
+            case SOLDIER:
+                soldier++;
+                break;
         }
 
     }
