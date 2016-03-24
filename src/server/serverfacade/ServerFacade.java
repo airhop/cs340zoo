@@ -29,6 +29,7 @@ import client.model.player.Player;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.TreeMap;
 
 /**
@@ -372,14 +373,44 @@ public class ServerFacade implements IServerFacade {
     /**
      * The command objects will call this method to run the server operation of robbing a player
      *
-     * @param plyerIndex  the id of the player doing the robbing
+     * @param playerIndex  the id of the player doing the robbing
      * @param victimIndex the id of the player being robbed
      * @param location    the location of the robber
      */
     @Override
-    public void robPlayer(int plyerIndex, int victimIndex, HexLocation location) {
+    public void robPlayer(int playerIndex, int victimIndex, HexLocation location) {
         GameModel game = gamesList.get(currPlayer.getGameId());
-        //Ask aaron about pull random card
+        if (!game.getMap().getRobber().getHl().equals(location))
+            game.getMap().getRobber().setHl(location);
+
+        if (victimIndex == -1)
+            return;
+
+        Random rand = new Random();
+        ResourceList victimResources = game.getPlayers().get(victimIndex).getResources();
+        ResourceList playerResources = game.getPlayers().get(playerIndex).getResources();
+        ArrayList<Integer> ints = new ArrayList<Integer>();
+
+        for (int i = 0; i < victimResources.getBrick(); i++) {
+            ints.add(0);
+        }
+        for (int i = 0; i < victimResources.getOre(); i++) {
+            ints.add(1);
+        }
+        for (int i = 0; i < victimResources.getSheep(); i++) {
+            ints.add(2);
+        }
+        for (int i = 0; i < victimResources.getWheat(); i++) {
+            ints.add(3);
+        }
+        for (int i = 0; i < victimResources.getWood(); i++) {
+            ints.add(4);
+        }
+
+        int random = (int) (Math.random() * (ints.size() - 1));
+        int stolenResource = ints.get(random);
+        playerResources.addResourceType(stolenResource);
+        game.getPlayers().get(playerIndex).setResources(playerResources);
     }
 
     /**
@@ -725,12 +756,25 @@ public class ServerFacade implements IServerFacade {
                 trade = game.getTradeOffer();
                 sender = game.getPlayers().get(trade.getSender());
                 receiver = game.getPlayers().get(trade.getReciever());
-                sender.getResources().alterAllResources(trade.getSentList());
-                receiver.getResources().alterAllResources(trade.getRecievedList());
+                updateTrade(trade.getOffer(), sender, receiver);
             }
             game.setTradeOffer(null);
             game.getLog().addMessage(currPlayer.getUsername(), "someone accepted a trade");
         }
+        }
+
+    public void updateTrade(ResourceList offer, Player sender, Player reciever) {
+        reciever.getResources().addResourceType("BRICK", offer.getBrick());
+        reciever.getResources().addResourceType("ORE", offer.getOre());
+        reciever.getResources().addResourceType("SHEEP", offer.getSheep());
+        reciever.getResources().addResourceType("WHEAT", offer.getWheat());
+        reciever.getResources().addResourceType("WOOD", offer.getWood());
+
+        sender.getResources().addResourceType("BRICK", -offer.getBrick());
+        sender.getResources().addResourceType("ORE", -offer.getOre());
+        sender.getResources().addResourceType("SHEEP", -offer.getSheep());
+        sender.getResources().addResourceType("WHEAT", -offer.getWheat());
+        sender.getResources().addResourceType("WOOD", -offer.getWood());
     }
 
     /**
@@ -775,6 +819,7 @@ public class ServerFacade implements IServerFacade {
             disPlayer.addResource(ResourceType.SHEEP, discardedCards.getSheep());
             disPlayer.addResource(ResourceType.WHEAT, discardedCards.getWheat());
             disPlayer.addResource(ResourceType.WOOD, discardedCards.getWood());
+            game.getTurnTracker().updateStatus("robbing");
         }
     }
 }
