@@ -43,6 +43,9 @@ public class Player {
         oldDevCards = new DevCardList();
         this.setUsername(playerName);
         this.setPlayerID(ID);
+        roads = MAX_ROADS;
+        settlements = MAX_SETTLEMENTS;
+        cities = MAX_CITIES;
     }
 
     public Player(String newColor, String newName, String newPassword, int newBiggestRoadLength, int ID, int newCityAmount, int newRoadAmount, int newSettlementAmount, int newMonumentAmount,
