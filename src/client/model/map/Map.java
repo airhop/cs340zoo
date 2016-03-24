@@ -441,6 +441,7 @@ public class Map {
         location = location.getNormalizedLocation();
         //Settlement settlement = new Settlement(location,owner);
         Settlement settlement = new Settlement(location, pid);
+        settlement.setSettlement(true);
         buildings.add(settlement);
     }
 
@@ -475,6 +476,7 @@ public class Map {
         VertexLocation location = new VertexLocation(hex, direction);
         //City city = new City(location,owner);
         City city = new City(location, pid);
+        city.setSettlement(false);
         buildings.add(city);
     }
 

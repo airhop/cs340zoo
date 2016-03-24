@@ -633,7 +633,7 @@ public class Proxy implements IProxy {
         myObjOne.addProperty("playerIndex", playerIndex);
         myObjOne.add("roadLocation", edgeLocationObject(el));
         myObjOne.addProperty("free", "" + free);
-        System.out.println("GETTING IN HERE");
+     //   System.out.println(myObjOne.toString());
         //
         HttpURLResponse myResponse;
         try {
