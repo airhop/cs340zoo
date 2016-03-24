@@ -445,7 +445,7 @@ public class ServerFacade implements IServerFacade {
                             break;
                         case "monument":
                             bankCards.setMonument(bankCards.getMonument() - 1);
-                            playerDevCards.setMonument(1);
+                            buyPlayer.getOldDevCards().setMonument(1);
                             break;
                         case "roadbuilding":
                             bankCards.setRoadBuilding(bankCards.getRoadBuilding() - 1);
@@ -508,10 +508,15 @@ public class ServerFacade implements IServerFacade {
         if (currPlayer.getGameId() != -1) {
             GameModel game = gamesList.get(currPlayer.getGameId());
             Map ourMap = game.getMap();
+            if(game.getPlayers().get(currPlayer.getPlayerIndex()).getRoads() < 2)
+                return;
             if (ourMap.canPlaceRoad(spot1, false) && ourMap.canPlaceRoad(spot1, false)) {
                 try {
                     ourMap.addRoad(spot1.getHexLoc().getX(), spot1.getHexLoc().getY(), spot1.getDir(), playerIndex);
                     ourMap.addRoad(spot2.getHexLoc().getX(), spot2.getHexLoc().getY(), spot2.getDir(), playerIndex);
+                    game.getPlayers().get(currPlayer.getPlayerIndex()).setRoads( game.getPlayers().get(currPlayer.getPlayerIndex()).getRoads() - 2);
+                    game.getTurnTracker().calcLongestRoad(currPlayer.getPlayerIndex(),game.getPlayers().get(currPlayer.getPlayerIndex()).getRoads() );
+                    game.calcVP(currPlayer.getPlayerIndex());
                 } catch (FailureToAddException e) {
                     e.printStackTrace();
                 }
@@ -556,7 +561,6 @@ public class ServerFacade implements IServerFacade {
             }
             players.get(playerIndex).addResource(ResourceType.valueOf(resource), addAmount);
             players.get(playerIndex).getOldDevCards().use(DevCardType.MONOPOLY);
-            players.get(playerIndex).getNewDevCards().add(DevCardType.MONOPOLY);
             game.getLog().addMessage(currPlayer.getUsername(), currPlayer.getUsername() + " used a monopoly card");
         }
     }
@@ -570,8 +574,8 @@ public class ServerFacade implements IServerFacade {
     public void monument(int playerIndex) {
         if (currPlayer.getGameId() != -1) {
             GameModel game = gamesList.get(currPlayer.getGameId());
-            Player addPointPlayer = game.getPlayers().get(playerIndex);
-            addPointPlayer.setVictoryPoints(addPointPlayer.getVictoryPoints() + 1);
+            game.getPlayers().get(playerIndex).setMonuments(game.getPlayers().get(playerIndex).getMonuments() + 1);
+            game.getPlayers().get(playerIndex).getOldDevCards().use(DevCardType.MONUMENT);
             game.getLog().addMessage(currPlayer.getUsername(), currPlayer.getUsername() + " used a monument card");
         }
     }
