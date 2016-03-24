@@ -435,7 +435,9 @@ public class ServerFacade implements IServerFacade {
             if (bankCards.getSize() > 0 && buyPlayer.canBuyDevcard()) {//get a random if it is not there than fall down through the switch
                 try {
                     String buyCard = bankCards.buyDevCard();
-
+                    buyPlayer.addResource(ResourceType.SHEEP, -1);
+                    buyPlayer.addResource(ResourceType.WHEAT, -1);
+                    buyPlayer.addResource(ResourceType.ORE, -1);
                     switch (buyCard) {
                         case "monopoly":
                             bankCards.setMonopoly(bankCards.getMonopoly() - 1);
