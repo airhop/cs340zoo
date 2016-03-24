@@ -352,9 +352,11 @@ public class ServerFacade implements IServerFacade {
                 game.getPlayers().get(i).addResource(ResourceType.WOOD, resources.get(i).getWood());
             }
             if (number == 7) {
+                System.out.println("YAY ROB ME");
                 game.getTurnTracker().updateStatus("robbing");
             } else {
                 game.getTurnTracker().updateStatus("playing");
+                System.out.println("YAY MOVE TO PLAY GAME");
             }
         }
 

@@ -3,6 +3,7 @@ package server.factories;
 import client.model.GameModel;
 import client.model.map.Hex;
 import client.model.map.Port;
+import client.model.map.Robber;
 import shared.locations.EdgeDirection;
 import shared.locations.HexLocation;
 
@@ -23,7 +24,7 @@ public class MapFactory
     public GameModel newModel(boolean randomTiles, boolean randomNumbers, boolean randomPorts, String name)
     {
         ArrayList<Hex> hexes = initializeHexes();
-
+        Robber robber = null;
         if(randomTiles)
             hexes = initializeRandomHexes(hexes);
 
@@ -34,7 +35,8 @@ public class MapFactory
         if(randomPorts)
             ports = randomizePorts(ports);
 
-        return new GameModel(name, hexes, ports);
+        robber = addRobber(hexes);
+        return new GameModel(name, hexes, ports, robber);
     }
 
 
@@ -167,4 +169,15 @@ public class MapFactory
         return ports;
 
     }
+
+    public Robber addRobber(ArrayList<Hex> hexes) {
+        Robber robber = new Robber();
+        for (Hex hex : hexes) {
+            if (hex.getResource() == "desert") {
+                robber.setHl(hex.getLocation());
+            }
+        }
+        return robber;
+    }
+
 }
