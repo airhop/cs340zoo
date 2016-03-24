@@ -29,7 +29,6 @@ public class MaritimeTrade implements ICommand {
      */
     @Override
     public Object execute() {
-
         ServerFacade.getInstance().maritimeTrade(playerIndex, ratio, inputResource, outputResource);
         return ServerFacade.getInstance().getModel();
     }
