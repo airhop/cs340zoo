@@ -729,7 +729,7 @@ public class ServerFacade implements IServerFacade {
         if (currPlayer.getGameId() != -1) {
             GameModel game = gamesList.get(currPlayer.getGameId());
             Player tradePlayer = game.getPlayers().get(playerIndex);
-            if (ratio < 4 && ratio > 1) {
+            if (ratio < 5 && ratio > 1) {
                 if (tradePlayer.getResources().getNumOfResource(inputResource) >= ratio) {
                     if (game.getBank().getResources().getNumOfResource(outputResource) > 0) {
                         tradePlayer.addResource(ResourceType.valueOf(inputResource), -ratio);

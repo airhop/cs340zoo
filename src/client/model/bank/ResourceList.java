@@ -196,7 +196,7 @@ public class ResourceList {
 
     public int getNumOfResource(String resource) {
         int resourceNum = 0;
-        switch (resource) {
+        switch (resource.toUpperCase()) {
             case "BRICK":
                 resourceNum = getBrick();
                 break;
