@@ -93,8 +93,8 @@ public class GameModel extends Observable {
         chat = new Chat();
     }
 
-    public GameModel(String name, ArrayList<Hex> hexes, ArrayList<Port> ports) {
-        map = new Map(hexes, ports);
+    public GameModel(String name, ArrayList<Hex> hexes, ArrayList<Port> ports, Robber r) {
+        map = new Map(hexes, ports, r);
         bank = new Bank();
         turnTracker = new TurnTracker();
         tradeOffer = new TradeOffer();
