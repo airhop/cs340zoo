@@ -8,7 +8,7 @@ public class MessageList {
 
 
     public MessageList(){
-        messages = new ArrayList<>();
+        messages = new ArrayList<MessageLine>();
     }
 
     public void clearMessageList() {

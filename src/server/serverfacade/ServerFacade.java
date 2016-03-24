@@ -358,7 +358,8 @@ public class ServerFacade implements IServerFacade {
                 game.getTurnTracker().updateStatus("robbing");
                 System.out.println("YAY MOVE TO PLAY GAME");
             }
-            game.getLog().addMessage(currPlayer.getUsername(), currPlayer.getUsername() + " rolled a " + number);
+
+            game.getLog().addMessage(currPlayer.getUsername(), (currPlayer.getUsername() + " rolled a " + number));
         }
 
     }

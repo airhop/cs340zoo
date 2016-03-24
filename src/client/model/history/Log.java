@@ -8,6 +8,7 @@ public class Log {
 	{
 		LogList = new MessageList();
 	}
+
 	public Log(MessageList ml)
 	{
 		if(ml == null)
@@ -38,6 +39,7 @@ public class Log {
 	*/
 	public void addMessage(String source, String message)
 	{
+		System.out.println(source + " " + message);
 		LogList.addMessage(new MessageLine(message, source));
 	}
 

@@ -1,6 +1,7 @@
 package client.MVC.communication;
 
 import client.MVC.base.*;
+import client.MVC.main.Catan;
 import client.facade.Facade;
 import client.model.GameModel;
 import client.model.history.MessageLine;
@@ -34,7 +35,7 @@ public class GameHistoryController extends Controller implements IGameHistoryCon
             return;
         GameModel gm = (GameModel) o;
         ArrayList<MessageLine> ml = gm.getLog().getLogList().getMessages();
-        //System.out.println("Game History - " + ml.size());
+        System.out.println("Game History - " + ml.size());
         ArrayList<Player> players = gm.getPlayers();
         Map <String, CatanColor> conversion = new TreeMap<String, CatanColor>();
 
@@ -44,13 +45,15 @@ public class GameHistoryController extends Controller implements IGameHistoryCon
             if(color == null || color.isEmpty()) //happens at start up
                 return;
             conversion.put(players.get(i).getUsername(), CatanColor.convert(color));
+            System.out.println("Tree addition " + players.get(i).getUsername() + " " + CatanColor.convert(color));
         }
+
         List<LogEntry> logs = new ArrayList<LogEntry>();
         for(int i = 0;  i< ml.size(); i++)
         {
-            //message and source were mixed up on accident
-            CatanColor c = conversion.get(ml.get(i).getMessage());
-            logs.add(new LogEntry(c, ml.get(i).getSource()));
+            CatanColor c = conversion.get(ml.get(i).getSource());
+            logs.add(new LogEntry(c, ml.get(i).getMessage()));
+            //System.out.println("Message " + c.toString() + " " + ml.get(i).getSource());
         }
 
         getView().setEntries(logs);
