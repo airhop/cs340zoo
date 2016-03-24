@@ -134,7 +134,13 @@ public class Facade {
             updateGamesList();
         }
         if (Joined && ready) {
+
+            CurrentPlayer cp = game.getCurrentPlayer();
+            System.out.println("Checking currentPlayer " + cp.getPlayerIndex());
             gm = proxy.getGameModel();
+            gm.setCurrentPlayer(cp);
+            System.out.println(gm.getCurrentPlayer().getPlayerIndex());
+//            System.out.println(gm.getCurrentPlayer().getPlayerIndex());
         }
         if (Facade.getInstance().isSettingColor()) {
             if (gm != null) {
@@ -228,6 +234,7 @@ public class Facade {
         boolean login = false;
         try {
             login = proxy.userLogin(u);
+            System.out.println("Logged in? " + login);
             if (login) {
                 game.getCurrentPlayer().setUsername(username);
                 game.getCurrentPlayer().setPassword(password);
@@ -291,6 +298,7 @@ public class Facade {
             Joined = true;
             game.setID(gameId);
             game.getCurrentPlayer().setPlayerIndex(game.getPlayerIndex(game.getCurrentPlayer().getPlayerId()));
+            System.out.println("Index " +  game.getPlayerIndex(game.getCurrentPlayer().getPlayerId()));
         } catch (InvalidUserException e) {
             //exceptionair!!
         }

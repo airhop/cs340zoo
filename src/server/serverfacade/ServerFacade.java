@@ -57,9 +57,13 @@ public class ServerFacade implements IServerFacade {
         GameModel gm = myMapFactory.newModel(true, false, false, "First Game");
         ArrayList<Player> ps = new ArrayList<Player>();
         ps.add(new Player("David", 0));
+        ps.get(0).setPlayerIndex(0);
         ps.add(new Player("Aaron", 1));
+        ps.get(1).setPlayerIndex(1);
         ps.add(new Player("Josh", 2));
+        ps.get(2).setPlayerIndex(2);
         ps.add(new Player("Rebecca", 3));
+        ps.get(3).setPlayerIndex(3);
         gm.setPlayers(ps);
         gm.setID(createGameIndex++);
 
@@ -235,6 +239,7 @@ public class ServerFacade implements IServerFacade {
             myPlayer.setId(currPlayer.getPlayerId());
             myPlayer.setName(currPlayer.getUsername());
             myPlayer.setPlayerIndex(playerIndex);
+ //need to add the new player to the game, not just the gameinfolist array
             gameInfoList.get(id).addPlayer(myPlayer);
         }else{
             PlayerInfo myPlayer = gameInfoList.get(id).getPlayers().get(playerIndex);

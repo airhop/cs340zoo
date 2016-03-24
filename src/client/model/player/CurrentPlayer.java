@@ -13,7 +13,9 @@ public class CurrentPlayer {
     private int playerIndex;
     private int gameId;
 
-    public CurrentPlayer(){
+    public CurrentPlayer()
+    {
+        System.out.println("okay . . .");
         String username = "";
         String password = "";
         CatanColor color = CatanColor.BLUE;
@@ -67,7 +69,8 @@ public class CurrentPlayer {
         return playerIndex;
     }
 
-    public void setPlayerIndex(int playerIndex) {
+    public void setPlayerIndex(int playerIndex)
+    {
         this.playerIndex = playerIndex;
     }
 

@@ -152,6 +152,7 @@ public class Proxy implements IProxy {
                 {
                     cookieInfo += " " + gameCookie.getCookieName();
                 }
+                System.out.println("Passed Cookies " + cookieInfo);
                 connection.setRequestProperty("Cookie", cookieInfo);
             }
             //System.out.println(url.toString());
@@ -395,7 +396,7 @@ public class Proxy implements IProxy {
         try {
             myResponse = doGet(url);
             String test = myResponse.getResponseBody();
-            System.out.println(test);
+           // System.out.println(test);
             GsonBuilder gson = new GsonBuilder();
 //            gson.registerTypeAdapter(TreeMap.class, new MapDeserializer());
             gson.enableComplexMapKeySerialization();

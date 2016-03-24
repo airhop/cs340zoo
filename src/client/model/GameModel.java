@@ -126,7 +126,7 @@ public class GameModel extends Observable {
     public int getPlayerIndex(int playerId) {
         for (int i = 0; i < 4; i++) {
             if (players.get(i).getPlayerID() == playerId) {
-                return players.get(i).getPlayerIndex();
+                return i;
             }
         }
         return 0;
@@ -566,14 +566,17 @@ public class GameModel extends Observable {
     }
 
     public void setCurrentPlayerIndex() {
-        int pid = currentPlayer.getPlayerId();
-        System.out.println("Player IDs saved " + players.size());
-        for (int i = 0; i < players.size(); i++) {
-            System.out.print(players.get(i).getUsername() + " " + players.get(i).getPlayerID() + " ");
-            if (players.get(i).getPlayerID() == pid)
-                currentPlayer.setPlayerIndex(i);
-        }
-
-        System.out.println("CurrentPlayer.index = " + currentPlayer.getPlayerIndex() + " Current turn = " + turnTracker.getStatus() + " The player = " + turnTracker.getCurrentPlayer());
+//        int pid = currentPlayer.getPlayerId();
+//        System.out.println("Player IDs saved " + players.size());
+//        for (int i = 0; i < players.size(); i++) {
+//            System.out.print(players.get(i).getUsername() + " " + players.get(i).getPlayerID() + " ");
+//            if (players.get(i).getPlayerID() == pid)
+//                currentPlayer.setPlayerIndex(i);
+//        }
+//
+//        System.out.println("CurrentPlayer.index = " + currentPlayer.getPlayerIndex() + " Current turn = " + turnTracker.getStatus() + " The player = " + turnTracker.getCurrentPlayer());
+        System.out.println("indexes are being set!! " + players.size());
+        for(int i = 0; i < players.size(); i++)
+            players.get(i).setPlayerIndex(i);
     }
 }

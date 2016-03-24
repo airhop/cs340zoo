@@ -75,25 +75,32 @@ public class Handler implements HttpHandler {
 
         try {
             //Get doesn't work so I moved game/model to another method and games/list to gamemethod
-            System.out.println("Method " + method);
+            System.out.println("Method " + method + " Path = " + path);
             //if ("GET".equals(method))
             //    Get(exchange);
 
 
-            userCookie = new Cookie();
-            gameCookie = new Cookie();
-            Headers reqHeaders = exchange.getRequestHeaders();
-            List<String> rh = reqHeaders.get("Cookie");
-            if (rh != null) {
-                scan = new Scanner(rh.get(0));
-                if (scan.hasNext())
-                    userCookie = new Cookie(scan.next(), scan.next(), scan.next());
-                if (scan.hasNext())
-                    gameCookie = new Cookie(Integer.parseInt(scan.next()));
+
+                userCookie = new Cookie();
+                gameCookie = new Cookie();
+            try {
+                Headers reqHeaders = exchange.getRequestHeaders();
+                List<String> rh = reqHeaders.get("Cookie");
+                if (rh != null) {
+                    System.out.println("Cookie string " + rh.get(0));
+                    scan = new Scanner(rh.get(0));
+                    if (scan.hasNext())
+                        userCookie = new Cookie(scan.next(), scan.next(), scan.next());
+                    if (scan.hasNext())
+                        gameCookie = new Cookie(Integer.parseInt(scan.next()));
+                }
+            } catch (NumberFormatException e)
+            {
+                System.out.println("Stupid Swagger . . .");
             }
             ServerFacade.getInstance().buildCurrentPlayer(userCookie, gameCookie);
 
-            if (path.contains("model")){
+            if (path.contains("model")) {
                 Get(exchange);
                 return;
             } else if (path.contains("/user")) {
