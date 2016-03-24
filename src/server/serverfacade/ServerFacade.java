@@ -435,11 +435,13 @@ public class ServerFacade implements IServerFacade {
             if (bankCards.getSize() > 0 && buyPlayer.canBuyDevcard()) {//get a random if it is not there than fall down through the switch
                 try {
                     String buyCard = bankCards.buyDevCard();
-
+                    buyPlayer.addResource(ResourceType.SHEEP, -1);
+                    buyPlayer.addResource(ResourceType.WHEAT, -1);
+                    buyPlayer.addResource(ResourceType.ORE, -1);
                     switch (buyCard) {
                         case "monopoly":
                             bankCards.setMonopoly(bankCards.getMonopoly() - 1);
-                            playerDevCards.setMonopoly(1);
+                            playerDevCards.setMonopoly(playerDevCards.getMonopoly() + 1);
                             break;
                         case "monument":
                             bankCards.setMonument(bankCards.getMonument() - 1);
@@ -447,15 +449,15 @@ public class ServerFacade implements IServerFacade {
                             break;
                         case "roadbuilding":
                             bankCards.setRoadBuilding(bankCards.getRoadBuilding() - 1);
-                            playerDevCards.setRoadBuilding(1);
+                            playerDevCards.setRoadBuilding(playerDevCards.getRoadBuilding() + 1);
                             break;
                         case "soldier":
                             bankCards.setSoldier(bankCards.getSoldier() - 1);
-                            playerDevCards.setSoldier(1);
+                            playerDevCards.setSoldier(playerDevCards.getSoldier() + 1);
                             break;
                         case "yearofplenty":
                             bankCards.setYearOfPlenty(bankCards.getYearOfPlenty() - 1);
-                            playerDevCards.setYearOfPlenty(1);
+                            playerDevCards.setYearOfPlenty(playerDevCards.getYearOfPlenty() + 1);
                             break;
                     }
                 } catch (InsufficientResourcesException e) {
