@@ -180,7 +180,7 @@ public class MapController extends Controller implements IMapController {
         String testState = state.getName();
 
 
-        if(gm.getTurnTracker().getCurrentPlayer() == Facade.getInstance().getCurrentPlayer().getPlayerIndex())
+//        if(gm.getTurnTracker().getCurrentPlayer() == Facade.getInstance().getCurrentPlayer().getPlayerIndex())
             changeState(gm.getTurnTracker().getStatus());
 
         System.out.println(gm.getTurnTracker().getCurrentPlayer() + " " + Facade.getInstance().getCurrentPlayer().getPlayerIndex() + " " + state.getName());
