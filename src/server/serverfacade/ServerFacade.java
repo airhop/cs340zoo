@@ -355,7 +355,7 @@ public class ServerFacade implements IServerFacade {
                 System.out.println("YAY ROB ME");
                 game.getTurnTracker().updateStatus("robbing");
             } else {
-                game.getTurnTracker().updateStatus("playing");
+                game.getTurnTracker().updateStatus("robbing");
                 System.out.println("YAY MOVE TO PLAY GAME");
             }
         }
@@ -384,6 +384,10 @@ public class ServerFacade implements IServerFacade {
     public void finishTurn(int playerIndex) {
         if (currPlayer.getGameId() != -1) {
             GameModel game = gamesList.get(currPlayer.getGameId());
+            if (game.getPlayers().get(playerIndex).getVictoryPoints() >= 10) {
+                game.setWinner(playerIndex);
+                return;
+            }
             if (playerIndex == game.getTurnTracker().getCurrentPlayer()) {
                 if (playerIndex == 3) {
                     playerIndex = -1;

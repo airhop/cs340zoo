@@ -173,7 +173,7 @@ public class MapFactory
     public Robber addRobber(ArrayList<Hex> hexes) {
         Robber robber = new Robber();
         for (Hex hex : hexes) {
-            if (hex.getResource() == "desert") {
+            if (hex.getResource().equalsIgnoreCase("desert")) {
                 robber.setHl(hex.getLocation());
             }
         }
