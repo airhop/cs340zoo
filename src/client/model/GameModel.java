@@ -582,7 +582,7 @@ public class GameModel extends Observable {
 
     public void calcVP(int playerIndex)
     {
-        int vp;
+        int vp = 0;
         ArrayList<VertexObject> vo = map.getBuildingsFor(playerIndex);
         for(int i = 0; i < vo.size(); i++)
         {
