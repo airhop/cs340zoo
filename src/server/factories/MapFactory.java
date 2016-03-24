@@ -141,7 +141,7 @@ public class MapFactory
         ports.add(new Port(2, 1, EdgeDirection.NW, 3));
         ports.add(new Port(3, -1, "sheep", EdgeDirection.NW, 2));
         ports.add(new Port(3, -3, EdgeDirection.SW, 3));
-        ports.add(new Port(2, 3, "Ore", EdgeDirection.S, 2));
+        ports.add(new Port(1, -3, "Ore", EdgeDirection.S, 2));
         ports.add(new Port(-1, -2, "wheat", EdgeDirection.S, 2));
         return ports;
     }
