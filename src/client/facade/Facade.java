@@ -280,6 +280,10 @@ public class Facade {
 
     public void gamesCreate(CreateGamePassObject gameNew) {
         try {
+            if(gameNew.getGameName().equals(""))
+            {
+                throw new FailedCreateGameException("ENTER A NAME FOR A GAME");
+            }
             proxy.gamesCreate(gameNew);
             Created = true;
         } catch (FailedCreateGameException e) {
