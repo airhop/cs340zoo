@@ -103,7 +103,7 @@ public class ResourceBarController extends Controller implements IResourceBarCon
             getView().setElementAmount(ResourceBarElement.ROAD,currentResources.getRoad());
             getView().setElementAmount(ResourceBarElement.SETTLEMENT,currentResources.getSettlement());
             getView().setElementAmount(ResourceBarElement.CITY,currentResources.getCity());
-            if(currentResources.getSheep() > 0 && currentResources.getWheat() > 0 && currentResources.getOre() > 0){
+            if (currentResources.getSheep() > 0 && currentResources.getWheat() > 0 && currentResources.getOre() > 0 && Facade.getInstance().getGameModel().getCurrentPlayer().getPlayerIndex() == Facade.getInstance().getGameModel().getTurnTracker().getCurrentPlayer()) {
                 getView().setElementEnabled(ResourceBarElement.BUY_CARD, true);
             }else{
                 getView().setElementEnabled(ResourceBarElement.BUY_CARD, false);

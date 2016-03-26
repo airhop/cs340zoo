@@ -245,6 +245,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
             System.out.println(tradeList.toString());
             Facade.getInstance().tradePlayer(Facade.getInstance().getPlayerIndex(), tradeAccepterId, tradeList);
         }
+        getTradeOverlay().reset();
         getTradeOverlay().closeModal();
         getWaitOverlay().showModal();
     }
@@ -339,6 +340,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 
     @Override
     public void cancelTrade() {
+        getTradeOverlay().reset();
         getTradeOverlay().closeModal();
     }
 
