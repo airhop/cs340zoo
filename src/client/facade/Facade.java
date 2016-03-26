@@ -134,10 +134,10 @@ public class Facade {
             updateGamesList();
         }
         if (Joined && ready) {
-
             CurrentPlayer cp = game.getCurrentPlayer();
-            System.out.println("Checking currentPlayer " + cp.getPlayerIndex());
             gm = proxy.getGameModel();
+            cp.setPlayerIndex(gm.getPlayerIndex(cp.getPlayerId()));
+            System.out.println("Checking currentPlayer " + cp.getPlayerIndex());
             gm.setCurrentPlayer(cp);
             System.out.println(gm.getCurrentPlayer().getPlayerIndex());
 //            System.out.println(gm.getCurrentPlayer().getPlayerIndex());
@@ -255,6 +255,7 @@ public class Facade {
         User u = new User(username, password);
         try {
             proxy.userRegister(u);
+            loggedIn = true;
             game.getCurrentPlayer().setUsername(username);
             game.getCurrentPlayer().setPassword(password);
             game.getCurrentPlayer().setPlayerId(proxy.getPlayerId());

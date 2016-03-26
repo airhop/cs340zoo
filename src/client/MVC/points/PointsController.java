@@ -55,7 +55,7 @@ public class PointsController extends Controller implements IPointsController {
         if (((GameModel) o).getWinner() != -1)
         {
             System.out.println("There was a winner!!");
-            if (Facade.getInstance().getCurrentPlayer().getPlayerId() == ((GameModel) o).getWinner()) {
+            if (Facade.getInstance().getCurrentPlayer().getPlayerIndex() == ((GameModel) o).getWinner()) {
                 getFinishedView().setWinner(Facade.getInstance().getCurrentPlayer().getUsername(), true);
             } else
             {
@@ -63,7 +63,7 @@ public class PointsController extends Controller implements IPointsController {
                 String name = "";
                 for(int i =0 ; i < 4; i++)
                 {
-                    if(players.get(i).getPlayerID() == ((GameModel)o).getWinner())
+                    if(players.get(i).getPlayerIndex() == ((GameModel)o).getWinner())
                         name = players.get(i).getUsername();
                 }
                 getFinishedView().setWinner(name, false);

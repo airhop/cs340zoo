@@ -103,6 +103,7 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
                 getView().showModal();
             }else{
                 getView().closeModal();
+                getView().setPlayers(playersInfo());
                 getView().showModal();
             }
         }

@@ -88,19 +88,15 @@ public class LoginController extends Controller implements ILoginController {
 //        }
 
         // If log in succeeded
-        if (verifyCharacters(username) && verifyCharacters(password))
-        {//going to need some work
-            if(Facade.getInstance().playerLogin(username, password)){
+        if (verifyCharacters(username) && verifyCharacters(password)) {//going to need some work
+            if (Facade.getInstance().playerLogin(username, password)) {
                 getLoginView().closeModal();
                 loginAction.execute();
-            }
-            else{
+            } else {
                 JOptionPane.showMessageDialog(new JFrame(), "Server Error", "Inane error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
-        }
-        else
-        {
+        } else {
             JOptionPane.showMessageDialog(new JFrame(), "Illegal Characters", "Inane error", JOptionPane.ERROR_MESSAGE);
             return;
         }
@@ -129,50 +125,38 @@ public class LoginController extends Controller implements ILoginController {
 //        if (!confirmPassword.matches(passwordRegex)) {
 //            System.out.println("LoginController.java: password include invalid charaters, such as unicode?");
 //        }
-        System.out.println(confirmPassword + " "+  password);
-        if (!confirmPassword.equals(password))
-        {
+        System.out.println(confirmPassword + " " + password);
+        if (!confirmPassword.equals(password)) {
             JOptionPane.showMessageDialog(new JFrame(), "Passwords do not match", "Inane error", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        if(password.length() < 5)
-        {
+        if (password.length() < 5) {
             JOptionPane.showMessageDialog(new JFrame(), "Passwords not long enough", "Inane error", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        if(username.length() < 3 || username.length() > 7)
-        {
+        if (username.length() < 3 || username.length() > 7) {
             JOptionPane.showMessageDialog(new JFrame(), "Username must be between 3 and 7 characters long", "Inane error", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        if(verifyCharacters(username) && verifyCharacters(password) && verifyCharacters(confirmPassword))
-        {
-            if(!Facade.getInstance().register(username, password))
-            {
+        if (verifyCharacters(username) && verifyCharacters(password) && verifyCharacters(confirmPassword)) {
+            if (!Facade.getInstance().register(username, password)) {
                 JOptionPane.showMessageDialog(new JFrame(), "Server hated something.  Please try again", "Inane error", JOptionPane.ERROR_MESSAGE);
                 return;
-            }
-            else
-            {
+            } else {
                 getLoginView().closeModal();
                 loginAction.execute();
             }
-        }
-        else
-        {
+        } else {
             JOptionPane.showMessageDialog(new JFrame(), "Illegal Characters", "Inane error", JOptionPane.ERROR_MESSAGE);
             return;
         }
     }
 
-    public boolean verifyCharacters(String word)
-    {
-        for(int i = 0; i < word.length(); i++)
-        {
+    public boolean verifyCharacters(String word) {
+        for (int i = 0; i < word.length(); i++) {
             char curr = word.charAt(i);
-            if(!Character.isAlphabetic(curr) && !Character.isDigit(curr))
-            {
-                if(curr != '-' && curr != '_')
+            if (!Character.isAlphabetic(curr) && !Character.isDigit(curr)) {
+                if (curr != '-' && curr != '_')
                     return false;
             }
         }
@@ -180,6 +164,7 @@ public class LoginController extends Controller implements ILoginController {
     }
 
     @Override
-    public void update(Observable o, Object arg) {}
+    public void update(Observable o, Object arg) {
+    }
 }
 
