@@ -548,7 +548,7 @@ public class ServerFacade implements IServerFacade {
                     ourMap.addRoad(spot1.getHexLoc().getX(), spot1.getHexLoc().getY(), spot1.getDir(), playerIndex);
                     ourMap.addRoad(spot2.getHexLoc().getX(), spot2.getHexLoc().getY(), spot2.getDir(), playerIndex);
                     game.getPlayers().get(currPlayer.getPlayerIndex()).setRoads( game.getPlayers().get(currPlayer.getPlayerIndex()).getRoads() - 2);
-                    game.getTurnTracker().calcLongestRoad(currPlayer.getPlayerIndex(),game.getPlayers().get(currPlayer.getPlayerIndex()).getRoads() );
+                    game.getTurnTracker().calcLongestRoad(currPlayer.getPlayerIndex(), (15 - game.getPlayers().get(currPlayer.getPlayerIndex()).getRoads()) );
                     game.calcVP(currPlayer.getPlayerIndex());
                 } catch (FailureToAddException e) {
                     e.printStackTrace();
@@ -651,7 +651,7 @@ public class ServerFacade implements IServerFacade {
             }
             game.getPlayers().get(currPlayer.getPlayerIndex()).setRoads( game.getPlayers().get(currPlayer.getPlayerIndex()).getRoads() - 1);
             game.getLog().addMessage(currPlayer.getUsername(), currPlayer.getUsername() + " built a road");
-            game.getTurnTracker().calcLongestRoad(currPlayer.getPlayerIndex(), game.getPlayers().get(currPlayer.getPlayerIndex()).getRoads());
+            game.getTurnTracker().calcLongestRoad(currPlayer.getPlayerIndex(), (15- game.getPlayers().get(currPlayer.getPlayerIndex()).getRoads()));
             game.calcVP(currPlayer.getPlayerIndex());
         }
     }
@@ -670,6 +670,7 @@ public class ServerFacade implements IServerFacade {
             Map ourMap = game.getMap();
             Player setPlayer = game.getPlayers().get(playerIndex);
             if (!ourMap.canPlaceSettlement(vertexLocation)) {
+                System.out.println("Unable to place settlement");
                 return;
             }
             if (free) {
@@ -691,6 +692,7 @@ public class ServerFacade implements IServerFacade {
                     }
                 }
             }
+            System.out.println("Settlement info : " + currPlayer.getPlayerIndex() + " " + game.getPlayers().get(currPlayer.getPlayerIndex()));
             game.getPlayers().get(currPlayer.getPlayerIndex()).setSettlements( game.getPlayers().get(currPlayer.getPlayerIndex()).getSettlements() - 1);
             game.getLog().addMessage(currPlayer.getUsername(), currPlayer.getUsername() + " built a settlement");
             game.calcVP(currPlayer.getPlayerIndex());
