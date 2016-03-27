@@ -133,6 +133,7 @@ public class Facade {
             closeMap = true;
             updateGamesList();
         }
+
         if (Joined && ready) {
             CurrentPlayer cp = game.getCurrentPlayer();
             gm = proxy.getGameModel();
