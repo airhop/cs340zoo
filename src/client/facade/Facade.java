@@ -138,9 +138,9 @@ public class Facade {
             CurrentPlayer cp = game.getCurrentPlayer();
             gm = proxy.getGameModel();
             cp.setPlayerIndex(gm.getPlayerIndex(cp.getPlayerId()));
-            System.out.println("Checking currentPlayer " + cp.getPlayerIndex());
+            System.out.print("Checking currentPlayer " + cp.getPlayerIndex());
             gm.setCurrentPlayer(cp);
-            System.out.println(gm.getCurrentPlayer().getPlayerIndex());
+            System.out.println("\t " + gm.getCurrentPlayer().getPlayerIndex());
 //            System.out.println(gm.getCurrentPlayer().getPlayerIndex());
         }
         if (Facade.getInstance().isSettingColor()) {

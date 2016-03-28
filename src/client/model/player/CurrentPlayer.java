@@ -15,7 +15,6 @@ public class CurrentPlayer {
 
     public CurrentPlayer()
     {
-        System.out.println("okay . . .");
         String username = "";
         String password = "";
         CatanColor color = CatanColor.BLUE;

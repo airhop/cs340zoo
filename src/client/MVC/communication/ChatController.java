@@ -50,7 +50,6 @@ public class ChatController extends Controller implements IChatController {
         for(int i = 0; i < players.size(); i++)
         {
             String color = players.get(i).getColor();
-            System.out.println(players.get(i).getUsername() + " " + color + " " );
             if(color == null || color.isEmpty()) //happens at start up
                 return;
             conversion.put(players.get(i).getUsername(), CatanColor.convert(color));

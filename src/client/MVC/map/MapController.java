@@ -63,7 +63,7 @@ public class MapController extends Controller implements IMapController {
         Facade facade = Facade.getInstance();
         String s = facade.getGameModel().getTurnTracker().getStatus();
         int pid = facade.getPlayerID();
-         System.out.println(s + " " + pid);
+         //System.out.println(s + " " + pid);
 
         if (s.equalsIgnoreCase("FirstTurn") || s.equalsIgnoreCase("SecondTurn"))
         {
@@ -183,7 +183,7 @@ public class MapController extends Controller implements IMapController {
 //        if(gm.getTurnTracker().getCurrentPlayer() == Facade.getInstance().getCurrentPlayer().getPlayerIndex())
             changeState(gm.getTurnTracker().getStatus());
 
-        System.out.println(gm.getTurnTracker().getCurrentPlayer() + " " + Facade.getInstance().getCurrentPlayer().getPlayerIndex() + " " + state.getName());
+        //System.out.println(gm.getTurnTracker().getCurrentPlayer() + " " + Facade.getInstance().getCurrentPlayer().getPlayerIndex() + " " + state.getName());
 //        if (!changeState(gm.getTurnTracker().getStatus()))
 //            return;
 //        Facade.getInstance().setCurPlayerIndex();

@@ -422,31 +422,43 @@ public class ServerFacade implements IServerFacade {
         if (currPlayer.getGameId() != -1) {
             GameModel game = gamesList.get(currPlayer.getGameId());
             game.calcVP(currPlayer.getPlayerIndex());
+            System.out.print("Finishing Turn = " + playerIndex + " " + game.getTurnTracker().getStatus());
             if (game.getPlayers().get(playerIndex).getVictoryPoints() >= 10) {
                 game.setWinner(playerIndex);
                 return;
             }
             if (playerIndex == game.getTurnTracker().getCurrentPlayer()) {
-                if (playerIndex == 3) {
-                    playerIndex = -1;
-                    if (game.getTurnTracker().getStatus().equals("FirstRound")) {
+                if(game.getTurnTracker().getStatus().equals("FirstRound"))
+                {
+                    if(playerIndex == 3)
+                    {
+                        playerIndex--;
                         game.getTurnTracker().updateStatus("SecondRound");
-                    } else if (game.getTurnTracker().getStatus().equals("SecondRound")) {
-                        game.getTurnTracker().updateStatus("Rolling");
                     }
                 }
-                if (!game.getTurnTracker().getStatus().equals("FirstRound") && !game.getTurnTracker().getStatus().equals("SecondRound")) {
+                else if(game.getTurnTracker().getStatus().equals("SecondRound"))
+                {
+                    if(playerIndex == 0)
+                    {
+                        game.getTurnTracker().updateStatus("Rolling");
+                        playerIndex++;
+                    }
+                    playerIndex -= 2;
+                }
+                else if (!game.getTurnTracker().getStatus().equals("FirstRound") && !game.getTurnTracker().getStatus().equals("SecondRound")) {
                     game.getTurnTracker().updateStatus("Rolling");
                 }
             }
-            Player playerChange = game.getPlayers().get(playerIndex);
-            DevCardList old = playerChange.getOldDevCards();
-            DevCardList listNew = playerChange.getNewDevCards();
-            old.mergeList(listNew);
-            listNew.clearList();
+            if(playerIndex != -1) {
+                Player playerChange = game.getPlayers().get(playerIndex);
+                DevCardList old = playerChange.getOldDevCards();
+                DevCardList listNew = playerChange.getNewDevCards();
+                old.mergeList(listNew);
+                listNew.clearList();
+            }
             playerIndex++;
-            game.getTurnTracker().setCurrentPlayer(playerIndex);
-
+            System.out.println("  " + playerIndex);
+            game.getTurnTracker().setCurrentPlayer(playerIndex%4);
 
             game.getLog().addMessage(currPlayer.getUsername(), currPlayer.getUsername() + " finished a turn");
         }
@@ -547,7 +559,7 @@ public class ServerFacade implements IServerFacade {
                     ourMap.addRoad(spot1.getHexLoc().getX(), spot1.getHexLoc().getY(), spot1.getDir(), playerIndex);
                     ourMap.addRoad(spot2.getHexLoc().getX(), spot2.getHexLoc().getY(), spot2.getDir(), playerIndex);
                     game.getPlayers().get(currPlayer.getPlayerIndex()).setRoads( game.getPlayers().get(currPlayer.getPlayerIndex()).getRoads() - 2);
-                    game.getTurnTracker().calcLongestRoad(currPlayer.getPlayerIndex(),game.getPlayers().get(currPlayer.getPlayerIndex()).getRoads() );
+                    game.getTurnTracker().calcLongestRoad(currPlayer.getPlayerIndex(), 15 - game.getPlayers().get(currPlayer.getPlayerIndex()).getRoads() );
                     game.calcVP(currPlayer.getPlayerIndex());
                 } catch (FailureToAddException e) {
                     e.printStackTrace();
@@ -650,7 +662,7 @@ public class ServerFacade implements IServerFacade {
             }
             game.getPlayers().get(currPlayer.getPlayerIndex()).setRoads( game.getPlayers().get(currPlayer.getPlayerIndex()).getRoads() - 1);
             game.getLog().addMessage(currPlayer.getUsername(), currPlayer.getUsername() + " built a road");
-            game.getTurnTracker().calcLongestRoad(currPlayer.getPlayerIndex(), game.getPlayers().get(currPlayer.getPlayerIndex()).getRoads());
+            game.getTurnTracker().calcLongestRoad(currPlayer.getPlayerIndex(),15 - game.getPlayers().get(currPlayer.getPlayerIndex()).getRoads());
             game.calcVP(currPlayer.getPlayerIndex());
         }
     }
@@ -668,12 +680,14 @@ public class ServerFacade implements IServerFacade {
             GameModel game = gamesList.get(currPlayer.getGameId());
             Map ourMap = game.getMap();
             Player setPlayer = game.getPlayers().get(playerIndex);
-            if (!ourMap.canPlaceSettlement(vertexLocation)) {
-                return;
-            }
+           // if (!ourMap.canPlaceSettlement(vertexLocation)) {
+           //     System.out.println("Unable to place settlement");
+           //     return;
+           // }
             if (free) {
                 try {
                     ourMap.addSettlement(vertexLocation.getHexLoc().getX(), vertexLocation.getHexLoc().getY(), vertexLocation.getDir(), playerIndex);
+                    System.out.println("Settlement Placed!");
                 } catch (FailureToAddException e) {
                     e.printStackTrace();
                 }
@@ -685,6 +699,7 @@ public class ServerFacade implements IServerFacade {
                         setPlayer.addResource(ResourceType.WHEAT, -1);
                         setPlayer.addResource(ResourceType.SHEEP, -1);
                         ourMap.addSettlement(vertexLocation.getHexLoc().getX(), vertexLocation.getHexLoc().getY(), vertexLocation.getDir(), playerIndex);
+                        System.out.println("Settlement Placed!");
                     } catch (FailureToAddException e) {
                         e.printStackTrace();
                     }
@@ -693,6 +708,7 @@ public class ServerFacade implements IServerFacade {
             game.getPlayers().get(currPlayer.getPlayerIndex()).setSettlements( game.getPlayers().get(currPlayer.getPlayerIndex()).getSettlements() - 1);
             game.getLog().addMessage(currPlayer.getUsername(), currPlayer.getUsername() + " built a settlement");
             game.calcVP(currPlayer.getPlayerIndex());
+            System.out.println("Survived the Build Settlement Method");
         }
     }
 
