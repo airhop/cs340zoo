@@ -2,17 +2,23 @@ package server.ai;
 
 import client.model.GameModel;
 import server.commandobjects.ICommand;
+import server.commandobjects.moves.RollNumber;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Created by Joshua on 3/28/2016.
  */
 public class AISettlements implements IAIntel {
-    GameModel myGame;
+    private GameModel myGame;
+    private int playerAIIndex;
+    private int playerAIId;
 
-    public AISettlements(){
-
+    public AISettlements(int id, int index){
+        playerAIIndex = index;
+        playerAIId = id;
     }
 
     @Override
@@ -22,7 +28,17 @@ public class AISettlements implements IAIntel {
 
     @Override
     public List<ICommand> buildTurn() {
-        return null;
+        List<ICommand> myCommands = new ArrayList<>();
+        ICommand roll = new RollNumber(rollAction(), playerAIIndex);
+        myCommands.add(roll);
+
+        return myCommands;
+    }
+    private int rollAction(){
+        Random rand = new Random();
+        int roll = rand.nextInt()%6 + 1;
+        roll += rand.nextInt()%6 + 1;
+        return roll;
     }
 }
 /**
