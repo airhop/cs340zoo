@@ -179,21 +179,31 @@ public class ResourceList {
         }
     }
 
-    public void addResourceType(int type) {
+    public void addResourceType(int type, String sign) {
         if (type == 0) {
+            if (sign.equals("pos"))
             numOfBrick++;
+            else numOfBrick--;
         }
         if (type == 1) {
-            numOfOre++;
+            if (sign.equals("pos"))
+                numOfOre++;
+            else numOfOre--;
         }
         if (type == 2) {
-            numOfSheep++;
+            if (sign.equals("pos"))
+                numOfSheep++;
+            else numOfSheep--;
         }
         if (type == 3) {
-            numOfWheat++;
+            if (sign.equals("pos"))
+                numOfWheat++;
+            else numOfWheat--;
         }
         if (type == 4) {
-            numOfWood++;
+            if (sign.equals("pos"))
+                numOfWood++;
+            else numOfWood--;
         }
     }
 
