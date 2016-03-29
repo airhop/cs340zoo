@@ -41,6 +41,7 @@ public class OverlayView extends PanelView implements IOverlayView {
         System.out.println(overlayStack.toString());
     }
 
+
     /**
      * Displays the overlay. The overlay is displayed on top of any other
      * overlays that are already visible.
