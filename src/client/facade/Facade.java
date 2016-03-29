@@ -125,11 +125,10 @@ public class Facade {
         if (!loggedIn)
         {
             closeMap = true;
-            return;
-        }
-        if (!ready)
-        {
             closeMap = true;
+
+            return;
+        }else{
             updateGamesList();
         }
 
