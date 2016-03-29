@@ -592,6 +592,7 @@ public class ServerFacade implements IServerFacade {
                 addPlayer.addResource(res1, 1);
                 addPlayer.addResource(res2, 1);
             }
+            addPlayer.getOldDevCards().setYearOfPlenty(addPlayer.getOldDevCards().getYearOfPlenty() - 1);
             game.getLog().addMessage(currPlayer.getUsername(), currPlayer.getUsername() + " used Year of Plenty");
         }
     }
