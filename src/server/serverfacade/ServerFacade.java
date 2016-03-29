@@ -44,6 +44,7 @@ public class ServerFacade implements IServerFacade {
     int createGameIndex;
     CurrentPlayer currPlayer;
     MapFactory myMapFactory;
+    boolean cheats;
 
     public ServerFacade() {
         gamesList = new ArrayList<>();
@@ -57,6 +58,7 @@ public class ServerFacade implements IServerFacade {
         createGameIndex = gamesList.size();
         currPlayer = new CurrentPlayer();
         myMapFactory = new MapFactory();
+        cheats = false;
 
 
         GameModel gm = myMapFactory.newModel(true, false, false, "First Game");
@@ -335,6 +337,51 @@ public class ServerFacade implements IServerFacade {
         if (!currPlayer.getUsername().equals("")) {
             GameModel game = gamesList.get(currPlayer.getGameId());
             game.getChat().addMessage(currPlayer.getUsername(), content);
+            if(content.equals("cheats active")){
+                cheats = true;
+            }
+            if(cheats){
+                Player myPlayer = game.getPlayers().get(currPlayer.getPlayerIndex());
+                switch (content){
+                    case "wood":
+                        myPlayer.addResource(ResourceType.WOOD, 10);
+                        break;
+                    case "wheat":
+                        myPlayer.addResource(ResourceType.WHEAT, 10);
+                        break;
+                    case "brick":
+                        myPlayer.addResource(ResourceType.BRICK, 10);
+                        break;
+                    case "sheep":
+                        myPlayer.addResource(ResourceType.SHEEP, 10);
+                        break;
+                    case "ore":
+                        myPlayer.addResource(ResourceType.ORE, 10);
+                        break;
+                    case "yop":
+                        myPlayer.getOldDevCards().setYearOfPlenty(myPlayer.getOldDevCards().getYearOfPlenty() + 10);
+                        break;
+                    case "soldier":
+                        myPlayer.getOldDevCards().setSoldier(myPlayer.getOldDevCards().getSoldier() + 10);
+                        break;
+                    case "monopoly":
+                        myPlayer.getOldDevCards().setMonopoly(myPlayer.getOldDevCards().getMonopoly() + 10);
+                        break;
+                    case "road":
+                        myPlayer.getOldDevCards().setRoadBuilding(myPlayer.getOldDevCards().getRoadBuilding() + 10);
+                        break;
+                    case "monument":
+                        myPlayer.getOldDevCards().setMonument(myPlayer.getOldDevCards().getMonument() + 10);
+                        break;
+                    case "allr":
+                        myPlayer.addResource(ResourceType.WOOD, 10);
+                        myPlayer.addResource(ResourceType.WHEAT, 10);
+                        myPlayer.addResource(ResourceType.ORE, 10);
+                        myPlayer.addResource(ResourceType.BRICK, 10);
+                        myPlayer.addResource(ResourceType.SHEEP, 10);
+                        break;
+                }
+            }
         }
     }
 
@@ -556,6 +603,7 @@ public class ServerFacade implements IServerFacade {
     public void roadBuilding(int playerIndex, EdgeLocation spot1, EdgeLocation spot2) {
         if (currPlayer.getGameId() != -1) {
             GameModel game = gamesList.get(currPlayer.getGameId());
+            Player myPlayer = game.getPlayers().get(currPlayer.getPlayerIndex());
             Map ourMap = game.getMap();
             if(game.getPlayers().get(currPlayer.getPlayerIndex()).getRoads() < 2)
                 return;
@@ -571,6 +619,7 @@ public class ServerFacade implements IServerFacade {
                 }
             }
             game.getLog().addMessage(currPlayer.getUsername(), currPlayer.getUsername() + " used a Road Building card");
+            myPlayer.getOldDevCards().setRoadBuilding(myPlayer.getOldDevCards().getRoadBuilding() - 1);
         }
     }
 
@@ -585,9 +634,13 @@ public class ServerFacade implements IServerFacade {
     public void soldier(int playerIndex, int victimIndex, HexLocation location) {
         if (currPlayer.getGameId() != -1) {
             GameModel game = gamesList.get(currPlayer.getGameId());
-            List<Player> players = game.getPlayers();
-            game.getTurnTracker().updateStatus("Robbing");
-            game.getLog().addMessage(currPlayer.getUsername(), currPlayer.getUsername() + " used Soldier");
+            Player myPlayer = game.getPlayers().get(currPlayer.getPlayerIndex());
+            if(myPlayer.getOldDevCards().getSoldier() > 0){
+                List<Player> players = game.getPlayers();
+                game.getTurnTracker().updateStatus("Robbing");
+                game.getLog().addMessage(currPlayer.getUsername(), currPlayer.getUsername() + " used Soldier");
+                myPlayer.getOldDevCards().setSoldier(myPlayer.getOldDevCards().getSoldier() - 1);
+            }
         }
 
     }
