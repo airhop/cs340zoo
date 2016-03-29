@@ -26,6 +26,7 @@ public class MapController extends Controller implements IMapController {
     private int playing; //needed for debugging when playing by yourself
     private int secondRound = 0;
     private boolean soldier;
+    private boolean first = false;
 
     private int roundNum = 0;
 
@@ -52,6 +53,7 @@ public class MapController extends Controller implements IMapController {
     }
 
     public boolean finishedSetup() {
+        System.out.println("I is here!!");
         StateSetup s = new StateSetup(getView(), robView);
         if (s.getClass() != state.getClass())
             return false;
@@ -67,7 +69,11 @@ public class MapController extends Controller implements IMapController {
 
         if (s.equalsIgnoreCase("FirstTurn") || s.equalsIgnoreCase("SecondTurn"))
         {
-            state = new StateSetup(getView(), robView);
+            if(Facade.getInstance().isCloseMap())
+            {
+                state = new StateSetup(getView(), robView);
+                getView().showModel();
+            }
             if (((StateSetup) state).finishedSetup()) {
                 state = new StateDefault(getView(), robView);
                 facade.FinishTurn(pid);
@@ -94,17 +100,22 @@ public class MapController extends Controller implements IMapController {
     }
 
     private boolean changeState(String s) {
-       // System.out.println("Map State - " + s);
-
+        System.out.println("Map State - " + s);
+        System.out.println("Closed map? " + Facade.getInstance().isCloseMap());
         if(state.getName().equalsIgnoreCase("setup"))
         {
             if(((StateSetup)state).finishedSetup())
             {
+                System.out.println("\nfinished setup . . .\n");
+                state.cancelMove();
+                getView().closeModal();
                 state = new StateDefault(getView(), robView);
                 return false;
             }
-            if(Facade.getInstance().isCloseMap())
-                state = new StateDefault(getView(), robView);
+            if(Facade.getInstance().isCloseMap()) {
+                state = new StateSetup(getView(), robView);
+                getView().showModel();
+            }
 //            System.out.println("Close Map = "  + Facade.getInstance().isCloseMap());
         }
 
@@ -127,9 +138,15 @@ public class MapController extends Controller implements IMapController {
         }
             // System.out.println("Desired State: " + s);
 //if it is in default stage go ahead and change it
-        if (state.getName().equalsIgnoreCase("default")) {
+        if (state.getName().equalsIgnoreCase("default"))
+        {
             if (s.equalsIgnoreCase("FirstRound") || s.equalsIgnoreCase("SecondRound"))
+            {
+                System.out.println("Heyo!!");
                 state = new StateSetup(getView(), robView);
+                state = new StateSetup(getView(), robView);
+                state = new StateSetup(getView(), robView);
+            }
             else if (s.equalsIgnoreCase("RoadBuilding"))
                 state = new StateRoadBuilding(getView(), robView);
             else if (s.equalsIgnoreCase("Robbing"))
@@ -146,7 +163,7 @@ public class MapController extends Controller implements IMapController {
         if (((s.equalsIgnoreCase("FirstRound") || s.equalsIgnoreCase("SecondRound") && state.getName().equalsIgnoreCase("Setup"))
                 || s.equalsIgnoreCase(state.getName())))
         {
-            System.out.println(((MapView)getView()).getOverlaid());
+//            System.out.println(((MapView)getView()).getOverlaid() + " " + ((MapView)getView()).getOverlaid());
 //            if(((MapView)getView()).getOverlaid())
 //            {
 //                state = new StateSetup(getView(), robView);
@@ -181,7 +198,7 @@ public class MapController extends Controller implements IMapController {
 
 
 //        if(gm.getTurnTracker().getCurrentPlayer() == Facade.getInstance().getCurrentPlayer().getPlayerIndex())
-            changeState(gm.getTurnTracker().getStatus());
+          //  changeState(gm.getTurnTracker().getStatus());
 
         //System.out.println(gm.getTurnTracker().getCurrentPlayer() + " " + Facade.getInstance().getCurrentPlayer().getPlayerIndex() + " " + state.getName());
 //        if (!changeState(gm.getTurnTracker().getStatus()))
@@ -217,6 +234,7 @@ public class MapController extends Controller implements IMapController {
 
         //   System.out.println("\nbuildings = " + buildings.size());
         getView().placeRobber(map.getRobber().getHl());
+        changeState(gm.getTurnTracker().getStatus());
     }
 
 

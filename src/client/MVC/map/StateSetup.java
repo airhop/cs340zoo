@@ -25,17 +25,16 @@ public class StateSetup extends StateAbstract
         facade = Facade.getInstance();
         color = facade.getCurrentPlayer().getColor();
 
-        //players start with 15 roads and 5 settlements
         int pid = facade.getPlayerIndex();
         int roads = facade.getGameModel().getPlayers().get(pid).getRoads();
         int settlements = facade.getGameModel().getPlayers().get(pid).getSettlements();
-      //  cancelMove();
+
         startMove(PieceType.ROAD, true, true);
+        Facade.getInstance().setCloseMap(false);
     }
     @Override
     public boolean canPlaceRoad(EdgeLocation edgeLoc)
     {
-        Facade.getInstance().setCloseMap(false);
         if(setRoad)
             return false;
         return Facade.getInstance().canPlaceRoadSetup(edgeLoc.getNormalizedLocation());
@@ -75,6 +74,8 @@ public class StateSetup extends StateAbstract
         Facade.getInstance().placeSettlement(Facade.getInstance().getCurrentPlayer().getPlayerIndex(), vertLoc.getNormalizedLocation(), true);
         Facade.getInstance().FinishTurn(Facade.getInstance().getPlayerIndex());
         Facade.getInstance().retrieveGameModel();
+        Facade.getInstance().setCloseMap(true);
+        view.closeModal();
     }
 
     @Override
@@ -96,7 +97,7 @@ public class StateSetup extends StateAbstract
 
     @Override
     public void cancelMove() {
-     //   view.closeModal();
+        view.closeModal();
     }
 
     @Override

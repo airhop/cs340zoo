@@ -41,7 +41,6 @@ public class Facade {
     public boolean isCloseMap() {
         return closeMap;
     }
-
     public void setCloseMap(boolean closeMap) {
         this.closeMap = closeMap;
     }
