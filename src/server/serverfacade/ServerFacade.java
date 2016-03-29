@@ -591,8 +591,9 @@ public class ServerFacade implements IServerFacade {
      * The command objects will call this method to run the server operation of playing a monopoly card
      *
      * @param playerIndex the id of the player using the monopoly card
-     * @param resource    -
+     * @param resource -
      */
+
     @Override
     public void monopoly(int playerIndex, String resource) {
         if (currPlayer.getGameId() != -1) {
