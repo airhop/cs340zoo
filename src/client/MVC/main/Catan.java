@@ -56,10 +56,16 @@ public class Catan extends JFrame {
 
                 Facade facade = Facade.getInstance();
                 GameModel gameModel = new GameModel();
-                Proxy myProxy = new Proxy(gameModel);
+                Proxy myProxy;
+                if(args.length > 1){
+                    myProxy = new Proxy(gameModel, args[0], Integer.parseInt(args[1]));
+                }else if(args.length > 0){
+                    myProxy = new Proxy(gameModel, args[0]);
+                }else{
+                    myProxy = new Proxy(gameModel);
+                }
                 facade.setProxy(myProxy);
                 Poller poller = new Poller(myProxy);
-
                 PlayerWaitingView playerWaitingView = new PlayerWaitingView();
                 final PlayerWaitingController playerWaitingController = new PlayerWaitingController(
                         playerWaitingView);
