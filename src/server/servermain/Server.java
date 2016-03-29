@@ -26,9 +26,9 @@ public class Server {
     /**
      * This will run the server creating the handler
      */
-    public void run() {
+    public void run(int serverNum) {
         try {
-            server = HttpServer.create(new InetSocketAddress(SERVER_PORT_NUMBER), MAX_WAITING_CONNECTIONS);
+            server = HttpServer.create(new InetSocketAddress(serverNum), MAX_WAITING_CONNECTIONS);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -78,7 +78,11 @@ public class Server {
      * @param args - args passed to the main
      */
     public static void main(String[] args) {
-        new Server().run();
+        if(args.length > 0){
+            new Server().run(Integer.parseInt(args[0]));
+        }else {
+            new Server().run(SERVER_PORT_NUMBER);
+        }
     }
 
 

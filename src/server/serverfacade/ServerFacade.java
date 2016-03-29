@@ -408,8 +408,13 @@ public class ServerFacade implements IServerFacade {
 
         int random = (int) (Math.random() * (ints.size() - 1));
         int stolenResource = ints.get(random);
-        playerResources.addResourceType(stolenResource);
+
+        playerResources.addResourceType(stolenResource, "pos");
         game.getPlayers().get(playerIndex).setResources(playerResources);
+
+        victimResources.addResourceType(stolenResource, "neg");
+        game.getPlayers().get(victimIndex).setResources(victimResources);
+
     }
 
     /**
@@ -591,8 +596,9 @@ public class ServerFacade implements IServerFacade {
      * The command objects will call this method to run the server operation of playing a monopoly card
      *
      * @param playerIndex the id of the player using the monopoly card
-     * @param resource    -
+     * @param resource -
      */
+
     @Override
     public void monopoly(int playerIndex, String resource) {
         if (currPlayer.getGameId() != -1) {
@@ -601,13 +607,14 @@ public class ServerFacade implements IServerFacade {
             int addAmount = 0;
             for (int i = 0; i < players.size(); i++) {
                 addAmount += players.get(i).getResources().getNumOfResource(resource);
-                players.get(i).depleteResource(ResourceType.valueOf(resource));
+                players.get(i).depleteResource(ResourceType.valueOf(resource.toUpperCase()));
             }
-            players.get(playerIndex).addResource(ResourceType.valueOf(resource), addAmount);
+            players.get(playerIndex).addResource(ResourceType.valueOf(resource.toUpperCase()), addAmount);
             players.get(playerIndex).getOldDevCards().use(DevCardType.MONOPOLY);
             game.getLog().addMessage(currPlayer.getUsername(), currPlayer.getUsername() + " used a monopoly card");
         }
     }
+
 
     /**
      * The command objects will call this method to run the server operation of using a monument card

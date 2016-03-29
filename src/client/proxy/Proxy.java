@@ -54,6 +54,33 @@ public class Proxy implements IProxy {
         playerId = -1;
         lastResponse = new HttpURLResponse();
     }
+    public Proxy(GameModel givenGameModel, String address) {
+        SERVER_HOST = address;
+        SERVER_PORT = 8081;
+        URL_PREFIX = "http://" + SERVER_HOST + ":" + SERVER_PORT;
+        userCookie = new Cookie();
+        gameCookie = new Cookie();
+        myGson = new Gson();
+        cookiesList = "";
+        myDeSer = new Deserializer();
+        myGameModel = givenGameModel;
+        playerId = -1;
+        lastResponse = new HttpURLResponse();
+    }
+    public Proxy(GameModel givenGameModel, String address, int port) {
+        SERVER_HOST = address;
+        SERVER_PORT = port;
+        URL_PREFIX = "http://" + SERVER_HOST + ":" + SERVER_PORT;
+        userCookie = new Cookie();
+        gameCookie = new Cookie();
+        myGson = new Gson();
+        cookiesList = "";
+        myDeSer = new Deserializer();
+        myGameModel = givenGameModel;
+        playerId = -1;
+        lastResponse = new HttpURLResponse();
+    }
+
 
     public int getPlayerId() {
         if (playerId == -1) {
