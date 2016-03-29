@@ -70,7 +70,7 @@ public class Map {
         ArrayList<HexLocation> locations = new ArrayList<HexLocation>();
         for (HexLocation hex : hexes.keySet()) {
             Hex currentHex = hexes.get(hex);
-            if (currentHex.chit == rolledNumber && !robber.isLocated(hex)) {
+            if (currentHex.chit == rolledNumber && robber.getHl() != hex) {
                 locations.add(hex);
             }
         }
