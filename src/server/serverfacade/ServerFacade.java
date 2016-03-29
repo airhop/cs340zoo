@@ -336,8 +336,10 @@ public class ServerFacade implements IServerFacade {
     public void sendChat(int playerIndex, String content) {
         if (!currPlayer.getUsername().equals("")) {
             GameModel game = gamesList.get(currPlayer.getGameId());
-            game.getChat().addMessage(currPlayer.getUsername(), content);
             if(content.equals("cheats active")){
+                cheats = true;
+            }
+            if(content.equals("cheats no")){
                 cheats = true;
             }
             if(cheats){
@@ -381,6 +383,8 @@ public class ServerFacade implements IServerFacade {
                         myPlayer.addResource(ResourceType.SHEEP, 10);
                         break;
                 }
+            }else{
+                game.getChat().addMessage(currPlayer.getUsername(), content);
             }
         }
     }
