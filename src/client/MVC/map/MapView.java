@@ -286,7 +286,6 @@ public class MapView extends PanelView implements IMapView {
         };
 
         public void cancelDrop() {
-
             map.cancelDrop();
         }
 

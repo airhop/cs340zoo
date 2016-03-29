@@ -10,16 +10,14 @@ import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
 
-public class StateSetup extends StateAbstract
-{
+public class StateSetup extends StateAbstract {
     private IMapView view;
     private IRobView robView;
     CatanColor color;
     Facade facade;
     boolean setRoad = false, setSettlement = false;
 
-    public StateSetup(IMapView v, IRobView rv)
-    {
+    public StateSetup(IMapView v, IRobView rv) {
         view = v;
         robView = rv;
         facade = Facade.getInstance();
@@ -29,23 +27,23 @@ public class StateSetup extends StateAbstract
         int pid = facade.getPlayerIndex();
         int roads = facade.getGameModel().getPlayers().get(pid).getRoads();
         int settlements = facade.getGameModel().getPlayers().get(pid).getSettlements();
-      //  cancelMove();
+        //  cancelMove();
         startMove(PieceType.ROAD, true, true);
     }
+
     @Override
-    public boolean canPlaceRoad(EdgeLocation edgeLoc)
-    {
+    public boolean canPlaceRoad(EdgeLocation edgeLoc) {
         Facade.getInstance().setCloseMap(false);
-        if(setRoad)
+        if (setRoad)
             return false;
         return Facade.getInstance().canPlaceRoadSetup(edgeLoc.getNormalizedLocation());
     }
+
     @Override
-    public boolean canPlaceSettlement(VertexLocation vertLoc)
-    {
-        if(setSettlement)
+    public boolean canPlaceSettlement(VertexLocation vertLoc) {
+        if (setSettlement)
             return false;
-      return Facade.getInstance().canPlaceSettlement(vertLoc);
+        return Facade.getInstance().canPlaceSettlement(vertLoc);
     }
 
     @Override
@@ -59,17 +57,16 @@ public class StateSetup extends StateAbstract
     }
 
     @Override
-    public void placeRoad(EdgeLocation edgeLoc)
-    {
+    public void placeRoad(EdgeLocation edgeLoc) {
         view.placeRoad(edgeLoc, color);
         setRoad = true;
         Facade.getInstance().placeRoad(Facade.getInstance().getCurrentPlayer().getPlayerIndex(), edgeLoc.getNormalizedLocation(), true, true);
         Facade.getInstance().retrieveGameModel();
         startMove(PieceType.SETTLEMENT, true, false);
     }
+
     @Override
-    public void placeSettlement(VertexLocation vertLoc)
-    {
+    public void placeSettlement(VertexLocation vertLoc) {
         view.placeSettlement(vertLoc, color);
         setSettlement = true;
         Facade.getInstance().placeSettlement(Facade.getInstance().getCurrentPlayer().getPlayerIndex(), vertLoc.getNormalizedLocation(), true);
@@ -88,15 +85,14 @@ public class StateSetup extends StateAbstract
     }
 
     @Override
-    public void startMove(PieceType pieceType, boolean isFree, boolean allowDisconnected)
-    {
+    public void startMove(PieceType pieceType, boolean isFree, boolean allowDisconnected) {
         color = Facade.getInstance().getPlayerColor(Facade.getInstance().getCurrentPlayer().getPlayerIndex());
         view.startDrop(pieceType, color, false);
     }
 
     @Override
     public void cancelMove() {
-     //   view.closeModal();
+        view.closeModal();
     }
 
     @Override
@@ -114,10 +110,12 @@ public class StateSetup extends StateAbstract
 
     }
 
-    public boolean finishedSetup()
-    {
+    public boolean finishedSetup() {
         return (setRoad && setSettlement);
     }
+
     @Override
-    public String getName() {return "Setup"; }
+    public String getName() {
+        return "Setup";
+    }
 }

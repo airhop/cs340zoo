@@ -601,9 +601,9 @@ public class ServerFacade implements IServerFacade {
             int addAmount = 0;
             for (int i = 0; i < players.size(); i++) {
                 addAmount += players.get(i).getResources().getNumOfResource(resource);
-                players.get(i).depleteResource(ResourceType.valueOf(resource));
+                players.get(i).depleteResource(ResourceType.valueOf(resource.toUpperCase()));
             }
-            players.get(playerIndex).addResource(ResourceType.valueOf(resource), addAmount);
+            players.get(playerIndex).addResource(ResourceType.valueOf(resource.toUpperCase()), addAmount);
             players.get(playerIndex).getOldDevCards().use(DevCardType.MONOPOLY);
             game.getLog().addMessage(currPlayer.getUsername(), currPlayer.getUsername() + " used a monopoly card");
         }

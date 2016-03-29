@@ -63,10 +63,9 @@ public class MapController extends Controller implements IMapController {
         Facade facade = Facade.getInstance();
         String s = facade.getGameModel().getTurnTracker().getStatus();
         int pid = facade.getPlayerID();
-         //System.out.println(s + " " + pid);
+        //System.out.println(s + " " + pid);
 
-        if (s.equalsIgnoreCase("FirstTurn") || s.equalsIgnoreCase("SecondTurn"))
-        {
+        if (s.equalsIgnoreCase("FirstTurn") || s.equalsIgnoreCase("SecondTurn")) {
             state = new StateSetup(getView(), robView);
             if (((StateSetup) state).finishedSetup()) {
                 state = new StateDefault(getView(), robView);
@@ -75,7 +74,7 @@ public class MapController extends Controller implements IMapController {
         }
         if (s.equalsIgnoreCase("Rolling")) {
             state = new StatePlayersTurn(getView(), robView);
-            Facade.getInstance().roll(7,pid); //random number
+            Facade.getInstance().roll(7, pid); //random number
         }
         if (s.equalsIgnoreCase("Playing") || s.equalsIgnoreCase("Robbing")) {
             playing++;
@@ -94,38 +93,34 @@ public class MapController extends Controller implements IMapController {
     }
 
     private boolean changeState(String s) {
-       // System.out.println("Map State - " + s);
+        // System.out.println("Map State - " + s);
 
-        if(state.getName().equalsIgnoreCase("setup"))
-        {
-            if(((StateSetup)state).finishedSetup())
-            {
+        if (state.getName().equalsIgnoreCase("setup")) {
+            if (((StateSetup) state).finishedSetup()) {
                 state = new StateDefault(getView(), robView);
                 return false;
             }
-            if(Facade.getInstance().isCloseMap())
+            if (Facade.getInstance().isCloseMap())
                 state = new StateDefault(getView(), robView);
 //            System.out.println("Close Map = "  + Facade.getInstance().isCloseMap());
         }
 
-        if(Facade.getInstance().getCurrentPlayer().getPlayerIndex() != Facade.getInstance().getGameModel().getTurnTracker().getCurrentPlayer())
-        {
+        if (Facade.getInstance().getCurrentPlayer().getPlayerIndex() != Facade.getInstance().getGameModel().getTurnTracker().getCurrentPlayer()) {
 //            System.out.println("Not your turn!!!");
             state = new StateDefault(getView(), robView);
             return true;
         }
 
-        if (s.equalsIgnoreCase("RoadBuilding")){
+        if (s.equalsIgnoreCase("RoadBuilding")) {
             String test = s;
         }
 
-        if(state.getName().equalsIgnoreCase("RoadBuilding"))
-        {
-            if(((StateRoadBuilding)state).finished())
+        if (state.getName().equalsIgnoreCase("RoadBuilding")) {
+            if (((StateRoadBuilding) state).finished())
                 state = new StatePlayersTurn(getView(), robView);
             return true;
         }
-            // System.out.println("Desired State: " + s);
+        // System.out.println("Desired State: " + s);
 //if it is in default stage go ahead and change it
         if (state.getName().equalsIgnoreCase("default")) {
             if (s.equalsIgnoreCase("FirstRound") || s.equalsIgnoreCase("SecondRound"))
@@ -144,16 +139,15 @@ public class MapController extends Controller implements IMapController {
 
         //if the state is going to be the same don't worry about updating it
         if (((s.equalsIgnoreCase("FirstRound") || s.equalsIgnoreCase("SecondRound") && state.getName().equalsIgnoreCase("Setup"))
-                || s.equalsIgnoreCase(state.getName())))
-        {
-            System.out.println(((MapView)getView()).getOverlaid());
+                || s.equalsIgnoreCase(state.getName()))) {
+            System.out.println(((MapView) getView()).getOverlaid());
 //            if(((MapView)getView()).getOverlaid())
 //            {
 //                state = new StateSetup(getView(), robView);
 //                return true;
 //            }
 //            else
-                return false;
+            return false;
         }
 
 
@@ -181,7 +175,7 @@ public class MapController extends Controller implements IMapController {
 
 
 //        if(gm.getTurnTracker().getCurrentPlayer() == Facade.getInstance().getCurrentPlayer().getPlayerIndex())
-            changeState(gm.getTurnTracker().getStatus());
+        changeState(gm.getTurnTracker().getStatus());
 
         //System.out.println(gm.getTurnTracker().getCurrentPlayer() + " " + Facade.getInstance().getCurrentPlayer().getPlayerIndex() + " " + state.getName());
 //        if (!changeState(gm.getTurnTracker().getStatus()))
@@ -230,7 +224,7 @@ public class MapController extends Controller implements IMapController {
 
     public boolean canPlaceCity(VertexLocation vertLoc) {
         return state.canPlaceCity(vertLoc);
-}
+    }
 
     public boolean canPlaceRobber(HexLocation hexLoc) {
         return state.canPlaceRobber(hexLoc);
@@ -265,25 +259,23 @@ public class MapController extends Controller implements IMapController {
         state.cancelMove();
     }
 
-    public void playSoldierCard()
-    {
+    public void playSoldierCard() {
         state = new StateRobbing(getView(), robView);
         soldier = true;
 //        state.playSoldierCard();
     }
 
-    public void playRoadBuildingCard()
-    {
+    public void playRoadBuildingCard() {
         state = new StateRoadBuilding(getView(), robView);
         state.playRoadBuildingCard();
     }
 
     public void robPlayer(RobPlayerInfo victim) {
 //        soldier = false;
-        if(soldier){
+        if (soldier) {
             soldier = false;
             state.playSoldierCard(victim);
-        }else{
+        } else {
             state.robPlayer(victim);
         }
 
