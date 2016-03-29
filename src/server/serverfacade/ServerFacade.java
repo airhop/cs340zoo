@@ -476,6 +476,7 @@ public class ServerFacade implements IServerFacade {
     @Override
     public void finishTurn(int playerIndex) {
         if (currPlayer.getGameId() != -1) {
+            cheats = false;
             GameModel game = gamesList.get(currPlayer.getGameId());
             game.calcVP(currPlayer.getPlayerIndex());
             System.out.print("Finishing Turn = " + playerIndex + " " + game.getTurnTracker().getStatus());
