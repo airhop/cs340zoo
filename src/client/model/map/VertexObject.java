@@ -66,4 +66,9 @@ public class VertexObject {
         this.vertexLocation = location;
     }
 
+    public String toString()
+    {
+        return "Owner : " + owner + " " + vertexLocation.toString() + " " + settlement;
+    }
+
 }

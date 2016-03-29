@@ -132,7 +132,7 @@ public class Map {
     //fix Buildings adds empty vertexObjects to the main array of buildings to make it easier to
     //determine where to put settlements
     public void fixBuildings() {
-        ArrayList<VertexObject> extras = new ArrayList<VertexObject>();
+        ArrayList<VertexObject> extras = new ArrayList<>();
         for (int i = 0; i < buildings.size(); i++) {
             //cases NW, NE, W, E
             VertexLocation vl = buildings.get(i).getLocation();
@@ -140,8 +140,7 @@ public class Map {
 
             if (vl.getDir() == VertexDirection.E) {
                 //System.out.println("E case");
-                VertexLocation v = vl;
-                v.setDir(VertexDirection.NE);
+                VertexLocation v = new VertexLocation(vl.getHexLoc(), VertexDirection.NE);
                 extras.add(new VertexObject(v, -1));
                 VertexLocation vertex =
                         new VertexLocation(new HexLocation(vl.getHexLoc().getX() + 1, vl.getHexLoc().getY() - 1),
@@ -152,8 +151,7 @@ public class Map {
                 extras.add(new VertexObject(x, -1));
             } else if (vl.getDir() == VertexDirection.W) {
                 //System.out.println("W case");
-                VertexLocation v = vl;
-                v.setDir(VertexDirection.NW);
+                VertexLocation v = new VertexLocation(vl.getHexLoc(), VertexDirection.NW);
                 extras.add(new VertexObject(v, -1));
                 VertexLocation vertex =
                         new VertexLocation(new HexLocation(vl.getHexLoc().getX() - 1, vl.getHexLoc().getY() + 1),
@@ -175,9 +173,7 @@ public class Map {
                 extras.add(new VertexObject(vertex, -1));
             } else //(vl.getDir() == VertexDirection.NE) //should be here . . .
             {
-                //System.out.println("NE case");
-                VertexLocation v = vl;
-                v.setDir(VertexDirection.E);
+                VertexLocation v = new VertexLocation(vl.getHexLoc(), VertexDirection.E);
                 extras.add(new VertexObject(v, -1));
                 VertexLocation x = new VertexLocation(new HexLocation(vl.getHexLoc().getX(), vl.getHexLoc().getY()),
                         VertexDirection.NW);
@@ -189,11 +185,12 @@ public class Map {
             }
         }
 
-        placements = new ArrayList<VertexObject>();
+        placements = new ArrayList<>();
 //		placements.addAll(extras);
         for (int i = 0; i < extras.size(); i++)
             placements.add(extras.get(i));
-        placements.addAll(buildings);
+        for(int i = 0; i < buildings.size(); i++)
+            placements.add(buildings.get(i));
     }
 
     public ArrayList<Hex> getHexMap() {
@@ -399,6 +396,10 @@ public class Map {
             System.out.println("Buildings " + i + " " + buildings.get(i).toString());
         if (placements.size() != (buildings.size() * 4))
             fixBuildings();
+
+        System.out.println("placements");
+        for(int i = 0; i < placements.size(); i++)
+            System.out.println("Placements " + i + " " + placements.get(i).toString());
 
         if (settlementLocation == null) {
             return false;
