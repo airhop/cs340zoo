@@ -609,6 +609,7 @@ public class ServerFacade implements IServerFacade {
         }
     }
 
+
     /**
      * The command objects will call this method to run the server operation of using a monument card
      *
