@@ -71,7 +71,7 @@ public class RollController extends Controller implements IRollController {
         getResultView().showModal();
         getResultView().setRollValue(roll);
         Facade.getInstance().roll(Facade.getInstance().getCurrentPlayer().getPlayerIndex(), roll);
-        Facade.getInstance().setCloseMap(false);
+//        Facade.getInstance().setCloseMap(false);
     }
 
     public void setWaiting() {waiting = false;}

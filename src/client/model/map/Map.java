@@ -394,6 +394,7 @@ public class Map {
         System.out.println("Buildings size = " + buildings.size() + " placement size = " + placements.size() + "\n");
         for(int i = 0; i < buildings.size(); i++)
             System.out.println("Buildings " + i + " " + buildings.get(i).toString());
+
         if (placements.size() != (buildings.size() * 4))
             fixBuildings();
 

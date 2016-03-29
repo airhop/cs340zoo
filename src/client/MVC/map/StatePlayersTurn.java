@@ -58,7 +58,7 @@ public class StatePlayersTurn extends StateAbstract {
         view.placeRoad(edgeLoc, color);
         Facade.getInstance().placeRoad(Facade.getInstance().getCurrentPlayer().getPlayerIndex(), edgeLoc.getNormalizedLocation(), false, true);
         Facade.getInstance().retrieveGameModel();
-        view.closeModal();
+       // view.closeModal();
     }
 
     @Override
@@ -66,14 +66,14 @@ public class StatePlayersTurn extends StateAbstract {
         view.placeSettlement(vertLoc, color);
         Facade.getInstance().placeSettlement(Facade.getInstance().getCurrentPlayer().getPlayerIndex(), vertLoc.getNormalizedLocation(), false);
         Facade.getInstance().retrieveGameModel();
-        view.closeModal();
+       // view.closeModal();
     }
 
     @Override
     public void placeCity(VertexLocation vertLoc) {
         view.placeCity(vertLoc, color);
         Facade.getInstance().placeCity(Facade.getInstance().getCurrentPlayer().getPlayerIndex(), vertLoc.getNormalizedLocation());
-        view.closeModal();
+     //   view.closeModal();
     }
 
     @Override
