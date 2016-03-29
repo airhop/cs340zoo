@@ -408,8 +408,13 @@ public class ServerFacade implements IServerFacade {
 
         int random = (int) (Math.random() * (ints.size() - 1));
         int stolenResource = ints.get(random);
-        playerResources.addResourceType(stolenResource);
+
+        playerResources.addResourceType(stolenResource, "pos");
         game.getPlayers().get(playerIndex).setResources(playerResources);
+
+        victimResources.addResourceType(stolenResource, "neg");
+        game.getPlayers().get(victimIndex).setResources(victimResources);
+
     }
 
     /**
