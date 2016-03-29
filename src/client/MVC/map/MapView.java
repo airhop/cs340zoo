@@ -93,6 +93,7 @@ public class MapView extends PanelView implements IMapView {
         overlay.showModal();
     }
 
+
     @Override
     public void closeModal()
     {
