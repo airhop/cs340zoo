@@ -11,7 +11,9 @@ import shared.jsonobject.Login;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.Scanner;
+import java.util.regex.Pattern;
 
 /**
  * Created by Josh on 1/31/2016.
@@ -74,7 +76,16 @@ public class Cookie {
         this.cookieValue = cookieValue;
     }
 
-    public int retrieveID() { return Integer.parseInt(myId); }
+    public int retrieveID()
+    {
+        try {
+            return Integer.parseInt(myId);
+        }
+        catch(NumberFormatException e)
+        {
+            return Integer.parseInt(myId.substring(0, myId.length() - 1));
+        }
+    }
 
     public String getDecode() {
         decodedValue = URLDecoder.decode(cookieValue);
@@ -139,5 +150,52 @@ public class Cookie {
     {
         System.out.println("Cookie.toString() cn " + cookieName + " cv " + cookieValue + " id "  + myId + " dc " + decodedValue);
         return cookieName + " " + cookieValue + " " + myId;
+    }
+
+    public void createCookie(String encoded)
+    {
+        if(encoded == null)
+            return;
+        System.out.println("Given = " + encoded + "\nSize = " + encoded.length());
+        encoded = encoded.substring(17);  //catan.user=%xx%xx%xx
+
+        System.out.println("Given = " + encoded + "\nSize = " + encoded.length());
+        Scanner scan = new Scanner(encoded);
+        scan.useDelimiter("%..%..%..");
+        scan.next();
+        cookieName = scan.next();
+        System.out.println("Name " + cookieName);
+        scan.next();
+        cookieValue = scan.next();
+        System.out.println("password " + cookieValue);
+
+        String ID = scan.next();
+        ID = ID.substring(14);
+        myId = ID.substring(0, ID.length() - 3);
+        System.out.println("ID " + myId);
+        System.out.println("survived?");
+    }
+
+    public String encode()
+    {
+        String user = "catan.user=";
+        String inbetween = "%22%3A%22";
+       // String passback = user + inbetween + "name" + inbetween + cookieName + inbetween + "password" + inbetween
+       //         + "playerID" + "%22%3A" + myId + "%7D";
+
+
+
+        String cookie = user + "name " + cookieName + " password " + cookieValue + " playerID " + myId;
+        try{
+            System.out.println(URLEncoder.encode(cookie, "UTF-8"));
+            return URLEncoder.encode(cookie, "UTF-8");
+        }
+        catch( UnsupportedEncodingException e)
+        {
+            System.out.println("Bad Encoder");
+            return URLEncoder.encode(cookie);
+
+        }
+
     }
 }

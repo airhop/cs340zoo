@@ -46,6 +46,7 @@ public class Handler implements HttpHandler {
     private String requestBody;
     private Cookie userCookie;
     private Cookie gameCookie;
+    private boolean swagger = false;
 
     public Handler() {
         userFactory = new UserFactory();
@@ -80,7 +81,6 @@ public class Handler implements HttpHandler {
             //    Get(exchange);
 
 
-
                 userCookie = new Cookie();
                 gameCookie = new Cookie();
             try {
@@ -89,10 +89,34 @@ public class Handler implements HttpHandler {
                 if (rh != null) {
                     System.out.println("Cookie string " + rh.get(0));
                     scan = new Scanner(rh.get(0));
-                    if (scan.hasNext())
-                        userCookie = new Cookie(scan.next(), scan.next(), scan.next());
-                    if (scan.hasNext())
-                        gameCookie = new Cookie(Integer.parseInt(scan.next()));
+                    String first = scan.next();
+                    if(first.length() > 10)
+                    {
+//                        System.out.println("in here?");
+                        swagger = true;
+                        //first = first.substring(11);
+                        userCookie.createCookie(first);
+//                        System.out.println("To stringed cookie! " + userCookie.toString());
+                        if(scan.hasNext())
+                            gameCookie.setFullCookie(scan.next());
+                    }
+                    else
+                    {
+                        System.out.println("Why am I here?!");
+                        swagger = false;
+                        userCookie = new Cookie(first, scan.next(), scan.next());
+                        if (scan.hasNext())
+                        {
+                            String game = scan.next();
+                            if(game.length() > 2)
+                            {
+                                System.out.println("Stupid Swagger . . ."); // Swagger is giving me issues . . .
+                                swagger = true;
+                            }
+                            else
+                                gameCookie = new Cookie(Integer.parseInt(game));
+                        }
+                    }
                 }
             } catch (NumberFormatException e)
             {
@@ -203,8 +227,19 @@ public class Handler implements HttpHandler {
         userCookie = new Cookie(login);
         ArrayList<String> cookies = new ArrayList<String>();
         System.out.println("userCookie.toString() = " + userCookie.toString());
-        cookies.add(userCookie.toString());
-        exchange.getResponseHeaders().put("Set-Cookie", cookies);
+        if(swagger)
+        {
+            cookies.add(userCookie.encode());
+
+            //cookies.add(userCookie.toString());
+            exchange.getResponseHeaders().put("Cookie", cookies);
+            exchange.getResponseHeaders().put("Set-Cookie", cookies);
+        }
+        else
+        {
+            cookies.add(userCookie.toString());
+            exchange.getResponseHeaders().put("Set-Cookie", cookies);
+        }
         cookies = new ArrayList<String>();
         cookies.add("text/html");
         exchange.getResponseHeaders().put("Content-Type", cookies);

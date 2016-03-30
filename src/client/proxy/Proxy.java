@@ -334,7 +334,7 @@ public class Proxy implements IProxy {
     public List<GameInfo> gamesList() {
         String url = "/games/list";
         List<GameInfo> games = new ArrayList<>();
-        games.add(new GameInfo());
+//        games.add(new GameInfo());
         HttpURLResponse myResponse;
         try {
             myResponse = doGet(url);
