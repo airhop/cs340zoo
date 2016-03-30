@@ -10,6 +10,7 @@ import client.model.map.VertexObject;
 import client.model.misc.TradeOffer;
 import client.model.player.CurrentPlayer;
 import client.proxy.Cookie;
+import server.ai.AITypes;
 import server.commandobjects.moves.Monopoly;
 import server.factories.MapFactory;
 import shared.definitions.CatanColor;
@@ -322,8 +323,13 @@ public class ServerFacade implements IServerFacade {
      * The command objects will call this method to run the server operation listing the AI in a game
      */
     @Override
-    public void listAI() {
-
+    public List<String> listAI() {
+        List<String> myList = new ArrayList<>();
+        myList.add(AITypes.LARGESTARMY.toString());
+        myList.add(AITypes.LONGESTROAD.toString());
+        myList.add(AITypes.POINTS.toString());
+        myList.add(AITypes.SETTLEMENTS.toString());
+        return myList;
     }
 
     /**

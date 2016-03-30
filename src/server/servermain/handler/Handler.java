@@ -257,8 +257,17 @@ public class Handler implements HttpHandler {
             exchange.sendResponseHeaders(200, info.length());
             exchange.getResponseBody().write(info.getBytes());
             exchange.getResponseBody().close();
-        } else
+        } else if(path.contains("/game/listAI")){
+            List<String> aiList = ServerFacade.getInstance().listAI();
+            String info = new com.google.gson.Gson().toJson(aiList);
+//            System.out.println("Game Info . .  ." + gameInfo.size() + " " + gameInfo.get(0).toString());
+            exchange.sendResponseHeaders(200, info.length());
+            exchange.getResponseBody().write(info.getBytes());
+            exchange.getResponseBody().close();
+        }else {
             throw new ServerException("Not a valid game request");
+        }
+
 
         ArrayList<String> content = new ArrayList<String>();
         content.add("application/json");

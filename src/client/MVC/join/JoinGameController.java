@@ -2,6 +2,7 @@ package client.MVC.join;
 
 import client.MVC.base.*;
 import client.MVC.data.*;
+import client.MVC.main.Catan;
 import client.MVC.misc.*;
 import client.facade.Facade;
 import client.model.player.CurrentPlayer;
@@ -147,7 +148,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
         // Facade.getInstance().setSettingColor(true);
         int gameToJoin = 0;
         if (game != null) {
-            getSelectColorView().resetColors();
+            getSelectColorView().resetColors(null);
             List<PlayerInfo> players = game.getPlayers();
             Facade.getInstance().setSettingColor(true);
             for (int i = 0; i < players.size(); i++) {
@@ -192,14 +193,15 @@ public class JoinGameController extends Controller implements IJoinGameControlle
             getJoinGameView().showModal();
         }
         if (selectColorView.isModalShowing()) {
-            selectColorView.resetColors();
+            CatanColor myColor = selectColorView.getSelectedColor();
+            selectColorView.resetColors(myColor);
             selectColorView.closeModal();
             Facade.getInstance().updateGamesList();
             List<GameInfo> gameInfo = Facade.getInstance().getGameModel().getGameList();
             GameInfo game = gameInfo.get(Facade.getInstance().getCurrentPlayer().getGameId());
             List<PlayerInfo> players = game.getPlayers();
             for(int i = 0; i < players.size(); i++){
-                if(!players.get(i).getName().equals("")){
+                if(!players.get(i).getName().equals("") && !Facade.getInstance().getCurrentPlayer().getUsername().equals(players.get(i).getName())){
                     selectColorView.setColorEnabled(players.get(i).getColor(), false);
                 }
             }

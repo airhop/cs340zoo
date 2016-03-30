@@ -30,7 +30,7 @@ public interface IServerFacade
 	//game: total 6 methods
 	GameModel getModel();
 	void addAI(String AIType);
-	void listAI();
+	List<String> listAI();
 	//moves: total 17 methods
 	void sendChat(int playerIndex, String content);
 	void rollNumber(int playerIndex, int number);

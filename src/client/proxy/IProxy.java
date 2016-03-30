@@ -77,7 +77,7 @@ public interface IProxy {
      * Game list for the AI's to join
      * @return String[] returned
      */
-    String[] gameListAI();
+    List<String> gameListAI();
 
     /**
      * Messages to be sent to all the players

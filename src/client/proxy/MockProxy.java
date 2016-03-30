@@ -104,9 +104,9 @@ public class MockProxy implements IProxy {
     }
 
     @Override
-    public String[] gameListAI() {
+    public List<String > gameListAI() {
         System.out.println("MockProxy.java: gameListAI() is called");
-        return new String[0];
+        return new ArrayList<>();
     }
 
     @Override

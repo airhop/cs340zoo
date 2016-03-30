@@ -37,6 +37,8 @@ public class Facade {
     private boolean playerWaiting = false;
     private boolean settingColor = false;
     private boolean closeMap = false;
+    private boolean grabAiList = true;
+    private List<String> ourAiList;
 
     public boolean isCloseMap() {
         return closeMap;
@@ -77,8 +79,9 @@ public class Facade {
 
     private static Facade facade = new Facade();
 
-    private Facade() {
+    public Facade() {
         game = new GameModel();
+        ourAiList = new ArrayList<>();
     }
 
     public static Facade getInstance() {
@@ -122,6 +125,7 @@ public class Facade {
     public void retrieveGameModel() {
        // System.out.println(loggedIn + " " + Joined + " " + ready + " " + game.getTurnTracker().getStatus() + " here");
         GameModel gm = null;
+
         if (!loggedIn)
         {
             closeMap = true;
@@ -129,32 +133,35 @@ public class Facade {
 
             return;
         }else{
+            if(grabAiList){
+                updateAiList();
+                grabAiList = false;
+            }
             updateGamesList();
-        }
 
-        if (Joined && ready) {
-            CurrentPlayer cp = game.getCurrentPlayer();
-            gm = proxy.getGameModel();
-            cp.setPlayerIndex(gm.getPlayerIndex(cp.getPlayerId()));
-            System.out.print("Checking currentPlayer " + cp.getPlayerIndex());
-            gm.setCurrentPlayer(cp);
-            System.out.println("\t " + gm.getCurrentPlayer().getPlayerIndex());
+            if (Joined && ready) {
+                CurrentPlayer cp = game.getCurrentPlayer();
+                gm = proxy.getGameModel();
+                cp.setPlayerIndex(gm.getPlayerIndex(cp.getPlayerId()));
+                System.out.print("Checking currentPlayer " + cp.getPlayerIndex());
+                gm.setCurrentPlayer(cp);
+                System.out.println("\t " + gm.getCurrentPlayer().getPlayerIndex());
 //            System.out.println(gm.getCurrentPlayer().getPlayerIndex());
-        }
-        if (Facade.getInstance().isSettingColor()) {
+            }
+
             if (gm != null) {
                 game.updateGameModel(gm);
             }
             int test = observers.size();
-//observation is not happening without this for loop, so I am leaving it for now
-            StopWatch myStop = new StopWatch();
+//            StopWatch myStop = new StopWatch();
 
             for (int i = 0; i < observers.size(); i++) {
-                myStop.start();
+//                myStop.start();
                 (observers.get(i)).update(game, "");
-                myStop.stop();
+//                myStop.stop();
 //                System.out.println("Update Time" + i + " = " + myStop.getElapsedTime());
             }
+
         }
     }
 
@@ -248,6 +255,14 @@ public class Facade {
         }
         loggedIn = login;
         return login;
+    }
+
+    public List<String> getAiList(){
+        return ourAiList;
+    }
+
+    private void updateAiList(){
+        ourAiList = proxy.gameListAI();
     }
 
     public boolean register(String username, String password) {

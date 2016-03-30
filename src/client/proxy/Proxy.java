@@ -476,8 +476,21 @@ public class Proxy implements IProxy {
     }
 
     @Override
-    public String[] gameListAI() {
-        return new String[0];
+    public List<String> gameListAI() {
+        List<String> myList = new ArrayList<>();
+        String url = "/game/listAI";
+        HttpURLResponse myResponse;
+        try {
+            myResponse = doGet(url);
+            JsonParser myParse = new JsonParser();
+            JsonElement myEle = myParse.parse(myResponse.getResponseBody());
+            Type listOfTestObject = new TypeToken<ArrayList<String>>(){}.getType();
+            myList = new Gson().fromJson(myResponse.getResponseBody(), listOfTestObject);
+//            games = myGson.fromJson(myResponse.getResponseBody(), listOfTestObject);
+        } catch (ClientException e) {
+            e.printStackTrace();
+        }
+        return myList;
     }
 
     @Override

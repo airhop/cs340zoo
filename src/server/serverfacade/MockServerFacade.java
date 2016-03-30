@@ -11,6 +11,7 @@ import client.model.GameModel;
 import client.model.bank.ResourceList;
 import client.model.player.Player;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -64,8 +65,8 @@ public class MockServerFacade implements IServerFacade {
     }
 
     @Override
-    public void listAI() {
-
+    public List<String> listAI() {
+        return new ArrayList<>();
     }
 
     @Override

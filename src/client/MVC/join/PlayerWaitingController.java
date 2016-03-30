@@ -18,10 +18,12 @@ import java.util.Observable;
  * Implementation for the player waiting controller
  */
 public class PlayerWaitingController extends Controller implements IPlayerWaitingController {
+    private boolean grabAi;
 
     public PlayerWaitingController(IPlayerWaitingView view) {
         super(view);
         Facade.getInstance().addObserver(this);
+        grabAi = true;
     }
 
     private int getNumPlayers() {
@@ -88,9 +90,15 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
             return;
         GameModel game = Facade.getInstance().getGameModel();
         CurrentPlayer myPlayer = Facade.getInstance().getCurrentPlayer();
-        String[] AIs = new String[1];
-        AIs[0] = "LARGEST_ARMY";
-        getView().setAIChoices(AIs);
+        if (grabAi){
+            List<String> myList = Facade.getInstance().getAiList();
+            int size = myList.size();
+            String[] AIs = new String[size];
+            for(int i = 0; i < size; i++){
+                AIs[i] = myList.get(i);
+            }
+            getView().setAIChoices(AIs);
+        }
         if (Facade.getInstance().gamesList().get(myPlayer.getGameId()).getPlayers().size() >= 4) {
             getView().setPlayers(playersInfo());
             if(Facade.getInstance().isPlayerWaiting()){
