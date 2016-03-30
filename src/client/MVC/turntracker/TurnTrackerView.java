@@ -111,11 +111,15 @@ public class TurnTrackerView extends PanelView implements ITurnTrackerView {
 
     @Override
     public void updatePlayer(int playerIndex, int points, boolean highlight,
-                             boolean largestArmy, boolean longestRoad) {
+                             boolean largestArmy, boolean longestRoad, CatanColor playerColor) {
         playerArmy[playerIndex].setVisible(largestArmy);
         playerRoad[playerIndex].setVisible(longestRoad);
         playerPoints[playerIndex].setText(String.format("%d", points));
 
+        //update the colors
+        BorderLayout layout = (BorderLayout) playerPanel[playerIndex].getLayout();
+        layout.getLayoutComponent(BorderLayout.CENTER).setBackground(playerColor.getJavaColor());
+        playerPanel[playerIndex].setBackground(playerColor.getJavaColor());
 
         if (highlight)
             playerPanel[playerIndex].setBorder(BorderFactory.createLineBorder(new Color(0, 0, 0), 3));
