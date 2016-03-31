@@ -2,6 +2,7 @@ package server.serverfacade;
 
 import client.MVC.data.GameInfo;
 import client.MVC.data.PlayerInfo;
+import client.MVC.main.Catan;
 import client.model.bank.Bank;
 import client.model.bank.DevCardList;
 import client.model.map.Map;
@@ -10,7 +11,10 @@ import client.model.map.VertexObject;
 import client.model.misc.TradeOffer;
 import client.model.player.CurrentPlayer;
 import client.proxy.Cookie;
+import server.ai.AILongestRoad;
 import server.ai.AITypes;
+import server.ai.IAIntel;
+import server.commandobjects.ICommand;
 import server.commandobjects.moves.Monopoly;
 import server.factories.MapFactory;
 import shared.definitions.CatanColor;
@@ -28,10 +32,9 @@ import client.model.GameModel;
 import client.model.bank.ResourceList;
 import client.model.player.Player;
 
-import java.util.ArrayList;
+import java.awt.*;
+import java.util.*;
 import java.util.List;
-import java.util.Random;
-import java.util.TreeMap;
 
 /**
  * Created by Josh on 3/10/2016.
@@ -46,6 +49,8 @@ public class ServerFacade implements IServerFacade {
     CurrentPlayer currPlayer;
     MapFactory myMapFactory;
     boolean cheats;
+    int createAIIndex;
+    IAIntel ourAi;
 
     public ServerFacade() {
         gamesList = new ArrayList<>();
@@ -55,12 +60,17 @@ public class ServerFacade implements IServerFacade {
         players.put("Aaron", new Login("Aaron", "aaron", 1));
         players.put("Josh", new Login("Josh", "josh", 2));
         players.put("Rebecca", new Login("Rebecca", "rebecca", 3));
+        players.put("Dingo", new Login("Dingo", "45342wersfsdfgcvb", -1));
+        players.put("Ate", new Login("Ate", "45342wersfsdfgcvb", -2));
+        players.put("Your", new Login("Your", "45342wersfsdfgcvb", -3));
+        players.put("Baby", new Login("Baby", "45342wersfsdfgcvb", -4));
         createPlayerIndex = players.size();
         createGameIndex = gamesList.size();
         currPlayer = new CurrentPlayer();
         myMapFactory = new MapFactory();
         cheats = false;
-
+        createAIIndex = -1;
+        ourAi = new AILongestRoad();
 
         GameModel gm = myMapFactory.newModel(true, false, false, "First Game");
         ArrayList<Player> ps = new ArrayList<Player>();
@@ -235,28 +245,27 @@ public class ServerFacade implements IServerFacade {
         List<Player> gamePlayers = myModel.getPlayers();
         int playerIndex = -1;
         boolean firstJoin = false;
-        for(int i = 0; i < 4; i++){
-            if(gamePlayers.get(i).getUsername().equals(currPlayer.getUsername()) && playerIndex == -1){
+        for (int i = 0; i < 4; i++) {
+            if (gamePlayers.get(i).getUsername().equals(currPlayer.getUsername()) && playerIndex == -1) {
                 playerIndex = i;
             }
         }
-        for(int i = 0; i < 4; i++){
-            if(gamePlayers.get(i).getUsername().equals("") && playerIndex == -1){
+        for (int i = 0; i < 4; i++) {
+            if (gamePlayers.get(i).getUsername().equals("") && playerIndex == -1) {
                 playerIndex = i;
                 firstJoin = true;
             }
         }
 
-
-        if(firstJoin){
+        if (firstJoin) {
             PlayerInfo myPlayer = new PlayerInfo();
             myPlayer.setColor(CatanColor.valueOf(color.toUpperCase()));
             myPlayer.setId(currPlayer.getPlayerId());
             myPlayer.setName(currPlayer.getUsername());
             myPlayer.setPlayerIndex(playerIndex);
- //need to add the new player to the game, not just the gameinfolist array
+            //need to add the new player to the game, not just the gameinfolist array
             gameInfoList.get(id).addPlayer(myPlayer);
-        }else{
+        } else {
             PlayerInfo myPlayer = gameInfoList.get(id).getPlayers().get(playerIndex);
             myPlayer.setColor(CatanColor.valueOf(color.toUpperCase()));
             myPlayer.setId(currPlayer.getPlayerId());
@@ -309,6 +318,22 @@ public class ServerFacade implements IServerFacade {
         }
     }
 
+    public CatanColor getColor(GameModel game){
+        Set<CatanColor> colors = new HashSet<>();
+        colors.add(CatanColor.BLUE);
+        colors.add(CatanColor.RED);
+        colors.add(CatanColor.BROWN);
+        colors.add(CatanColor.GREEN);
+        colors.add(CatanColor.PUCE);
+        colors.add(CatanColor.PURPLE);
+        colors.add(CatanColor.WHITE);
+        colors.add(CatanColor.YELLOW);
+        colors.add(CatanColor.ORANGE);
+        for(int i = 0; i < game.getPlayers().size(); i++){
+            colors.remove(CatanColor.convert(game.getPlayers().get(i).getColor()));
+        }
+        return colors.iterator().next();
+    }
     /**
      * The comand objects will call this method to run the server operation of adding an AI player to a game
      *
@@ -316,7 +341,63 @@ public class ServerFacade implements IServerFacade {
      */
     @Override
     public void addAI(String AIType) {
+        if (AIType.equalsIgnoreCase(AITypes.LARGESTARMY.toString())) {
+            int numberOfPlayers = 0;
+            int numberOfAi = 0;
+            GameModel game = gamesList.get(currPlayer.getGameId());
+            for (int i = 0; i < game.getPlayers().size(); i++) {
+                if (!game.getPlayers().get(i).getUsername().equals("")) {
+                    numberOfPlayers++;
+                }
+                if(game.getPlayers().get(i).getPlayerID() < 0){
+                    numberOfAi++;
+                }
+            }
+            CatanColor ourColor = getColor(game);
+            PlayerInfo addPlayer;
+//            players.put("Dingo", new Login("Dingo", "45342wersfsdfgcvb", -1));
+//            players.put("Ate", new Login("Ate", "45342wersfsdfgcvb", -2));
+//            players.put("Your", new Login("Your", "45342wersfsdfgcvb", -3));
+//            players.put("Baby", new Login("Baby", "45342wersfsdfgcvb", -4));
+            switch (numberOfAi){
+                case 0:
+                    addPlayer = new PlayerInfo(-1, numberOfPlayers, "Dingo", ourColor);
+                    break;
+                case 1:
+                    addPlayer = new PlayerInfo(-2, numberOfPlayers, "Ate", ourColor);
+                    break;
+                case 2:
+                    addPlayer = new PlayerInfo(-3, numberOfPlayers, "Your", ourColor);
+                    break;
+                case 3:
+                    addPlayer = new PlayerInfo(-4, numberOfPlayers, "Baby", ourColor);
+                    break;
+                default:
+                    addPlayer = new PlayerInfo(-4, numberOfPlayers, "Baby", ourColor);
+                    break;
+            }
 
+            if (numberOfPlayers < 4) {
+                PlayerInfo myPlayer = new PlayerInfo();
+                myPlayer.setColor(ourColor);
+                myPlayer.setId(addPlayer.getId());
+                myPlayer.setName(addPlayer.getName());
+                myPlayer.setPlayerIndex(numberOfPlayers);
+                //need to add the new player to the game, not just the gameinfolist array
+                gameInfoList.get(numberOfPlayers).addPlayer(myPlayer);
+
+                Player changePlayer = game.getPlayers().get(numberOfPlayers);
+
+                changePlayer.setColor(ourColor.toString().toUpperCase());
+                changePlayer.setPlayerIndex(addPlayer.getPlayerIndex());
+                changePlayer.setUsername(addPlayer.getName());
+                changePlayer.setPlayerID(addPlayer.getId());
+            }
+        } else if (AIType.equalsIgnoreCase(AITypes.LONGESTROAD.toString())) {
+
+        } else {
+
+        }
     }
 
     /**
@@ -340,15 +421,15 @@ public class ServerFacade implements IServerFacade {
     public void sendChat(int playerIndex, String content) {
         if (!currPlayer.getUsername().equals("")) {
             GameModel game = gamesList.get(currPlayer.getGameId());
-            if(content.equals("cheats active")){
+            if (content.equals("cheats active")) {
                 cheats = true;
             }
-            if(content.equals("cheats no")){
+            if (content.equals("cheats no")) {
                 cheats = true;
             }
-            if(cheats){
+            if (cheats) {
                 Player myPlayer = game.getPlayers().get(currPlayer.getPlayerIndex());
-                switch (content){
+                switch (content) {
                     case "wood":
                         myPlayer.addResource(ResourceType.WOOD, 10);
                         break;
@@ -387,7 +468,7 @@ public class ServerFacade implements IServerFacade {
                         myPlayer.addResource(ResourceType.SHEEP, 10);
                         break;
                 }
-            }else{
+            } else {
                 game.getChat().addMessage(currPlayer.getUsername(), content);
             }
         }
@@ -427,7 +508,7 @@ public class ServerFacade implements IServerFacade {
     /**
      * The command objects will call this method to run the server operation of robbing a player
      *
-     * @param playerIndex  the id of the player doing the robbing
+     * @param playerIndex the id of the player doing the robbing
      * @param victimIndex the id of the player being robbed
      * @param location    the location of the robber
      */
@@ -482,6 +563,7 @@ public class ServerFacade implements IServerFacade {
         if (currPlayer.getGameId() != -1) {
             cheats = false;
             GameModel game = gamesList.get(currPlayer.getGameId());
+            List<Player> myPlayers = game.getPlayers();
             game.calcVP(currPlayer.getPlayerIndex());
             System.out.print("Finishing Turn = " + playerIndex + " " + game.getTurnTracker().getStatus());
             if (game.getPlayers().get(playerIndex).getVictoryPoints() >= 10) {
@@ -489,28 +571,22 @@ public class ServerFacade implements IServerFacade {
                 return;
             }
             if (playerIndex == game.getTurnTracker().getCurrentPlayer()) {
-                if(game.getTurnTracker().getStatus().equals("FirstRound"))
-                {
-                    if(playerIndex == 3)
-                    {
+                if (game.getTurnTracker().getStatus().equals("FirstRound")) {
+                    if (playerIndex == 3) {
                         playerIndex--;
                         game.getTurnTracker().updateStatus("SecondRound");
                     }
-                }
-                else if(game.getTurnTracker().getStatus().equals("SecondRound"))
-                {
-                    if(playerIndex == 0)
-                    {
+                } else if (game.getTurnTracker().getStatus().equals("SecondRound")) {
+                    if (playerIndex == 0) {
                         game.getTurnTracker().updateStatus("Rolling");
                         playerIndex++;
                     }
                     playerIndex -= 2;
-                }
-                else if (!game.getTurnTracker().getStatus().equals("FirstRound") && !game.getTurnTracker().getStatus().equals("SecondRound")) {
+                } else if (!game.getTurnTracker().getStatus().equals("FirstRound") && !game.getTurnTracker().getStatus().equals("SecondRound")) {
                     game.getTurnTracker().updateStatus("Rolling");
                 }
             }
-            if(playerIndex != -1) {
+            if (playerIndex != -1) {
                 Player playerChange = game.getPlayers().get(playerIndex);
                 DevCardList old = playerChange.getOldDevCards();
                 DevCardList listNew = playerChange.getNewDevCards();
@@ -519,8 +595,23 @@ public class ServerFacade implements IServerFacade {
             }
             playerIndex++;
             System.out.println("  " + playerIndex);
-            game.getTurnTracker().setCurrentPlayer(playerIndex%4);
-
+            playerIndex = playerIndex % 4;
+            game.getTurnTracker().setCurrentPlayer(playerIndex);
+            if(myPlayers.get(playerIndex).getPlayerID() < 0){
+                ourAi.setPlayerAIIndex(playerIndex);
+                ourAi.setMyGame(game);
+                List<ICommand> commands;
+                if(game.getTurnTracker().getStatus().equals("FirstRound") || game.getTurnTracker().getStatus().equals("SecondRound")) {
+                    commands = ourAi.buildTurn(true);
+                }else{
+                    commands = ourAi.buildTurn(false);
+                }
+                for(int i = 0; i < commands.size(); i++){
+                    if(commands.get(i) != null){
+                        commands.get(i).execute();
+                    }
+                }
+            }
             game.getLog().addMessage(currPlayer.getUsername(), currPlayer.getUsername() + " finished a turn");
         }
     }
@@ -615,14 +706,14 @@ public class ServerFacade implements IServerFacade {
             GameModel game = gamesList.get(currPlayer.getGameId());
             Player myPlayer = game.getPlayers().get(currPlayer.getPlayerIndex());
             Map ourMap = game.getMap();
-            if(game.getPlayers().get(currPlayer.getPlayerIndex()).getRoads() < 2)
+            if (game.getPlayers().get(currPlayer.getPlayerIndex()).getRoads() < 2)
                 return;
             if (ourMap.canPlaceRoad(spot1, false) && ourMap.canPlaceRoad(spot1, false)) {
                 try {
                     ourMap.addRoad(spot1.getHexLoc().getX(), spot1.getHexLoc().getY(), spot1.getDir(), playerIndex);
                     ourMap.addRoad(spot2.getHexLoc().getX(), spot2.getHexLoc().getY(), spot2.getDir(), playerIndex);
-                    game.getPlayers().get(currPlayer.getPlayerIndex()).setRoads( game.getPlayers().get(currPlayer.getPlayerIndex()).getRoads() - 2);
-                    game.getTurnTracker().calcLongestRoad(currPlayer.getPlayerIndex(), 15 - game.getPlayers().get(currPlayer.getPlayerIndex()).getRoads() );
+                    game.getPlayers().get(currPlayer.getPlayerIndex()).setRoads(game.getPlayers().get(currPlayer.getPlayerIndex()).getRoads() - 2);
+                    game.getTurnTracker().calcLongestRoad(currPlayer.getPlayerIndex(), 15 - game.getPlayers().get(currPlayer.getPlayerIndex()).getRoads());
                     game.calcVP(currPlayer.getPlayerIndex());
                 } catch (FailureToAddException e) {
                     e.printStackTrace();
@@ -645,7 +736,7 @@ public class ServerFacade implements IServerFacade {
         if (currPlayer.getGameId() != -1) {
             GameModel game = gamesList.get(currPlayer.getGameId());
             Player myPlayer = game.getPlayers().get(currPlayer.getPlayerIndex());
-            if(myPlayer.getOldDevCards().getSoldier() > 0){
+            if (myPlayer.getOldDevCards().getSoldier() > 0) {
                 List<Player> players = game.getPlayers();
                 game.getTurnTracker().updateStatus("Robbing");
                 game.getLog().addMessage(currPlayer.getUsername(), currPlayer.getUsername() + " used Soldier");
@@ -659,7 +750,7 @@ public class ServerFacade implements IServerFacade {
      * The command objects will call this method to run the server operation of playing a monopoly card
      *
      * @param playerIndex the id of the player using the monopoly card
-     * @param resource -
+     * @param resource    -
      */
 
     @Override
@@ -730,9 +821,9 @@ public class ServerFacade implements IServerFacade {
                     }
                 }
             }
-            game.getPlayers().get(currPlayer.getPlayerIndex()).setRoads( game.getPlayers().get(currPlayer.getPlayerIndex()).getRoads() - 1);
+            game.getPlayers().get(currPlayer.getPlayerIndex()).setRoads(game.getPlayers().get(currPlayer.getPlayerIndex()).getRoads() - 1);
             game.getLog().addMessage(currPlayer.getUsername(), currPlayer.getUsername() + " built a road");
-            game.getTurnTracker().calcLongestRoad(currPlayer.getPlayerIndex(),15 - game.getPlayers().get(currPlayer.getPlayerIndex()).getRoads());
+            game.getTurnTracker().calcLongestRoad(currPlayer.getPlayerIndex(), 15 - game.getPlayers().get(currPlayer.getPlayerIndex()).getRoads());
             game.calcVP(currPlayer.getPlayerIndex());
         }
     }
@@ -750,10 +841,10 @@ public class ServerFacade implements IServerFacade {
             GameModel game = gamesList.get(currPlayer.getGameId());
             Map ourMap = game.getMap();
             Player setPlayer = game.getPlayers().get(playerIndex);
-           // if (!ourMap.canPlaceSettlement(vertexLocation)) {
-           //     System.out.println("Unable to place settlement");
-           //     return;
-           // }
+            // if (!ourMap.canPlaceSettlement(vertexLocation)) {
+            //     System.out.println("Unable to place settlement");
+            //     return;
+            // }
             if (free) {
                 try {
                     ourMap.addSettlement(vertexLocation.getHexLoc().getX(), vertexLocation.getHexLoc().getY(), vertexLocation.getDir(), playerIndex);
@@ -775,7 +866,7 @@ public class ServerFacade implements IServerFacade {
                     }
                 }
             }
-            game.getPlayers().get(currPlayer.getPlayerIndex()).setSettlements( game.getPlayers().get(currPlayer.getPlayerIndex()).getSettlements() - 1);
+            game.getPlayers().get(currPlayer.getPlayerIndex()).setSettlements(game.getPlayers().get(currPlayer.getPlayerIndex()).getSettlements() - 1);
             game.getLog().addMessage(currPlayer.getUsername(), currPlayer.getUsername() + " built a settlement");
             game.calcVP(currPlayer.getPlayerIndex());
             System.out.println("Survived the Build Settlement Method");
@@ -802,7 +893,7 @@ public class ServerFacade implements IServerFacade {
                 }
             }
 
-            game.getPlayers().get(currPlayer.getPlayerIndex()).setCities( game.getPlayers().get(currPlayer.getPlayerIndex()).getCities() - 1);
+            game.getPlayers().get(currPlayer.getPlayerIndex()).setCities(game.getPlayers().get(currPlayer.getPlayerIndex()).getCities() - 1);
             game.getLog().addMessage(currPlayer.getUsername(), currPlayer.getUsername() + " built a city");
             game.calcVP(currPlayer.getPlayerIndex());
         }
@@ -848,7 +939,7 @@ public class ServerFacade implements IServerFacade {
             game.setTradeOffer(null);
             game.getLog().addMessage(currPlayer.getUsername(), "someone accepted a trade");
         }
-        }
+    }
 
     public void updateTrade(ResourceList offer, Player sender, Player reciever) {
         reciever.getResources().addResourceType("BRICK", offer.getBrick());

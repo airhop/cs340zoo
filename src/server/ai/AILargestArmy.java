@@ -10,6 +10,26 @@ import java.util.List;
  */
 public class AILargestArmy implements IAIntel {
     @Override
+    public GameModel getMyGame() {
+        return null;
+    }
+
+    @Override
+    public void setMyGame(GameModel myGame) {
+
+    }
+
+    @Override
+    public int getPlayerAIIndex() {
+        return 0;
+    }
+
+    @Override
+    public void setPlayerAIIndex(int playerAIIndex) {
+
+    }
+
+    @Override
     public void gameToActOn(GameModel game) {
 
     }

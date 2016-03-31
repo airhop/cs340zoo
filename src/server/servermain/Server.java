@@ -76,7 +76,7 @@ public class Server {
 
     /**
      * The main function
-     * @param args - args passed to the main
+     * @param args - args passed to the main363
      */
     public static void main(String[] args) {
         if(args.length > 0){

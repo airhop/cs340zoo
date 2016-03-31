@@ -160,6 +160,45 @@ public class ResourceList {
         }
         return card;
     }
+    public ResourceType getRandomCard() {
+        ResourceType card = null;
+        ArrayList<Integer> ints = new ArrayList<Integer>();
+        for (int i = 0; i < numOfBrick; i++) {
+            ints.add(0);
+        }
+        for (int i = 0; i < numOfOre; i++) {
+            ints.add(1);
+        }
+        for (int i = 0; i < numOfSheep; i++) {
+            ints.add(2);
+        }
+        for (int i = 0; i < numOfWheat; i++) {
+            ints.add(3);
+        }
+        for (int i = 0; i < numOfWood; i++) {
+            ints.add(4);
+        }
+        if (ints.size() == 0) {
+            return null;
+        }
+        int random = ints.get((int) (Math.random() * ints.size() - 1));
+        if (random == 0) {
+            card = ResourceType.BRICK;
+        }
+        if (random == 1) {
+            card = ResourceType.ORE;
+        }
+        if (random == 2) {
+            card = ResourceType.SHEEP;
+        }
+        if (random == 3) {
+            card = ResourceType.WHEAT;
+        }
+        if (random == 4) {
+            card = ResourceType.WOOD;
+        }
+        return card;
+    }
 
     public void addResourceType(String type, int num) {
         if (type.equals("BRICK")) {
