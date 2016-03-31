@@ -77,10 +77,10 @@
 			</classpath>
 			<formatter type="plain" usefile="true" extension=".log" />
 			<test name="shared.test.CanDoTest" haltonfailure="no" />
-			<test name="shared.test.ProxyTest" haltonfailure="no"/>
+			<test name="shared.test.ProxyCrashTest" haltonfailure="no"/>
 			<test name="shared.test.PollerTest" haltonfailure="no"/>
 			<test name="shared.test.P3Testing" haltonfailure="no"/>
-			<test name="shared.test.serverTest" haltonfailure="no"/>
+			<test name="shared.test.ServerTest" haltonfailure="no"/>
 		</junit>
 	</target>
 

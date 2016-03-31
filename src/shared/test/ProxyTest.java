@@ -19,13 +19,14 @@ import shared.locations.*;
 import static org.junit.Assert.*;
 
 public class ProxyTest {
-    GameModel myGameModel;
+       GameModel myGameModel;
     IProxy myProxy;
     int playerIndex = 0;
     int playerId = 0;
 
 
     public ProxyTest() {
+        begin();
     }
 
     public void begin()
@@ -39,7 +40,7 @@ public class ProxyTest {
 
     @Test
     public void testLogin() {
-        begin();
+
         try {
             if(!myProxy.userLogin(new User("David", "david")))
                 fail();
@@ -51,7 +52,7 @@ public class ProxyTest {
 
     @Test
     public void testJoin() {
-        begin();
+
         try {
             myProxy.userLogin(new User("David", "david"));
             myProxy.gamesJoin("blue", 0);
@@ -65,7 +66,7 @@ public class ProxyTest {
 
     @Test
     public void testGetModel() {
-        begin();
+
         try {
             myProxy.userLogin(new User("david", "david"));
             myProxy.gamesJoin("blue", 0);
@@ -81,7 +82,7 @@ public class ProxyTest {
     //doesn't test something that the proxy needs to test
 //    @Test
 //    public void testGetPlayerId() {
-//        begin();
+//
 //        try {
 //            myProxy.userLogin(new User("david", "david"));
 //            myProxy.gamesJoin("blue", 0);
@@ -109,7 +110,7 @@ public class ProxyTest {
 
     @Test
     public void testSendChat() {
-        begin();
+
         try {
             myProxy.userLogin(new User("david", "david"));
             myProxy.gamesJoin("blue", 0);
@@ -123,7 +124,7 @@ public class ProxyTest {
 
     @Test
     public void testRollNumber() {
-        begin();
+
         try {
             myProxy.userLogin(new User("david", "david"));
             myProxy.gamesJoin("blue", 0);
@@ -136,7 +137,7 @@ public class ProxyTest {
     }
     @Test
     public void testRobPlayer() {
-        begin();
+
         try {
             myProxy.userLogin(new User("david", "david"));
             myProxy.gamesJoin("blue", 0);
@@ -149,7 +150,7 @@ public class ProxyTest {
     }
     @Test
     public void testFinishTurn() {
-        begin();
+
         try {
             myProxy.userLogin(new User("david", "david"));
             myProxy.gamesJoin("blue", 0);
@@ -162,7 +163,7 @@ public class ProxyTest {
     }
     @Test
     public void testBuyDevCard() {
-        begin();
+
         try {
             myProxy.userLogin(new User("david", "david"));
             myProxy.gamesJoin("blue", 0);
@@ -179,7 +180,7 @@ public class ProxyTest {
     }
     @Test
     public void testPlayYearOfPlenty() {
-        begin();
+
         try {
             myProxy.userLogin(new User("david", "david"));
             myProxy.gamesJoin("blue", 0);
@@ -192,7 +193,7 @@ public class ProxyTest {
     }
     @Test
     public void testPlayRoadBuilding() {
-        begin();
+
         try {
             myProxy.userLogin(new User("david", "david"));
             myProxy.gamesJoin("blue", 0);
@@ -205,7 +206,7 @@ public class ProxyTest {
     }
     @Test
     public void testPlaySoldier() {
-        begin();
+
         try {
             myProxy.userLogin(new User("david", "david"));
             myProxy.gamesJoin("blue", 0);
@@ -218,7 +219,7 @@ public class ProxyTest {
     }
     @Test
     public void testPlayMonopoly() {
-        begin();
+
         try {
             myProxy.userLogin(new User("david", "david"));
             myProxy.gamesJoin("blue", 0);
@@ -231,7 +232,7 @@ public class ProxyTest {
     }
     @Test
     public void testPlaceMonument() {
-        begin();
+
         try {
             myProxy.userLogin(new User("david", "david"));
             myProxy.gamesJoin("blue", 0);
@@ -244,7 +245,7 @@ public class ProxyTest {
     }
     @Test
     public void testBuildRoad() {
-        begin();
+
         try {
             myProxy.userLogin(new User("david", "david"));
             myProxy.gamesJoin("blue", 0);
@@ -257,7 +258,7 @@ public class ProxyTest {
     }
     @Test
     public void testBuildSettlement() {
-        begin();
+
         try {
             myProxy.userLogin(new User("david", "david"));
             myProxy.gamesJoin("blue", 0);
@@ -274,7 +275,7 @@ public class ProxyTest {
     }
     @Test
     public void testBuildCity() {
-        begin();
+
         try {
             myProxy.userLogin(new User("david", "david"));
             myProxy.gamesJoin("blue", 0);
@@ -291,7 +292,7 @@ public class ProxyTest {
     }
     @Test
     public void testOfferTrade() {
-        begin();
+
         try {
             myProxy.userLogin(new User("david", "david"));
             myProxy.gamesJoin("blue", 0);
@@ -304,7 +305,7 @@ public class ProxyTest {
     }
     @Test
     public void testAcceptTrade() {
-        begin();
+
         try {
             myProxy.userLogin(new User("david", "david"));
             myProxy.gamesJoin("blue", 0);
@@ -317,7 +318,7 @@ public class ProxyTest {
     }
     @Test
     public void testMaritimeTrade() {
-        begin();
+
         try {
             myProxy.userLogin(new User("david", "david"));
             myProxy.gamesJoin("blue", 0);
@@ -330,7 +331,7 @@ public class ProxyTest {
     }
     @Test
     public void testDiscardCards() {
-        begin();
+
         try {
             myProxy.userLogin(new User("david", "david"));
             myProxy.gamesJoin("blue", 0);

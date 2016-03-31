@@ -17,7 +17,7 @@ public class Server {
     private static final int SERVER_PORT_NUMBER = 8081;
     private static final int MAX_WAITING_CONNECTIONS = 10;
 
-    private HttpServer server;
+    private static HttpServer server;
 
     private Server() {
     }
@@ -73,7 +73,11 @@ public class Server {
         server.start();
     }
 
-
+    public static void kill()
+    {
+        if(server != null)
+            server.stop(1);
+    }
 
     /**
      * The main function

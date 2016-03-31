@@ -16,8 +16,12 @@ ProxyTest
     - Was used in Phase 1 to verify that our client was able to reach the server.
     - The MockHandler was created in order to pass back 200s in order to save ourselves from having to create
         new games and to show that the client did reach the server.
+    - For some reason ant test fails all of them because of binding issues with the server
+ProxyCrashTest
+    - replaced Proxy Test while I was unable to get the Server to behave and quit trying to rebind on itself.
+        it covers all of proxy test in one gigantic test.
 
-serverTest
+ServerTest
     - used to verify that we had command objects and that they did do their job.
 
 P3Testing
