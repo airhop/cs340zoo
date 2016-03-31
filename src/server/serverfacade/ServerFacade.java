@@ -998,7 +998,6 @@ public class ServerFacade implements IServerFacade {
      */
     @Override
     public void discardCards(int playerIndex, ResourceList discardedCards) {
-        //TODO check if these values need to be flipped
         if (currPlayer.getGameId() != -1) {
             GameModel game = gamesList.get(currPlayer.getGameId());
             Player disPlayer = game.getPlayers().get(playerIndex);
