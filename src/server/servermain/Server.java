@@ -89,7 +89,7 @@ public class Server {
             mainHandler = new Handler();
 
             if (args.length > 0) {
-                new Server().run(Integer.parseInt(args[0]));
+                new Server().run(Integer.parseInt(args[0]));  //ignore the host :)
             } else {
                 new Server().run(SERVER_PORT_NUMBER);
             }
