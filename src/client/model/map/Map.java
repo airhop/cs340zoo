@@ -352,6 +352,7 @@ public class Map {
             fixBuildings();
 
 
+
         int count = 0;
         for (int i = 0; i < placements.size(); i++) {
             if (placable(el.getNormalizedLocation(), placements.get(i).getLocation().getNormalizedLocation()))
