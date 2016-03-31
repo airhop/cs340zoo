@@ -187,6 +187,7 @@ public class Proxy implements IProxy {
             connection.connect();
             OutputStreamWriter myOut = new OutputStreamWriter(connection.getOutputStream());
             myOut.write(myObj.toString());
+            System.out.println("JSONNNNNNNNNNNNN!!!!: " + myObj.toString());
             myOut.flush();
 //            System.out.println(connection.getResponseCode());
 
