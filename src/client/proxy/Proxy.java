@@ -786,7 +786,7 @@ public class Proxy implements IProxy {
         myObjOne.addProperty("playerIndex", playerIndex);
         JsonObject RLO = RLO(rl);
         myObjOne.add("discardedCards", RLO);
-     //   System.out.println(myObjOne.toString());
+        System.out.println("ATLEAST WERE GETTING IN HERE");
         HttpURLResponse myResponse;
         try {
             myResponse = doPost(url, myObjOne);
