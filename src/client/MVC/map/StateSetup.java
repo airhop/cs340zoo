@@ -30,11 +30,12 @@ public class StateSetup extends StateAbstract
         int settlements = facade.getGameModel().getPlayers().get(pid).getSettlements();
 
         startMove(PieceType.ROAD, true, true);
-        Facade.getInstance().setCloseMap(false);
+//        Facade.getInstance().setCloseMap(false);
     }
     @Override
     public boolean canPlaceRoad(EdgeLocation edgeLoc)
     {
+        Facade.getInstance().setCloseMap(false);
         if(setRoad)
             return false;
         return Facade.getInstance().canPlaceRoadSetup(edgeLoc.getNormalizedLocation());

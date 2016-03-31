@@ -55,6 +55,7 @@ public class MapController extends Controller implements IMapController {
         StateSetup s = new StateSetup(getView(), robView);
         if (s.getClass() != state.getClass())
             return false;
+
         return ((StateSetup) state).finishedSetup();
     }
 
@@ -74,6 +75,7 @@ public class MapController extends Controller implements IMapController {
             }
             if (((StateSetup) state).finishedSetup()) {
                 state = new StateDefault(getView(), robView);
+                OverlayView.emptyOS();
                 facade.FinishTurn(pid);
             }
         }
@@ -108,6 +110,7 @@ public class MapController extends Controller implements IMapController {
                 state.cancelMove();
                 getView().closeModal();
                 state = new StateDefault(getView(), robView);
+                OverlayView.emptyOS();
                 return false;
             }
             if(Facade.getInstance().isCloseMap()) {

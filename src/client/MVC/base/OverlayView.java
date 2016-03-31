@@ -5,7 +5,9 @@ import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.MouseAdapter;
 import java.util.ArrayDeque;
+import java.util.Collection;
 import java.util.Deque;
+import java.util.Iterator;
 
 /**
  * Base class for overlay views
@@ -26,6 +28,8 @@ public class OverlayView extends PanelView implements IOverlayView {
      * Stack of overlays that are currently displayed
      */
     private static Deque<OverlayInfo> overlayStack;
+    public static Deque<OverlayInfo> getOS(){ return overlayStack; }
+    public static void emptyOS() { overlayStack.clear(); }
 
     public static void setWindow(JFrame window) {
         OverlayView.window = window;
