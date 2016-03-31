@@ -189,7 +189,7 @@ public class DiscardController extends Controller implements IDiscardController 
 
         rl = gm.getPlayers().get(gm.getCurrentPlayer().getPlayerIndex()).getResources();
 
-        if(gm.getTurnTracker().getStatus().equalsIgnoreCase("Discarding") && rl.size() > 7)
+        if (gm.getTurnTracker().getStatus().equalsIgnoreCase("Discarding"))
         {
             discardamount = rl.size()/2;
             verify();

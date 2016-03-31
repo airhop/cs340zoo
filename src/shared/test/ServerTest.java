@@ -2,7 +2,6 @@ package shared.test;
 
 import client.model.GameModel;
 import client.model.bank.ResourceList;
-import client.proxy.Cookie;
 import org.junit.Test;
 import server.commandobjects.ICommand;
 import server.factories.GamesFactory;
@@ -10,14 +9,9 @@ import server.factories.MovesFactory;
 import server.factories.UserFactory;
 import server.serverfacade.ServerFacade;
 import server.servermain.JsonConstructionInfo;
-import server.servermain.Server;
 import server.shared.CommandType;
-import shared.exceptions.InvalidUserException;
 import shared.jsonobject.CreatedGame;
 import shared.jsonobject.Login;
-import shared.jsonobject.User;
-
-import static org.junit.Assert.fail;
 
 /**
  * Created by airho on 3/30/2016.
