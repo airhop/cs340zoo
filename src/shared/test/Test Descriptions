@@ -1,0 +1,24 @@
+Explanation of the JUnit Tests and their purposes
+
+CanDoTest
+    - verify that the cando Methods in the models work
+    - all of canDo methods are called and tested
+
+PollerTest
+    - Test to verify that the poller is communicating with the server
+    - Test runs for 15 seconds to verify that the poller calls the server a certain number of times
+
+ExperimentTest
+    - was for our own purposes, we did not include it as it didn't work with the old characters and
+        did not test anything extra
+
+ProxyTest
+    - Was used in Phase 1 to verify that our client was able to reach the server.
+    - The MockHandler was created in order to pass back 200s in order to save ourselves from having to create
+        new games and to show that the client did reach the server.
+
+serverTest
+    - used to verify that we had command objects and that they did do their job.
+
+P3Testing
+    - used to verify that things could happen on one game without affecting the other games
