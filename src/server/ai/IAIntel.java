@@ -10,5 +10,5 @@ import java.util.List;
  */
 public interface IAIntel {
     void gameToActOn(GameModel game);
-    List<ICommand> buildTurn();
+    List<ICommand> buildTurn(boolean setup);
 }

@@ -15,7 +15,7 @@ public class AILargestArmy implements IAIntel {
     }
 
     @Override
-    public List<ICommand> buildTurn() {
+    public List<ICommand> buildTurn(boolean setup) {
         return null;
     }
 }
