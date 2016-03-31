@@ -19,6 +19,7 @@ public interface IProxy {
 
 
     int getPlayerId();
+    int getResponseCode();
 
     /**
      * This is used to log a player in that has already registered

@@ -50,6 +50,12 @@ public class GameModel extends Observable {
         first = false;
     }
 
+    //for testing purposes only . . .
+    public GameModel(String title)
+    {
+        GameID = 200;
+    }
+
     public void updateGameModel(GameModel givenModel) {
         this.map = givenModel.getMap();
         this.bank = givenModel.getBank();
