@@ -358,7 +358,7 @@ public class Map {
             if (placable(el.getNormalizedLocation(), placements.get(i).getLocation().getNormalizedLocation()))
                 count++;
         }
-        System.out.println("Count " + count);
+//        System.out.println("Count " + count);
         if(count == 2)
             return false;
 
