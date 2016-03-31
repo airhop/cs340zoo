@@ -50,7 +50,7 @@ public enum CommandType {
             return acceptTrade;
         if(type.equalsIgnoreCase("maritimeTrade"))
             return maritimeTrade;
-        if(type.equalsIgnoreCase("discradCards"))
+        if (type.equalsIgnoreCase("discardCards"))
             return discardCards;
 
         return listAI;

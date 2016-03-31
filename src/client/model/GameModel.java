@@ -31,6 +31,7 @@ public class GameModel extends Observable {
     private int version = 0;
     private int winner = -1;
     private boolean first;
+    public int playersToDiscard = 0;
 
     public GameModel() {
         map = new Map();
@@ -83,6 +84,14 @@ public class GameModel extends Observable {
         chat = c;
         dice = new Dice();
         log = l;
+    }
+
+    public int getPlayersToDiscard() {
+        return playersToDiscard;
+    }
+
+    public void setPlayersToDiscard(int playersToDiscard) {
+        this.playersToDiscard = playersToDiscard;
     }
 
     public GameModel(String[] names) {
