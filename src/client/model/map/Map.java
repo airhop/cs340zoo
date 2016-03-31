@@ -343,10 +343,24 @@ public class Map {
             if (edgecompare == 0)
                 return false;
         }
-        for (int i = 0; i < buildings.size(); i++) {
-            if (placable(el.getNormalizedLocation(), buildings.get(i).getLocation().getNormalizedLocation()))
-                return false;
+//        for (int i = 0; i < buildings.size(); i++) {
+//            if (placable(el.getNormalizedLocation(), buildings.get(i).getLocation().getNormalizedLocation()))
+//                return false;
+//        }
+
+        if(placements.size() != (buildings.size()*4))
+            fixBuildings();
+
+
+        int count = 0;
+        for (int i = 0; i < placements.size(); i++) {
+            if (placable(el.getNormalizedLocation(), placements.get(i).getLocation().getNormalizedLocation()))
+                count++;
         }
+        System.out.println("Count " + count);
+        if(count == 2)
+            return false;
+
 
         Hex h = hexes.get(el.getHexLoc());
         if (h == null)
@@ -357,14 +371,14 @@ public class Map {
         }
 
 
-        roads.add(new Road(el, Facade.getInstance().getCurrentPlayer().getPlayerIndex()));
-        if (extraPlacable(el.getNormalizedLocation())) {
-            roads.remove(roads.size() - 1);
-            return true;
-        }
+//        roads.add(new Road(el, Facade.getInstance().getCurrentPlayer().getPlayerIndex()));
+//        if (extraPlacable(el.getNormalizedLocation())) {
+//            roads.remove(roads.size() - 1);
+//            return true;
+//        }
 
 
-        return false;
+        return true;
     }
 
     /**
@@ -390,17 +404,17 @@ public class Map {
      */
     //public boolean canAddSettlement(Settlement settlement,VertexObject settlement)
     public boolean canPlaceSettlement(VertexLocation settlementLocation) {
-        System.out.println("Can Place Settlement " + settlementLocation.toString());
-        System.out.println("Buildings size = " + buildings.size() + " placement size = " + placements.size() + "\n");
-        for(int i = 0; i < buildings.size(); i++)
-            System.out.println("Buildings " + i + " " + buildings.get(i).toString());
+      //  System.out.println("Can Place Settlement " + settlementLocation.toString());
+      //  System.out.println("Buildings size = " + buildings.size() + " placement size = " + placements.size() + "\n");
+      //  for(int i = 0; i < buildings.size(); i++)
+      //      System.out.println("Buildings " + i + " " + buildings.get(i).toString());
 
         if (placements.size() != (buildings.size() * 4))
             fixBuildings();
 
-        System.out.println("placements");
-        for(int i = 0; i < placements.size(); i++)
-            System.out.println("Placements " + i + " " + placements.get(i).toString());
+       // System.out.println("placements");
+       // for(int i = 0; i < placements.size(); i++)
+       //     System.out.println("Placements " + i + " " + placements.get(i).toString());
 
         if (settlementLocation == null) {
             return false;
