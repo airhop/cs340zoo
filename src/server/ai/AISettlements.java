@@ -27,7 +27,7 @@ public class AISettlements implements IAIntel {
     }
 
     @Override
-    public List<ICommand> buildTurn() {
+    public List<ICommand> buildTurn(boolean setup) {
         List<ICommand> myCommands = new ArrayList<>();
         ICommand roll = new RollNumber(rollAction(), playerAIIndex);
         myCommands.add(roll);

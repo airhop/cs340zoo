@@ -327,8 +327,6 @@ public class ServerFacade implements IServerFacade {
         List<String> myList = new ArrayList<>();
         myList.add(AITypes.LARGESTARMY.toString());
         myList.add(AITypes.LONGESTROAD.toString());
-        myList.add(AITypes.POINTS.toString());
-        myList.add(AITypes.SETTLEMENTS.toString());
         return myList;
     }
 
