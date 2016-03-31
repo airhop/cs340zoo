@@ -19,8 +19,19 @@ import java.util.List;
  */
 public class MockServerFacade implements IServerFacade {
 
+    private static MockServerFacade facade = null;
+
+    public static MockServerFacade getInstance() {
+        if (facade == null) {
+            facade = new MockServerFacade();
+        }
+        return facade;
+    }
+
     @Override
-    public Login userLogin(String username, String password) {
+    public Login userLogin(String username, String password)
+    {
+        System.out.println("logging in mock style");
         return new Login("","", -1);
     }
 

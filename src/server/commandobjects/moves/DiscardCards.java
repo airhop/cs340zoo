@@ -25,7 +25,7 @@ public class DiscardCards implements ICommand {
      */
     @Override
     public Object execute() {
-
+        System.out.println("I AM EXECUTING");
         ServerFacade.getInstance().discardCards(playerIndex, discardedCards);
         return ServerFacade.getInstance().getModel();
     }

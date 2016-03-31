@@ -31,6 +31,7 @@ public class MockProxy implements IProxy {
         System.out.println("MockProxy.java: runMock() is called");
     }
 
+    public int getResponseCode() {return 200;}
 
     @Override
     public int getPlayerId() {

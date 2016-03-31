@@ -4,6 +4,7 @@ import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
 import server.servermain.handler.Handler;
 import server.servermain.handler.Handlers;
+import server.servermain.handler.MockHandler;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -16,12 +17,12 @@ public class Server {
     private static final int SERVER_PORT_NUMBER = 8081;
     private static final int MAX_WAITING_CONNECTIONS = 10;
 
-    private HttpServer server;
+    private static HttpServer server;
 
     private Server() {
     }
 
-    private HttpHandler mainHandler = new Handler();
+    private static HttpHandler mainHandler;
 
     /**
      * This will run the server creating the handler
@@ -72,17 +73,30 @@ public class Server {
         server.start();
     }
 
-
+    public static void kill()
+    {
+        if(server != null)
+            server.stop(1);
+    }
 
     /**
      * The main function
      * @param args - args passed to the main363
      */
     public static void main(String[] args) {
-        if(args.length > 0){
-            new Server().run(Integer.parseInt(args[0]));
-        }else {
+        if(args.length == 1)
+        {
+            mainHandler = new MockHandler();
             new Server().run(SERVER_PORT_NUMBER);
+        }
+        else {
+            mainHandler = new Handler();
+
+            if (args.length > 0) {
+                new Server().run(Integer.parseInt(args[0]));  //ignore the host :)
+            } else {
+                new Server().run(SERVER_PORT_NUMBER);
+            }
         }
     }
 

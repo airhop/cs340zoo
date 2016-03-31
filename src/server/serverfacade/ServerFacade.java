@@ -17,6 +17,7 @@ import server.ai.IAIntel;
 import server.commandobjects.ICommand;
 import server.commandobjects.moves.Monopoly;
 import server.factories.MapFactory;
+import server.servermain.Server;
 import shared.definitions.CatanColor;
 import shared.definitions.DevCardType;
 import shared.definitions.ResourceType;
@@ -408,6 +409,8 @@ public class ServerFacade implements IServerFacade {
         List<String> myList = new ArrayList<>();
         myList.add(AITypes.LARGESTARMY.toString());
         myList.add(AITypes.LONGESTROAD.toString());
+       // myList.add(AITypes.POINTS.toString());
+       // myList.add(AITypes.SETTLEMENTS.toString());
         return myList;
     }
 
@@ -494,7 +497,14 @@ public class ServerFacade implements IServerFacade {
             }
             if (number == 7) {
                 System.out.println("YAY ROB ME");
-                game.getTurnTracker().updateStatus("robbing");
+                for (Player player : ServerFacade.getInstance().getModel().getPlayers()) {
+                    if (player.getResources().getSize() > 7)
+                        ServerFacade.getInstance().getModel().setPlayersToDiscard(ServerFacade.getInstance().getModel().getPlayersToDiscard() + 1);
+                }
+                System.out.println("HOW MANY PLAYERS NEED TO DISCARD " + ServerFacade.getInstance().getModel().getPlayersToDiscard());
+                if (ServerFacade.getInstance().getModel().getPlayersToDiscard() > 0)
+                    game.getTurnTracker().updateStatus("Discarding");
+                else game.getTurnTracker().updateStatus("robbing");
             } else {
                 game.getTurnTracker().updateStatus("playing");
                 System.out.println("YAY MOVE TO PLAY GAME");
@@ -992,12 +1002,15 @@ public class ServerFacade implements IServerFacade {
         if (currPlayer.getGameId() != -1) {
             GameModel game = gamesList.get(currPlayer.getGameId());
             Player disPlayer = game.getPlayers().get(playerIndex);
-            disPlayer.addResource(ResourceType.BRICK, discardedCards.getBrick());
-            disPlayer.addResource(ResourceType.ORE, discardedCards.getOre());
-            disPlayer.addResource(ResourceType.SHEEP, discardedCards.getSheep());
-            disPlayer.addResource(ResourceType.WHEAT, discardedCards.getWheat());
-            disPlayer.addResource(ResourceType.WOOD, discardedCards.getWood());
-            game.getTurnTracker().updateStatus("robbing");
+            disPlayer.addResource(ResourceType.BRICK, -discardedCards.getBrick());
+            disPlayer.addResource(ResourceType.ORE, -discardedCards.getOre());
+            disPlayer.addResource(ResourceType.SHEEP, -discardedCards.getSheep());
+            disPlayer.addResource(ResourceType.WHEAT, -discardedCards.getWheat());
+            disPlayer.addResource(ResourceType.WOOD, -discardedCards.getWood());
+            ServerFacade.getInstance().getModel().setPlayersToDiscard(ServerFacade.getInstance().getModel().getPlayersToDiscard() - 1);
+            if (ServerFacade.getInstance().getModel().getPlayersToDiscard() == 0) {
+                game.getTurnTracker().updateStatus("robbing");
+            }
         }
     }
 }

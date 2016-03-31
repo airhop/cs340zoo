@@ -317,6 +317,7 @@ public class MovesFactory {
      */
     public DiscardCards makeDiscardCards(JsonConstructionInfo info)
     {
+        System.out.println("MAKING DISCARD CARDS!!!!!!!!!!!!!!!!!");
         JsonParser myParse = new JsonParser();
         JsonElement myEle = myParse.parse(info.getJsonBody());
         JsonTreeReader myTree = new JsonTreeReader(myEle);
