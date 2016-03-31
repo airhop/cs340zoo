@@ -102,7 +102,7 @@ public class AILongestRoad implements IAIntel {
             }
         } else {
             int rollNum = rollAction();
-            curCommand = new RollNumber(rollNum, playerAIIndex);
+            curCommand = new RollNumber(playerAIIndex, rollNum);
             myCommands.add(curCommand);
             if (rollNum == 7) {
                 //Player must rob
@@ -228,20 +228,21 @@ public class AILongestRoad implements IAIntel {
         Hex myHex = null;
         int victim = -1;
         ICommand curCommand;
-        for (int i = 0; i < hexMap.size(); i++) {
-            myHex = hexMap.get(i);
+        int grabInt = 0;
+        boolean tester = true;
+        while (tester && grabInt < hexMap.size() + 10) {
+            myHex = hexMap.get(getRandom.nextInt(hexMap.size()));
             if (myMap.canRelocateRobber(myHex.getLocation())) {
                 List<VertexObject> vertexes = myMap.getVObjectsAroundHexlocation(myHex.getLocation());
                 for (int j = 0; j < vertexes.size(); j++) {
                     if (vertexes.get(j).getOwner() != playerAIIndex) {
                         victim = vertexes.get(j).getOwner();
-                        i = hexMap.size();
+                        tester = false;
                         j = vertexes.size();
                     }
                 }
-
             }
-
+            grabInt++;
         }
         if (myHex != null && victim != -1) {
             curCommand = new Soldier(playerAIIndex, victim, myHex.getLocation());//index, vic, x, y
@@ -255,19 +256,22 @@ public class AILongestRoad implements IAIntel {
         Hex myHex = null;
         int victim = -1;
         ICommand curCommand;
-        for (int i = 0; i < hexMap.size(); i++) {
-            myHex = hexMap.get(i);
+        int grabInt = 0;
+        boolean tester = true;
+        while (tester && grabInt < hexMap.size() + 10) {
+            myHex = hexMap.get(getRandom.nextInt(hexMap.size()));
             if (myMap.canRelocateRobber(myHex.getLocation())) {
                 List<VertexObject> vertexes = myMap.getVObjectsAroundHexlocation(myHex.getLocation());
                 for (int j = 0; j < vertexes.size(); j++) {
                     if (vertexes.get(j).getOwner() != playerAIIndex) {
                         victim = vertexes.get(j).getOwner();
-                        i = hexMap.size();
+                        tester = false;
                         j = vertexes.size();
                     }
                 }
 
             }
+            grabInt++;
         }
         if (myHex != null && victim != -1) {
             curCommand = new RobPlayer(playerAIIndex, victim, "" + myHex.getLocation().getX(), "" + myHex.getLocation().getY());//index, vic, x, y
@@ -407,8 +411,8 @@ public class AILongestRoad implements IAIntel {
     }
 
     private int rollAction() {
-        int roll = getRandom.nextInt() % 6 + 1;
-        roll += getRandom.nextInt() % 6 + 1;
+        int roll = getRandom.nextInt(6) + 1;
+        roll += getRandom.nextInt(6) + 1;
         return roll;
     }
 }
