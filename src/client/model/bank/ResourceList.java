@@ -246,6 +246,14 @@ public class ResourceList {
         }
     }
 
+    public void reverseList(){
+        numOfBrick = -numOfBrick;
+        numOfOre = -numOfOre;
+        numOfSheep = -numOfSheep;
+        numOfWheat = -numOfWheat;
+        numOfWood = -numOfWood;
+    }
+
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("BRICK AMOUNT: " + getBrick() + "\n");

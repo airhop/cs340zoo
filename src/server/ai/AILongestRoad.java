@@ -1,10 +1,12 @@
 package server.ai;
 
+import client.facade.Facade;
 import client.model.GameModel;
 import client.model.bank.ResourceList;
 import client.model.map.Hex;
 import client.model.map.Map;
 import client.model.map.VertexObject;
+import client.model.player.CurrentPlayer;
 import client.model.player.Player;
 import server.commandobjects.ICommand;
 import server.commandobjects.moves.*;
@@ -26,6 +28,17 @@ public class AILongestRoad implements IAIntel {
     private int playerAIIndex;
     private int playerAIId;
     private boolean buildingRoad;
+    private Random getRandom;
+
+    @Override
+    public int getPlayerAIId() {
+        return playerAIId;
+    }
+
+    @Override
+    public void setPlayerAIId(int playerAIId) {
+        this.playerAIId = playerAIId;
+    }
 
     @Override
     public GameModel getMyGame() {
@@ -50,11 +63,13 @@ public class AILongestRoad implements IAIntel {
     public AILongestRoad(int id, int index) {
         playerAIIndex = index;
         playerAIId = id;
+        getRandom = new Random();
     }
 
     public AILongestRoad() {
         playerAIIndex = 0;
         playerAIId = 0;
+        getRandom = new Random();
     }
 
 
@@ -70,69 +85,78 @@ public class AILongestRoad implements IAIntel {
         buildingRoad = false;
         Map myMap = myGame.getMap();
         List<Hex> hexMap = myMap.getHexMap();
-        int rollNum = rollAction();
         ICommand curCommand;
-        if(setup){
+        if (setup) {
+            CurrentPlayer curPlayer = myGame.getCurrentPlayer();
+            curPlayer.setPlayerId(playerAIId);
+            curPlayer.setPlayerIndex(playerAIIndex);
+            Facade.getInstance().setGame(myGame);
+            Facade.getInstance().setCurPlayerIndex();
             curCommand = buildSetupRoad(hexMap, myMap);
-            curCommand.execute();
+            if(curCommand != null){
+                curCommand.execute();
+            }
             curCommand = buildSetupSettlement(hexMap, myMap);
-            curCommand.execute();
-        }else {
+            if(curCommand != null){
+                curCommand.execute();
+            }
+        } else {
+            int rollNum = rollAction();
             curCommand = new RollNumber(rollNum, playerAIIndex);
             myCommands.add(curCommand);
             if (rollNum == 7) {
                 //Player must rob
-                if(myPlayer.getResources().size() > 7){
+                if (myPlayer.getResources().size() > 7) {
                     myCommands.add(getDiscard(myPlayer));
                 }
                 curCommand = robPlayer(hexMap, myMap);
-                if(curCommand != null){
+                if (curCommand != null) {
                     myCommands.add(curCommand);
                 }
             }
             if (myPlayer.getResources().getBrick() > 0 && myPlayer.getResources().getWood() > 0) {
                 curCommand = buildRoad(hexMap, myMap);
-                if(curCommand != null){
+                if (curCommand != null) {
                     myCommands.add(curCommand);
                     buildingRoad = true;
                 }
             }
-            if(buildingRoad && myPlayer.getResources().getWood() > 1 && myPlayer.getResources().getBrick() > 1 && myPlayer.getResources().getSheep() > 0 && myPlayer.getResources().getWheat() > 0 ){
+            if (buildingRoad && myPlayer.getResources().getWood() > 1 && myPlayer.getResources().getBrick() > 1 && myPlayer.getResources().getSheep() > 0 && myPlayer.getResources().getWheat() > 0) {
                 myCommands.add(buildSettlement(hexMap, myMap));
-            }else if(myPlayer.getResources().getWood() > 0 && myPlayer.getResources().getBrick() > 0 && myPlayer.getResources().getSheep() > 0 && myPlayer.getResources().getWheat() > 0){
+            } else if (myPlayer.getResources().getWood() > 0 && myPlayer.getResources().getBrick() > 0 && myPlayer.getResources().getSheep() > 0 && myPlayer.getResources().getWheat() > 0) {
                 myCommands.add(buildSettlement(hexMap, myMap));
             }
-            if(myPlayer.getResources().getOre() > 0 && myPlayer.getResources().getSheep() > 0 && myPlayer.getResources().getWheat() > 0){
+            if (myPlayer.getResources().getOre() > 0 && myPlayer.getResources().getSheep() > 0 && myPlayer.getResources().getWheat() > 0) {
                 myCommands.add(new BuyDevCard(playerAIIndex));
             }
-            if(myPlayer.getOldDevCards().getSize() > 0){
-                if(myPlayer.getOldDevCards().getSoldier() > 0){
+            if (myPlayer.getOldDevCards().getSize() > 0) {
+                if (myPlayer.getOldDevCards().getSoldier() > 0) {
                     myCommands.add(getSoldier(hexMap, myMap));
                 }
-                if(myPlayer.getOldDevCards().getMonument() > 0 && myPlayer.getVictoryPoints() + myPlayer.getOldDevCards().getMonument() == 10){
-                    for(int i = 0; i < myPlayer.getOldDevCards().getMonument(); i++){
+                if (myPlayer.getOldDevCards().getMonument() > 0 && myPlayer.getVictoryPoints() + myPlayer.getOldDevCards().getMonument() == 10) {
+                    for (int i = 0; i < myPlayer.getOldDevCards().getMonument(); i++) {
                         myCommands.add(new Monument(playerAIIndex));
                     }
                 }
-                if(myPlayer.getOldDevCards().getMonopoly() > 0){
+                if (myPlayer.getOldDevCards().getMonopoly() > 0) {
                     int wood = 0;
                     int brick = 0;
-                    for(int i = 0; i < myGame.getPlayers().size(); i++){
-                        if(i != playerAIIndex){
+                    for (int i = 0; i < myGame.getPlayers().size(); i++) {
+                        if (i != playerAIIndex) {
                             wood += myGame.getPlayers().get(i).getResources().getWood();
                             brick += myGame.getPlayers().get(i).getResources().getBrick();
                         }
                     }
-                    if(wood > brick){
+                    if (wood > brick) {
                         myCommands.add(new Monopoly(playerAIIndex, ResourceType.WOOD.toString()));
-                    }else{
+                    } else {
                         myCommands.add(new Monopoly(playerAIIndex, ResourceType.BRICK.toString()));
                     }
                 }
-                if(myPlayer.getOldDevCards().getYearOfPlenty() > 0){
+                if (myPlayer.getOldDevCards().getYearOfPlenty() > 0) {
                     myCommands.add(new YearOfPlenty(playerAIIndex, ResourceType.WOOD, ResourceType.BRICK));
                 }
-                if(myPlayer.getOldDevCards().getRoadBuilding() > 0){
+                if (myPlayer.getOldDevCards().getRoadBuilding() > 0) {
                     buildRoad(hexMap, myMap).execute();
                     buildRoad(hexMap, myMap).execute();
                     myPlayer.getOldDevCards().setRoadBuilding(myPlayer.getOldDevCards().getRoadBuilding() - 1);
@@ -144,29 +168,34 @@ public class AILongestRoad implements IAIntel {
         return myCommands;
     }
 
-    public ICommand getDiscard(Player myPlayer){
+    public ICommand getDiscard(Player myPlayer) {
         ResourceList resources = new ResourceList();
-        for(int i = 0; i < myPlayer.getResources().size() - 7; i++){
+        for (int i = 0; i < myPlayer.getResources().size() - 7; i++) {
             resources.addResourceType(myPlayer.getResources().getRandomCard().toString(), -1);
         }
         return new DiscardCards(playerAIIndex, resources);
     }
 
 
+    public void mixHexes(List<Hex> hexMap) {
 
-    private ICommand buildSettlement(List<Hex> hexMap, Map myMap){
+    }
+
+    private ICommand buildSettlement(List<Hex> hexMap, Map myMap) {
         Hex myHex;
         ICommand curCommand = null;
         VertexLocation myVertex = null;
-        for(int i = 0; i < hexMap.size(); i++){
-            myHex = hexMap.get(i);
+        boolean tester = true;
+        int grabInt = 0;
+        while (tester && grabInt < hexMap.size() + 10) {
+            myHex = hexMap.get(getRandom.nextInt(hexMap.size()));
             for (int j = 0; j < 6; j++) {
                 switch (j) {
                     case 0:
                         myVertex = new VertexLocation(myHex.getLocation(), VertexDirection.NE);
                         break;
                     case 1:
-                        myVertex  = new VertexLocation(myHex.getLocation(), VertexDirection.NW);
+                        myVertex = new VertexLocation(myHex.getLocation(), VertexDirection.NW);
                         break;
                     case 2:
                         myVertex = new VertexLocation(myHex.getLocation(), VertexDirection.E);
@@ -185,17 +214,17 @@ public class AILongestRoad implements IAIntel {
                         break;
                 }
                 if (myMap.canPlaceSettlement(myVertex)) {
-                    i = hexMap.size();
                     j = 6;
+                    tester = false;
                 }
             }
+            grabInt++;
         }
-        if(myVertex != null){
-            curCommand = new BuildSettlement(playerAIIndex, myVertex.getHexLoc().getX(), myVertex.getHexLoc().getY(), myVertex.getDir(), true);
-        }
+        curCommand = new BuildSettlement(playerAIIndex, myVertex.getHexLoc().getX(), myVertex.getHexLoc().getY(), myVertex.getDir(), false);
         return curCommand;
     }
-    private ICommand getSoldier(List<Hex> hexMap, Map myMap){
+
+    private ICommand getSoldier(List<Hex> hexMap, Map myMap) {
         Hex myHex = null;
         int victim = -1;
         ICommand curCommand;
@@ -203,8 +232,8 @@ public class AILongestRoad implements IAIntel {
             myHex = hexMap.get(i);
             if (myMap.canRelocateRobber(myHex.getLocation())) {
                 List<VertexObject> vertexes = myMap.getVObjectsAroundHexlocation(myHex.getLocation());
-                for(int j = 0; j < vertexes.size(); j++){
-                    if(vertexes.get(j).getOwner() != playerAIIndex){
+                for (int j = 0; j < vertexes.size(); j++) {
+                    if (vertexes.get(j).getOwner() != playerAIIndex) {
                         victim = vertexes.get(j).getOwner();
                         i = hexMap.size();
                         j = vertexes.size();
@@ -222,8 +251,7 @@ public class AILongestRoad implements IAIntel {
     }
 
 
-
-    private ICommand robPlayer(List<Hex> hexMap, Map myMap){
+    private ICommand robPlayer(List<Hex> hexMap, Map myMap) {
         Hex myHex = null;
         int victim = -1;
         ICommand curCommand;
@@ -231,8 +259,8 @@ public class AILongestRoad implements IAIntel {
             myHex = hexMap.get(i);
             if (myMap.canRelocateRobber(myHex.getLocation())) {
                 List<VertexObject> vertexes = myMap.getVObjectsAroundHexlocation(myHex.getLocation());
-                for(int j = 0; j < vertexes.size(); j++){
-                    if(vertexes.get(j).getOwner() != playerAIIndex){
+                for (int j = 0; j < vertexes.size(); j++) {
+                    if (vertexes.get(j).getOwner() != playerAIIndex) {
                         victim = vertexes.get(j).getOwner();
                         i = hexMap.size();
                         j = vertexes.size();
@@ -248,19 +276,21 @@ public class AILongestRoad implements IAIntel {
         return null;
     }
 
-    private ICommand buildSetupSettlement(List<Hex> hexMap, Map myMap){
+    private ICommand buildSetupSettlement(List<Hex> hexMap, Map myMap) {
         Hex myHex;
         ICommand curCommand = null;
         VertexLocation myVertex = null;
-        for(int i = 0; i < hexMap.size(); i++){
-            myHex = hexMap.get(i);
+        boolean tester = true;
+        int grabInt = 0;
+        while (tester && grabInt < hexMap.size() + 10) {
+            myHex = hexMap.get(getRandom.nextInt(hexMap.size()));
             for (int j = 0; j < 6; j++) {
                 switch (j) {
                     case 0:
                         myVertex = new VertexLocation(myHex.getLocation(), VertexDirection.NE);
                         break;
                     case 1:
-                        myVertex  = new VertexLocation(myHex.getLocation(), VertexDirection.NW);
+                        myVertex = new VertexLocation(myHex.getLocation(), VertexDirection.NW);
                         break;
                     case 2:
                         myVertex = new VertexLocation(myHex.getLocation(), VertexDirection.E);
@@ -279,102 +309,106 @@ public class AILongestRoad implements IAIntel {
                         break;
                 }
                 if (myMap.canPlaceSettlement(myVertex)) {
-                    i = hexMap.size();
                     j = 6;
+                    tester = false;
                 }
             }
+            grabInt++;
         }
-        if(myVertex != null){
-            curCommand = new BuildSettlement(playerAIIndex, myVertex.getHexLoc().getX(), myVertex.getHexLoc().getY(), myVertex.getDir(), true);
-        }
+        curCommand = new BuildSettlement(playerAIIndex, myVertex.getHexLoc().getX(), myVertex.getHexLoc().getY(), myVertex.getDir(), true);
         return curCommand;
     }
 
-    private ICommand buildSetupRoad(List<Hex> hexMap, Map myMap){
+    private ICommand buildSetupRoad(List<Hex> hexMap, Map myMap) {
         EdgeLocation myEdge = null;
         ICommand curCommand = null;
-        for (int i = 0; i < hexMap.size(); i++) {
+        boolean tester = true;
+        int testNum = 0;
+        int grabInt = 0;
+        while (tester && grabInt < hexMap.size() + 10) {
+            testNum = getRandom.nextInt(hexMap.size());
             for (int j = 0; j < 6; j++) {
                 switch (j) {
                     case 0:
-                        myEdge = new EdgeLocation(hexMap.get(i).getLocation(), EdgeDirection.N);
+                        myEdge = new EdgeLocation(hexMap.get(testNum).getLocation(), EdgeDirection.N);
                         break;
                     case 1:
-                        myEdge = new EdgeLocation(hexMap.get(i).getLocation(), EdgeDirection.NE);
+                        myEdge = new EdgeLocation(hexMap.get(testNum).getLocation(), EdgeDirection.NE);
                         break;
                     case 2:
-                        myEdge = new EdgeLocation(hexMap.get(i).getLocation(), EdgeDirection.NW);
+                        myEdge = new EdgeLocation(hexMap.get(testNum).getLocation(), EdgeDirection.NW);
                         break;
                     case 3:
-                        myEdge = new EdgeLocation(hexMap.get(i).getLocation(), EdgeDirection.S);
+                        myEdge = new EdgeLocation(hexMap.get(testNum).getLocation(), EdgeDirection.S);
                         break;
                     case 4:
-                        myEdge = new EdgeLocation(hexMap.get(i).getLocation(), EdgeDirection.SE);
+                        myEdge = new EdgeLocation(hexMap.get(testNum).getLocation(), EdgeDirection.SE);
                         break;
                     case 5:
-                        myEdge = new EdgeLocation(hexMap.get(i).getLocation(), EdgeDirection.SW);
+                        myEdge = new EdgeLocation(hexMap.get(testNum).getLocation(), EdgeDirection.SW);
                         break;
                     default:
-                        myEdge = new EdgeLocation(hexMap.get(i).getLocation(), EdgeDirection.N);
+                        myEdge = new EdgeLocation(hexMap.get(testNum).getLocation(), EdgeDirection.N);
                         break;
                 }
                 if (myMap.canPlaceRoadSetup(myEdge)) {
-                    i = hexMap.size();
+                    tester = false;
                     j = 6;
                 }
             }
+            grabInt++;
         }
-        if (myEdge != null) {
-            curCommand = new BuildRoad(playerAIIndex, myEdge, false);
-        }
+        curCommand = new BuildRoad(playerAIIndex, myEdge, true);
         return curCommand;
     }
 
 
-    private ICommand buildRoad(List<Hex> hexMap, Map myMap){
+    private ICommand buildRoad(List<Hex> hexMap, Map myMap) {
         EdgeLocation myEdge = null;
         ICommand curCommand = null;
-        for (int i = 0; i < hexMap.size(); i++) {
+        boolean tester = true;
+        int testNum = 0;
+        int grabInt = 0;
+        while (tester && grabInt < hexMap.size() + 10) {
+            testNum = getRandom.nextInt(hexMap.size());
             for (int j = 0; j < 6; j++) {
                 switch (j) {
                     case 0:
-                        myEdge = new EdgeLocation(hexMap.get(i).getLocation(), EdgeDirection.N);
+                        myEdge = new EdgeLocation(hexMap.get(testNum).getLocation(), EdgeDirection.N);
                         break;
                     case 1:
-                        myEdge = new EdgeLocation(hexMap.get(i).getLocation(), EdgeDirection.NE);
+                        myEdge = new EdgeLocation(hexMap.get(testNum).getLocation(), EdgeDirection.NE);
                         break;
                     case 2:
-                        myEdge = new EdgeLocation(hexMap.get(i).getLocation(), EdgeDirection.NW);
+                        myEdge = new EdgeLocation(hexMap.get(testNum).getLocation(), EdgeDirection.NW);
                         break;
                     case 3:
-                        myEdge = new EdgeLocation(hexMap.get(i).getLocation(), EdgeDirection.S);
+                        myEdge = new EdgeLocation(hexMap.get(testNum).getLocation(), EdgeDirection.S);
                         break;
                     case 4:
-                        myEdge = new EdgeLocation(hexMap.get(i).getLocation(), EdgeDirection.SE);
+                        myEdge = new EdgeLocation(hexMap.get(testNum).getLocation(), EdgeDirection.SE);
                         break;
                     case 5:
-                        myEdge = new EdgeLocation(hexMap.get(i).getLocation(), EdgeDirection.SW);
+                        myEdge = new EdgeLocation(hexMap.get(testNum).getLocation(), EdgeDirection.SW);
                         break;
                     default:
-                        myEdge = new EdgeLocation(hexMap.get(i).getLocation(), EdgeDirection.N);
+                        myEdge = new EdgeLocation(hexMap.get(testNum).getLocation(), EdgeDirection.N);
                         break;
                 }
                 if (myMap.canPlaceRoad(myEdge, true)) {
-                    i = hexMap.size();
+                    tester = false;
                     j = 6;
                 }
             }
+            grabInt++;
         }
-        if (myEdge != null) {
-            curCommand = new BuildRoad(playerAIIndex, myEdge, false);
-        }
+        curCommand = new BuildRoad(playerAIIndex, myEdge, false);
         return curCommand;
     }
 
     private int rollAction() {
-        Random rand = new Random();
-        int roll = rand.nextInt() % 6 + 1;
-        roll += rand.nextInt() % 6 + 1;
+        int roll = getRandom.nextInt() % 6 + 1;
+        roll += getRandom.nextInt() % 6 + 1;
         return roll;
     }
 }

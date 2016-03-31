@@ -40,6 +40,14 @@ public class Facade {
     private boolean grabAiList = true;
     private List<String> ourAiList;
 
+    public GameModel getGame() {
+        return game;
+    }
+
+    public void setGame(GameModel game) {
+        this.game = game;
+    }
+
     public boolean isCloseMap() {
         return closeMap;
     }

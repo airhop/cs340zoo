@@ -608,34 +608,30 @@ public class ServerFacade implements IServerFacade {
             System.out.println("  " + playerIndex);
             playerIndex = playerIndex % 4;
             game.getTurnTracker().setCurrentPlayer(playerIndex);
+            game.getLog().addMessage(currPlayer.getUsername(), currPlayer.getUsername() + " finished a turn");
+
             if(myPlayers.get(playerIndex).getPlayerID() < 0){
                 ourAi.setPlayerAIIndex(playerIndex);
-                ourAi.setMyGame(game);
+                ourAi.setPlayerAIId(myPlayers.get(playerIndex).getPlayerID());
+                ourAi.setMyGame(gamesList.get(currPlayer.getGameId()));
+                currPlayer.setPlayerIndex(playerIndex);
+                currPlayer.setColor(CatanColor.valueOf(myPlayers.get(currPlayer.getPlayerIndex()).getColor().toUpperCase()));
+                currPlayer.setUsername(myPlayers.get(currPlayer.getPlayerIndex()).getUsername());
+                currPlayer.setPlayerId(myPlayers.get(currPlayer.getPlayerIndex()).getPlayerID());
+
                 List<ICommand> commands;
                 if(game.getTurnTracker().getStatus().equals("FirstRound") || game.getTurnTracker().getStatus().equals("SecondRound")) {
                     commands = ourAi.buildTurn(true);
                 }else{
                     commands = ourAi.buildTurn(false);
                 }
+
                 for(int i = 0; i < commands.size(); i++){
                     if(commands.get(i) != null){
-                        if(game.getTurnTracker().getStatus().equals("SecondRound")){
-                            currPlayer.setPlayerIndex(currPlayer.getPlayerIndex() + 1);
-                        }else{
-                            currPlayer.setPlayerIndex(currPlayer.getPlayerIndex() + 1);
-                        }
-
-                        if(currPlayer.getPlayerIndex() > 4){
-                            currPlayer.getPlayerIndex();
-                        }
-                        currPlayer.setColor(CatanColor.valueOf(myPlayers.get(currPlayer.getPlayerIndex()).getColor().toUpperCase()));
-                        currPlayer.setUsername(myPlayers.get(currPlayer.getPlayerIndex()).getUsername());
-                        currPlayer.setPlayerId(myPlayers.get(currPlayer.getPlayerIndex()).getPlayerID());
                         commands.get(i).execute();
                     }
                 }
             }
-            game.getLog().addMessage(currPlayer.getUsername(), currPlayer.getUsername() + " finished a turn");
         }
     }
 
@@ -935,6 +931,16 @@ public class ServerFacade implements IServerFacade {
         if (currPlayer.getGameId() != -1) {
             GameModel game = gamesList.get(currPlayer.getGameId());
             game.setTradeOffer(new TradeOffer(playerIndex, receiver, offer));
+            if(game.getPlayers().get(receiver).getPlayerID() < 0){
+                game.getTradeOffer().separateOffer();
+                if(game.getPlayers().get(receiver).canAcceptTrade(game.getTradeOffer().getOffer())){
+                    if(game.getTradeOffer().getSentList().size() >= game.getTradeOffer().getSentList().size()){
+                        acceptTrade(receiver, true);
+                    }
+                }else{
+                    acceptTrade(receiver, false);
+                }
+            }
         }
     }
 
