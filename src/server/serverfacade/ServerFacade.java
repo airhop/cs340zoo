@@ -229,6 +229,7 @@ public class ServerFacade implements IServerFacade {
         gameObject.setId(myModel.getID());
         gameObject.setTitle(name);
         gameInfoList.add(gameObject);
+        joinGame(gameInfoList.size() - 1,CatanColor.RED.toString());
         return theGame;
     }
 
@@ -342,7 +343,7 @@ public class ServerFacade implements IServerFacade {
      */
     @Override
     public void addAI(String AIType) {
-        if (AIType.equalsIgnoreCase(AITypes.LARGESTARMY.toString())) {
+        if (AIType.equalsIgnoreCase(AITypes.LONGESTROAD.toString())) {
             int numberOfPlayers = 0;
             int numberOfAi = 0;
             GameModel game = gamesList.get(currPlayer.getGameId());
@@ -385,7 +386,7 @@ public class ServerFacade implements IServerFacade {
                 myPlayer.setName(addPlayer.getName());
                 myPlayer.setPlayerIndex(numberOfPlayers);
                 //need to add the new player to the game, not just the gameinfolist array
-                gameInfoList.get(numberOfPlayers).addPlayer(myPlayer);
+                gameInfoList.get(currPlayer.getGameId()).addPlayer(myPlayer);
 
                 Player changePlayer = game.getPlayers().get(numberOfPlayers);
 
@@ -618,6 +619,18 @@ public class ServerFacade implements IServerFacade {
                 }
                 for(int i = 0; i < commands.size(); i++){
                     if(commands.get(i) != null){
+                        if(game.getTurnTracker().getStatus().equals("SecondRound")){
+                            currPlayer.setPlayerIndex(currPlayer.getPlayerIndex() + 1);
+                        }else{
+                            currPlayer.setPlayerIndex(currPlayer.getPlayerIndex() + 1);
+                        }
+
+                        if(currPlayer.getPlayerIndex() > 4){
+                            currPlayer.getPlayerIndex();
+                        }
+                        currPlayer.setColor(CatanColor.valueOf(myPlayers.get(currPlayer.getPlayerIndex()).getColor().toUpperCase()));
+                        currPlayer.setUsername(myPlayers.get(currPlayer.getPlayerIndex()).getUsername());
+                        currPlayer.setPlayerId(myPlayers.get(currPlayer.getPlayerIndex()).getPlayerID());
                         commands.get(i).execute();
                     }
                 }

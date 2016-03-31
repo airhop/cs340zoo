@@ -47,6 +47,7 @@ public class Server {
 
         server.createContext("/game/model", mainHandler);
         server.createContext("/game/listAI", mainHandler);
+        server.createContext("/game/addAI", mainHandler);
 
         server.createContext("/moves/sendChat", mainHandler);
         server.createContext("/moves/rollNumber", mainHandler);

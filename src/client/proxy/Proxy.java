@@ -7,6 +7,7 @@ import client.model.bank.ResourceList;
 import client.model.map.Map;
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
+import server.ai.AITypes;
 import shared.definitions.ResourceType;
 import shared.exceptions.*;
 import shared.extra.StopWatch;
@@ -459,7 +460,7 @@ public class Proxy implements IProxy {
         StopWatch myWatch = new StopWatch();
         JsonObject myObjOne = new JsonObject();
         String url = "/game/addAI";
-        myObjOne.addProperty("AIType", "LARGEST_ARMY");
+        myObjOne.addProperty("AIType", AITypes.LONGESTROAD.toString());
     //    System.out.println(myObjOne.toString());
         HttpURLResponse myResponse;
         try {

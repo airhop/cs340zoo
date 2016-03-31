@@ -140,6 +140,7 @@ public class AILongestRoad implements IAIntel {
                 }
             }
         }
+        myCommands.add(new FinishTurn(playerAIIndex));
         return myCommands;
     }
 

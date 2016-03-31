@@ -14,6 +14,7 @@ import com.google.gson.reflect.TypeToken;
 import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
+import server.ai.AITypes;
 import server.factories.GamesFactory;
 import server.factories.MovesFactory;
 import server.factories.UserFactory;
@@ -299,7 +300,12 @@ public class Handler implements HttpHandler {
             exchange.sendResponseHeaders(200, info.length());
             exchange.getResponseBody().write(info.getBytes());
             exchange.getResponseBody().close();
-        }else {
+        } else if(path.contains("/game/addAI")){
+            ServerFacade.getInstance().addAI(AITypes.LONGESTROAD.toString());
+//            System.out.println("Game Info . .  ." + gameInfo.size() + " " + gameInfo.get(0).toString());
+            exchange.sendResponseHeaders(200, 0);
+            exchange.getResponseBody().close();
+        } else {
             throw new ServerException("Not a valid game request");
         }
 
