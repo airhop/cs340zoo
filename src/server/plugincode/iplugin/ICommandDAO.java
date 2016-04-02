@@ -9,7 +9,7 @@ import java.util.List;
  */
 public interface ICommandDAO {
     void addCommand(ICommand command);
-    List<ICommand> readAllCommands();
+    List<ICommand> readAllCommands(int gameId);
     void clearGame(int gameId);
     void clearAll();
 }
