@@ -10,6 +10,6 @@ import java.util.List;
  */
 public interface IPlayerDAO {
     void addPlayer(PlayerInfo playerInfo);
-    List<Player> readAllPlayers();
+    List<PlayerInfo> readAllPlayers();
     void clearTable();
 }
