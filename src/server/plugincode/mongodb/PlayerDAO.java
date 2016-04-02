@@ -1,5 +1,6 @@
 package server.plugincode.mongodb;
 
+import client.MVC.data.PlayerInfo;
 import client.model.player.Player;
 import server.plugincode.iplugin.IPlayerDAO;
 
@@ -10,12 +11,12 @@ import java.util.List;
  */
 public class PlayerDAO implements IPlayerDAO{
     @Override
-    public void addPlayer() {
+    public void addPlayer(PlayerInfo player) {
 
     }
 
     @Override
-    public List<Player> readAllPlayers() {
+    public List<PlayerInfo> readAllPlayers() {
         return null;
     }
 
