@@ -1,4 +1,4 @@
-package server.plugincode.plugintwo;
+package server.plugincode.sql;
 
 import server.plugincode.iplugin.IGameDAO;
 

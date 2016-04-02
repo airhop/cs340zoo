@@ -1,4 +1,4 @@
-package server.plugincode.pluginone;
+package server.plugincode.mongodb;
 
 import server.plugincode.iplugin.IGameDAO;
 

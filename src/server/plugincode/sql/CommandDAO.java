@@ -1,4 +1,4 @@
-package server.plugincode.pluginone;
+package server.plugincode.sql;
 
 import server.plugincode.iplugin.ICommandDAO;
 
