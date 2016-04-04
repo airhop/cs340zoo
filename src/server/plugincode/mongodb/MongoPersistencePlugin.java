@@ -1,9 +1,9 @@
 package server.plugincode.mongodb;
 
+import com.mongodb.*;
+import com.mongodb.WriteConcern;
 import com.mongodb.DB;
-import com.mongodb.MongoClient;
-import com.mongodb.MongoCredential;
-import com.mongodb.ServerAddress;
+import com.mongodb.DBCollection;
 import server.plugincode.iplugin.ICommandDAO;
 import server.plugincode.iplugin.IGameDAO;
 import server.plugincode.iplugin.IPersistencePlugin;
@@ -33,24 +33,39 @@ public class MongoPersistencePlugin implements IPersistencePlugin {
 //            mcs.add(credential);
 //            mongoClient = new MongoClient(new ServerAddress("localhost"), mcs);
 
-            mongoClient = new MongoClient();
+//            mongoClient = new MongoClient();
 //            List<String> names = mongoClient.getDatabaseNames();
+//            mdb = mongoClient.getDB("Catan");
 
-            mdb = mongoClient.getDB("Catan");
+            MongoClient mongo = new MongoClient("localhost", 27017);
+            mdb = mongo.getDB("Catan");
 
             Players = new PlayerDAO(mdb);
             Games = new GameDAO(mdb);
             Commands = new CommandDAO(mdb);
-
+            initializeDB();
         }
 
+    /**
+     * method to initialize the Database
+     */
+    public void initializeDB()
+    {
+        Players.clearTable();
+        Games.clearTable();
+        Commands.clearAll();
+    }
+
+    /**
+     * method that will be called when the ant target clears the method
+     */
     public void clear()
     {
         mongoClient = new MongoClient();
         mdb = mongoClient.getDB("Catan");
-        Players.clearTable();
-        Games.clearTable();
-        Commands.clearAll();
+        //Players.clearTable();
+        //Games.clearTable();
+        //Commands.clearAll();
     }
 
     @Override
