@@ -47,6 +47,11 @@ public class PersistencePlugin implements IPersistencePlugin {
         }
 
     @Override
+    public void initializeDB() {
+
+    }
+
+    @Override
     public void startTransaction() {
 
     }
