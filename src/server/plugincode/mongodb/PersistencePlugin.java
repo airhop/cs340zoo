@@ -20,6 +20,7 @@ public class PersistencePlugin implements IPersistencePlugin {
         private PlayerDAO Players;
         private CommandDAO Commands;
 
+
         public PersistencePlugin()
         {
             mongoClient = new MongoClient();
