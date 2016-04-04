@@ -22,7 +22,7 @@ public class GameDAO implements IGameDAO {
     }
 
     @Override
-    public void addGame(GameModel addModel)
+    public void addGame(GameModel addModel, int id)
     {
         BasicDBObject bdbo = new BasicDBObject();
         bdbo.put("ID", addModel.getID());
