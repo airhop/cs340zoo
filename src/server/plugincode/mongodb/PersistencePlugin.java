@@ -22,13 +22,14 @@ public class PersistencePlugin implements IPersistencePlugin {
 
         public PersistencePlugin()
         {
-            try {
-                mongoClient = new MongoClient();
-            }
-            catch(UnknownHostException e)
-            {
-                //oops . . .
-            }
+            mongoClient = new MongoClient();
+//            try {
+//
+//            }
+//            catch(UnknownHostException e)
+//            {
+//                //oops . . .
+//            }
             DB mdb = mongoClient.getDB("Catan");
 
             if(mdb.collectionExists("Games"))
@@ -57,7 +58,7 @@ public class PersistencePlugin implements IPersistencePlugin {
     }
 
     @Override
-    public void endTransaction() {
+    public void endTransaction(boolean commit) {
 
     }
 
