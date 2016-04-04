@@ -24,6 +24,11 @@ public class CommandDAO implements ICommandDAO {
 //            mdb.createCollection("Commands", new BasicDBObject());
     }
 
+    /**
+     * Add a command to the table with its associated gameID
+     * @param command - command to be added
+     * @param gameID - gameID that is associated with the command
+     */
     @Override
     public void addCommand(ICommand command, int gameID)
     {
@@ -33,6 +38,11 @@ public class CommandDAO implements ICommandDAO {
         mdb.getCollection("Commands").insert(bdbo);
     }
 
+    /**
+     * Read all the commands for a given gameId and return the list of commands
+     * @param gameId - GameId to look for
+     * @return - a list of the commands to return
+     */
     @Override
     public List<ICommand> readAllCommands(int gameId)
     {
@@ -53,6 +63,10 @@ public class CommandDAO implements ICommandDAO {
         return new ArrayList<ICommand>();
     }
 
+    /**
+     * clear the commands for a given game
+     * @param gameId - given game to clear
+     */
     @Override
     public void clearGame(int gameId)
     {
@@ -61,6 +75,9 @@ public class CommandDAO implements ICommandDAO {
         mdb.getCollection("Commands").remove(bdbo);
     }
 
+    /**
+     * Clear the entire table
+     */
     @Override
     public void clearAll()
     {
