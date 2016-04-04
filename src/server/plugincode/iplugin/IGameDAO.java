@@ -6,7 +6,7 @@ import client.model.GameModel;
  * Created by Joshua on 4/2/2016.
  */
 public interface IGameDAO {
-    void addGame(GameModel addModel);
+    void addGame(GameModel addModel, int id);
     GameModel readGame(int gameId);
     void updateGame(int gameId, GameModel updateModel);
     void clearTable();
