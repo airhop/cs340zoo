@@ -38,8 +38,8 @@ public class PlayerDAO implements IPlayerDAO
     }
 
     /**
-     * Return a list of all players
-     * @return
+     * Access the database and read all players
+     * @return - a list of login objects representing the players
      */
     public List<Login> readAllPlayers()
     {
@@ -53,6 +53,9 @@ public class PlayerDAO implements IPlayerDAO
         return pi;
     }
 
+    /**
+     * Clear the table and prepares it to be used again.
+     */
     public void clearTable()
     {
 //        if(mdb.getCollection("Players").count() != 0)

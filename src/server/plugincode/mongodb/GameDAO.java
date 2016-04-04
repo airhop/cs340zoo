@@ -21,6 +21,11 @@ public class GameDAO implements IGameDAO {
       //      mdb.createCollection("Games", new BasicDBObject());
     }
 
+    /**
+     * add a game model to the game table
+     * @param addModel - gamemodel to save
+     * @param id - id to save the model under
+     */
     @Override
     public void addGame(GameModel addModel, int id)
     {
@@ -30,6 +35,11 @@ public class GameDAO implements IGameDAO {
         mdb.getCollection("Games").insert(bdbo);
     }
 
+    /**
+     * Find and retrieve a game model
+     * @param gameId - game model to retrieve
+     * @return - the expected gamemodel
+     */
     @Override
     public GameModel readGame(int gameId)
     {
@@ -44,6 +54,11 @@ public class GameDAO implements IGameDAO {
         return null;
     }
 
+    /**
+     * update a certain game model
+     * @param gameId - id of the model to replace
+     * @param updateModel - updated model
+     */
     @Override
     public void updateGame(int gameId, GameModel updateModel)
     {
@@ -56,6 +71,9 @@ public class GameDAO implements IGameDAO {
         mdb.getCollection("Games").update(search, noob);
     }
 
+    /**
+     * Clear the table and start it again
+     */
     @Override
     public void clearTable()
     {

@@ -43,18 +43,8 @@ public class MongoPersistencePlugin implements IPersistencePlugin {
             Players = new PlayerDAO(mdb);
             Games = new GameDAO(mdb);
             Commands = new CommandDAO(mdb);
-            initializeDB();
         }
 
-    /**
-     * method to initialize the Database
-     */
-    public void initializeDB()
-    {
-        Players.clearTable();
-        Games.clearTable();
-        Commands.clearAll();
-    }
 
     /**
      * method that will be called when the ant target clears the method
@@ -68,17 +58,19 @@ public class MongoPersistencePlugin implements IPersistencePlugin {
         //Commands.clearAll();
     }
 
-    @Override
-    public void initializeDB() {
-
-    }
-
+    /**
+     * to start a transaction
+     */
     @Override
     public void startTransaction()
     {
         safeguard = mdb;
     }
 
+    /**
+     * End a transaction.  Rollback or commit
+     * @param commit - whether to rollback or not
+     */
     @Override
     public void endTransaction(boolean commit)
     {
