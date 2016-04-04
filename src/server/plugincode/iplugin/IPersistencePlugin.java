@@ -6,7 +6,7 @@ package server.plugincode.iplugin;
 public interface IPersistencePlugin {
     void initializeDB();
     void startTransaction();
-    void endTransaction();
+    void endTransaction(boolean commit);
     ICommandDAO getCommandDAO();
     IPlayerDAO getPlayerDAO();
     IGameDAO getGameDAO();

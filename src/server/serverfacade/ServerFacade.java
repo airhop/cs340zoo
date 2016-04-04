@@ -192,6 +192,7 @@ public class ServerFacade implements IServerFacade {
      */
     @Override
     public Login userRegister(String username, String password) {
+       System.out.println(username + " " + password);
         if (players.containsKey(username)) {
             //cannot register a player that already exists
             return new Login("", "", -1);

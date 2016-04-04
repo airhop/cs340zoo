@@ -3,6 +3,7 @@ package server.plugincode.sql;
 import client.MVC.data.PlayerInfo;
 import client.model.player.Player;
 import server.plugincode.iplugin.IPlayerDAO;
+import shared.jsonobject.Login;
 
 import java.util.List;
 
@@ -11,7 +12,7 @@ import java.util.List;
  */
 public class PlayerDAO implements IPlayerDAO{
     @Override
-    public void addPlayer(PlayerInfo player) {
+    public void addPlayer(Login player) {
 
     }
 

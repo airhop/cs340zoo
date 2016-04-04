@@ -4,6 +4,7 @@ import client.MVC.data.PlayerInfo;
 import client.model.player.Player;
 import com.mongodb.*;
 import server.plugincode.iplugin.IPlayerDAO;
+import shared.jsonobject.Login;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,16 +15,19 @@ import java.util.List;
 public class PlayerDAO implements IPlayerDAO
 {
     private DB mdb;
-    public PlayerDAO(DB mdb)
+    public PlayerDAO(DB db)
     {
-        this.mdb = mdb;
-        mdb.createCollection("Players", new BasicDBObject());
+        mdb = db;
+        mdb.getCollection("Players");
+//        if(!mdb.collectionExists("Players"))
+//           mdb.createCollection("Players", new BasicDBObject());
     }
 
-    public void addPlayer(PlayerInfo pi)
+    public void addPlayer(Login pi)
     {
+        System.out.println(pi.toString());
         BasicDBObject bdbo = new BasicDBObject();
-        bdbo.put("ID", pi.getId());
+        bdbo.put("ID", pi.getID());
         bdbo.put("PlayerInfo", pi);
         mdb.getCollection("Players").insert(bdbo);
     }
@@ -42,6 +46,8 @@ public class PlayerDAO implements IPlayerDAO
 
     public void clearTable()
     {
-        mdb.getCollection("Players").drop();
+        DBCursor dbc = mdb.getCollection("Players").find();
+        while(dbc.hasNext())
+            mdb.getCollection("Players").findAndRemove(dbc.next());
     }
 }

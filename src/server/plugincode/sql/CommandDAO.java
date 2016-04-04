@@ -10,12 +10,18 @@ import java.util.List;
  */
 public class CommandDAO implements ICommandDAO {
 
+   public CommandDAO()
+   {
+
+   }
+
 
     /**
      * Adds a command to the command table
      * @param command Command to add
      * @param gameId Game command to be added
      */
+
     @Override
     public void addCommand(ICommand command, int gameId) {
 

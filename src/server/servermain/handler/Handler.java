@@ -3,6 +3,7 @@
 package server.servermain.handler;
 
 import client.MVC.data.GameInfo;
+import client.MVC.data.PlayerInfo;
 import client.model.GameModel;
 import client.model.map.Hex;
 import client.model.map.Map;
@@ -15,10 +16,13 @@ import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import server.ai.AITypes;
+import server.commandobjects.games.Create;
 import server.factories.GamesFactory;
 import server.factories.MovesFactory;
 import server.factories.UserFactory;
 import server.commandobjects.ICommand;
+import server.plugincode.iplugin.IPersistencePlugin;
+import server.plugincode.mongodb.MongoPersistencePlugin;
 import server.serverfacade.ServerFacade;
 import server.servermain.exceptions.ServerException;
 import server.servermain.JsonConstructionInfo;
@@ -48,11 +52,17 @@ public class Handler implements HttpHandler {
     private Cookie userCookie;
     private Cookie gameCookie;
     private boolean swagger = false;
+    private IPersistencePlugin IPP;
+    private int commands;
 
-    public Handler() {
+    public Handler(IPersistencePlugin ipp, int runs)
+    {
         userFactory = new UserFactory();
         gamesFactory = new GamesFactory();
         movesFactory = new MovesFactory();
+        IPP = ipp;
+        ((MongoPersistencePlugin)ipp).clear();
+        commands = runs;
     }
 
     /**
@@ -208,17 +218,23 @@ public class Handler implements HttpHandler {
      */
     public void UserMethod(HttpExchange exchange) throws ServerException, IOException {
         ICommand current;
+        Login login;
         String path = exchange.getRequestURI().getPath();
         System.out.println("User Method " + path + " " + path.contains("/login"));
         if (path.contains("/login"))
+        {
             current = userFactory.getCommand(new JsonConstructionInfo(CommandType.login, requestBody));
+            login = (Login) current.execute();
+        }
         else if (path.contains("/register"))
+        {
             current = userFactory.getCommand(new JsonConstructionInfo(CommandType.register, requestBody));
+            login = (Login)current.execute();
+            if(login.getID() != -1)
+                IPP.getPlayerDAO().addPlayer(login);
+        }
         else
             throw new ServerException("Not a valid user request");
-
-        Object o = current.execute();
-        Login login = (Login) o;
 
         System.out.println("LoginObject " + login.toString());
         if (login.getID() == -1) {
@@ -255,6 +271,7 @@ public class Handler implements HttpHandler {
         System.out.println("Response Body = " + exchange.getResponseBody());
         exchange.getResponseBody().close();
 
+
     }
 
     /**
@@ -275,6 +292,7 @@ public class Handler implements HttpHandler {
             exchange.sendResponseHeaders(200, info.length());
             exchange.getResponseBody().write(info.getBytes());
             exchange.getResponseBody().close();
+            IPP.getGameDAO().addGame(new GameModel(cg.getTitle()));
         } else if (path.contains("games/join")) {
             current = gamesFactory.getCommand(new JsonConstructionInfo(CommandType.join, requestBody));
             Object o = current.execute();
@@ -286,6 +304,7 @@ public class Handler implements HttpHandler {
             exchange.getResponseHeaders().put("Set-Cookie", cookies);
             exchange.sendResponseHeaders(200, 0);
             exchange.getResponseBody().close();
+            IPP.getGameDAO().updateGame(((CreatedGame)o).getId(), ServerFacade.getInstance().getModel());
         } else if (path.contains("games/list")) {
             List<GameInfo> gameInfo = ServerFacade.getInstance().getGamesList();
             String info = new com.google.gson.Gson().toJson(gameInfo);
@@ -332,6 +351,8 @@ public class Handler implements HttpHandler {
 
         System.out.println(tokens[tokens.length - 1]);
         ICommand current = movesFactory.getCommand(new JsonConstructionInfo(type, requestBody));
+
+        IPP.getCommandDAO().addCommand(current, ServerFacade.getInstance().getModel().getID());
 
         System.out.println("here!");
         Object o = current.execute();

@@ -2,6 +2,8 @@ package server.servermain;
 
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
+import server.plugincode.mongodb.MongoPersistencePlugin;
+import server.plugincode.sql.SQLPersistencePlugin;
 import server.servermain.handler.Handler;
 import server.servermain.handler.Handlers;
 import server.servermain.handler.MockHandler;
@@ -85,20 +87,33 @@ public class Server {
      * @param args - args passed to the main363
      */
     public static void main(String[] args) {
-        if(args.length == 1)
-        {
-            mainHandler = new MockHandler();
-            new Server().run(SERVER_PORT_NUMBER);
-        }
-        else {
-            mainHandler = new Handler();
 
-            if (args.length > 0) {
-                new Server().run(Integer.parseInt(args[0]));  //ignore the host :)
-            } else {
-                new Server().run(SERVER_PORT_NUMBER);
-            }
-        }
+        System.out.println(args.length);
+        if(args[0].equals("MDB"))
+           mainHandler = new Handler(new MongoPersistencePlugin(), Integer.parseInt(args[1]));
+        if(args[0].equals("SQL"))
+            mainHandler = new Handler(new SQLPersistencePlugin(), Integer.parseInt(args[1]));
+
+        new Server().run(SERVER_PORT_NUMBER);
+//        if(args.length == 1)
+//        {
+//            mainHandler = new MockHandler();
+//            new Server().run(SERVER_PORT_NUMBER);
+//        }
+//        else {
+//            mainHandler = new Handler();
+//
+//            if (args.length > 0) {
+//                new Server().run(Integer.parseInt(args[0]));  //ignore the host :)
+//            } else {
+//                new Server().run(SERVER_PORT_NUMBER);
+//            }
+//        }
+    }
+
+    public void Begin(String type, int values)
+    {
+        mainHandler = new Handler(new MongoPersistencePlugin(), values);
     }
 
 

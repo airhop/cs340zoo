@@ -19,7 +19,9 @@ public class CommandDAO implements ICommandDAO {
     public CommandDAO(DB mdb)
     {
         this.mdb = mdb;
-        mdb.createCollection("Commands", new BasicDBObject());
+        mdb.getCollection("Commands");
+//        if(!mdb.collectionExists("Commands"))
+//            mdb.createCollection("Commands", new BasicDBObject());
     }
 
     @Override

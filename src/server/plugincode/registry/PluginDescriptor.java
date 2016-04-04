@@ -1,7 +1,7 @@
 package server.plugincode.registry;
 
 import server.plugincode.iplugin.IPersistencePlugin;
-import sun.plugin2.main.server.Plugin;
+//import sun.plugin2.main.server.Plugin;
 
 import java.util.List;
 

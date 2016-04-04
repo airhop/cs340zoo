@@ -16,7 +16,9 @@ public class GameDAO implements IGameDAO {
     public GameDAO(DB mdb)
     {
         this.mdb = mdb;
-        mdb.createCollection("Games", new BasicDBObject());
+        mdb.getCollection("Games");
+      //  if(!mdb.collectionExists("Games"))
+      //      mdb.createCollection("Games", new BasicDBObject());
     }
 
     @Override

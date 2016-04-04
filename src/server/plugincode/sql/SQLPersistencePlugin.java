@@ -38,7 +38,7 @@ public class PersistencePlugin implements IPersistencePlugin {
     }
 
     @Override
-    public void endTransaction() {
+    public void endTransaction(boolean commit) {
 
     }
 
