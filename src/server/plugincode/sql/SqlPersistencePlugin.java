@@ -8,10 +8,10 @@ import server.plugincode.iplugin.IPlayerDAO;
 /**
  * Created by Joshua on 4/2/2016.
  */
-public class PersistencePlugin implements IPersistencePlugin {
+public class SqlPersistencePlugin implements IPersistencePlugin {
 
 
-    public PersistencePlugin(){
+    public SqlPersistencePlugin(){
         try {
             final String driver = "org.sqlite.JDBC";
             Class.forName(driver);

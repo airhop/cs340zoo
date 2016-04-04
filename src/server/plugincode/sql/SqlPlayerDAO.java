@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Created by Joshua on 4/2/2016.
  */
-public class PlayerDAO implements IPlayerDAO{
+public class SqlPlayerDAO implements IPlayerDAO{
     @Override
     public void addPlayer(Login player) {
 
