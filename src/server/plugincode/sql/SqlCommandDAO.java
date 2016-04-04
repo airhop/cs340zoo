@@ -10,16 +10,15 @@ import java.util.List;
  */
 public class SqlCommandDAO implements ICommandDAO {
 
-   public SqlCommandDAO()
-   {
+    public SqlCommandDAO() {
 
-   }
-
+    }
 
     /**
      * Adds a command to the command table
+     *
      * @param command Command to add
-     * @param gameId Game command to be added
+     * @param gameId  Game command to be added
      */
 
     @Override
@@ -29,6 +28,7 @@ public class SqlCommandDAO implements ICommandDAO {
 
     /**
      * Takes all commands from the database
+     *
      * @param gameId game to get the commands for
      * @return list of all commands
      */
@@ -39,6 +39,7 @@ public class SqlCommandDAO implements ICommandDAO {
 
     /**
      * removes a game, may not need this
+     *
      * @param gameId GameId to be dropped
      */
     @Override
