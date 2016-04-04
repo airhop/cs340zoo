@@ -17,7 +17,7 @@ public class SqlPlayerDAO implements IPlayerDAO{
     }
 
     @Override
-    public List<PlayerInfo> readAllPlayers() {
+    public List<Login> readAllPlayers() {
         return null;
     }
 

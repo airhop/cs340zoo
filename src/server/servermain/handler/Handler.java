@@ -52,6 +52,7 @@ public class Handler implements HttpHandler {
     private Cookie userCookie;
     private Cookie gameCookie;
     private boolean swagger = false;
+    private boolean duplicate;  //big bandaid . . .
     private IPersistencePlugin IPP;
     private int commands;
 
@@ -63,6 +64,7 @@ public class Handler implements HttpHandler {
         IPP = ipp;
         ((MongoPersistencePlugin)ipp).clear();
         commands = runs;
+        duplicate = false;
     }
 
     /**
@@ -113,7 +115,7 @@ public class Handler implements HttpHandler {
                     }
                     else
                     {
-                        System.out.println("Why am I here?!");
+                       // System.out.println("Why am I here?!");
                         swagger = false;
                         userCookie = new Cookie(first, scan.next(), scan.next());
                         if (scan.hasNext())
@@ -145,6 +147,7 @@ public class Handler implements HttpHandler {
 
 
             if (userCookie.isActive()) {
+                duplicate = false;  //big bandaid having to do with users . . .
                 if (path.contains("/game"))
                     GameMethod(exchange);
                 else if (gameCookie.isActive()) {
@@ -220,14 +223,20 @@ public class Handler implements HttpHandler {
         ICommand current;
         Login login;
         String path = exchange.getRequestURI().getPath();
-        System.out.println("User Method " + path + " " + path.contains("/login"));
+//        System.out.println("User Method " + path + " " + path.contains("/login"));
+        if(duplicate)
+            path = "/login";
+//        System.out.println("path again " + path + " " + duplicate);
         if (path.contains("/login"))
         {
+            duplicate = false;
             current = userFactory.getCommand(new JsonConstructionInfo(CommandType.login, requestBody));
             login = (Login) current.execute();
         }
         else if (path.contains("/register"))
         {
+            duplicate = true;
+//            System.out.println("in here!");
             current = userFactory.getCommand(new JsonConstructionInfo(CommandType.register, requestBody));
             login = (Login)current.execute();
             if(login.getID() != -1)

@@ -19,35 +19,53 @@ public class PlayerDAO implements IPlayerDAO
     {
         mdb = db;
         mdb.getCollection("Players");
+      //  mdb = mc.getDB("Players");
+       // mdb.getCollection("Players");
+
 //        if(!mdb.collectionExists("Players"))
 //           mdb.createCollection("Players", new BasicDBObject());
     }
 
+    /**
+     * add a player to the players database
+     * @param pi - the login information to put into the player database
+     */
     public void addPlayer(Login pi)
     {
         System.out.println(pi.toString());
-        BasicDBObject bdbo = new BasicDBObject();
-        bdbo.put("ID", pi.getID());
-        bdbo.put("PlayerInfo", pi);
+        BasicDBObject bdbo = new BasicDBObject("_id", pi.getID()).append("PlayerInfo", pi);
         mdb.getCollection("Players").insert(bdbo);
     }
 
-    public List<PlayerInfo> readAllPlayers()
+    /**
+     * Return a list of all players
+     * @return
+     */
+    public List<Login> readAllPlayers()
     {
-        List<PlayerInfo> pi = new ArrayList<PlayerInfo>();
+        List<Login> pi = new ArrayList<Login>();
         DBCursor cursor = mdb.getCollection("Players").find();
         if(cursor.hasNext())
         {
             DBObject dbo = cursor.next();
-            pi.add((PlayerInfo)dbo.get("PlayerInfo"));
+            pi.add((Login)dbo.get("PlayerInfo"));
         }
         return pi;
     }
 
     public void clearTable()
     {
-        DBCursor dbc = mdb.getCollection("Players").find();
-        while(dbc.hasNext())
-            mdb.getCollection("Players").findAndRemove(dbc.next());
+//        if(mdb.getCollection("Players").count() != 0)
+//            mdb.getCollection("Players").drop();
+
+        Login lo = new Login("FirstUser", "password", 0);
+        BasicDBObject bdbo = new BasicDBObject("FirstUser", lo);
+
+        mdb.createCollection("Players", bdbo);
+
+//        mdb.createCollection("Players", new BasicDBObject());
+//        DBCursor dbc = mdb.getCollection("Players").find();
+//        while(dbc.hasNext())
+//            mdb.getCollection("Players").findAndRemove(dbc.next());
     }
 }
