@@ -22,17 +22,6 @@ public class SqlPersistencePlugin implements IPersistencePlugin {
     }
 
     @Override
-    public void initializeDB() {
-        try {
-            final String driver = "org.sqlite.JDBC";
-            Class.forName(driver);
-        }
-        catch(ClassNotFoundException e) {
-            System.out.println(e.toString());
-        }
-    }
-
-    @Override
     public void startTransaction() {
 
     }
