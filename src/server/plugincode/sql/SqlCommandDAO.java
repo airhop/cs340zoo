@@ -8,9 +8,9 @@ import java.util.List;
 /**
  * Created by Joshua on 4/2/2016.
  */
-public class CommandDAO implements ICommandDAO {
+public class SqlCommandDAO implements ICommandDAO {
 
-   public CommandDAO()
+   public SqlCommandDAO()
    {
 
    }

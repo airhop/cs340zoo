@@ -69,6 +69,11 @@ public class MongoPersistencePlugin implements IPersistencePlugin {
     }
 
     @Override
+    public void initializeDB() {
+
+    }
+
+    @Override
     public void startTransaction()
     {
         safeguard = mdb;

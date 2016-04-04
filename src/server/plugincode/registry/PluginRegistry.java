@@ -40,13 +40,13 @@ public class PluginRegistry {
     }
 
     /**
-     * not used
+     * loads in the plugin config file that we will be putting the descriptors of the plugins
      */
     public void loadConfig() {
     }
 
     /**
-     * not used
+     * not really used
      */
     public void saveConfig() {
     }
