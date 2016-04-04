@@ -43,7 +43,7 @@ public class PlayerDAO implements IPlayerDAO
      */
     public List<Login> readAllPlayers()
     {
-        List<Login> pi = new ArrayList<PlayerInfo>();
+        List<Login> pi = new ArrayList<Login>();
         DBCursor cursor = mdb.getCollection("Players").find();
         if(cursor.hasNext())
         {
