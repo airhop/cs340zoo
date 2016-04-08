@@ -2,8 +2,9 @@ package server.servermain;
 
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
+import server.plugincode.TextPlugin.TextPersistencePlugin;
 import server.plugincode.mongodb.MongoPersistencePlugin;
-import server.plugincode.sql.SQLPersistencePlugin;
+import server.plugincode.sql.SqlPersistencePlugin;
 import server.servermain.handler.Handler;
 import server.servermain.handler.Handlers;
 import server.servermain.handler.MockHandler;
@@ -92,7 +93,9 @@ public class Server {
         if(args[0].equals("MDB"))
            mainHandler = new Handler(new MongoPersistencePlugin(), Integer.parseInt(args[1]));
         if(args[0].equals("SQL"))
-            mainHandler = new Handler(new SQLPersistencePlugin(), Integer.parseInt(args[1]));
+            mainHandler = new Handler(new SqlPersistencePlugin(), Integer.parseInt(args[1]));
+        if(args[0].equals("TXT"))
+            mainHandler = new Handler(new TextPersistencePlugin(), Integer.parseInt(args[1]));
 
         new Server().run(SERVER_PORT_NUMBER);
 //        if(args.length == 1)

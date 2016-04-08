@@ -3,8 +3,11 @@ package server.plugincode.mongodb;
 import client.MVC.data.PlayerInfo;
 import client.model.player.Player;
 import com.mongodb.*;
+import com.mongodb.client.FindIterable;
+import com.mongodb.client.MongoDatabase;
 import server.plugincode.iplugin.IPlayerDAO;
 import shared.jsonobject.Login;
+import org.bson.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,8 +17,8 @@ import java.util.List;
  */
 public class PlayerDAO implements IPlayerDAO
 {
-    private DB mdb;
-    public PlayerDAO(DB db)
+    private MongoDatabase mdb;
+    public PlayerDAO(MongoDatabase db)
     {
         mdb = db;
         mdb.getCollection("Players");
@@ -34,7 +37,7 @@ public class PlayerDAO implements IPlayerDAO
     {
         System.out.println(pi.toString());
         BasicDBObject bdbo = new BasicDBObject("_id", pi.getID()).append("PlayerInfo", pi);
-        mdb.getCollection("Players").insert(bdbo);
+       // mdb.getCollection("Players").insert(bdbo);
     }
 
     /**
@@ -44,12 +47,13 @@ public class PlayerDAO implements IPlayerDAO
     public List<Login> readAllPlayers()
     {
         List<Login> pi = new ArrayList<Login>();
-        DBCursor cursor = mdb.getCollection("Players").find();
+      /*  DBCursor cursor = mdb.getCollection("Players").find();
         if(cursor.hasNext())
         {
             DBObject dbo = cursor.next();
             pi.add((Login)dbo.get("PlayerInfo"));
         }
+        return pi;*/
         return pi;
     }
 
@@ -58,13 +62,15 @@ public class PlayerDAO implements IPlayerDAO
      */
     public void clearTable()
     {
-//        if(mdb.getCollection("Players").count() != 0)
-//            mdb.getCollection("Players").drop();
+        FindIterable<org.bson.Document> p = mdb.getCollection("Players").find();
 
-        Login lo = new Login("FirstUser", "password", 0);
-        BasicDBObject bdbo = new BasicDBObject("FirstUser", lo);
+        if(mdb.getCollection("Players").count() != 0)
+            mdb.getCollection("Players").drop();
 
-        mdb.createCollection("Players", bdbo);
+//        Login lo = new Login("FirstUser", "password", 0);
+//        BasicDBObject bdbo = new BasicDBObject("FirstUser", lo);
+
+//        mdb.createCollection("Players", bdbo);
 
 //        mdb.createCollection("Players", new BasicDBObject());
 //        DBCursor dbc = mdb.getCollection("Players").find();

@@ -1,48 +1,51 @@
 package server.plugincode.mongodb;
 
-import com.mongodb.*;
-import com.mongodb.WriteConcern;
-import com.mongodb.DB;
-import com.mongodb.DBCollection;
+//import com.mongodb.*;
+import com.mongodb.Mongo;
 import server.plugincode.iplugin.ICommandDAO;
 import server.plugincode.iplugin.IGameDAO;
 import server.plugincode.iplugin.IPersistencePlugin;
 import server.plugincode.iplugin.IPlayerDAO;
-
-import java.net.UnknownHostException;
-import java.util.ArrayList;
-import java.util.List;
+import com.mongodb.DB;
+import com.mongodb.MongoClient;
+import shared.jsonobject.Login;
+import org.bson.Document;
+import com.google.gson.GsonBuilder;
+import com.mongodb.client.MongoDatabase;
 
 /**
  * Created by Joshua on 4/2/2016.
  */
 public class MongoPersistencePlugin implements IPersistencePlugin {
 
-        private MongoClient mongoClient;
+        public MongoClient mongoClient;
         private GameDAO Games;
         private PlayerDAO Players;
         private CommandDAO Commands;
-        private DB mdb;
+        public DB mdb;
         private DB safeguard;
-        private MongoCredential credential;
+//        private MongoCredential credential;
 
         public MongoPersistencePlugin()
         {
-//            credential = MongoCredential.createCredential("Me", "Catan", "I is awesome".toCharArray());
-//            List<MongoCredential> mcs = new ArrayList<MongoCredential>();
-//            mcs.add(credential);
-//            mongoClient = new MongoClient(new ServerAddress("localhost"), mcs);
 
-//            mongoClient = new MongoClient();
-//            List<String> names = mongoClient.getDatabaseNames();
-//            mdb = mongoClient.getDB("Catan");
+            mongoClient = new MongoClient();
+            MongoDatabase mdb = mongoClient.getDatabase("Catan2");
 
-            MongoClient mongo = new MongoClient("localhost", 27017);
-            mdb = mongo.getDB("Catan");
+            GsonBuilder gson = new GsonBuilder();
+            gson.enableComplexMapKeySerialization();
+            String info = gson.create().toJson(new Login("un", "p", 20));
+
+            Document test = new Document("_id", 20).append("Login", info);
+            mdb.getCollection("Players").insertOne(test);
+
+            mdb.getCollection("Players").drop();
 
             Players = new PlayerDAO(mdb);
-            Games = new GameDAO(mdb);
-            Commands = new CommandDAO(mdb);
+
+            // Games = new GameDAO(mdb);
+           // Commands = new CommandDAO(mdb);
+            //   clear();
         }
 
 
@@ -53,9 +56,9 @@ public class MongoPersistencePlugin implements IPersistencePlugin {
     {
         mongoClient = new MongoClient();
         mdb = mongoClient.getDB("Catan");
-        //Players.clearTable();
-        //Games.clearTable();
-        //Commands.clearAll();
+        Players.clearTable();
+//        Games.clearTable();
+//        Commands.clearAll();
     }
 
     /**
@@ -96,3 +99,23 @@ public class MongoPersistencePlugin implements IPersistencePlugin {
         return Games;
     }
 }
+
+//            credential = MongoCredential.createCredential("Me", "Catan", "I is awesome".toCharArray());
+//            List<MongoCredential> mcs = new ArrayList<MongoCredential>();
+//            mcs.add(credential);
+//            mongoClient = new MongoClient(new ServerAddress("localhost"), mcs);
+
+//            List<String> names = mongoClient.getDatabaseNames();
+//            mdb = mongoClient.getDB("Catan");
+
+//            MongoClientOptions.Builder builder = new MongoClientOptions.Builder();
+//            builder.writeConcern(WriteConcern.JOURNAL_SAFE);
+//            MongoClient mongo = new MongoClient(new ServerAddress("localhost"), builder.build());
+//            MongoClient mongo = new MongoClient("localhost", 27017);
+
+// Games = new GameDAO(mdb);
+// Commands = new CommandDAO(mdb);
+
+//   if(mdb.getCollection("Players").count() != 0)
+//       System.out.println("success . . .");
+//   clear();

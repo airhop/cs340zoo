@@ -62,7 +62,6 @@ public class Handler implements HttpHandler {
         gamesFactory = new GamesFactory();
         movesFactory = new MovesFactory();
         IPP = ipp;
-        ((MongoPersistencePlugin)ipp).clear();
         commands = runs;
         duplicate = false;
     }
@@ -235,12 +234,14 @@ public class Handler implements HttpHandler {
         }
         else if (path.contains("/register"))
         {
-            duplicate = true;
 //            System.out.println("in here!");
             current = userFactory.getCommand(new JsonConstructionInfo(CommandType.register, requestBody));
             login = (Login)current.execute();
             if(login.getID() != -1)
+            {
+                duplicate = true;
                 IPP.getPlayerDAO().addPlayer(login);
+            }
         }
         else
             throw new ServerException("Not a valid user request");
@@ -301,7 +302,7 @@ public class Handler implements HttpHandler {
             exchange.sendResponseHeaders(200, info.length());
             exchange.getResponseBody().write(info.getBytes());
             exchange.getResponseBody().close();
-            IPP.getGameDAO().addGame(new GameModel(cg.getTitle()));
+            IPP.getGameDAO().addGame(new GameModel(cg.getTitle()), cg.getId());
         } else if (path.contains("games/join")) {
             current = gamesFactory.getCommand(new JsonConstructionInfo(CommandType.join, requestBody));
             Object o = current.execute();
