@@ -43,6 +43,8 @@ public class SqlGameDAO implements IGameDAO {
             stmt.setInt(1, addModel.getID());
             stmt.setString(2, addModel.getTitle());
             stmt.setString(3, myGson.toJson(addModel));
+
+            stmt.executeQuery();
         } catch (SQLException e) {
         }
     }
