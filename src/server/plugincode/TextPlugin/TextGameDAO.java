@@ -5,6 +5,8 @@ import com.google.gson.GsonBuilder;
 import server.plugincode.iplugin.IGameDAO;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Joshua on 4/2/2016.
@@ -74,6 +76,37 @@ public class TextGameDAO implements IGameDAO {
         return null;
     }
 
+    public List<GameModel> readAllGames()
+    {
+        List<GameModel> games = new ArrayList<GameModel>();
+
+        try {
+            File file = new File("TextData");
+            File[] files = file.listFiles();
+            for(int i = 0; i < files.length; i++)
+            {
+                if(files[i].getAbsolutePath().contains("Game"))
+                {
+                    BufferedReader br = new BufferedReader(new FileReader(files[i]));
+                    GsonBuilder gson = new GsonBuilder();
+                    gson.enableComplexMapKeySerialization();
+                    GameModel gm =  gson.create().fromJson(br.readLine(), GameModel.class);
+                    br.close();
+                    games.add(gm);
+
+                }
+            }
+
+            return games;
+
+        }catch(IOException e)
+        {
+            System.out.println("Error in the TextGameDAO readGame");
+        }
+
+
+        return games;
+    }
     /**
      * Updates a gameModel in the database, from an Id
      * @param gameId The game id that you are grabbing
@@ -86,6 +119,8 @@ public class TextGameDAO implements IGameDAO {
             File file = new File(fileName + gameId + ".txt");
             if (file.exists())
                 file.delete();
+            else
+                return;
             file.createNewFile();
             BufferedWriter bw = new BufferedWriter(new FileWriter(file));
 

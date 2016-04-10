@@ -56,6 +56,26 @@ public class GameModel extends Observable {
     {
         GameID = 200;
     }
+    public GameModel(String title, int GameID)
+    {
+        setID(GameID);
+        map = new Map();
+        bank = new Bank();
+        turnTracker = new TurnTracker();
+        tradeOffer = new TradeOffer();
+        dice = new Dice();
+        chat = new Chat();
+        log = new Log();
+        players = new ArrayList<>();
+        players.add(new Player("", 0));
+        players.add(new Player("", 1));
+        players.add(new Player("", 2));
+        players.add(new Player("", 3));
+        currentPlayer = new CurrentPlayer();
+        gameList = new ArrayList<>();
+        first = false;
+
+    }
 
     public void updateGameModel(GameModel givenModel) {
         this.map = givenModel.getMap();

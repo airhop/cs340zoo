@@ -35,12 +35,13 @@ public class TextPlayerDAO implements IPlayerDAO{
         try {
             File file = new File(fileName);
 
-            FileWriter fw = new FileWriter(file.getAbsoluteFile());
+            FileWriter fw = new FileWriter(file.getAbsoluteFile(), true);
             BufferedWriter bw = new BufferedWriter(fw);
 
             GsonBuilder gson = new GsonBuilder();
             String info = gson.create().toJson(player);
             bw.write(info);
+            bw.write("\n");
             bw.close();
 
         } catch(IOException e)
@@ -68,6 +69,7 @@ public class TextPlayerDAO implements IPlayerDAO{
             while(line != null)
             {
                    logins.add((Login)gson.create().fromJson(line, Login.class));
+                    line = br.readLine();
             }
             br.close();
 

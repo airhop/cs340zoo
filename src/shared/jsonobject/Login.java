@@ -39,4 +39,16 @@ public class Login
 	{
 		return username + " " + password + " " + ID;
 	}
+
+	public int compareTo(Login login)
+	{
+		int same = 3;
+		if(username.equals(login.getUsername()))
+			same--;
+		if(password.equals((login.getPassword())))
+			same--;
+		if(getID() == login.getID())
+			same--;
+		return same;
+	}
 }

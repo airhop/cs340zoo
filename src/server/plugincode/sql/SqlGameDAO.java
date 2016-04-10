@@ -3,6 +3,8 @@ package server.plugincode.sql;
 import client.model.GameModel;
 import server.plugincode.iplugin.IGameDAO;
 
+import java.util.List;
+
 /**
  * Created by Joshua on 4/2/2016.
  */
@@ -28,6 +30,10 @@ public class SqlGameDAO implements IGameDAO {
         return null;
     }
 
+    public List<GameModel> readAllGames()
+    {
+        return null;
+    }
     /**
      * Updates a gameModel in the database, from an Id
      * @param gameId The game id that you are grabbing

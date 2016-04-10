@@ -37,7 +37,7 @@ public class TextCommandDAO implements ICommandDAO {
             if (!file.exists())
                 file.createNewFile();
 
-            FileWriter fw = new FileWriter(file.getAbsoluteFile());
+            FileWriter fw = new FileWriter(file.getAbsoluteFile(), true);
             BufferedWriter bw = new BufferedWriter(fw);
 
             GsonBuilder gson = new GsonBuilder();
@@ -73,6 +73,7 @@ public class TextCommandDAO implements ICommandDAO {
             while(line != null)
             {
                 commands.add((ICommand)gson.create().fromJson(line, ICommand.class));
+                line = br.readLine();
             }
             br.close();
 

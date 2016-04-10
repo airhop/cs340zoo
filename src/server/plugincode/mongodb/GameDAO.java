@@ -7,6 +7,9 @@ import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 import server.plugincode.iplugin.IGameDAO;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by Joshua on 4/2/2016.
  */
@@ -52,6 +55,11 @@ public class GameDAO implements IGameDAO {
         }
 
         return null;
+    }
+
+    public List<GameModel> readAllGames()
+    {
+        return new ArrayList<GameModel>();
     }
 
     /**
