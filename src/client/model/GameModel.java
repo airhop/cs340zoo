@@ -32,6 +32,7 @@ public class GameModel extends Observable {
     private int winner = -1;
     private boolean first;
     public int playersToDiscard = 0;
+    private String title;
 
     public GameModel() {
         map = new Map();
@@ -157,6 +158,14 @@ public class GameModel extends Observable {
 //        dice = new Dice();
     }
 */
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
     public int getPlayerIndex(int playerId) {
         for (int i = 0; i < 4; i++) {

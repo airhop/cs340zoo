@@ -226,6 +226,7 @@ public class ServerFacade implements IServerFacade {
         myModel.getTurnTracker().updateStatus("FirstRound");
         gamesList.add(myModel);
         myModel.setID(gamesList.size() - 1);
+        myModel.setTitle(name);
         GameInfo gameObject = new GameInfo();
         gameObject.setId(myModel.getID());
         gameObject.setTitle(name);

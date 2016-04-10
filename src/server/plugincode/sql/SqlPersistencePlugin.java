@@ -5,13 +5,29 @@ import server.plugincode.iplugin.IGameDAO;
 import server.plugincode.iplugin.IPersistencePlugin;
 import server.plugincode.iplugin.IPlayerDAO;
 
+import java.io.File;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
 /**
  * Created by Joshua on 4/2/2016.
  */
 public class SqlPersistencePlugin implements IPersistencePlugin {
+    private ICommandDAO commandDao;
+    private IGameDAO gameDAO;
+    private IPlayerDAO playerDAO;
+    private Connection connection;
 
+    private static final String DATABASE_DIRECTORY = "database";
+    private static final String DATABASE_FILE = "Project1.sqlite";
+    private static final String DATABASE_URL = "jdbc:sqlite:" + DATABASE_DIRECTORY +
+            File.separator + DATABASE_FILE;
 
     public SqlPersistencePlugin(){
+        commandDao = new SqlCommandDAO();
+        gameDAO = new SqlGameDAO(connection);
+        playerDAO = new SqlPlayerDAO();
         try {
             final String driver = "org.sqlite.JDBC";
             Class.forName(driver);
@@ -26,7 +42,13 @@ public class SqlPersistencePlugin implements IPersistencePlugin {
      */
     @Override
     public void startTransaction() {
-
+        if(connection == null){
+            try {
+                connection = DriverManager.getConnection(DATABASE_URL);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     /**
@@ -35,7 +57,28 @@ public class SqlPersistencePlugin implements IPersistencePlugin {
      */
     @Override
     public void endTransaction(boolean commit) {
-
+        if (connection != null) {
+            try {
+                if (commit) {
+                    connection.commit();
+                }
+                else {
+                    connection.rollback();
+                }
+            }
+            catch (SQLException e) {
+                System.out.println("Could not end transaction");
+                e.printStackTrace();
+            }
+            finally {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+                connection = null;
+            }
+        }
     }
 
     /**
@@ -44,7 +87,7 @@ public class SqlPersistencePlugin implements IPersistencePlugin {
      */
     @Override
     public ICommandDAO getCommandDAO() {
-        return null;
+        return commandDao;
     }
 
     /**
@@ -53,7 +96,7 @@ public class SqlPersistencePlugin implements IPersistencePlugin {
      */
     @Override
     public IPlayerDAO getPlayerDAO() {
-        return null;
+        return playerDAO;
     }
 
     /**
@@ -62,6 +105,6 @@ public class SqlPersistencePlugin implements IPersistencePlugin {
      */
     @Override
     public IGameDAO getGameDAO() {
-        return null;
+        return gameDAO;
     }
 }
