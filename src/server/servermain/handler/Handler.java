@@ -23,8 +23,6 @@ import server.factories.MovesFactory;
 import server.factories.UserFactory;
 import server.commandobjects.ICommand;
 import server.plugincode.iplugin.IPersistencePlugin;
-import server.plugincode.mongodb.GameDAO;
-import server.plugincode.mongodb.MongoPersistencePlugin;
 import server.serverfacade.ServerFacade;
 import server.servermain.Server;
 import server.servermain.exceptions.ServerException;
@@ -398,12 +396,13 @@ public class Handler implements HttpHandler {
     }
 
     public void loadIntoServerFacade() {
+        IPP.startTransaction();
         List<Login> players = IPP.getPlayerDAO().readAllPlayers();
         List<GameModel> games = IPP.getGameDAO().readAllGames();
+        IPP.endTransaction(true);
         if (games.size() == 0 || players.size() == 0) {
             TreeMap<String, Login> newPlayers = ServerFacade.getInstance().getPlayers();
             List<GameModel> newGames = ServerFacade.getInstance().getGameInfoList();
-            IPP.startTransaction();
             IGameDAO game = IPP.getGameDAO();
             IPlayerDAO player = IPP.getPlayerDAO();
             for (GameModel g : newGames) {
@@ -413,8 +412,10 @@ public class Handler implements HttpHandler {
                 player.addPlayer(newPlayers.get(s));
             }
         }
+        IPP.startTransaction();
         players = IPP.getPlayerDAO().readAllPlayers();
         games = IPP.getGameDAO().readAllGames();
+        IPP.endTransaction(true);
         for (GameModel model : games) {
             gameUpdated.put(model.getID(), 0);
         }

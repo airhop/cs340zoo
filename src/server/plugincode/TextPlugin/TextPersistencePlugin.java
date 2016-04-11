@@ -4,7 +4,6 @@ import server.plugincode.iplugin.ICommandDAO;
 import server.plugincode.iplugin.IGameDAO;
 import server.plugincode.iplugin.IPersistencePlugin;
 import server.plugincode.iplugin.IPlayerDAO;
-import server.plugincode.mongodb.GameDAO;
 
 import java.io.File;
 import java.io.IOException;
