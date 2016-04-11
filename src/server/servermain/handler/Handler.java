@@ -38,6 +38,7 @@ import shared.locations.HexLocation;
 import shared.serialization.GameListDeserialize;
 import shared.serialization.MapSerializer;
 
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Type;
 import java.io.IOException;
 import java.io.OutputStream;
