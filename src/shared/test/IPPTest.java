@@ -8,15 +8,20 @@ import server.commandobjects.moves.SendChat;
 import server.plugincode.TextPlugin.TextPersistencePlugin;
 import server.plugincode.iplugin.ICommandDAO;
 import server.plugincode.iplugin.IGameDAO;
+import server.plugincode.iplugin.IPersistencePlugin;
 import server.plugincode.iplugin.IPlayerDAO;
+import server.plugincode.sql.SqlPersistencePlugin;
 import shared.jsonobject.Login;
 
 import java.util.List;
 
 public class IPPTest {
+    public IPersistencePlugin getPlugin(){
+        return new SqlPersistencePlugin();
+    }
     @Test
     public void PlayerDAO() {
-        TextPersistencePlugin tpp = new TextPersistencePlugin();
+        IPersistencePlugin tpp = getPlugin();
         IPlayerDAO tpdao = tpp.getPlayerDAO();
         tpdao.clearTable();
 
@@ -51,7 +56,7 @@ public class IPPTest {
 
     @Test
     public void TestGameDAO() {
-        TextPersistencePlugin tpp = new TextPersistencePlugin();
+        IPersistencePlugin tpp = getPlugin();
         IGameDAO gameDAO = tpp.getGameDAO();
         gameDAO.clearTable();
 
@@ -121,7 +126,7 @@ public class IPPTest {
 
     @Test
     public void CommandDAOTest() {
-        TextPersistencePlugin tpp = new TextPersistencePlugin();
+        IPersistencePlugin tpp = getPlugin();
         ICommandDAO commandDAO = tpp.getCommandDAO();
         commandDAO.clearAll();
 
