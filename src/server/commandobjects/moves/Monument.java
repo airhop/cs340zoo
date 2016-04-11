@@ -2,6 +2,7 @@ package server.commandobjects.moves;
 
 import server.commandobjects.ICommand;
 import server.serverfacade.ServerFacade;
+import server.shared.CommandType;
 
 import java.lang.reflect.Type;
 
@@ -29,5 +30,10 @@ public class Monument implements ICommand {
     @Override
     public void unexecute() {
 
+    }
+
+    @Override
+    public String getType() {
+        return CommandType.Monument.toString();
     }
 }

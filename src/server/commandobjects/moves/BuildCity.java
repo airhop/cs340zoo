@@ -2,6 +2,7 @@ package server.commandobjects.moves;
 
 import server.commandobjects.ICommand;
 import server.serverfacade.ServerFacade;
+import server.shared.CommandType;
 import shared.locations.VertexLocation;
 
 import java.lang.reflect.Type;
@@ -32,5 +33,10 @@ public class BuildCity implements ICommand {
     @Override
     public void unexecute() {
 
+    }
+
+    @Override
+    public String getType() {
+        return CommandType.buildCity.toString();
     }
 }

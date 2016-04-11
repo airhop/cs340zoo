@@ -15,4 +15,6 @@ public interface ICommand {
      * by the execute method
      */
     void unexecute();
+
+    String getType();
 }

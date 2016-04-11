@@ -2,6 +2,7 @@ package server.commandobjects.moves;
 
 import server.commandobjects.ICommand;
 import server.serverfacade.ServerFacade;
+import server.shared.CommandType;
 
 import java.lang.reflect.Type;
 
@@ -36,5 +37,10 @@ public class MaritimeTrade implements ICommand {
     @Override
     public void unexecute() {
 
+    }
+
+    @Override
+    public String getType() {
+        return CommandType.maritimeTrade.toString();
     }
 }

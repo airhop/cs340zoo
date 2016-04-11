@@ -2,6 +2,7 @@ package server.commandobjects.moves;
 
 import server.commandobjects.ICommand;
 import server.serverfacade.ServerFacade;
+import server.shared.CommandType;
 import shared.locations.HexLocation;
 
 import java.lang.reflect.Type;
@@ -34,5 +35,10 @@ public class Soldier implements ICommand {
     @Override
     public void unexecute() {
 
+    }
+
+    @Override
+    public String getType() {
+        return CommandType.Soldier.toString();
     }
 }
