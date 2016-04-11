@@ -4,6 +4,7 @@ import client.proxy.MockFunctionProxy;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
 import server.plugincode.TextPlugin.TextPersistencePlugin;
+import server.plugincode.iplugin.IPersistencePlugin;
 import server.plugincode.sql.SqlPersistencePlugin;
 import server.servermain.handler.Handler;
 import server.servermain.handler.Handlers;
@@ -125,7 +126,5 @@ public class Server {
 //            }
 //        }
     }
-
-
 
 }

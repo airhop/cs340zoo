@@ -153,6 +153,12 @@
 					value="lib/gson-2.5.jar" />
 			</manifest>
 		</jar>
+		<jar jarfile="${java.dist}/clear.jar" basedir="${java.build}">
+			<manifest>
+				<attribute name="Main-Class" value="server.servermain.Clearing"/>
+				<attribute name="Class-Path" value="lib/gson-2.5.jar"/>
+			</manifest>
+		</jar>
 	</target>
 	
 	<target name="our-client" depends="package" description="compiles, packages, and runs the student client">
@@ -176,6 +182,12 @@
 
 	<target name="cserver" depends="package" description="compiles packages yada yada yada">
 		<java jar="${java.dist}/catan-server.jar" dir="${java.dist}" fork="yes">
+			<arg value="${arg0}"/>
+		</java>
+	</target>
+
+	<target name="clear" description="clear tables">
+		<java jar="${java.dist}/clear.jar" dir="${java.dist}" fork="yes">
 			<arg value="${arg0}"/>
 		</java>
 	</target>
