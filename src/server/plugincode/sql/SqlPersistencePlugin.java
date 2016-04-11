@@ -25,16 +25,19 @@ public class SqlPersistencePlugin implements IPersistencePlugin {
             File.separator + DATABASE_FILE;
 
     public SqlPersistencePlugin(){
-        commandDao = new SqlCommandDAO(connection);
-        gameDAO = new SqlGameDAO(connection);
-        playerDAO = new SqlPlayerDAO(connection);
         try {
             final String driver = "org.sqlite.JDBC";
             Class.forName(driver);
+            //connection = DriverManager.getConnection(DATABASE_URL);
         }
-        catch(ClassNotFoundException e) {
+        catch(ClassNotFoundException e){// | SQLException e) {
             System.out.println(e.toString());
         }
+
+        commandDao = new SqlCommandDAO(connection);
+        gameDAO = new SqlGameDAO(connection);
+        playerDAO = new SqlPlayerDAO(connection);
+
     }
 
     /**

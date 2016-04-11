@@ -8,12 +8,14 @@
       <root url="jar://$PROJECT_DIR$/lib/mediaplayer.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/multiplayer.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/bson-3.0.2.jar!/" />
-      <root url="jar://$PROJECT_DIR$/lib/mongo-java-driver-2.13.3.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/mongodb-driver-3.0.4.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/sqlite-jdbc-3.8.11.2.jar!/" />
     </CLASSES>
     <JAVADOC>
       <root url="jar://$PROJECT_DIR$/lib/gson-2.5-javadoc.jar!/" />
     </JAVADOC>
-    <SOURCES />
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/lib/sqlite-jdbc-3.8.11.2.jar!/" />
+    </SOURCES>
   </library>
 </component>

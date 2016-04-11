@@ -4,11 +4,13 @@ import com.google.gson.GsonBuilder;
 import com.sun.xml.internal.bind.v2.TODO;
 import server.commandobjects.ICommand;
 import server.plugincode.iplugin.ICommandDAO;
+import server.shared.CommandType;
 import shared.jsonobject.Login;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 /**
  * Created by Joshua on 4/2/2016.
@@ -41,7 +43,7 @@ public class TextCommandDAO implements ICommandDAO {
 
             GsonBuilder gson = new GsonBuilder();
             String info = gson.create().toJson(command);
-            bw.write(info);
+            bw.write(command.getType() + " " + info + "\n");
             bw.close();
 
         } catch(IOException e)
@@ -71,14 +73,19 @@ public class TextCommandDAO implements ICommandDAO {
             String line = br.readLine();
             while(line != null)
             {
-                commands.add((ICommand)gson.create().fromJson(line, ICommand.class));
+                Scanner scan = new Scanner(line);
+                String type = scan.next();
+                String newCommand = scan.nextLine();
+                CommandType ct = CommandType.convert(type);
+                commands.add(CommandType.getClass(ct, newCommand));
                 line = br.readLine();
             }
             br.close();
 
         }catch (IOException e)
         {
-            System.out.println("Error in TextPlayerDAO readAllPlayers");
+            System.out.println("Error in TextCommandDAO readAllPlayers");
+
         }
         return commands;
     }
