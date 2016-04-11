@@ -47,18 +47,23 @@ public class PluginRegistry {
     public IPersistencePlugin createPlugin(PluginDescriptor inDescriptor) {
         IPersistencePlugin persPlugin = null;
         ClassLoader classLoader = PluginRegistry.class.getClassLoader();
-
-        try {
-           Class aClass = (classLoader.loadClass("com.jenkov.MyClass"));
-           persPlugin = (IPersistencePlugin) aClass.getConstructors()[0].newInstance();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
+        for(PluginDescriptor pd: pluginDescriptors) {
+            try {
+                Class aClass = (classLoader.loadClass("com.jenkov.MyClass"));
+                if(pd.getName().equals("SQLP")) {
+                    persPlugin = (IPersistencePlugin) aClass.getConstructors()[0].newInstance();
+                } else if(pd.getName().equals("TEXTP")) {
+                    persPlugin = (IPersistencePlugin) aClass.getConstructors()[0].newInstance();
+                }
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            } catch (InstantiationException e) {
+                e.printStackTrace();
+            } catch (InvocationTargetException e) {
+                e.printStackTrace();
+            }
         }
         return persPlugin;
     }

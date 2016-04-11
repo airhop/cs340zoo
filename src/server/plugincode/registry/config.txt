@@ -1,1 +1,4 @@
-name classpath descriptor name classpath descriptor
+SQLP classpath classname
+SQL classpath classname
+SQL classpath classname
+SQL classpath classname
