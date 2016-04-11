@@ -17,11 +17,10 @@ import java.util.List;
  * Created by Joshua on 4/2/2016.
  */
 public class SqlGameDAO implements IGameDAO {
-    private Connection connnection;
     private Gson myGson;
 
-    public SqlGameDAO(Connection givenConnection) {
-        connnection = givenConnection;
+
+    public SqlGameDAO() {
         GsonBuilder myBuild = new GsonBuilder();
         myBuild.enableComplexMapKeySerialization();
         myGson = myBuild.create();
@@ -39,12 +38,12 @@ public class SqlGameDAO implements IGameDAO {
         ResultSet rs = null;
         try {
             String query = "insert into games (GameId, GameName, Game) values (?, ?, ?)";
-            stmt = connnection.prepareStatement(query);
+            stmt = SqlPersistencePlugin.getConnection().prepareStatement(query);
             stmt.setInt(1, addModel.getID());
             stmt.setString(2, addModel.getTitle());
             stmt.setString(3, myGson.toJson(addModel));
 
-            stmt.executeQuery();
+            stmt.executeUpdate();
         } catch (SQLException e) {
         }
     }
@@ -64,7 +63,7 @@ public class SqlGameDAO implements IGameDAO {
 
         try {
             String query = "select Game from games WHERE GameId = ?";
-            stmt = connnection.prepareStatement(query);
+            stmt = SqlPersistencePlugin.getConnection().prepareStatement(query);
             stmt.setInt(1, gameId);
 
             rs = stmt.executeQuery();
@@ -85,7 +84,7 @@ public class SqlGameDAO implements IGameDAO {
 
         try {
             String query = "select Game from games";
-            stmt = connnection.prepareStatement(query);
+            stmt = SqlPersistencePlugin.getConnection().prepareStatement(query);
 
             rs = stmt.executeQuery();
             while (rs.next()) {
@@ -111,11 +110,11 @@ public class SqlGameDAO implements IGameDAO {
 
         try {
             String query = "update games set Game = ? where GameId = ?";
-            stmt = connnection.prepareStatement(query);
+            stmt = SqlPersistencePlugin.getConnection().prepareStatement(query);
             stmt.setString(1, myGson.toJson(updateModel, GameModel.class));
             stmt.setInt(2, gameId);
 
-            stmt.executeQuery();
+            stmt.executeUpdate();
         } catch (SQLException e) {
         }
     }
@@ -125,6 +124,14 @@ public class SqlGameDAO implements IGameDAO {
      */
     @Override
     public void clearTable() {
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
 
+        try {
+            String query = "DELETE from games";
+            stmt = SqlPersistencePlugin.getConnection().prepareStatement(query);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+        }
     }
 }

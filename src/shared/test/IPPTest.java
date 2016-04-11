@@ -23,6 +23,8 @@ public class IPPTest {
     public void PlayerDAO() {
         IPersistencePlugin tpp = getPlugin();
         IPlayerDAO tpdao = tpp.getPlayerDAO();
+
+        tpp.startTransaction();
         tpdao.clearTable();
 
         List<Login> logins = tpdao.readAllPlayers();
@@ -52,12 +54,15 @@ public class IPPTest {
         tpdao.clearTable();
         logins = tpdao.readAllPlayers();
         assert (logins.size() == 0);
+        tpp.endTransaction(true);
     }
 
     @Test
     public void TestGameDAO() {
         IPersistencePlugin tpp = getPlugin();
         IGameDAO gameDAO = tpp.getGameDAO();
+
+        tpp.startTransaction();
         gameDAO.clearTable();
 
         List<GameModel> games = gameDAO.readAllGames();
@@ -122,12 +127,15 @@ public class IPPTest {
         gameDAO.clearTable();
         games = gameDAO.readAllGames();
         assert (games.size() == 0);
+        tpp.endTransaction(true);
     }
 
     @Test
     public void CommandDAOTest() {
         IPersistencePlugin tpp = getPlugin();
         ICommandDAO commandDAO = tpp.getCommandDAO();
+
+        tpp.startTransaction();
         commandDAO.clearAll();
 
         commandDAO.addCommand(new SendChat(0, "Hello"), 0);
@@ -163,6 +171,6 @@ public class IPPTest {
 
         commands = commandDAO.readAllCommands(0);
         assert (commands.size() == 0);
-
+        tpp.endTransaction(true);
     }
 }

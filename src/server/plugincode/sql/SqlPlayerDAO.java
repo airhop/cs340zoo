@@ -19,10 +19,9 @@ import java.util.List;
  * Created by Joshua on 4/2/2016.
  */
 public class SqlPlayerDAO implements IPlayerDAO{
-    private Connection connnection;
 
-    public SqlPlayerDAO(Connection givenConnection) {
-        connnection = givenConnection;
+    public SqlPlayerDAO() {
+
     }
 
 
@@ -35,12 +34,12 @@ public class SqlPlayerDAO implements IPlayerDAO{
         PreparedStatement stmt;
         try {
             String query = "insert into players (PlayerId, Username, Password) values (?, ?, ?)";
-            stmt = connnection.prepareStatement(query);
+            stmt = SqlPersistencePlugin.getConnection().prepareStatement(query);
             stmt.setInt(1, player.getID());
             stmt.setString(2, player.getUsername());
             stmt.setString(3, player.getPassword());
 
-            stmt.executeQuery();
+            stmt.executeUpdate();
         } catch (SQLException e) {
         }
     }
@@ -51,15 +50,14 @@ public class SqlPlayerDAO implements IPlayerDAO{
      */
     @Override
     public List<Login> readAllPlayers() {
-        GameModel myModel = null;
         List<Login> myPlayers = new ArrayList<>();
 
         PreparedStatement stmt = null;
         ResultSet rs = null;
 
         try {
-            String query = "select PlayerId, Username, Password from games";
-            stmt = connnection.prepareStatement(query);
+            String query = "select * from players";
+            stmt = SqlPersistencePlugin.getConnection().prepareStatement(query);
 
             rs = stmt.executeQuery();
             while (rs.next()) {
@@ -75,6 +73,14 @@ public class SqlPlayerDAO implements IPlayerDAO{
      */
     @Override
     public void clearTable() {
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
 
+        try {
+            String query = "DELETE from players";
+            stmt = SqlPersistencePlugin.getConnection().prepareStatement(query);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+        }
     }
 }

@@ -6,9 +6,7 @@ import server.plugincode.iplugin.IPersistencePlugin;
 import server.plugincode.iplugin.IPlayerDAO;
 
 import java.io.File;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
 
 /**
  * Created by Joshua on 4/2/2016.
@@ -17,26 +15,30 @@ public class SqlPersistencePlugin implements IPersistencePlugin {
     private ICommandDAO commandDao;
     private IGameDAO gameDAO;
     private IPlayerDAO playerDAO;
-    private Connection connection;
+    private static Connection connection;
 
     private static final String DATABASE_DIRECTORY = "database";
     private static final String DATABASE_FILE = "Project1.sqlite";
     private static final String DATABASE_URL = "jdbc:sqlite:" + DATABASE_DIRECTORY +
             File.separator + DATABASE_FILE;
 
-    public SqlPersistencePlugin(){
-//        try {
-//            final String driver = "org.sqlite.JDBC";
-//            Class.forName(driver);
-//            //connection = DriverManager.getConnection(DATABASE_URL);
-//        }
-//        catch(ClassNotFoundException e){// | SQLException e) {
-//            System.out.println(e.toString());
-//        }
+    public static Connection getConnection() {
+        return connection;
+    }
 
-        commandDao = new SqlCommandDAO(connection);
-        gameDAO = new SqlGameDAO(connection);
-        playerDAO = new SqlPlayerDAO(connection);
+    public SqlPersistencePlugin() {
+        try {
+            final String driver = "org.sqlite.JDBC";
+            Class.forName(driver);
+            System.out.println("THISDFSDFLKJHSDLFKJ");
+            //connection = DriverManager.getConnection(DATABASE_URL);
+        } catch (ClassNotFoundException e) {// | SQLException e) {
+            System.out.println(e.toString());
+        }
+
+        commandDao = new SqlCommandDAO();
+        gameDAO = new SqlGameDAO();
+        playerDAO = new SqlPlayerDAO();
 
     }
 
@@ -45,9 +47,56 @@ public class SqlPersistencePlugin implements IPersistencePlugin {
      */
     @Override
     public void startTransaction() {
-        if(connection == null){
+        if (connection == null) {
             try {
                 connection = DriverManager.getConnection(DATABASE_URL);
+                if (connection == null) {
+                    System.out.println("DIE");
+                } else {
+                    System.out.println("real");
+                    //Check table else create them
+                    String query;
+                    PreparedStatement stmt;
+                    ResultSet rs;
+                    try {
+                        query = "SELECT name FROM sqlite_master WHERE type='table' AND name='players'";
+                        stmt = SqlPersistencePlugin.getConnection().prepareStatement(query);
+                        rs = stmt.executeQuery();
+                        if (!rs.next()) {
+                            query = "CREATE TABLE players " +
+                                    "(PlayerId INT NOT NULL," +
+                                    " Username     varchar(32)    NOT NULL, " +
+                                    " Password     varchar(32)     NOT NULL)";
+                            stmt = connection.prepareStatement(query);
+                            stmt.execute();
+                        }
+
+                        query = "SELECT name FROM sqlite_master WHERE type='table' AND name='games'";
+                        stmt = SqlPersistencePlugin.getConnection().prepareStatement(query);
+                        stmt.executeQuery();
+                        if (!rs.next()) {
+                            query = "CREATE TABLE games " +
+                                    "(GameId INT PRIMARY KEY     NOT NULL," +
+                                    " GameName varchar(64)    NOT NULL, " +
+                                    " Game   varchar(16384)     NOT NULL)";
+                            stmt = connection.prepareStatement(query);
+                            stmt.execute();
+                        }
+
+                        query = "SELECT name FROM sqlite_master WHERE type='table' AND name='commands'";
+                        stmt = SqlPersistencePlugin.getConnection().prepareStatement(query);
+                        rs = stmt.executeQuery();
+                        if (!rs.next()) {
+                            query = "CREATE TABLE commands " +
+                                    "(GameId INT   NOT NULL," +
+                                    " CommandType  varchar(64)    NOT NULL, " +
+                                    " Command      varchar(512)     NOT NULL)";
+                            stmt = connection.prepareStatement(query);
+                            stmt.execute();
+                        }
+                    } catch (SQLException e) {
+                    }
+                }
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -56,6 +105,7 @@ public class SqlPersistencePlugin implements IPersistencePlugin {
 
     /**
      * Ends the transaction on the dataBase, committing or not
+     *
      * @param commit Whether or not you are going to commit
      */
     @Override
@@ -64,16 +114,13 @@ public class SqlPersistencePlugin implements IPersistencePlugin {
             try {
                 if (commit) {
                     connection.commit();
-                }
-                else {
+                } else {
                     connection.rollback();
                 }
-            }
-            catch (SQLException e) {
+            } catch (SQLException e) {
                 System.out.println("Could not end transaction");
                 e.printStackTrace();
-            }
-            finally {
+            } finally {
                 try {
                     connection.close();
                 } catch (SQLException e) {
@@ -86,6 +133,7 @@ public class SqlPersistencePlugin implements IPersistencePlugin {
 
     /**
      * Abstract factory for the CommandDAO
+     *
      * @return Returns the DAO
      */
     @Override
@@ -95,6 +143,7 @@ public class SqlPersistencePlugin implements IPersistencePlugin {
 
     /**
      * Abstract factory for the PlayerDAO
+     *
      * @return Returns the DAO
      */
     @Override
@@ -104,6 +153,7 @@ public class SqlPersistencePlugin implements IPersistencePlugin {
 
     /**
      * Abstract factory for the GameDAO
+     *
      * @return Returns the DAO
      */
     @Override
