@@ -12,6 +12,7 @@ import client.model.map.VertexObject;
 import client.model.misc.TradeOffer;
 import client.model.player.CurrentPlayer;
 import client.proxy.Cookie;
+import com.google.gson.GsonBuilder;
 import server.ai.AILongestRoad;
 import server.ai.AITypes;
 import server.ai.IAIntel;
@@ -45,6 +46,9 @@ public class ServerFacade implements IServerFacade {
 
     private List<GameModel> gamesList;
     private List<GameInfo> gameInfoList;
+    private List<GameModel> savedGames;
+    private List<GameInfo> savedgameInfoList;
+
     private TreeMap<String, Login> players; // first is the username, next is the password
     int createPlayerIndex; //the currentID for the player to be added
     int createGameIndex;
@@ -57,6 +61,8 @@ public class ServerFacade implements IServerFacade {
     public ServerFacade() {
         gamesList = new ArrayList<>();
         gameInfoList = new ArrayList<>();
+        savedGames = new ArrayList<>();
+        savedgameInfoList = new ArrayList<>();
         players = new TreeMap<String, Login>();
         players.put("David", new Login("David", "david", 0));
         players.put("Aaron", new Login("Aaron", "aaron", 1));
@@ -152,6 +158,8 @@ public class ServerFacade implements IServerFacade {
             currPlayer.setGameId(-1);
             currPlayer.setPlayerIndex(-1);
         }
+
+        System.out.println("ServerFacade setting cookies = " + gameCookie.toString() + "\n" + userCookie.toString());
     }
 
     public void setCurrPlayer(CurrentPlayer currPlayer) {
@@ -210,8 +218,14 @@ public class ServerFacade implements IServerFacade {
      */
     @Override
     public List<GameInfo> getGamesList() {
-        System.out.println("here! " + gameInfoList.size());
-        return gameInfoList;
+//        System.out.println("here! " + gameInfoList.size());
+        System.out.println(gameInfoList.size() + " " + savedgameInfoList.size());
+        List<GameInfo> ReturningGameList = new ArrayList<GameInfo>();
+        for(int i = 0; i< gameInfoList.size(); i++)
+            ReturningGameList.add(gameInfoList.get(i));
+        for(int i = 0; i < savedgameInfoList.size(); i++)
+            ReturningGameList.add(savedgameInfoList.get(i));
+        return ReturningGameList;
     }
 
     /**
@@ -246,7 +260,34 @@ public class ServerFacade implements IServerFacade {
     public CreatedGame joinGame(int id, String color) {
         System.out.println("Game ID = " + id + " gamelistsize " + gamesList.size());
 
-        GameModel myModel = gamesList.get(id);
+        GameModel myModel;
+        if(id < 0)
+        {
+            GameModel saved = savedGames.get((id+1)*-1);
+            savedGames.remove((id+1)*-1);
+            savedgameInfoList.remove((id+1)*-1);
+
+            saved.setID(gamesList.size());
+            gamesList.add(saved);
+
+            ArrayList<PlayerInfo> cps = new ArrayList<PlayerInfo>();
+            ArrayList<Player> players = saved.getPlayers();
+            for(int i = 0; i < players.size(); i++)
+            {
+                if(players.get(i) != null)
+                {
+                    cps.add(new PlayerInfo(players.get(i).getPlayerIndex(), players.get(i).getPlayerID(), players.get(i).getUsername(), CatanColor.convert(players.get(i).getColor())));
+                }
+                else
+                    cps.add(new PlayerInfo());
+             }
+            GameInfo gi = new GameInfo(saved.getID(), saved.getTitle(), cps);
+            gameInfoList.add(gi);
+            myModel = saved;
+        }
+        else
+            myModel = gamesList.get(id);
+
         List<Player> gamePlayers = myModel.getPlayers();
         int playerIndex = -1;
         boolean firstJoin = false;
@@ -262,6 +303,7 @@ public class ServerFacade implements IServerFacade {
             }
         }
 
+
         if (firstJoin) {
             PlayerInfo myPlayer = new PlayerInfo();
             myPlayer.setColor(CatanColor.valueOf(color.toUpperCase()));
@@ -269,22 +311,31 @@ public class ServerFacade implements IServerFacade {
             myPlayer.setName(currPlayer.getUsername());
             myPlayer.setPlayerIndex(playerIndex);
             //need to add the new player to the game, not just the gameinfolist array
-            gameInfoList.get(id).addPlayer(myPlayer);
+            gameInfoList.get(myModel.getID()).addPlayer(myPlayer);
         } else {
-            PlayerInfo myPlayer = gameInfoList.get(id).getPlayers().get(playerIndex);
+            PlayerInfo myPlayer = gameInfoList.get(myModel.getID()).getPlayers().get(playerIndex);
             myPlayer.setColor(CatanColor.valueOf(color.toUpperCase()));
             myPlayer.setId(currPlayer.getPlayerId());
             myPlayer.setName(currPlayer.getUsername());
             myPlayer.setPlayerIndex(playerIndex);
         }
-        Player changePlayer = gamePlayers.get(playerIndex);
 
+        Player changePlayer = gamePlayers.get(playerIndex);
         changePlayer.setColor(color);
         changePlayer.setPlayerIndex(playerIndex);
         changePlayer.setUsername(currPlayer.getUsername());
         changePlayer.setPlayerID(currPlayer.getPlayerId());
 
-        return new CreatedGame(gameInfoList.get(id).getTitle(), id);
+        System.out.println("Playing game information " + gameInfoList.size() + " "  + myModel.getID() + " " + id);
+
+
+        GsonBuilder gson = new GsonBuilder();
+        gson.enableComplexMapKeySerialization();
+        System.out.println("My Model " + gson.create().toJson(myModel));
+        System.out.println(gson.create().toJson(gamesList.get(gamesList.size() - 1)));
+
+
+        return new CreatedGame(gameInfoList.get(myModel.getID()).getTitle(), myModel.getID());
     }
 
     /**
@@ -315,12 +366,17 @@ public class ServerFacade implements IServerFacade {
      */
     @Override
     public GameModel getModel() {
-        System.out.println("GameId " + currPlayer.getGameId());
+      //  System.out.println("GameId " + currPlayer.getGameId());
         if (currPlayer.getGameId() != -1) {
             return gamesList.get(currPlayer.getGameId());
         } else {
             return null;
         }
+    }
+
+    public GameModel getModel(int gameId)
+    {
+        return gamesList.get(gameId);
     }
 
     public CatanColor getColor(GameModel game){
@@ -1035,8 +1091,8 @@ public class ServerFacade implements IServerFacade {
         }
     }
 
-    public void loadInData(List<Login> player, List<GameModel> game) {
-        gamesList = game;
+    public void loadInData(List<Login> player, List<GameModel> normal, List<GameModel> saved) {
+        gamesList = normal;
         gameInfoList = new ArrayList<GameInfo>();
         for(GameModel g : gamesList)
         {
@@ -1056,6 +1112,26 @@ public class ServerFacade implements IServerFacade {
             gameInfoList.add(gi);
         }
 
+        savedGames = saved;
+        savedgameInfoList = new ArrayList<GameInfo>();
+        for(GameModel g : savedGames)
+        {
+            ArrayList<PlayerInfo> cps = new ArrayList<PlayerInfo>();
+            ArrayList<Player> players = g.getPlayers();
+            for(int i = 0; i < players.size(); i++)
+            {
+                if(players.get(i) != null)
+                {
+                    cps.add(new PlayerInfo(players.get(i).getPlayerIndex(), players.get(i).getPlayerID(), players.get(i).getUsername(), CatanColor.convert(players.get(i).getColor())));
+                }
+                else
+                    cps.add(new PlayerInfo());
+
+            }
+            GameInfo gi = new GameInfo(g.getID(), g.getTitle(), cps);
+            savedgameInfoList.add(gi);
+        }
+
         for (Login playa : player) {
             if (!players.containsKey(playa.getUsername())) {
                 players.put(playa.getUsername(), playa);
@@ -1071,5 +1147,32 @@ public class ServerFacade implements IServerFacade {
         return gamesList;
     }
 
+    public int saveGame(GameModel gm)
+    {
+        System.out.println("hey!");
+        gm.setID((savedGames.size()*-1) -1);
+        gm.setGameList(new ArrayList<GameInfo>());
+        savedGames.add(gm);
+        ArrayList<PlayerInfo> cps = new ArrayList<PlayerInfo>();
+        ArrayList<Player> players = gm.getPlayers();
+        for(int i = 0; i < players.size(); i++)
+        {
+            if(players.get(i) != null)
+            {
+                cps.add(new PlayerInfo(players.get(i).getPlayerIndex(), players.get(i).getPlayerID(), players.get(i).getUsername(), CatanColor.convert(players.get(i).getColor())));
+            }
+            else
+                cps.add(new PlayerInfo());
+
+        }
+        GameInfo gi = new GameInfo(gm.getID(), gm.getTitle(), cps);
+        savedgameInfoList.add(gi);
+        return gm.getID();
+    }
+
+    public GameModel retrieveFinal()
+    {
+        return gamesList.get(gamesList.size() - 1);
+    }
 
 }

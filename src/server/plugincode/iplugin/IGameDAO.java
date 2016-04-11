@@ -12,5 +12,6 @@ public interface IGameDAO {
     GameModel readGame(int gameId);
     List<GameModel> readAllGames();
     void updateGame(int gameId, GameModel updateModel);
+    void deleteGame(int gameId);
     void clearTable();
 }

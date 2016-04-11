@@ -307,7 +307,8 @@ public class MockFunctionProxy implements IProxy {
     }
 
     @Override
-    public void gamesSave() {
+    public void gamesSave(GameModel game)
+    {
 
     }
 

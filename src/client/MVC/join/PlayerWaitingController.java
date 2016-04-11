@@ -27,7 +27,15 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
     }
 
     private int getNumPlayers() {
-        int numPlayers = Facade.getInstance().gamesList().get(Facade.getInstance().getGameModel().getID()).getPlayers().size();
+        System.out.println(Facade.getInstance().getCurrentPlayer().getGameId());
+        List<GameInfo> gameInfo = Facade.getInstance().gamesList();
+        GameInfo foundGame = new GameInfo();
+        for(int i =0 ; i < gameInfo.size(); i++)
+        {
+            if(gameInfo.get(i).getId() == Facade.getInstance().getCurrentPlayer().getGameId())
+                foundGame = gameInfo.get(i);
+        }
+        int numPlayers = foundGame.getPlayers().size();
         if (numPlayers == 4)
             Facade.getInstance().setReady();
         return numPlayers;
@@ -37,10 +45,16 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
         int numPlayers = getNumPlayers();
         PlayerInfo[] players = new PlayerInfo[numPlayers];
 
+        List<GameInfo> gameInfo = Facade.getInstance().gamesList();
+        GameInfo foundGame = new GameInfo();
+        for(int i =0 ; i < gameInfo.size(); i++)
+        {
+            if(gameInfo.get(i).getId() == Facade.getInstance().getCurrentPlayer().getGameId())
+                foundGame = gameInfo.get(i);
+        }
+        List<PlayerInfo> myPlayers = foundGame.getPlayers();
+
         for (int i = 0; i < numPlayers; i++) {
-            int gameNum = Facade.getInstance().getGameModel().getID();
-            GameInfo myGame = Facade.getInstance().gamesList().get(gameNum);
-            List<PlayerInfo> myPlayers = myGame.getPlayers();
             players[i] = myPlayers.get(i);
         }
         return players;
@@ -55,8 +69,7 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
     @Override
     public void start() {
         Facade.getInstance().setPlayerWaiting(true);
-        System.out.println("the number of current players: ");
-        System.out.println(getNumPlayers());
+        System.out.println("the number of current players: " + getNumPlayers());
         getView().setPlayers(playersInfo());
         if (getNumPlayers() < 4) {
             getView().showModal();
@@ -99,7 +112,15 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
             }
             getView().setAIChoices(AIs);
         }
-        if (Facade.getInstance().gamesList().get(myPlayer.getGameId()).getPlayers().size() >= 4) {
+        List<GameInfo> gameInfo = Facade.getInstance().gamesList();
+        GameInfo foundGame = new GameInfo();
+        for(int i =0 ; i < gameInfo.size(); i++)
+        {
+            if(gameInfo.get(i).getId() == Facade.getInstance().getCurrentPlayer().getGameId())
+                foundGame = gameInfo.get(i);
+        }
+
+        if (foundGame.getPlayers().size() >= 4) {
             getView().setPlayers(playersInfo());
             if(Facade.getInstance().isPlayerWaiting()){
                 getView().closeModal();

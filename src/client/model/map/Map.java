@@ -457,7 +457,7 @@ public class Map {
      */
     //public void addSettlement(int x, int y, VertexDirection direction, int owner) throws FailureToAddException
     public void addSettlement(int x, int y, VertexDirection direction, int pid) throws FailureToAddException {
-        System.out.print("Settlement placement : " + x + " " + y + " " + direction.toString() + " " + pid);
+        //System.out.print("Settlement placement : " + x + " " + y + " " + direction.toString() + " " + pid);
         HexLocation hex = new HexLocation(x, y);
         VertexLocation location = new VertexLocation(hex, direction);
         location = location.getNormalizedLocation();
@@ -465,11 +465,11 @@ public class Map {
         Settlement settlement = new Settlement(location, pid);
         settlement.setSettlement(true);
         buildings.add(settlement);
-        System.out.println("\t" + location.toString());
+        //System.out.println("\t" + location.toString());
 
-        System.out.println("Buildings size " + buildings.size());
-        for(int i = 0; i < buildings.size(); i++)
-            System.out.println("Buildings " + i + " " + buildings.get(i).getOwner() + " " + buildings.get(i).toString());
+        //System.out.println("Buildings size " + buildings.size());
+        //for(int i = 0; i < buildings.size(); i++)
+        //    System.out.println("Buildings " + i + " " + buildings.get(i).getOwner() + " " + buildings.get(i).toString());
     }
 
     /**

@@ -47,7 +47,7 @@ public enum CatanColor
 		if(color.equalsIgnoreCase("Brown"))
 			return BROWN;
 
-		System.out.println("major error here :)");
+		System.out.println("major error here :) Color=" + color);
 		return WHITE;
 	}
 

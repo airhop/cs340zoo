@@ -29,6 +29,11 @@ public class TextGameDAO implements IGameDAO {
     public void addGame(GameModel addModel, int id)
     {
         try {
+            if(id < 0)
+            {
+                System.out.println("mkay?");
+                System.out.println(fileName+id+".txt");
+            }
             String name = fileName + id + ".txt";
             File file = new File(name);
             if (!file.exists())
@@ -135,6 +140,13 @@ public class TextGameDAO implements IGameDAO {
         {
             System.out.println("Error on the TextGameDAO updateGame");
         }
+    }
+
+    public void deleteGame(int gameId)
+    {
+        File file = new File(fileName+gameId+".txt");
+        if(file.exists())
+            file.delete();
     }
 
     /**

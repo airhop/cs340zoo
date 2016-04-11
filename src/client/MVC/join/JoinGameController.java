@@ -197,8 +197,13 @@ public class JoinGameController extends Controller implements IJoinGameControlle
             selectColorView.resetColors(myColor);
             selectColorView.closeModal();
             Facade.getInstance().updateGamesList();
-            List<GameInfo> gameInfo = Facade.getInstance().getGameModel().getGameList();
-            GameInfo game = gameInfo.get(Facade.getInstance().getCurrentPlayer().getGameId());
+            List<GameInfo> gameInfo = Facade.getInstance().gamesList();
+            GameInfo game = new GameInfo();
+            for(int i =0 ; i < gameInfo.size(); i++)
+            {
+                if(gameInfo.get(i).getId() == Facade.getInstance().getCurrentPlayer().getGameId())
+                    game = gameInfo.get(i);
+            }
             List<PlayerInfo> players = game.getPlayers();
             for(int i = 0; i < players.size(); i++){
                 if(!players.get(i).getName().equals("") && !Facade.getInstance().getCurrentPlayer().getUsername().equals(players.get(i).getName())){

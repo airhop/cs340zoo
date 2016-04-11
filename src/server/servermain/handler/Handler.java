@@ -9,15 +9,15 @@ import client.model.history.Log;
 import client.model.map.Hex;
 import client.model.map.Map;
 import client.proxy.Cookie;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.TypeAdapter;
+import com.google.gson.*;
+import com.google.gson.internal.bind.JsonTreeReader;
 import com.google.gson.reflect.TypeToken;
 import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import server.ai.AITypes;
 import server.commandobjects.games.Create;
+import server.commandobjects.games.Join;
 import server.factories.GamesFactory;
 import server.factories.MovesFactory;
 import server.factories.UserFactory;
@@ -102,7 +102,7 @@ public class Handler implements HttpHandler {
                 Headers reqHeaders = exchange.getRequestHeaders();
                 List<String> rh = reqHeaders.get("Cookie");
                 if (rh != null) {
-                    System.out.println("Cookie string " + rh.get(0));
+                 //   System.out.println("Cookie string " + rh.get(0));
                     scan = new Scanner(rh.get(0));
                     String first = scan.next();
                     if(first.length() > 10)
@@ -196,6 +196,7 @@ public class Handler implements HttpHandler {
             GsonBuilder gson = new GsonBuilder();
             gson.enableComplexMapKeySerialization();
             info = gson.create().toJson(gm);
+            System.out.println(info);
 //            private class DateTimeSerializer implements JsonSerializer<DateTime> {
 //                public JsonElement serialize(DateTime src, Type typeOfSrc, JsonSerializationContext context) {
 //                    return new JsonPrimitive(src.toString());
@@ -308,21 +309,50 @@ public class Handler implements HttpHandler {
             IPP.getGameDAO().addGame(new GameModel(cg.getTitle()), cg.getId());
             gameUpdated.put(cg.getId(), 0);
         } else if (path.contains("games/join")) {
+            if(gameCookie.isActive())
+            {
+                System.out.println("oops");
+                ArrayList<String> cookies = new ArrayList<String>();
+                cookies.add(gameCookie.toString());
+                exchange.getResponseHeaders().put("Set-Cookie", cookies);
+                exchange.sendResponseHeaders(200, 0);
+                exchange.getResponseBody().close();
+                return;
+            }
             current = gamesFactory.getCommand(new JsonConstructionInfo(CommandType.join, requestBody));
             Object o = current.execute();
 
-            gameCookie = new Cookie(((CreatedGame) o).getId());
+            int gameId = ((CreatedGame)o).getId();
+            if(IPP.getGameDAO().readGame(gameId) == null)
+            {
+                System.out.println("in here");
+                int i = (((CreatedGame)o).getId());
+                IPP.getGameDAO().deleteGame((i+1)*-1);
+                GameModel last = ServerFacade.getInstance().retrieveFinal();
+                IPP.getGameDAO().addGame(last, last.getID());
+                gameId = last.getID();
+            }
+
+            gameCookie = new Cookie(gameId);
             ArrayList<String> cookies = new ArrayList<String>();
-            System.out.println("gameCookie.toString() " + gameCookie.toString());
+//            System.out.println("gameCookie.toString() " + gameCookie.toString());
             cookies.add(gameCookie.toString());
             exchange.getResponseHeaders().put("Set-Cookie", cookies);
             exchange.sendResponseHeaders(200, 0);
             exchange.getResponseBody().close();
-            IPP.getGameDAO().updateGame(((CreatedGame)o).getId(), ServerFacade.getInstance().getModel());
+//            System.out.println(ServerFacade.getInstance().getModel(gameId));
+            IPP.getGameDAO().updateGame(((CreatedGame)o).getId(), ServerFacade.getInstance().getModel(gameId));
+
+            System.out.println("Finish Game Join " + gameId + " " + gameCookie.toString());
+
+            GsonBuilder gson = new GsonBuilder();
+            gson.enableComplexMapKeySerialization();
+            System.out.println(gson.create().toJson(ServerFacade.getInstance().getModel(gameId)));
+
         } else if (path.contains("games/list")) {
             List<GameInfo> gameInfo = ServerFacade.getInstance().getGamesList();
             String info = new com.google.gson.Gson().toJson(gameInfo);
-//            System.out.println("Game Info . .  ." + gameInfo.size() + " " + gameInfo.get(0).toString());
+            System.out.println("Game Info Here . .  ." + gameInfo.size() + " " + gameInfo.get(0).toString());
             exchange.sendResponseHeaders(200, info.length());
             exchange.getResponseBody().write(info.getBytes());
             exchange.getResponseBody().close();
@@ -338,6 +368,29 @@ public class Handler implements HttpHandler {
 //            System.out.println("Game Info . .  ." + gameInfo.size() + " " + gameInfo.get(0).toString());
             exchange.sendResponseHeaders(200, 0);
             exchange.getResponseBody().close();
+        } else if(path.contains("save")){
+            GsonBuilder gson = new GsonBuilder();
+            gson.enableComplexMapKeySerialization();
+
+            JsonParser myParse = new JsonParser();
+            JsonElement myEle = myParse.parse(requestBody.toString());
+            JsonTreeReader myTree = new JsonTreeReader(myEle);
+            try {
+                myTree.beginObject();
+                myTree.nextName();
+                String gsonedGame = myTree.nextString();
+                GameModel gm = gson.create().fromJson(gsonedGame, GameModel.class);
+                int id = ServerFacade.getInstance().saveGame(gm);
+                System.out.println("Id " + id);
+                exchange.sendResponseHeaders(200, "success".length());
+                exchange.getResponseBody().write("success".getBytes());
+                exchange.getResponseBody().close();
+                gm.setID(id);
+                IPP.getGameDAO().addGame(gm, id);
+            }catch(IOException e)
+            {
+                e.printStackTrace();
+            }
         } else {
             throw new ServerException("Not a valid game request");
         }
@@ -369,6 +422,7 @@ public class Handler implements HttpHandler {
         IPP.getCommandDAO().addCommand(current, ServerFacade.getInstance().getModel().getID());
         int currentGameID = ServerFacade.getInstance().getModel().getID();
         if (gameUpdated.get(currentGameID) == commandsBeforeStorage) {
+            System.out.println(ServerFacade.getInstance().getModel());
             IPP.getGameDAO().updateGame(currentGameID, ServerFacade.getInstance().getModel());
             gameUpdated.put(currentGameID, 0);
         } else {
@@ -416,12 +470,18 @@ public class Handler implements HttpHandler {
         players = IPP.getPlayerDAO().readAllPlayers();
         games = IPP.getGameDAO().readAllGames();
         IPP.endTransaction(true);
+        List<GameModel> saved = new ArrayList<GameModel>();
+        List<GameModel> normal = new ArrayList<GameModel>();
         for (GameModel model : games) {
-            gameUpdated.put(model.getID(), 0);
+            if(model.getID() < 0)
+                saved.add(model);
+            else {
+                normal.add(model);
+                gameUpdated.put(model.getID(), 0);
+            }
         }
 
-        System.out.println("sizes: " + players.size() + " " + games.size());
-        ServerFacade.getInstance().loadInData(players, games);
+        ServerFacade.getInstance().loadInData(players, normal, saved);
     }
 
 

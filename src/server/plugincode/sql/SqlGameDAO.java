@@ -119,6 +119,22 @@ public class SqlGameDAO implements IGameDAO {
         }
     }
 
+    public void deleteGame(int gameId)
+    {
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+
+        try {
+            String query = "delete from games where GameId = ?";
+            stmt = SqlPersistencePlugin.getConnection().prepareStatement(query);
+            stmt.setInt(1, gameId);
+
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+        }
+
+    }
+
     /**
      * Drop all tables
      */

@@ -323,9 +323,10 @@ public class Facade {
         try {
             proxy.gamesJoin(s, gameId);
             Joined = true;
-            game.setID(gameId);
+            game.setID(((Proxy)proxy).getGameID());
             game.getCurrentPlayer().setPlayerIndex(game.getPlayerIndex(game.getCurrentPlayer().getPlayerId()));
-            System.out.println("Index " +  game.getPlayerIndex(game.getCurrentPlayer().getPlayerId()));
+            game.getCurrentPlayer().setGameId(((Proxy)proxy).getGameID());
+            retrieveGameModel();
         } catch (InvalidUserException e) {
             //exceptionair!!
         }
@@ -805,5 +806,11 @@ public class Facade {
 
     public void setPlayerWaiting(boolean playerWaiting) {
         this.playerWaiting = playerWaiting;
+    }
+
+    public void saveGame()
+    {
+        if(Joined && ready)
+            proxy.gamesSave(getGameModel());
     }
 }

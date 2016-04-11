@@ -46,11 +46,11 @@ public class ServerTest {
     @Test
     public void testJoin() {
         facade = ServerFacade.getInstance();
-        String requestBody = "{\"id\":\"2\",\"color\":\"purple\"}";
+        String requestBody = "{\"id\":\"1\",\"color\":\"purple\"}";
         ICommand current = gamesFactory.getCommand(new JsonConstructionInfo(CommandType.join, requestBody));
         Object o = current.execute();
         CreatedGame game = (CreatedGame) o;
-        assert (game.getId() == 2);
+        assert (game.getId() == 1);
     }
 
     @Test

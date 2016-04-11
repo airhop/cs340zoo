@@ -388,6 +388,14 @@ public class Proxy implements IProxy {
         }
     }
 
+    public int getGameID()
+    {
+        if(gameCookie.isActive())
+            return Integer.parseInt(gameCookie.getCookieName());
+        else
+            return -100;
+    }
+
     @Override
     public void gamesJoin(String color, int gameId) throws InvalidUserException {
         JsonObject myObjOne = new JsonObject();
@@ -408,8 +416,21 @@ public class Proxy implements IProxy {
     }
 
     @Override
-    public void gamesSave() {
+    public void gamesSave(GameModel game)
+    {
+        String url = "/games/save";
+        GsonBuilder gson = new GsonBuilder();
+        gson.enableComplexMapKeySerialization();
+        String info = gson.create().toJson(game);
+        HttpURLResponse myResponse;
+        try{
+            JsonObject job = new JsonObject();
+            job.addProperty("Game", info);
+            myResponse = doPost(url, job);
 
+        } catch(ClientException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

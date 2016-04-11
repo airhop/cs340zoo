@@ -53,7 +53,7 @@ public interface IProxy {
     void gamesJoin(String color, int playerId) throws InvalidUserException;
 
 
-    void gamesSave();
+    void gamesSave(GameModel game);
 
     void gamesLoad();
 

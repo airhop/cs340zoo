@@ -1,5 +1,6 @@
 package server.servermain;
 
+import client.proxy.MockFunctionProxy;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
 import server.plugincode.TextPlugin.TextPersistencePlugin;
@@ -83,6 +84,12 @@ public class Server {
             server.stop(1);
     }
 
+
+    public static void Mockmain()
+    {
+        mainHandler = new MockHandler();
+        new Server().run(SERVER_PORT_NUMBER);
+    }
     /**
      * The main function
      * @param args - args passed to the main363

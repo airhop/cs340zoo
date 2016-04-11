@@ -68,7 +68,7 @@ public class MockProxy implements IProxy {
     }
 
     @Override
-    public void gamesSave() {
+    public void gamesSave(GameModel game) {
         System.out.println("MockProxy.java: gamesSave() is called");
     }
 

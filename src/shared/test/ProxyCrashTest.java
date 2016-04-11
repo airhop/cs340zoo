@@ -33,9 +33,7 @@ public class ProxyCrashTest {
             x++;
         myGameModel = new GameModel();
         myProxy = new MockFunctionProxy(myGameModel);
-        String[] send = new String[1];
-        send[0] = "mock handle!";
-        Server.main(send);
+        Server.Mockmain();
 
         try {
             if (!myProxy.userLogin(new User("David", "david")))
