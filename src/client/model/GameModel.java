@@ -1,7 +1,6 @@
 package client.model;
 
 import client.MVC.data.GameInfo;
-import client.facade.Facade;
 import client.model.bank.Bank;
 import client.model.bank.ResourceList;
 import client.model.map.*;
@@ -55,10 +54,28 @@ public class GameModel extends Observable {
     //for testing purposes only . . .
     public GameModel(String title)
     {
+        this.title = title;
         GameID = 200;
+        map = new Map();
+        bank = new Bank();
+        turnTracker = new TurnTracker();
+        tradeOffer = new TradeOffer();
+        dice = new Dice();
+        chat = new Chat();
+        log = new Log();
+        players = new ArrayList<>();
+        players.add(new Player("", 0));
+        players.add(new Player("", 1));
+        players.add(new Player("", 2));
+        players.add(new Player("", 3));
+        currentPlayer = new CurrentPlayer();
+        gameList = new ArrayList<>();
+        first = false;
+
     }
     public GameModel(String title, int GameID)
     {
+        this.title = title;
         setID(GameID);
         map = new Map();
         bank = new Bank();
@@ -145,6 +162,7 @@ public class GameModel extends Observable {
         currentPlayer = new CurrentPlayer();
         gameList = new ArrayList<>();
         first = false;
+        title = name;
     }
 
  /*   public void reinitialize(GameModel game) {
@@ -283,9 +301,7 @@ public class GameModel extends Observable {
     /**
      * updates version of the game model
      */
-    public void updateVersion() {
-        version++;
-    }
+   // public void updateVersion() {version++;   }
 
     /**
      * Checks to see if the player can win the game

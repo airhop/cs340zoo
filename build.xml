@@ -172,7 +172,13 @@
 			</assertions>
 		</java>
 	</target>
-    
+
+	<target name="cserver" depends="package" description="compiles packages yada yada yada">
+		<java jar="${java.dist}/catan-server.jar" dir="${java.dist}" fork="yes">
+			<arg value="${arg0}"/>
+		</java>
+	</target>
+
     <target name="make-tester-zip" depends="package" description="makes a zip file for your testing team">
         <zip destfile="./tester.zip" basedir="${java.dist}" />
     </target>

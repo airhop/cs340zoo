@@ -11,6 +11,7 @@ import server.servermain.handler.MockHandler;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
+import java.util.Scanner;
 
 
 /**
@@ -87,15 +88,22 @@ public class Server {
      * The main function
      * @param args - args passed to the main363
      */
-    public static void main(String[] args) {
-
+    public static void main(String[] args)
+    {
         System.out.println(args.length);
-        if(args[0].equals("MDB"))
-           mainHandler = new Handler(new MongoPersistencePlugin(), Integer.parseInt(args[1]));
-        if(args[0].equals("SQL"))
-            mainHandler = new Handler(new SqlPersistencePlugin(), Integer.parseInt(args[1]));
-        if(args[0].equals("TXT"))
-            mainHandler = new Handler(new TextPersistencePlugin(), Integer.parseInt(args[1]));
+        for(int i = 0; i <args.length; i++)
+            System.out.println((args[0]));
+
+        Scanner scan = new Scanner(args[0]);
+        String type = scan.next();
+        int revisions = scan.nextInt();
+
+        if(type.equals("MDB"))
+           mainHandler = new Handler(new MongoPersistencePlugin(), revisions);
+        if(type.equals("SQL"))
+            mainHandler = new Handler(new SqlPersistencePlugin(), revisions);
+        if(type.equals("TXT"))
+            mainHandler = new Handler(new TextPersistencePlugin(), revisions);
 
         new Server().run(SERVER_PORT_NUMBER);
 //        if(args.length == 1)

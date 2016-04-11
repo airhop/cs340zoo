@@ -27,7 +27,6 @@ public class TextCommandDAO implements ICommandDAO {
      * @param gameId  Game command to be added
      */
 
-    //TODO potentially overwrites everything int the file?  Need to experiment
     @Override
     public void addCommand(ICommand command, int gameId)
     {
