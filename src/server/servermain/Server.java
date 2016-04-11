@@ -3,7 +3,6 @@ package server.servermain;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
 import server.plugincode.TextPlugin.TextPersistencePlugin;
-import server.plugincode.mongodb.MongoPersistencePlugin;
 import server.plugincode.sql.SqlPersistencePlugin;
 import server.servermain.handler.Handler;
 import server.servermain.handler.Handlers;
@@ -98,8 +97,6 @@ public class Server {
         String type = scan.next();
         int revisions = scan.nextInt();
 
-        if(type.equals("MDB"))
-           mainHandler = new Handler(new MongoPersistencePlugin(), revisions);
         if(type.equals("SQL"))
             mainHandler = new Handler(new SqlPersistencePlugin(), revisions);
         if(type.equals("TXT"))
@@ -122,10 +119,6 @@ public class Server {
 //        }
     }
 
-    public void Begin(String type, int values)
-    {
-        mainHandler = new Handler(new MongoPersistencePlugin(), values);
-    }
 
 
 }
