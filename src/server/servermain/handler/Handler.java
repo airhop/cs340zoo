@@ -419,6 +419,8 @@ public class Handler implements HttpHandler {
         for (GameModel model : games) {
             gameUpdated.put(model.getID(), 0);
         }
+
+        System.out.println("sizes: " + players.size() + " " + games.size());
         ServerFacade.getInstance().loadInData(players, games);
     }
 
