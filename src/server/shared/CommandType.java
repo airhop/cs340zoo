@@ -33,14 +33,13 @@ public enum CommandType {
         if(type.equalsIgnoreCase("Soldier"))  return Soldier;
         if(type.equalsIgnoreCase("Monopoly")) return Monopoly;
         if(type.equalsIgnoreCase("Monument")) return Monument;
-
         if(type.equalsIgnoreCase("buildRoad")) return buildRoad;
         if(type.equalsIgnoreCase("buildSettlement")) return buildSettlement;
         if(type.equalsIgnoreCase("buildCity")) return buildCity;
         if(type.equalsIgnoreCase("offerTrade")) return offerTrade;
         if(type.equalsIgnoreCase("acceptTrade"))  return acceptTrade;
         if(type.equalsIgnoreCase("maritimeTrade"))  return maritimeTrade;
-        if (type.equalsIgnoreCase("discardCards")) return discardCards;
+        if(type.equalsIgnoreCase("discardCards")) return discardCards;
 
         return listAI;
     }

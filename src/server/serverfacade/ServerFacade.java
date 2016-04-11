@@ -1037,6 +1037,25 @@ public class ServerFacade implements IServerFacade {
 
     public void loadInData(List<Login> player, List<GameModel> game) {
         gamesList = game;
+        gameInfoList = new ArrayList<GameInfo>();
+        for(GameModel g : gamesList)
+        {
+            ArrayList<PlayerInfo> cps = new ArrayList<PlayerInfo>();
+            ArrayList<Player> players = g.getPlayers();
+            for(int i = 0; i < players.size(); i++)
+            {
+                if(players.get(i) != null)
+                {
+                    cps.add(new PlayerInfo(players.get(i).getPlayerIndex(), players.get(i).getPlayerID(), players.get(i).getUsername(), CatanColor.convert(players.get(i).getColor())));
+                }
+                else
+                    cps.add(new PlayerInfo());
+
+            }
+            GameInfo gi = new GameInfo(g.getID(), g.getTitle(), cps);
+            gameInfoList.add(gi);
+        }
+
         for (Login playa : player) {
             if (!players.containsKey(playa.getUsername())) {
                 players.put(playa.getUsername(), playa);
