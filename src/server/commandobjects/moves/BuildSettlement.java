@@ -2,6 +2,7 @@ package server.commandobjects.moves;
 
 import server.commandobjects.ICommand;
 import server.serverfacade.ServerFacade;
+import server.shared.CommandType;
 import shared.locations.HexLocation;
 import shared.locations.VertexDirection;
 import shared.locations.VertexLocation;
@@ -36,5 +37,10 @@ public class BuildSettlement implements ICommand {
     @Override
     public void unexecute() {
 
+    }
+
+    @Override
+    public String getType() {
+        return CommandType.buildSettlement.toString();
     }
 }

@@ -2,6 +2,7 @@ package server.commandobjects.moves;
 
 import server.commandobjects.ICommand;
 import server.serverfacade.ServerFacade;
+import server.shared.CommandType;
 import shared.locations.EdgeDirection;
 import shared.locations.EdgeLocation;
 
@@ -35,5 +36,10 @@ public class BuildRoad implements ICommand {
     @Override
     public void unexecute() {
 
+    }
+
+    @Override
+    public String getType() {
+        return CommandType.buildRoad.toString();
     }
 }

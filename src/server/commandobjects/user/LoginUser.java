@@ -5,6 +5,7 @@ import client.model.GameModel;
 import server.commandobjects.ICommand;
 import server.serverfacade.ServerFacade;
 import server.servermain.Server;
+import server.shared.CommandType;
 import shared.jsonobject.Login;
 
 /**
@@ -32,5 +33,10 @@ public class LoginUser implements ICommand {
     @Override
     public void unexecute() {
 
+    }
+
+    @Override
+    public String getType() {
+        return CommandType.login.toString();
     }
 }
