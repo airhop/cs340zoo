@@ -5,6 +5,7 @@ package server.servermain.handler;
 import client.MVC.data.GameInfo;
 import client.MVC.data.PlayerInfo;
 import client.model.GameModel;
+import client.model.history.Log;
 import client.model.map.Hex;
 import client.model.map.Map;
 import client.proxy.Cookie;
@@ -22,11 +23,15 @@ import server.factories.MovesFactory;
 import server.factories.UserFactory;
 import server.commandobjects.ICommand;
 import server.plugincode.iplugin.IPersistencePlugin;
+import server.plugincode.mongodb.GameDAO;
 import server.plugincode.mongodb.MongoPersistencePlugin;
 import server.serverfacade.ServerFacade;
+import server.servermain.Server;
 import server.servermain.exceptions.ServerException;
 import server.servermain.JsonConstructionInfo;
 import server.shared.CommandType;
+import server.plugincode.iplugin.IGameDAO;
+import server.plugincode.iplugin.IPlayerDAO;
 import shared.jsonobject.CreatedGame;
 import shared.jsonobject.Login;
 import shared.locations.HexLocation;
@@ -36,10 +41,7 @@ import shared.serialization.MapSerializer;
 import java.lang.reflect.Type;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
-import java.util.TreeMap;
+import java.util.*;
 
 /**
  * Created by Joshua on 3/9/2016.
@@ -54,16 +56,18 @@ public class Handler implements HttpHandler {
     private boolean swagger = false;
     private boolean duplicate;  //big bandaid . . .
     private IPersistencePlugin IPP;
-    private int commands;
-
+    private int commandsBeforeStorage;
+    //First int is game model id, second is number of times a command has been done on that game
+    private HashMap<Integer, Integer> gameUpdated = new HashMap<Integer, Integer>();
     public Handler(IPersistencePlugin ipp, int runs)
     {
         userFactory = new UserFactory();
         gamesFactory = new GamesFactory();
         movesFactory = new MovesFactory();
         IPP = ipp;
-        commands = runs;
+        commandsBeforeStorage = runs;
         duplicate = false;
+        loadIntoServerFacade();
     }
 
     /**
@@ -303,6 +307,7 @@ public class Handler implements HttpHandler {
             exchange.getResponseBody().write(info.getBytes());
             exchange.getResponseBody().close();
             IPP.getGameDAO().addGame(new GameModel(cg.getTitle()), cg.getId());
+            gameUpdated.put(cg.getId(), 0);
         } else if (path.contains("games/join")) {
             current = gamesFactory.getCommand(new JsonConstructionInfo(CommandType.join, requestBody));
             Object o = current.execute();
@@ -363,6 +368,13 @@ public class Handler implements HttpHandler {
         ICommand current = movesFactory.getCommand(new JsonConstructionInfo(type, requestBody));
 
         IPP.getCommandDAO().addCommand(current, ServerFacade.getInstance().getModel().getID());
+        int currentGameID = ServerFacade.getInstance().getModel().getID();
+        if (gameUpdated.get(currentGameID) == commandsBeforeStorage) {
+            IPP.getGameDAO().updateGame(currentGameID, ServerFacade.getInstance().getModel());
+            gameUpdated.put(currentGameID, 0);
+        } else {
+            gameUpdated.put(currentGameID, gameUpdated.get(currentGameID) + 1);
+        }
 
         System.out.println("here!");
         Object o = current.execute();
@@ -383,6 +395,31 @@ public class Handler implements HttpHandler {
         exchange.getResponseBody().write(info.getBytes());
         exchange.getResponseBody().close();
     }
+
+    public void loadIntoServerFacade() {
+        List<Login> players = IPP.getPlayerDAO().readAllPlayers();
+        List<GameModel> games = IPP.getGameDAO().readAllGames();
+        if (games.size() == 0 || players.size() == 0) {
+            TreeMap<String, Login> newPlayers = ServerFacade.getInstance().getPlayers();
+            List<GameModel> newGames = ServerFacade.getInstance().getGameInfoList();
+            IPP.startTransaction();
+            IGameDAO game = IPP.getGameDAO();
+            IPlayerDAO player = IPP.getPlayerDAO();
+            for (GameModel g : newGames) {
+                game.addGame(g, g.getID());
+            }
+            for (String s : newPlayers.keySet()) {
+                player.addPlayer(newPlayers.get(s));
+            }
+        }
+        players = IPP.getPlayerDAO().readAllPlayers();
+        games = IPP.getGameDAO().readAllGames();
+        for (GameModel model : games) {
+            gameUpdated.put(model.getID(), 0);
+        }
+        ServerFacade.getInstance().loadInData(players, games);
+    }
+
 
 }
 

@@ -5,6 +5,7 @@ import client.MVC.data.PlayerInfo;
 import client.MVC.main.Catan;
 import client.model.bank.Bank;
 import client.model.bank.DevCardList;
+import client.model.history.Log;
 import client.model.map.Map;
 import client.model.map.Road;
 import client.model.map.VertexObject;
@@ -1033,4 +1034,23 @@ public class ServerFacade implements IServerFacade {
             }
         }
     }
+
+    public void loadInData(List<Login> player, List<GameModel> game) {
+        gamesList = game;
+        for (Login playa : player) {
+            if (!players.containsKey(playa.getUsername())) {
+                players.put(playa.getUsername(), playa);
+            }
+        }
+    }
+
+    public TreeMap<String, Login> getPlayers() {
+        return players;
+    }
+
+    public List<GameModel> getGameInfoList() {
+        return gamesList;
+    }
+
+
 }
