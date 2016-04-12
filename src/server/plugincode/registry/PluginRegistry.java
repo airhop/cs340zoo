@@ -49,7 +49,7 @@ public class PluginRegistry {
         ClassLoader classLoader = PluginRegistry.class.getClassLoader();
         for(PluginDescriptor pd: pluginDescriptors) {
             try {
-                Class aClass = (classLoader.loadClass("com.jenkov.MyClass"));
+                Class aClass = (classLoader.loadClass(pd.classPath));
                 if(pd.getName().equals("SQLP")) {
                     persPlugin = (IPersistencePlugin) aClass.getConstructors()[0].newInstance();
                 } else if(pd.getName().equals("TEXTP")) {
