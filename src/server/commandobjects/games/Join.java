@@ -36,4 +36,5 @@ public class Join implements ICommand {
     public String getType() {
         return CommandType.join.toString();
     }
+    public int getPID() { return id; }
 }

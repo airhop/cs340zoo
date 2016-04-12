@@ -32,4 +32,5 @@ public class ListAI implements ICommand {
     public String getType() {
         return CommandType.listAI.toString();
     }
+    public int getPID() {return -1;}
 }

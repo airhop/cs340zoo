@@ -41,4 +41,5 @@ public class Soldier implements ICommand {
     public String getType() {
         return CommandType.Soldier.toString();
     }
+    public int getPID() {return playerIndex;}
 }

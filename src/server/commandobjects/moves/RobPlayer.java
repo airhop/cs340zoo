@@ -41,4 +41,5 @@ public class RobPlayer implements ICommand {
     public String getType() {
         return CommandType.robPlayer.toString();
     }
+    public int getPID() {return playerIndex;}
 }

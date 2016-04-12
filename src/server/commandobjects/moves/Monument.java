@@ -36,4 +36,5 @@ public class Monument implements ICommand {
     public String getType() {
         return CommandType.Monument.toString();
     }
+    public int getPID() {return playerIndex;}
 }

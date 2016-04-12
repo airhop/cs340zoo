@@ -43,4 +43,5 @@ public class MaritimeTrade implements ICommand {
     public String getType() {
         return CommandType.maritimeTrade.toString();
     }
+    public int getPID() {return playerIndex;}
 }

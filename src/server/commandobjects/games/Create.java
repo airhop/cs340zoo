@@ -41,4 +41,6 @@ public class Create implements ICommand {
     public String getType() {
         return CommandType.create.toString();
     }
+
+    public int getPID() {return -1;}
 }

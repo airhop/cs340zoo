@@ -43,4 +43,5 @@ public class BuildSettlement implements ICommand {
     public String getType() {
         return CommandType.buildSettlement.toString();
     }
+    public int getPID() {return playerIndex;}
 }

@@ -446,6 +446,7 @@ public class ServerFacade implements IServerFacade {
                 myPlayer.setPlayerIndex(numberOfPlayers);
                 //need to add the new player to the game, not just the gameinfolist array
                 gameInfoList.get(currPlayer.getGameId()).addPlayer(myPlayer);
+                //gamesList.get(currPlayer.getGameId()).getPlayers().add(new Player(addPlayer.getName(), addPlayer.getId()));
 
                 Player changePlayer = game.getPlayers().get(numberOfPlayers);
 
@@ -1112,6 +1113,11 @@ public class ServerFacade implements IServerFacade {
             gameInfoList.add(gi);
         }
 
+        for (Login playa : player) {
+            if (!players.containsKey(playa.getUsername())) {
+                players.put(playa.getUsername(), playa);
+            }
+        }
         savedGames = saved;
         savedgameInfoList = new ArrayList<GameInfo>();
         for(GameModel g : savedGames)
@@ -1132,11 +1138,6 @@ public class ServerFacade implements IServerFacade {
             savedgameInfoList.add(gi);
         }
 
-        for (Login playa : player) {
-            if (!players.containsKey(playa.getUsername())) {
-                players.put(playa.getUsername(), playa);
-            }
-        }
     }
 
     public TreeMap<String, Login> getPlayers() {

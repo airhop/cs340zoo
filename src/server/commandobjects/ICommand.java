@@ -17,4 +17,5 @@ public interface ICommand {
     void unexecute();
 
     String getType();
+    int getPID();
 }

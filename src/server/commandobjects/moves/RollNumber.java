@@ -38,4 +38,5 @@ public class RollNumber implements ICommand {
         return CommandType.rollNumber.toString();
     }
 
+    public int getPID() {return playerIndex;}
 }

@@ -35,4 +35,5 @@ public class BuyDevCard implements ICommand {
     public String getType() {
         return CommandType.buyDevCard.toString();
     }
+    public int getPID() {return playerIndex;}
 }

@@ -43,4 +43,5 @@ public class RoadBuilding implements ICommand {
     public String getType() {
         return CommandType.Road_Building.toString();
     }
+    public int getPID() {return playerIndex;}
 }

@@ -32,4 +32,5 @@ public class AddAI implements ICommand {
     public String getType() {
         return CommandType.addAI.toString();
     }
+    public int getPID() {return -1;}
 }

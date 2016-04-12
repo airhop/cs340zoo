@@ -39,4 +39,5 @@ public class SendChat implements ICommand {
     public String getType() {
         return CommandType.sendChat.toString();
     }
+    public int getPID() {return playerIndex;}
 }

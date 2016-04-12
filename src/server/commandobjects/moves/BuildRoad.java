@@ -42,4 +42,5 @@ public class BuildRoad implements ICommand {
     public String getType() {
         return CommandType.buildRoad.toString();
     }
+    public int getPID() {return playerIndex;}
 }

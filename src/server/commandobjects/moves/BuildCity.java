@@ -39,4 +39,5 @@ public class BuildCity implements ICommand {
     public String getType() {
         return CommandType.buildCity.toString();
     }
+    public int getPID() {return playerIndex;}
 }

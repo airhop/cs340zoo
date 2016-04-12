@@ -8,6 +8,7 @@ import client.model.GameModel;
 import client.model.history.Log;
 import client.model.map.Hex;
 import client.model.map.Map;
+import client.model.player.Player;
 import client.proxy.Cookie;
 import com.google.gson.*;
 import com.google.gson.internal.bind.JsonTreeReader;
@@ -423,6 +424,7 @@ public class Handler implements HttpHandler {
         int currentGameID = ServerFacade.getInstance().getModel().getID();
         if (gameUpdated.get(currentGameID) == commandsBeforeStorage) {
             System.out.println(ServerFacade.getInstance().getModel());
+            updateGameModel(currentGameID);
             IPP.getGameDAO().updateGame(currentGameID, ServerFacade.getInstance().getModel());
             gameUpdated.put(currentGameID, 0);
         } else {
@@ -472,18 +474,58 @@ public class Handler implements HttpHandler {
         IPP.endTransaction(true);
         List<GameModel> saved = new ArrayList<GameModel>();
         List<GameModel> normal = new ArrayList<GameModel>();
-        for (GameModel model : games) {
+
+        for(GameModel model: games)
+        {
             if(model.getID() < 0)
                 saved.add(model);
-            else {
+            else
                 normal.add(model);
-                gameUpdated.put(model.getID(), 0);
+        }
+        ServerFacade.getInstance().loadInData(players, normal, saved);
+
+        for (GameModel model : games) {
+            if(model.getID() >= 0)
+            {
+                IPP.startTransaction();
+                List<ICommand> commands = IPP.getCommandDAO().readAllCommands(model.getID());
+                IPP.endTransaction(true);
+                if(commands.size() > commandsBeforeStorage) {
+                    updateGameModel(model.getID());
+                    gameUpdated.put(model.getID(), commands.size());
+                }
+                else
+                    gameUpdated.put(model.getID(), commands.size());
             }
         }
 
-        ServerFacade.getInstance().loadInData(players, normal, saved);
     }
 
+
+    public void updateGameModel(int gameID)
+    {
+        GameModel current = ServerFacade.getInstance().getModel(gameID);
+        Cookie gc = new Cookie(gameID);
+        List<Player> players = current.getPlayers();
+
+        IPP.startTransaction();
+        List<ICommand> commands = IPP.getCommandDAO().readAllCommands(gameID);
+        IPP.endTransaction(true);
+
+        for(int i = 0; i < commands.size(); i++)
+        {
+            ICommand command = commands.get(i);
+            int pid = command.getPID();
+            Cookie uc = new Cookie(players.get(pid).getUsername(), players.get(pid).getPassword(), Integer.toString(pid));
+            ServerFacade.getInstance().buildCurrentPlayer(uc, gc);
+            command.execute();
+        }
+
+        IPP.startTransaction();
+        IPP.getGameDAO().updateGame(gameID, ServerFacade.getInstance().getModel(gameID));
+        IPP.getCommandDAO().clearGame(gameID);
+        IPP.endTransaction(true);
+    }
 
 }
 

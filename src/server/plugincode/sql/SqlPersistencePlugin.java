@@ -53,6 +53,7 @@ public class SqlPersistencePlugin implements IPersistencePlugin {
                 if (connection == null) {
                     System.out.println("DIE");
                 } else {
+                    connection.setAutoCommit(false);
                     System.out.println("real");
                     //Check table else create them
                     String query;

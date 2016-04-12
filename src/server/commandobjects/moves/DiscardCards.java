@@ -40,4 +40,5 @@ public class DiscardCards implements ICommand {
     public String getType() {
         return CommandType.discardCards.toString();
     }
+    public int getPID() {return playerIndex;}
 }

@@ -41,4 +41,5 @@ public class YearOfPlenty implements ICommand {
     public String getType() {
         return CommandType.Year_Of_Plenty.toString();
     }
+    public int getPID() {return playerIndex;}
 }

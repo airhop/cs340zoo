@@ -39,4 +39,5 @@ public class Monopoly implements ICommand {
     public String getType() {
         return CommandType.Monopoly.toString();
     }
+    public int getPID() {return playerIndex;}
 }

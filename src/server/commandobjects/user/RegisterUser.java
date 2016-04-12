@@ -36,4 +36,5 @@ public class RegisterUser implements ICommand {
     public String getType() {
         return CommandType.register.toString();
     }
+    public int getPID() {return -1;}
 }

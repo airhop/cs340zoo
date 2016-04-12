@@ -39,4 +39,5 @@ public class AcceptTrade implements ICommand {
     public String getType() {
         return CommandType.acceptTrade.toString();
     }
+    public int getPID() {return playerIndex;}
 }

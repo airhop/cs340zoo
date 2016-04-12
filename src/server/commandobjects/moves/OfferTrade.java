@@ -42,4 +42,6 @@ public class OfferTrade implements ICommand {
     public String getType() {
         return CommandType.offerTrade.toString();
     }
+
+    public int getPID() {return playerIndex;}
 }

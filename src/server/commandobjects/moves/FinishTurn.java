@@ -38,4 +38,5 @@ public class FinishTurn implements ICommand {
     public String getType() {
         return CommandType.finishTurn.toString();
     }
+    public int getPID() {return playerIndex;}
 }

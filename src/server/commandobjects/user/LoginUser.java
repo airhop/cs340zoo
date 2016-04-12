@@ -39,4 +39,5 @@ public class LoginUser implements ICommand {
     public String getType() {
         return CommandType.login.toString();
     }
+    public int getPID() {return -1;}
 }
