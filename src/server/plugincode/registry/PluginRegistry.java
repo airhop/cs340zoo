@@ -64,6 +64,7 @@ public class PluginRegistry {
 
         File gameDependenciesJar = new File("plugin/text.jar");
 
+
         URLClassLoader cl = null;
         try {
             cl = new URLClassLoader(new URL[]{gameJar.toURI().toURL(), gameDependenciesJar.toURI().toURL()});
