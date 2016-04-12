@@ -425,7 +425,6 @@ public class Handler implements HttpHandler {
         int currentGameID = ServerFacade.getInstance().getModel().getID();
         if (gameUpdated.get(currentGameID) == commandsBeforeStorage) {
             System.out.println(ServerFacade.getInstance().getModel());
-            updateGameModel(currentGameID);
             IPP.startTransaction();
             IPP.getGameDAO().updateGame(currentGameID, ServerFacade.getInstance().getModel());
             IPP.endTransaction(true);
@@ -494,12 +493,12 @@ public class Handler implements HttpHandler {
                 IPP.startTransaction();
                 List<ICommand> commands = IPP.getCommandDAO().readAllCommands(model.getID());
                 IPP.endTransaction(true);
-                if(commands.size() > commandsBeforeStorage) {
+                if(commands.size() != 0) {
                     updateGameModel(model.getID());
-                    gameUpdated.put(model.getID(), commands.size());
+                    gameUpdated.put(model.getID(), 0);
                 }
                 else
-                    gameUpdated.put(model.getID(), commands.size());
+                    gameUpdated.put(model.getID(), 0);
             }
         }
 
