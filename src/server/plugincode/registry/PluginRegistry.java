@@ -79,6 +79,7 @@ public class PluginRegistry {
 //                JarFile file = connection.getJarFile();
 //                String jarPath = file.getName();
 
+                Class aClass = cl.loadClass(pd.description);
                 if (pd.getName().equals("SQLP") && inDescriptor.name.equals("SQL")) {
                     persPlugin = (IPersistencePlugin) aClass.getConstructors()[0].newInstance();
                 } else if (pd.getName().equals("TEXTP") && inDescriptor.name.equals("TXT")) {
