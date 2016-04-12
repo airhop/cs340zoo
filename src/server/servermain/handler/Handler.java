@@ -339,6 +339,7 @@ public class Handler implements HttpHandler {
 //            System.out.println(ServerFacade.getInstance().getModel(gameId));
             IPP.startTransaction();
             IPP.getGameDAO().updateGame(((CreatedGame)o).getId(), ServerFacade.getInstance().getModel(gameId));
+            IPP.getCommandDAO().clearGame(((CreatedGame)o).getId());
             IPP.endTransaction(true);
 
             System.out.println("Finish Game Join " + gameId + " " + gameCookie.toString());

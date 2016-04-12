@@ -22,9 +22,11 @@ public class Clearing
         else
             return;
 
+        ipp.startTransaction();
         ipp.getGameDAO().clearTable();
         ipp.getPlayerDAO().clearTable();
         ipp.getCommandDAO().clearAll();
+        ipp.endTransaction(true);
     }
 
 
