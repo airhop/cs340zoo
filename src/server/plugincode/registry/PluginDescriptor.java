@@ -17,6 +17,9 @@ public class PluginDescriptor {
         this.classPath = classpath;
         this.description = description;
     }
+    public PluginDescriptor(){
+
+    }
 
     String name;
     String classPath;

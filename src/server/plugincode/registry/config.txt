@@ -1,8 +1,8 @@
-SQLP classpath classname
-SQL classpath classname
-SQL classpath classname
-SQL classpath classname
-TXTP classpath classname
-TXT classpath classname
-TXT classpath classname
-TXT classpath classname
+SQLP /plugin/sql.jar SqlPersistencePlugin.class
+SQL /plugin/sql.jar SqlGameDAO.class
+SQL /plugin/sql.jar SqlCommandDAO.class
+SQL /plugin/sql.jar SqlPlayerDAO.class
+TXTP /plugin/text.jar TextPersistencePlugin.class
+TXT /plugin/text.jar TextCommandDAO.class
+TXT /plugin/text.jar TextGameDAO.class
+TXT /plugin/text.jar TextPlayerDAO.class

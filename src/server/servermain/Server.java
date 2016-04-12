@@ -5,6 +5,8 @@ import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
 import server.plugincode.TextPlugin.TextPersistencePlugin;
 import server.plugincode.iplugin.IPersistencePlugin;
+import server.plugincode.registry.PluginDescriptor;
+import server.plugincode.registry.PluginRegistry;
 import server.plugincode.sql.SqlPersistencePlugin;
 import server.servermain.handler.Handler;
 import server.servermain.handler.Handlers;
@@ -104,12 +106,19 @@ public class Server {
         Scanner scan = new Scanner(args[0]);
         String type = scan.next();
         int revisions = scan.nextInt();
+        PluginDescriptor plugin = new PluginDescriptor();
+        PluginRegistry register = new PluginRegistry();
+        register.loadConfig();
 
-        if(type.equals("SQL"))
-            mainHandler = new Handler(new SqlPersistencePlugin(), revisions);
-        if(type.equals("TXT"))
-            mainHandler = new Handler(new TextPersistencePlugin(), revisions);
+        if(type.equals("SQL")){
+            plugin.setName("SQL");
+            mainHandler = new Handler(register.createPlugin(plugin), revisions);
+        }
 
+        if(type.equals("TXT")){
+            plugin.setName("TXT");
+            mainHandler = new Handler(register.createPlugin(plugin), revisions);
+        }
         new Server().run(SERVER_PORT_NUMBER);
 //        if(args.length == 1)
 //        {
