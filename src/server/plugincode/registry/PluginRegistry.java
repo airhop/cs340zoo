@@ -1,6 +1,8 @@
 package server.plugincode.registry;
 
+import server.plugincode.TextPlugin.TextPersistencePlugin;
 import server.plugincode.iplugin.IPersistencePlugin;
+import server.plugincode.sql.SqlPersistencePlugin;
 
 import java.io.*;
 import java.lang.reflect.InvocationTargetException;
@@ -60,39 +62,53 @@ public class PluginRegistry {
         IPersistencePlugin persPlugin = null;
         ClassLoader classLoader = PluginRegistry.class.getClassLoader();
 
-        File gameJar = new File("plugin/sql.jar");
-
-        File gameDependenciesJar = new File("plugin/text.jar");
-
-
-        URLClassLoader cl = null;
+        String urlOne = "jar:file:plugin/text.jar!/";
+        URL myUrlOne = null;
         try {
-            cl = new URLClassLoader(new URL[]{gameJar.toURI().toURL(), gameDependenciesJar.toURI().toURL()});
+            myUrlOne = new URL(urlOne);
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
+
+        String urlTwo = "jar:file:plugin/sql.jar!/";
+        URL myUrlTwo = null;
+        try {
+            myUrlTwo = new URL(urlTwo);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        try {
+            myUrlOne.openConnection();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+        URLClassLoader cl = new URLClassLoader(new URL[]{myUrlOne, myUrlTwo});
+
+        ClassLoader loader = this.getClass().getClassLoader();
         for (PluginDescriptor pd : pluginDescriptors) {
             try {
 
-                Class clazz = Class.forName(pd.description, true, cl);
 
-//                JarURLConnection connection = (JarURLConnection) url.openConnection();
-//                JarFile file = connection.getJarFile();
-//                String jarPath = file.getName();
 
-                Class aClass = cl.loadClass(pd.description);
+                String url = "jar:file:" + pd.classPath + "!/" + pd.description;
+                URL myUrl = new URL(url);
+                URLConnection connection = myUrl.openConnection();
+
+                loader.getResource(url);
+
+//                Class clazz = Class.forName(url);
+//
+//                Class aClass = cl.loadClass(pd.description);
                 if (pd.getName().equals("SQLP") && inDescriptor.name.equals("SQL")) {
-                    persPlugin = (IPersistencePlugin) aClass.getConstructors()[0].newInstance();
+                    persPlugin = new SqlPersistencePlugin();
                 } else if (pd.getName().equals("TEXTP") && inDescriptor.name.equals("TXT")) {
-                    persPlugin = (IPersistencePlugin) aClass.getConstructors()[0].newInstance();
+                    persPlugin = new TextPersistencePlugin();
                 }
-            } catch (ClassNotFoundException e) {
+            } catch (MalformedURLException e) {
                 e.printStackTrace();
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            } catch (InstantiationException e) {
-                e.printStackTrace();
-            } catch (InvocationTargetException e) {
+            } catch (IOException e) {
                 e.printStackTrace();
             }
         }

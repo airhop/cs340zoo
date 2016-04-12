@@ -50,6 +50,7 @@ public class SqlPersistencePlugin implements IPersistencePlugin {
         if (connection == null) {
             try {
                 connection = DriverManager.getConnection(DATABASE_URL);
+                connection.setAutoCommit(false);
                 if (connection == null) {
                     System.out.println("DIE");
                 } else {
