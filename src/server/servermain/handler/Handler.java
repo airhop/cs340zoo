@@ -3,11 +3,7 @@
 package server.servermain.handler;
 
 import client.MVC.data.GameInfo;
-import client.MVC.data.PlayerInfo;
 import client.model.GameModel;
-import client.model.history.Log;
-import client.model.map.Hex;
-import client.model.map.Map;
 import client.model.player.Player;
 import client.proxy.Cookie;
 import com.google.gson.*;
@@ -17,15 +13,12 @@ import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import server.ai.AITypes;
-import server.commandobjects.games.Create;
-import server.commandobjects.games.Join;
 import server.factories.GamesFactory;
 import server.factories.MovesFactory;
 import server.factories.UserFactory;
 import server.commandobjects.ICommand;
 import server.plugincode.iplugin.IPersistencePlugin;
 import server.serverfacade.ServerFacade;
-import server.servermain.Server;
 import server.servermain.exceptions.ServerException;
 import server.servermain.JsonConstructionInfo;
 import server.shared.CommandType;
@@ -33,11 +26,7 @@ import server.plugincode.iplugin.IGameDAO;
 import server.plugincode.iplugin.IPlayerDAO;
 import shared.jsonobject.CreatedGame;
 import shared.jsonobject.Login;
-import shared.locations.HexLocation;
-import shared.serialization.GameListDeserialize;
-import shared.serialization.MapSerializer;
 
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Type;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -245,7 +234,9 @@ public class Handler implements HttpHandler {
             if(login.getID() != -1)
             {
                 duplicate = true;
+                IPP.startTransaction();
                 IPP.getPlayerDAO().addPlayer(login);
+                IPP.endTransaction(true);
             }
         }
         else
@@ -307,7 +298,9 @@ public class Handler implements HttpHandler {
             exchange.sendResponseHeaders(200, info.length());
             exchange.getResponseBody().write(info.getBytes());
             exchange.getResponseBody().close();
+            IPP.startTransaction();
             IPP.getGameDAO().addGame(new GameModel(cg.getTitle()), cg.getId());
+            IPP.endTransaction(true);
             gameUpdated.put(cg.getId(), 0);
         } else if (path.contains("games/join")) {
             if(gameCookie.isActive())
@@ -324,6 +317,7 @@ public class Handler implements HttpHandler {
             Object o = current.execute();
 
             int gameId = ((CreatedGame)o).getId();
+            IPP.startTransaction();
             if(IPP.getGameDAO().readGame(gameId) == null)
             {
                 System.out.println("in here");
@@ -333,6 +327,7 @@ public class Handler implements HttpHandler {
                 IPP.getGameDAO().addGame(last, last.getID());
                 gameId = last.getID();
             }
+            IPP.endTransaction(true);
 
             gameCookie = new Cookie(gameId);
             ArrayList<String> cookies = new ArrayList<String>();
@@ -342,7 +337,9 @@ public class Handler implements HttpHandler {
             exchange.sendResponseHeaders(200, 0);
             exchange.getResponseBody().close();
 //            System.out.println(ServerFacade.getInstance().getModel(gameId));
+            IPP.startTransaction();
             IPP.getGameDAO().updateGame(((CreatedGame)o).getId(), ServerFacade.getInstance().getModel(gameId));
+            IPP.endTransaction(true);
 
             System.out.println("Finish Game Join " + gameId + " " + gameCookie.toString());
 
@@ -387,7 +384,9 @@ public class Handler implements HttpHandler {
                 exchange.getResponseBody().write("success".getBytes());
                 exchange.getResponseBody().close();
                 gm.setID(id);
+                IPP.startTransaction();
                 IPP.getGameDAO().addGame(gm, id);
+                IPP.endTransaction(true);
             }catch(IOException e)
             {
                 e.printStackTrace();
@@ -420,12 +419,16 @@ public class Handler implements HttpHandler {
         System.out.println(tokens[tokens.length - 1]);
         ICommand current = movesFactory.getCommand(new JsonConstructionInfo(type, requestBody));
 
+        IPP.startTransaction();
         IPP.getCommandDAO().addCommand(current, ServerFacade.getInstance().getModel().getID());
+        IPP.endTransaction(true);
         int currentGameID = ServerFacade.getInstance().getModel().getID();
         if (gameUpdated.get(currentGameID) == commandsBeforeStorage) {
             System.out.println(ServerFacade.getInstance().getModel());
             updateGameModel(currentGameID);
+            IPP.startTransaction();
             IPP.getGameDAO().updateGame(currentGameID, ServerFacade.getInstance().getModel());
+            IPP.endTransaction(true);
             gameUpdated.put(currentGameID, 0);
         } else {
             gameUpdated.put(currentGameID, gameUpdated.get(currentGameID) + 1);
@@ -455,7 +458,7 @@ public class Handler implements HttpHandler {
         IPP.startTransaction();
         List<Login> players = IPP.getPlayerDAO().readAllPlayers();
         List<GameModel> games = IPP.getGameDAO().readAllGames();
-        IPP.endTransaction(true);
+
         if (games.size() == 0 || players.size() == 0) {
             TreeMap<String, Login> newPlayers = ServerFacade.getInstance().getPlayers();
             List<GameModel> newGames = ServerFacade.getInstance().getGameInfoList();
@@ -468,10 +471,11 @@ public class Handler implements HttpHandler {
                 player.addPlayer(newPlayers.get(s));
             }
         }
-        IPP.startTransaction();
+
         players = IPP.getPlayerDAO().readAllPlayers();
         games = IPP.getGameDAO().readAllGames();
         IPP.endTransaction(true);
+
         List<GameModel> saved = new ArrayList<GameModel>();
         List<GameModel> normal = new ArrayList<GameModel>();
 
