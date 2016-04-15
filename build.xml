@@ -139,6 +139,7 @@
 				<include name="**"/>
 			</fileset>
 		</copy>
+		<mkdir dir="${java.dist}/database"/>
 		<mkdir dir="${java.dist}/docs"/>
 		<copy todir="${java.dist}/docs">
 			<fileset dir="${java.docs}">
