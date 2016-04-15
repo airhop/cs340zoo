@@ -1,7 +1,6 @@
 package server.plugincode.TextPlugin;
 
 import com.google.gson.GsonBuilder;
-import com.sun.xml.internal.bind.v2.TODO;
 import server.commandobjects.ICommand;
 import server.plugincode.iplugin.ICommandDAO;
 import server.shared.CommandType;
