@@ -131,6 +131,8 @@ public class PluginRegistry {
         String line = null;
 
         try {
+            File f = new File(fileName);
+            System.out.println(f.getAbsolutePath());
             // FileReader reads text files in the default encoding.
             FileReader fileReader = new FileReader(fileName);
 

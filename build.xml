@@ -133,6 +133,12 @@
 				<include name="**"/>
 			</fileset>
 		</copy>
+		<mkdir dir="${java.dist}/plugin"/>
+		<copy todir="{$java.dist}/plugin">
+			<fileset dir="${java.src}/server/plugincode/pluginNecessities">
+				<include name="**"/>
+			</fileset>
+		</copy>
 		<mkdir dir="${java.dist}/docs"/>
 		<copy todir="${java.dist}/docs">
 			<fileset dir="${java.docs}">
