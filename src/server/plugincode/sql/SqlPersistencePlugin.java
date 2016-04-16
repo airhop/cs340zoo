@@ -5,6 +5,7 @@ import server.plugincode.iplugin.IGameDAO;
 import server.plugincode.iplugin.IPersistencePlugin;
 import server.plugincode.iplugin.IPlayerDAO;
 
+
 import java.io.File;
 import java.sql.*;
 
@@ -29,16 +30,18 @@ public class SqlPersistencePlugin implements IPersistencePlugin {
     public SqlPersistencePlugin() {
         try {
             final String driver = "org.sqlite.JDBC";
+            File f = new File(driver);
+            System.out.println(f.getAbsolutePath());
             Class.forName(driver);
             System.out.println("THISDFSDFLKJHSDLFKJ");
+            commandDao = new SqlCommandDAO();
+            gameDAO = new SqlGameDAO();
+            playerDAO = new SqlPlayerDAO();
+
             //connection = DriverManager.getConnection(DATABASE_URL);
         } catch (ClassNotFoundException e) {// | SQLException e) {
             System.out.println(e.toString());
         }
-
-        commandDao = new SqlCommandDAO();
-        gameDAO = new SqlGameDAO();
-        playerDAO = new SqlPlayerDAO();
 
     }
 

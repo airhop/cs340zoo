@@ -131,8 +131,9 @@ public class PluginRegistry {
         String line = null;
 
         try {
-            File f = new File(fileName);
-            System.out.println(f.getAbsolutePath());
+//            File f = new File(fileName);
+//            System.out.println(f.getAbsolutePath());
+
             // FileReader reads text files in the default encoding.
             FileReader fileReader = new FileReader(fileName);
 
@@ -140,7 +141,7 @@ public class PluginRegistry {
             BufferedReader bufferedReader = new BufferedReader(fileReader);
 
             while ((line = bufferedReader.readLine()) != null) {
-                System.out.println(line);
+                //System.out.println(line);
                 String stringLine = line.toString();
                 String[] tokens = stringLine.split(" ");
                 String desName = tokens[0];
