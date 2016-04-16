@@ -35,6 +35,10 @@
 		</fileset>
 	</path>
 
+	<manifestclasspath property="manifest.classpath" jarfile="${java.lib.dir}">
+		<classpath refid="java.lib.classpath"/>
+	</manifestclasspath>
+
 	<!-- TARGETS -->
 	<!-- ******* -->
      
@@ -157,14 +161,13 @@
  		<jar jarfile="${java.dist}/catan-server.jar" basedir="${java.build}">
 			<manifest>
 				<attribute name="Main-Class" value="server.servermain.Server"/>
-				<attribute name="Class-Path" 
-					value="lib/gson-2.5.jar" />
+				<attribute name="Class-Path" value="${manifest.classpath}"/>
 			</manifest>
 		</jar>
 		<jar jarfile="${java.dist}/clear.jar" basedir="${java.build}">
 			<manifest>
 				<attribute name="Main-Class" value="server.servermain.Clearing"/>
-				<attribute name="Class-Path" value="lib/gson-2.5.jar"/>
+				<attribute name="Class-Path" value="${manifest.classpath}"/>
 			</manifest>
 		</jar>
 	</target>
@@ -203,6 +206,9 @@
     <target name="make-tester-zip" depends="package" description="makes a zip file for your testing team">
         <zip destfile="./tester.zip" basedir="${java.dist}" />
     </target>
+
+
+
   
 </project>
 

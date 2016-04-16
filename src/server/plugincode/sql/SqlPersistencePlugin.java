@@ -29,9 +29,9 @@ public class SqlPersistencePlugin implements IPersistencePlugin {
 
     public SqlPersistencePlugin() {
         try {
-            final String driver = "org.sqlite.JDBC";
+            String driver = "org.sqlite.JDBC";
             File f = new File(driver);
-            System.out.println(f.getAbsolutePath());
+           System.out.println(f.getAbsolutePath() + f.getAbsolutePath().length());
             Class.forName(driver);
             System.out.println("THISDFSDFLKJHSDLFKJ");
             commandDao = new SqlCommandDAO();
