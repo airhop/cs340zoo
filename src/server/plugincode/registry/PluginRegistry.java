@@ -103,7 +103,7 @@ public class PluginRegistry {
 //                Class aClass = cl.loadClass(pd.description);
                 if (pd.getName().equals("SQLP") && inDescriptor.name.equals("SQL")) {
                     persPlugin = new SqlPersistencePlugin();
-                } else if (pd.getName().equals("TEXTP") && inDescriptor.name.equals("TXT")) {
+                } else if (pd.getName().equals("TXTP") && inDescriptor.name.equals("TXT")) {
                     persPlugin = new TextPersistencePlugin();
                 }
             } catch (MalformedURLException e) {

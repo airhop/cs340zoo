@@ -68,7 +68,7 @@ public class ServerFacade implements IServerFacade {
         players.put("Aaron", new Login("Aaron", "aaron", 1));
         players.put("Josh", new Login("Josh", "josh", 2));
         players.put("Rebecca", new Login("Rebecca", "rebecca", 3));
-        players.put("Dingo", new Login("Dingo", "45342wersfsdfgcvb", -1));
+        players.put("Dingo", new Login("Dingo", "Baby", -1));
         players.put("Ate", new Login("Ate", "45342wersfsdfgcvb", -2));
         players.put("Your", new Login("Your", "45342wersfsdfgcvb", -3));
         players.put("Baby", new Login("Baby", "45342wersfsdfgcvb", -4));
