@@ -197,7 +197,7 @@
 		</java>
 	</target>
 
-	<target name="clear" description="clear tables">
+	<target name="clear" depends="package" description="clear tables">
 		<java jar="${java.dist}/clear.jar" dir="${java.dist}" fork="yes">
 			<arg value="${arg0}"/>
 		</java>
